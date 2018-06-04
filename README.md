@@ -44,3 +44,9 @@ Mainly .net Core & Vue bits and pieces.
     <pre>
     dotnet add package Dapper --version 1.50.5
     </pre>
+
+
+<pre>
+dotnet add package Microsoft.Extensions.Logging.Console --version 2.1.0
+dotnet add package Microsoft.Extensions.Logging.Debug --version 2.1.0	
+</pre>

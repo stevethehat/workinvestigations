@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 using Dapper;
 
@@ -11,6 +12,10 @@ namespace Async.Controllers
     [Route("endpoints")]
     public class TestEndpoints : Controller
     {
+        private ILogger<TestEndpoints> _logger {get;set;}
+        public TestEndpoints(ILogger<TestEndpoints> logger){
+            _logger = logger;
+        }
         // GET api/values
         private async Task<List<string>> GetStrings()
         {
@@ -24,6 +29,7 @@ namespace Async.Controllers
         [HttpGet]
         public async Task<IActionResult> Get(){
             var result = await GetStrings();
+            _logger.LogInformation(1, "test", 1);
             return Ok(result);
 
         }
