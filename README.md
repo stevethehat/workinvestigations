@@ -46,7 +46,15 @@ Mainly .net Core & Vue bits and pieces.
     </pre>
 
 
-<pre>
-dotnet add package Microsoft.Extensions.Logging.Console --version 2.1.0
-dotnet add package Microsoft.Extensions.Logging.Debug --version 2.1.0	
-</pre>
+* Logging
+
+    <pre>
+    dotnet add package Microsoft.Extensions.Logging.Console --version 2.1.0
+    dotnet add package Microsoft.Extensions.Logging.Debug --version 2.1.0	
+    </pre>
+
+* Encoding
+
+    <pre>
+    dotnet add package System.Text.Encoding.CodePages
+    </pre>
