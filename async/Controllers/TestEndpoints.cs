@@ -10,10 +10,20 @@ namespace Async.Controllers
     public class TestEndpoints : Controller
     {
         // GET api/values
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private async Task<List<string>> GetStrings()
         {
-            return new string[] { "value1", "value2" };
+            await Task.Delay(1000);
+            List<string> result = new List<string>();
+            result.Add("value 1");
+            result.Add("value 2");
+            return result;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Get(){
+            var result = await GetStrings();
+            return Ok(result);
+
         }
 
         // GET api/values/5
