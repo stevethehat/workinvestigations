@@ -1,4 +1,6 @@
 # Investigations
+A place to test things that i can access from both my laptop and work. 
+
 Mainly .net Core & Vue bits and pieces.
 
 ## Things we are using 
@@ -37,7 +39,7 @@ Mainly .net Core & Vue bits and pieces.
 * Dapper
 
     Lightweight ORM
-    
+
     https://github.com/StackExchange/Dapper
     <pre>
     dotnet add package Dapper --version 1.50.5
