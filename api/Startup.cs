@@ -13,7 +13,7 @@ using Microsoft.Extensions.Options;
 using Swashbuckle;
 
 
-namespace async
+namespace Api
 {
     public class Startup
     {
