@@ -4,8 +4,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Xunit;
 
-namespace tests
+namespace Tests
 {
+    [Collection("Database Collection")]
     public class ApiTests
     {
         public TestServer testServer {get;set;} 
