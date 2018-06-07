@@ -29,5 +29,33 @@ namespace Tests
             string expected = "[\"value 1\",\"value 2\"]";
             Assert.Equal(responseText, expected);
         }
+
+        private int CallLambda(Func<int, int, int> a){
+            if(a == null){
+                return -1;
+            } else {
+                return a(1, 2);
+            }
+        }
+
+        [Fact]
+        public void LambdaTest(){
+            int result;
+            result = CallLambda((x,y) => x*y);
+            Assert.Equal(result, 2);
+        }
+        [Fact]
+        public void LambdaTest2(){
+            int result;
+            result = CallLambda(null);
+            Assert.Equal(result, -1);
+        }
+        [Fact]
+        public void LambdaTest3(){
+            int result;
+            int whatWeWant = 22;
+            result = CallLambda((x,y) => whatWeWant);
+            Assert.Equal(result, 22);
+        }
     }
 }
