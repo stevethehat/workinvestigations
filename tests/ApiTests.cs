@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Xunit;
 
+using Api.Util;
+
 namespace Tests
 {
     [Collection("Database Collection")]
@@ -11,13 +13,14 @@ namespace Tests
     {
         public TestServer testServer {get;set;} 
         public DatabaseFixture databaseFixture {get;set;}
-        public ApiTests(DatabaseFixture databaseFixture){
+        public ApiTests(DatabaseFixture df){
             var host = new WebHostBuilder().
                 UseEnvironment("Development").
                 UseStartup<Api.Startup>().
                 UseApplicationInsights();
 
             testServer = new TestServer(host);
+            databaseFixture = df;
         }
         [Fact]
         public async void Test1()
@@ -56,6 +59,21 @@ namespace Tests
             int whatWeWant = 22;
             result = CallLambda((x,y) => whatWeWant);
             Assert.Equal(result, 22);
+        }
+
+        [Fact]
+        public void ScannerTest(){
+            int changedCount = 0;
+            int unchangedCount = 0;
+            Scanner scanner = new Scanner(databaseFixture.Db);
+            scanner.Changed = (current, import) => {changedCount++; return false;};
+            scanner.Unchanged = (current, import) => {unchangedCount++; return false;};
+            //scanner.Unchanged = (old, new) => {unchangedCount++; return true;}
+            //scanner.SetUnchanged(((a,b)) => true;));
+            scanner.Scan(1,2);
+
+            Assert.Equal(changedCount, 1);
+            Assert.Equal(unchangedCount, 1);
         }
     }
 }
