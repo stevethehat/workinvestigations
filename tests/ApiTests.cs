@@ -4,12 +4,14 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Xunit;
 
-namespace tests
+namespace Tests
 {
+    [Collection("Database Collection")]
     public class ApiTests
     {
         public TestServer testServer {get;set;} 
-        public ApiTests(){
+        public DatabaseFixture databaseFixture {get;set;}
+        public ApiTests(DatabaseFixture databaseFixture){
             var host = new WebHostBuilder().
                 UseEnvironment("Development").
                 UseStartup<Api.Startup>().
