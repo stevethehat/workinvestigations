@@ -5,10 +5,10 @@ using Api.Util;
 
 namespace Tests{
     public class DatabaseFixture: IDisposable{
-        public AppDb db {get;set;}
+        public AppDb Db {get;set;}
 
         public DatabaseFixture(){
-
+            Db = new AppDb("server=localhost;Database=priceupdates;Uid=root;Pwd=bh49bb;SslMode=none");
         }
         public void Dispose(){
 
