@@ -65,15 +65,32 @@ namespace Tests
         public void ScannerTest(){
             int changedCount = 0;
             int unchangedCount = 0;
+            int addedCount = 0;
+            int deletedCount = 0;
+
             Scanner scanner = new Scanner(databaseFixture.Db);
-            scanner.Changed = (current, import) => {changedCount++; return false;};
-            scanner.Unchanged = (current, import) => {unchangedCount++; return false;};
-            //scanner.Unchanged = (old, new) => {unchangedCount++; return true;}
-            //scanner.SetUnchanged(((a,b)) => true;));
+            scanner.Changed = (current, import) => {
+                changedCount++; 
+                return false;
+            };
+            scanner.Unchanged = (current, import) => {
+                unchangedCount++; 
+                return false;
+            };
+            scanner.Added = (current, import) => {
+                addedCount++; 
+                return false;
+            };
+            scanner.Deleted = (current, import) => {
+                deletedCount++; 
+                return false;
+            };
             scanner.Scan(1,2);
 
             Assert.Equal(changedCount, 1);
             Assert.Equal(unchangedCount, 1);
+            Assert.Equal(addedCount, 1);
+            Assert.Equal(deletedCount, 1);
         }
     }
 }
