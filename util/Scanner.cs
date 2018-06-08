@@ -23,11 +23,46 @@ namespace Api.Util{
 
         }
 
+        protected void ProcessAddedDeleted(int currentId, int importId, RecordDetail currentValues, RecordDetail rowValues)
+        {
+            if (currentValues.ImportId == importId)
+            {
+                // this must have been added
+                // added
+                if (Added != null)
+                {
+                    Added(null, rowValues);
+                }
+            }
+            if (rowValues.ImportId == importId)
+            {
+                // this must have been added
+                // added
+                if (Added != null)
+                {
+                    Added(null, rowValues);
+                }
+            }
+            if (currentValues.ImportId == currentId)
+            {
+                if (Deleted != null)
+                {
+                    Deleted(rowValues, null);
+                }
+            }
+            if (rowValues.ImportId == currentId)
+            {
+                if (Deleted != null)
+                {
+                    Deleted(rowValues, null);
+                }
+            }
+        }
+
         public void Scan(int currentId, int importId){
             int count = 0;
-            int currentImport = 0;
-            
-            RecordDetail rowValues;
+
+            RecordDetail rowValues = new RecordDetail();
             RecordDetail currentValues = new RecordDetail();
             RecordDetail importValues;
 
@@ -46,27 +81,22 @@ namespace Api.Util{
                 };
 
                 if(rowValues.PartNumber != currentValues.PartNumber){
+                    // something has been either added or deleted
                     if(count == 1){
-                        if(rowValues.ImportId == currentId){
-                            // deleted
-                            if(Deleted != null){
-                                Deleted(new RecordDetail(), new RecordDetail());
-                            }
-                        } else {
-                            // added
-                            if(Added != null){
-                                Added(new RecordDetail(), new RecordDetail());
-                            }
-                        }
+                        ProcessAddedDeleted(currentId, importId, currentValues, rowValues);
+
+                        // reset everything
                         count = 0;
+                        currentValues = new RecordDetail();
+                        rowValues = new RecordDetail();
                     }
                     currentValues = rowValues;
+                    rowValues = new RecordDetail();
                 }
                 count++;                
                 if(count == 2){
+                    // we have 2 matching part numbers
                     importValues = rowValues;
-                    //costChange = rowValues.Retail - currentValues.Retail;
-                    //percentageChange = costChange / currentCost * 100;
 
                     if(currentValues.Retail == rowValues.Retail){
                         // same
@@ -79,23 +109,13 @@ namespace Api.Util{
                         }
                     }
 
+                    // reset everything
                     count = 0;
+                    currentValues = new RecordDetail();
+                    rowValues = new RecordDetail();
                 }
             }
-            if(count == 1){
-                if(rowValues.ImportId == currentId){
-                    // deleted
-                    if(Deleted != null){
-                        Deleted(new RecordDetail(), new RecordDetail());
-                    }
-                } else {
-                    // added
-                    if(Added != null){
-                        Added(new RecordDetail(), new RecordDetail());
-                    }
-                }
-                count = 0;
-            }            
+            ProcessAddedDeleted(currentId, importId, currentValues, rowValues);
             reader.Close();
         }
     }

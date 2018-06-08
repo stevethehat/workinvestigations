@@ -2,6 +2,11 @@ using System;
 using System.Net.Http;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+
+using System.Data.Common;
+using System.Data.SqlClient;
+using Dapper;
+
 using Xunit;
 
 using Api.Util;
@@ -13,84 +18,165 @@ namespace Tests
     {
         public TestServer testServer {get;set;} 
         public DatabaseFixture databaseFixture {get;set;}
-        public ScannerTests(DatabaseFixture df){
-            var host = new WebHostBuilder().
-                UseEnvironment("Development").
-                UseStartup<Api.Startup>().
-                UseApplicationInsights();
 
-            testServer = new TestServer(host);
+        private int import1 = 1;
+        private int import2 = 2;
+        private int currentPartNumber = 1;
+
+        private int changedCount = 0;
+        private int unchangedCount = 0;
+        private int addedCount = 0;
+        private int deletedCount = 0;
+
+        public ScannerTests(DatabaseFixture df){
             databaseFixture = df;
         }
+
         [Fact]
-        public async void Test1()
+        [Trait("Category", "Scanner")]
+        public void EmptyTable()
         {
-            var client = testServer.CreateClient();
-            HttpResponseMessage response = await client.GetAsync("endpoints");
-
-            string responseText = await response.Content.ReadAsStringAsync();
-            string expected = "[\"value 1\",\"value 2\"]";
-            Assert.Equal(responseText, expected);
-        }
-
-        private int CallLambda(Func<int, int, int> a){
-            if(a == null){
-                return -1;
-            } else {
-                return a(1, 2);
-            }
-        }
-
-        [Fact]
-        public void LambdaTest(){
-            int result;
-            result = CallLambda((x,y) => x*y);
-            Assert.Equal(result, 2);
-        }
-        [Fact]
-        public void LambdaTest2(){
-            int result;
-            result = CallLambda(null);
-            Assert.Equal(result, -1);
-        }
-        [Fact]
-        public void LambdaTest3(){
-            int result;
-            int whatWeWant = 22;
-            result = CallLambda((x,y) => whatWeWant);
-            Assert.Equal(result, 22);
-        }
-
-        [Fact]
-        public void ScannerTest(){
-            int changedCount = 0;
-            int unchangedCount = 0;
-            int addedCount = 0;
-            int deletedCount = 0;
-
             Scanner scanner = new Scanner(databaseFixture.Db, "retail");
+            scanner.Scan(1, 2);
+        }
+
+        [Fact]
+        [Trait("Category", "Scanner")]
+        public void JustAdded()
+        {
+            ClearDatabase();
+            AddAdded();
+
+            TestCounts(0, 0, 1, 0);
+        }
+
+        [Fact]
+        [Trait("Category", "Scanner")]
+        public void JustDeleted()
+        {
+            ClearDatabase();
+            AddDeleted();
+
+            TestCounts(0, 0, 0, 1);
+        }
+
+        [Fact]
+        [Trait("Category", "Scanner")]
+        public void AddedAndDeleted()
+        {
+            ClearDatabase();
+            AddDeleted();
+            AddAdded();
+            AddAdded();
+            AddDeleted();
+            AddDeleted();
+            AddAdded();
+            AddDeleted();
+
+            TestCounts(0, 0, 3, 4);
+        }
+
+        [Fact]
+        [Trait("Category", "Scanner")]
+        public void Deleted2()
+        {
+            ClearDatabase();
+            AddDeleted();
+            AddDeleted();
+
+            TestCounts(0, 0, 0, 2);
+        }
+
+        [Fact]
+        [Trait("Category", "Scanner")]
+        public void Deleted3()
+        {
+            ClearDatabase();
+            AddDeleted();
+            AddDeleted();
+            AddDeleted();
+
+            TestCounts(0, 0, 0, 3);
+        }
+
+        [Fact]
+        [Trait("Category", "Scanner")]
+        public void ScannerTest()
+        {
+            ClearDatabase();
+            AddPair("same prices", 10, 10);
+            AddPair("changed prices", 10, 12);
+            AddAdded();
+            AddDeleted();
+
+            TestCounts(1, 1, 1, 1);
+        }
+
+        #region Util functions
+        private void ClearDatabase()
+        {
+            DbCommand command = databaseFixture.Db.Connection.CreateCommand();
+            command.CommandText = "truncate table prices";
+
+            command.ExecuteNonQuery();
+        }
+        private void AddRecord(int importId, int partNumber, string description, int retail)
+        {
+            DbCommand command = databaseFixture.Db.Connection.CreateCommand();
+            command.CommandText = $"insert into prices (import_id, partnumber, description, retail_price) values ({importId}, {partNumber}, '{description}', {retail})";
+
+            command.ExecuteNonQuery();
+        }
+        private void AddAdded()
+        {
+            AddRecord(import2, currentPartNumber, $"Added {currentPartNumber}", 10);
+            currentPartNumber++;
+        }
+
+        private void AddDeleted()
+        {
+            AddRecord(import1, currentPartNumber, $"Deleted {currentPartNumber}", 10);
+            currentPartNumber++;
+        }
+
+        private void AddPair(string description, int retail1, int retail2)
+        {
+            AddRecord(import1, currentPartNumber, $"{description} {currentPartNumber}", retail1);
+            AddRecord(import2, currentPartNumber, $"{description} {currentPartNumber}", retail2);
+            currentPartNumber++;
+        }
+
+        private void SetupWatchers(Scanner scanner)
+        {
             scanner.Changed = (current, import) => {
-                changedCount++; 
+                changedCount++;
                 return false;
             };
             scanner.Unchanged = (current, import) => {
-                unchangedCount++; 
+                unchangedCount++;
                 return false;
             };
             scanner.Added = (current, import) => {
-                addedCount++; 
+                addedCount++;
                 return false;
             };
             scanner.Deleted = (current, import) => {
-                deletedCount++; 
+                deletedCount++;
                 return false;
             };
-            scanner.Scan(1,2);
-
-            Assert.Equal(changedCount, 1);
-            Assert.Equal(unchangedCount, 1);
-            Assert.Equal(addedCount, 1);
-            Assert.Equal(deletedCount, 1);
         }
+
+        private void TestCounts(int changed, int unchanged, int added, int deleted)
+        {
+            Scanner scanner = new Scanner(databaseFixture.Db, "retail");
+            SetupWatchers(scanner);
+            scanner.Scan(1, 2);
+
+            Assert.Equal(changedCount, changed);
+            Assert.Equal(unchangedCount, unchanged);
+            Assert.Equal(addedCount, added);
+            Assert.Equal(deletedCount, deleted);
+        }
+        #endregion
     }
 }
