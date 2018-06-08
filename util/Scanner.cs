@@ -81,6 +81,20 @@ namespace Api.Util{
                     count = 0;
                 }
             }
+            if(count == 1){
+                if(currentImport == 1){
+                    // deleted
+                    if(Deleted != null){
+                        Deleted(new RecordDetail(), new RecordDetail());
+                    }
+                } else {
+                    // added
+                    if(Added != null){
+                        Added(new RecordDetail(), new RecordDetail());
+                    }
+                }
+                count = 0;
+            }            
             reader.Close();
         }
     }
