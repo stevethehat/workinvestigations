@@ -8,6 +8,10 @@ namespace Api.Util {
         public int ImportId { get; set; }
         public string Description { get; set; }
         public float Retail { get; set; }
+
+        public string ComparisonField { get; set; }
+
+        public Object[] Values { get; set; }
     }
     //public Func<RecordDetail, RecordDetail, bool>
     public class Scanner {
@@ -15,6 +19,8 @@ namespace Api.Util {
         public string CompareField { get; private set; }
         public int CurrentId { get; private set; }
         public int ImportId { get; private set; }
+        public int Total { get; private set; }
+
         private Queue<RecordDetail> records { get; set; }
 
         private int CompareFieldIndex { get; set; }
@@ -32,7 +38,7 @@ namespace Api.Util {
         }
 
         private void ProcessChange(RecordDetail firstItem, RecordDetail secondItem){
-            if (firstItem.Retail != secondItem.Retail) {
+            if (firstItem.ComparisonField != secondItem.ComparisonField) {
                 if (Changed != null) {
                     Changed(firstItem, secondItem);
                 }
@@ -41,6 +47,7 @@ namespace Api.Util {
                     Unchanged(firstItem, secondItem);
                 }
             }
+            Total++;
         }
 
         private void ProcessSingleItem(RecordDetail item) {
@@ -54,6 +61,7 @@ namespace Api.Util {
                     Added(item);
                 }
             }
+            Total++;
         }
 
         private void ProcessQueue() {
@@ -96,8 +104,10 @@ namespace Api.Util {
                     PartNumber = reader.GetString(reader.GetOrdinal("partnumber")),
                     ImportId = reader.GetInt32(reader.GetOrdinal("import_id")),
                     Description = reader.GetString(reader.GetOrdinal("description")),
-                    Retail = reader.GetFloat(reader.GetOrdinal("retail_price"))
+                    Retail = reader.GetFloat(reader.GetOrdinal("retail")),
+                    ComparisonField = reader.GetString(reader.GetOrdinal(CompareField))
                 };
+                //reader.GetValues(rowValues.Values);
 
                 records.Enqueue(rowValues);
                 if(records.Count == 2) {
