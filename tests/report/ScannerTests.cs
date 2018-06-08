@@ -3,8 +3,6 @@ using System.Net.Http;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 
-using System.Data.Common;
-using System.Data.SqlClient;
 using Dapper;
 
 using Xunit;
@@ -14,15 +12,8 @@ using Api.Util;
 namespace Tests
 {
     [Collection("Database Collection")]
-    public class ScannerTests
+    public class ScannerTests: RetailTestBase
     {
-        public TestServer testServer {get;set;} 
-        public DatabaseFixture databaseFixture {get;set;}
-
-        private int import1 = 1;
-        private int import2 = 2;
-        private int currentPartNumber = 1;
-
         private int changedCount = 0;
         private int unchangedCount = 0;
         private int addedCount = 0;
@@ -36,6 +27,7 @@ namespace Tests
         [Trait("Category", "Scanner")]
         public void EmptyTable()
         {
+            ClearDatabase();
             Scanner scanner = new Scanner(databaseFixture.Db, 1, 2, "retail");
             scanner.Scan();
         }
@@ -156,41 +148,7 @@ namespace Tests
 
 
         #region Util functions
-        private void ClearDatabase()
-        {
-            DbCommand command = databaseFixture.Db.Connection.CreateCommand();
-            command.CommandText = "truncate table prices";
-
-            command.ExecuteNonQuery();
-        }
-        private void AddRecord(int importId, int partNumber, string description, int retail)
-        {
-            DbCommand command = databaseFixture.Db.Connection.CreateCommand();
-            command.CommandText = $"insert into prices (import_id, partnumber, description, retail) values ({importId}, {partNumber}, '{description}', {retail})";
-
-            command.ExecuteNonQuery();
-        }
-        private void AddAdded()
-        {
-            AddRecord(import2, currentPartNumber, $"Added {currentPartNumber}", 10);
-            currentPartNumber++;
-        }
-
-        private void AddDeleted()
-        {
-            AddRecord(import1, currentPartNumber, $"Deleted {currentPartNumber}", 10);
-            currentPartNumber++;
-        }
-
-        private void AddPair(string description, int retail1, int retail2)
-        {
-            AddRecord(import1, currentPartNumber, $"{description} {currentPartNumber}", retail1);
-            AddRecord(import2, currentPartNumber, $"{description} {currentPartNumber}", retail2);
-            currentPartNumber++;
-        }
-
-        private void SetupWatchers(Scanner scanner)
-        {
+        private void SetupWatchers(Scanner scanner) {
             scanner.Changed = (current, import) => {
                 changedCount++;
                 return false;
@@ -209,8 +167,7 @@ namespace Tests
             };
         }
 
-        private void TestCounts(int changed, int unchanged, int added, int deleted)
-        {
+        private void TestCounts(int changed, int unchanged, int added, int deleted) {
             Scanner scanner = new Scanner(databaseFixture.Db, 1, 2, "retail");
             SetupWatchers(scanner);
             scanner.Scan();
@@ -220,6 +177,7 @@ namespace Tests
             Assert.Equal(addedCount, added);
             Assert.Equal(deletedCount, deleted);
         }
+
         #endregion
     }
 }
