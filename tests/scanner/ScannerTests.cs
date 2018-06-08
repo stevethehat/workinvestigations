@@ -36,8 +36,8 @@ namespace Tests
         [Trait("Category", "Scanner")]
         public void EmptyTable()
         {
-            Scanner scanner = new Scanner(databaseFixture.Db, "retail");
-            scanner.Scan(1, 2);
+            Scanner scanner = new Scanner(databaseFixture.Db, 1, 2, "retail");
+            scanner.Scan();
         }
 
         [Fact]
@@ -199,11 +199,11 @@ namespace Tests
                 unchangedCount++;
                 return false;
             };
-            scanner.Added = (current, import) => {
+            scanner.Added = (item) => {
                 addedCount++;
                 return false;
             };
-            scanner.Deleted = (current, import) => {
+            scanner.Deleted = (item) => {
                 deletedCount++;
                 return false;
             };
@@ -211,9 +211,9 @@ namespace Tests
 
         private void TestCounts(int changed, int unchanged, int added, int deleted)
         {
-            Scanner scanner = new Scanner(databaseFixture.Db, "retail");
+            Scanner scanner = new Scanner(databaseFixture.Db, 1, 2, "retail");
             SetupWatchers(scanner);
-            scanner.Scan(1, 2);
+            scanner.Scan();
 
             Assert.Equal(changedCount, changed);
             Assert.Equal(unchangedCount, unchanged);
