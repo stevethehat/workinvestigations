@@ -124,7 +124,7 @@ namespace Tests
 
 
             Random random = new Random();
-            int total = random.Next(0, 1000);
+            int total = random.Next(0, 100000);
 
             for(var i = 0;i < total; i++)
             {
@@ -166,7 +166,7 @@ namespace Tests
         private void AddRecord(int importId, int partNumber, string description, int retail)
         {
             DbCommand command = databaseFixture.Db.Connection.CreateCommand();
-            command.CommandText = $"insert into prices (import_id, partnumber, description, retail_price) values ({importId}, {partNumber}, '{description}', {retail})";
+            command.CommandText = $"insert into prices (import_id, partnumber, description, retail) values ({importId}, {partNumber}, '{description}', {retail})";
 
             command.ExecuteNonQuery();
         }
