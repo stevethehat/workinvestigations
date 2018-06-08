@@ -9,11 +9,11 @@ using Api.Util;
 namespace Tests
 {
     [Collection("Database Collection")]
-    public class ApiTests
+    public class ScannerTests
     {
         public TestServer testServer {get;set;} 
         public DatabaseFixture databaseFixture {get;set;}
-        public ApiTests(DatabaseFixture df){
+        public ScannerTests(DatabaseFixture df){
             var host = new WebHostBuilder().
                 UseEnvironment("Development").
                 UseStartup<Api.Startup>().
