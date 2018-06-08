@@ -23,7 +23,7 @@ namespace Api.Util{
 
         }
 
-        protected void ProcessAddedDeleted(int currentId, int importId, RecordDetail currentValues, RecordDetail rowValues)
+        protected void ProcessAddedDeleted(int currentId, int importId, int pass, RecordDetail currentValues, RecordDetail rowValues)
         {
             if (currentValues.ImportId == importId)
             {
@@ -60,7 +60,7 @@ namespace Api.Util{
         }
 
         public void Scan(int currentId, int importId){
-            int count = 0;
+            int pass = 0;
 
             RecordDetail rowValues = new RecordDetail();
             RecordDetail currentValues = new RecordDetail();
@@ -82,19 +82,19 @@ namespace Api.Util{
 
                 if(rowValues.PartNumber != currentValues.PartNumber){
                     // something has been either added or deleted
-                    if(count == 1){
-                        ProcessAddedDeleted(currentId, importId, currentValues, rowValues);
+                    if(pass == 1){
+                        ProcessAddedDeleted(currentId, importId, pass, currentValues, rowValues);
 
                         // reset everything
-                        count = 0;
+                        pass = 0;
                         currentValues = new RecordDetail();
                         rowValues = new RecordDetail();
                     }
                     currentValues = rowValues;
                     rowValues = new RecordDetail();
                 }
-                count++;                
-                if(count == 2){
+                pass++;                
+                if(pass == 2){
                     // we have 2 matching part numbers
                     importValues = rowValues;
 
@@ -110,12 +110,12 @@ namespace Api.Util{
                     }
 
                     // reset everything
-                    count = 0;
+                    pass = 0;
                     currentValues = new RecordDetail();
                     rowValues = new RecordDetail();
                 }
             }
-            ProcessAddedDeleted(currentId, importId, currentValues, rowValues);
+            ProcessAddedDeleted(currentId, importId, pass, currentValues, rowValues);
             reader.Close();
         }
     }

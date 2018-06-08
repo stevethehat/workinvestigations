@@ -112,6 +112,49 @@ namespace Tests
             TestCounts(1, 1, 1, 1);
         }
 
+        [Fact]
+        [Trait("Category", "Scanner")]
+        public void Random()
+        {
+            ClearDatabase();
+            var added = 0;
+            var deleted = 0;
+            var changed = 0;
+            var unChanged = 0;
+
+
+            Random random = new Random();
+            int total = random.Next(0, 1000);
+
+            for(var i = 0;i < total; i++)
+            {
+                switch(random.Next(0, 4))
+                {
+                    case 0:
+                        AddAdded();
+                        added++;
+                        break;
+                    case 1:
+                        AddDeleted();
+                        deleted++;
+                        break;
+                    case 2:
+                        AddPair("Equal pair", 10, 10);
+                        unChanged++;
+                        break;
+                    case 3:
+                        AddPair("Equal pair", 10, 12);
+                        changed++;
+                        break;
+
+                }
+            }
+
+            Assert.Equal(total, changed + unChanged + added + deleted);
+            TestCounts(changed, unChanged, added, deleted);
+        }
+
+
         #region Util functions
         private void ClearDatabase()
         {
