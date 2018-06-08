@@ -68,7 +68,7 @@ namespace Tests
             int addedCount = 0;
             int deletedCount = 0;
 
-            Scanner scanner = new Scanner(databaseFixture.Db);
+            Scanner scanner = new Scanner(databaseFixture.Db, "retail");
             scanner.Changed = (current, import) => {
                 changedCount++; 
                 return false;
