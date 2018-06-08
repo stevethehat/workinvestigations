@@ -4,32 +4,32 @@ namespace Api.Util{
 
     public class RecordDetail{
         public string PartNumber {get;set;}
+        public int ImportId {get;set;}
+        public string Description {get;set;}
+        public float Retail {get;set;}
     }
     //public Func<RecordDetail, RecordDetail, bool>
     public class Scanner{
         public AppDb Db {get;private set;}
+        public string CompareField {get;private set;}
+        private int CompareFieldIndex {get;set;}
         public Func<RecordDetail, RecordDetail, bool> Added {private get;set;}
         public Func<RecordDetail, RecordDetail, bool> Deleted {private get;set;}
         public Func<RecordDetail, RecordDetail, bool> Unchanged {private get;set;}
         public Func<RecordDetail, RecordDetail, bool> Changed {private get;set;}
-        public Scanner(AppDb db){
+        public Scanner(AppDb db, string compareField){
             Db = db;
+            CompareField = compareField;
+
         }
 
         public void Scan(int currentId, int importId){
-            float costChange;
-            float percentageChange;
-
-            string currentPart = "";
-            int currentImport = -1;
-            string currentDescription = "";
-            float currentCost = -1;
-            int count = 0;        
-
-            string rowPart = "";
-            int rowImport = -1;
-            string rowDescription;
-            float rowCost;    
+            int count = 0;
+            int currentImport = 0;
+            
+            RecordDetail rowValues;
+            RecordDetail currentValues = new RecordDetail();
+            RecordDetail importValues;
 
             var command = Db.Connection.CreateCommand();
             
@@ -37,14 +37,17 @@ namespace Api.Util{
             System.Data.IDataReader reader = command.ExecuteReader();
 
             while(reader.Read()){
-                rowPart = reader.GetString(reader.GetOrdinal("partnumber"));
-                rowImport = reader.GetInt32(reader.GetOrdinal("import_id"));
-                rowDescription = reader.GetString(reader.GetOrdinal("description"));
-                rowCost = reader.GetFloat(reader.GetOrdinal("retail_price"));
+                //currentValues 
+                rowValues = new RecordDetail(){
+                    PartNumber = reader.GetString(reader.GetOrdinal("partnumber")),
+                    ImportId = reader.GetInt32(reader.GetOrdinal("import_id")),
+                    Description = reader.GetString(reader.GetOrdinal("description")),
+                    Retail = reader.GetFloat(reader.GetOrdinal("retail_price"))
+                };
 
-                if(rowPart != currentPart){
+                if(rowValues.PartNumber != currentValues.PartNumber){
                     if(count == 1){
-                        if(currentImport == 1){
+                        if(rowValues.ImportId == currentId){
                             // deleted
                             if(Deleted != null){
                                 Deleted(new RecordDetail(), new RecordDetail());
@@ -57,24 +60,22 @@ namespace Api.Util{
                         }
                         count = 0;
                     }
-                    currentPart = rowPart;
-                    currentImport = rowImport;
-                    currentDescription = rowDescription;
-                    currentCost = rowCost;
+                    currentValues = rowValues;
                 }
                 count++;                
                 if(count == 2){
-                    costChange = rowCost - currentCost;
-                    percentageChange = costChange / currentCost * 100;
+                    importValues = rowValues;
+                    //costChange = rowValues.Retail - currentValues.Retail;
+                    //percentageChange = costChange / currentCost * 100;
 
-                    if(currentCost == rowCost){
+                    if(currentValues.Retail == rowValues.Retail){
                         // same
                         if(Unchanged != null){
-                            Unchanged(new RecordDetail(), new RecordDetail());
+                            Unchanged(currentValues, importValues);
                         }
                     } else {
                         if(Changed != null){
-                            Changed(new RecordDetail(), new RecordDetail());
+                            Changed(currentValues, rowValues);
                         }
                     }
 
@@ -82,7 +83,7 @@ namespace Api.Util{
                 }
             }
             if(count == 1){
-                if(currentImport == 1){
+                if(rowValues.ImportId == currentId){
                     // deleted
                     if(Deleted != null){
                         Deleted(new RecordDetail(), new RecordDetail());
