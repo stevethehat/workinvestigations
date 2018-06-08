@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Api.Util {
 
@@ -12,17 +13,25 @@ namespace Api.Util {
     public class Scanner {
         public AppDb Db { get; private set; }
         public string CompareField { get; private set; }
+        public int CurrentId { get; private set; }
+        public int ImportId { get; private set; }
+        private Queue<RecordDetail> records { get; set; }
+
         private int CompareFieldIndex { get; set; }
-        public Func<RecordDetail, RecordDetail, bool> Added { private get; set; }
-        public Func<RecordDetail, RecordDetail, bool> Deleted { private get; set; }
+        public Func<RecordDetail, bool> Added { private get; set; }
+        public Func<RecordDetail, bool> Deleted { private get; set; }
         public Func<RecordDetail, RecordDetail, bool> Unchanged { private get; set; }
         public Func<RecordDetail, RecordDetail, bool> Changed { private get; set; }
-        public Scanner(AppDb db, string compareField) {
+
+
+        public Scanner(AppDb db, int currentId, int importId, string compareField) {
             Db = db;
             CompareField = compareField;
-
+            CurrentId = currentId;
+            ImportId = importId;
         }
 
+        /*
         protected void ProcessAddedDeleted(int currentId, int importId, int pass, RecordDetail currentValues, RecordDetail rowValues) {
             if (currentValues.ImportId == importId) {
                 // this must have been added
@@ -50,16 +59,64 @@ namespace Api.Util {
             }
         }
 
-        public void Scan(int currentId, int importId) {
-            int pass = 0;
+        */
+        private void ProcessChange(RecordDetail firstItem, RecordDetail secondItem){
+            if (firstItem.Retail != secondItem.Retail) {
+                if (Changed != null) {
+                    Changed(firstItem, secondItem);
+                }
+            } else {
+                if (Unchanged != null) {
+                    Unchanged(firstItem, secondItem);
+                }
+            }
+        }
+
+        private void ProcessSingleItem(RecordDetail item) {
+            if(item.ImportId == CurrentId) {
+                if(Deleted != null) {
+                    Deleted(item);
+                }
+            }
+            if(item.ImportId == ImportId) {
+                if(Added != null) {
+                    Added(item);
+                }
+            }
+        }
+
+        private void ProcessQueue() {
+            RecordDetail firstItem;
+            RecordDetail secondItem;
+
+            if (records.Count == 0) {
+                return;
+            }
+
+            firstItem = records.Dequeue();
+
+            if(records.Count == 0) {
+                ProcessSingleItem(firstItem);
+            } else {
+                secondItem = records.Peek();
+                if(firstItem.PartNumber == secondItem.PartNumber) {
+                    // happy days :)  we have a matching pair!!
+                    ProcessChange(firstItem, secondItem);
+                    records.Dequeue();
+                } else {
+                    ProcessSingleItem(firstItem);
+                }
+            }
+        }
+
+        public void Scan() {
+            records = new Queue<RecordDetail>();
 
             RecordDetail rowValues = new RecordDetail();
-            RecordDetail currentValues = new RecordDetail();
-            RecordDetail importValues;
 
             var command = Db.Connection.CreateCommand();
 
-            command.CommandText = $"select * from prices where import_id in ({currentId}, {importId}) order by partnumber, import_id;";
+            command.CommandText = $"select * from prices where import_id in ({CurrentId}, {ImportId}) order by partnumber, import_id;";
             System.Data.IDataReader reader = command.ExecuteReader();
 
             while (reader.Read()) {
@@ -71,45 +128,16 @@ namespace Api.Util {
                     Retail = reader.GetFloat(reader.GetOrdinal("retail_price"))
                 };
 
-                if (rowValues.PartNumber != currentValues.PartNumber) {
-                    // something has been either added or deleted
-                    if (pass == 1) {
-                        ProcessAddedDeleted(currentId, importId, pass, currentValues, rowValues);
-
-                        // reset everything
-                        pass = 0;
-                        currentValues = new RecordDetail();
-                        rowValues = new RecordDetail();
-                    }
-                    currentValues = rowValues;
-                    rowValues = new RecordDetail();
-                }
-                pass++;
-                if (pass == 2) {
-                    // we have 2 matching part numbers
-                    importValues = rowValues;
-
-                    if (currentValues.Retail == rowValues.Retail) {
-                        // same
-                        if (Unchanged != null) {
-                            Unchanged(currentValues, importValues);
-                        }
-                    } else {
-                        if (Changed != null) {
-                            Changed(currentValues, rowValues);
-                        }
-                    }
-
-                    // reset everything
-                    pass = 0;
-                    currentValues = new RecordDetail();
-                    rowValues = new RecordDetail();
+                records.Enqueue(rowValues);
+                if(records.Count == 2) {
+                    ProcessQueue();
                 }
             }
-            ProcessAddedDeleted(currentId, importId, pass, currentValues, rowValues);
+            ProcessQueue();
             reader.Close();
         }
 
+        /*
         public void _Scan(int currentId, int importId) {
             int pass = 0;
 
@@ -169,5 +197,6 @@ namespace Api.Util {
             ProcessAddedDeleted(currentId, importId, pass, currentValues, rowValues);
             reader.Close();
         }
+        */
     }
 }
