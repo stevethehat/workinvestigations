@@ -10,8 +10,10 @@ namespace Api.Util {
         public int ImportId { get; private set; }
 
         public int Down { get; private set; }
+        public float MaxPercentageDown { get; private set; }
         public int Same { get; private set; }
         public int Up { get; private set; }
+        public float MaxPercentageUp { get; private set; }
 
 
         public RetailChangeSummary(AppDb db, int currentId, int importId, string compareField) {
@@ -25,11 +27,20 @@ namespace Api.Util {
             Scanner scanner = new Scanner(Db, CurrentId, ImportId, CompareField);
 
             scanner.Changed = (current, import) => {
-                if(current.Retail < import.Retail) {
+                float change = import.Retail - current.Retail;
+                float percentageChange = change / current.Retail * 100;
+
+                if (current.Retail < import.Retail) {
                     Up++;
+                    if(percentageChange > MaxPercentageUp) {
+                        MaxPercentageUp = percentageChange;
+                    }
                 }
                 if (current.Retail > import.Retail) {
                     Down++;
+                    if (percentageChange < MaxPercentageUp) {
+                        MaxPercentageDown = percentageChange;
+                    }
                 }
                 return false;
             };
@@ -39,6 +50,13 @@ namespace Api.Util {
             };
 
             scanner.Scan();
+        }
+
+        public void GetPercentageChangeBands() {
+            GetSummary();
+
+            float UpBand = MaxPercentageUp / 10;
+            float DownBand = MaxPercentageDown / 10;
         }
 
 

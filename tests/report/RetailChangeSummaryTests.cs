@@ -50,10 +50,39 @@ namespace Tests
             Test(0, 0, 1);
         }
 
+        [Fact]
+        [Trait("Category", "RetailChange")]
+        public void Up50pc() {
+            ClearDatabase();
+            AddPair("Cheaper", 10, 15);
+
+            Test(1, 0, 0);
+        }
+
+        [Fact]
+        [Trait("Category", "RetailChange")]
+        public void Down50pc() {
+            ClearDatabase();
+            AddPair("Cheaper", 10, 5);
+
+            Test(0, 0, 1);
+        }
+
+        [Fact]
+        [Trait("Category", "RetailChange")]
+        public void Down50Bands() {
+            ClearDatabase();
+            AddPair("Cheaper", 10, 5);
+
+            Test(0, 0, 1);
+        }
+
+
         private void Test(int up, int same, int down) {
             RetailChangeSummary retailChangeSummary = new RetailChangeSummary(databaseFixture.Db, 1, 2, "retail");
 
             retailChangeSummary.GetSummary();
+            retailChangeSummary.GetPercentageChangeBands();
 
             Assert.Equal(retailChangeSummary.Down, down);
             Assert.Equal(retailChangeSummary.Same, same);
