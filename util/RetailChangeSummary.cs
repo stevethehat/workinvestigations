@@ -58,12 +58,12 @@ namespace Api.Util
                         MaxPercentageDown = percentageChange;
                     }
                 }
-                return false;
+                return true;
             };
             scanner.Unchanged = (current, import) =>
             {
                 Same++;
-                return false;
+                return true;
             };
 
             scanner.Scan();
