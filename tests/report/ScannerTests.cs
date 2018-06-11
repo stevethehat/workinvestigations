@@ -1,11 +1,7 @@
 using System;
-using System.Net.Http;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-
-using Dapper;
 
 using Xunit;
+using Xunit.Abstractions;
 
 using Api.Util;
 
@@ -18,9 +14,12 @@ namespace Tests
         private int unchangedCount = 0;
         private int addedCount = 0;
         private int deletedCount = 0;
+        private ITestOutputHelper output;
 
-        public ScannerTests(DatabaseFixture df){
-            databaseFixture = df;
+        public ScannerTests(DatabaseFixture df,ITestOutputHelper output){
+            _databaseFixture = df;
+            _output = output;
+            _output.WriteLine("STARTING UP!!!");
         }
 
         [Fact]
@@ -28,7 +27,7 @@ namespace Tests
         public void EmptyTable()
         {
             ClearDatabase();
-            Scanner scanner = new Scanner(databaseFixture.Db, 1, 2, "retail");
+            Scanner scanner = new Scanner(_databaseFixture.Db, 1, 2, "retail");
             scanner.Scan();
         }
 
@@ -168,7 +167,7 @@ namespace Tests
         }
 
         private void TestCounts(int changed, int unchanged, int added, int deleted) {
-            Scanner scanner = new Scanner(databaseFixture.Db, 1, 2, "retail");
+            Scanner scanner = new Scanner(_databaseFixture.Db, 1, 2, "retail");
             SetupWatchers(scanner);
             scanner.Scan();
 
