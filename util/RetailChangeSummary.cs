@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Api.Util {
-    public class RetailChangeSummary {
+namespace Api.Util
+{
+    public class RetailChangeSummary
+    {
         public AppDb Db { get; private set; }
         public string CompareField { get; private set; }
         public int CurrentId { get; private set; }
         public int ImportId { get; private set; }
+
+        private Scanner scanner { get; set; }
 
         public int Down { get; private set; }
         public float MaxPercentageDown { get; private set; }
@@ -15,36 +19,49 @@ namespace Api.Util {
         public int Up { get; private set; }
         public float MaxPercentageUp { get; private set; }
 
-
-        public RetailChangeSummary(AppDb db, int currentId, int importId, string compareField) {
+        public BandChanges UpChanges { get; private set; }
+        public BandChanges DownChanges { get; private set; }
+        public RetailChangeSummary(AppDb db, int currentId, int importId, string compareField)
+        {
             Db = db;
             CompareField = compareField;
             CurrentId = currentId;
             ImportId = importId;
         }
 
-        public void GetSummary() {
-            Scanner scanner = new Scanner(Db, CurrentId, ImportId, CompareField);
+        public void Scan()
+        {
+            Down = 0;
+            Same = 0;
+            Up = 0;
 
-            scanner.Changed = (current, import) => {
+            scanner = new Scanner(Db, CurrentId, ImportId, CompareField);
+
+            scanner.Changed = (current, import) =>
+            {
                 float change = import.Retail - current.Retail;
                 float percentageChange = change / current.Retail * 100;
 
-                if (current.Retail < import.Retail) {
+                if (current.Retail < import.Retail)
+                {
                     Up++;
-                    if(percentageChange > MaxPercentageUp) {
+                    if (percentageChange > MaxPercentageUp)
+                    {
                         MaxPercentageUp = percentageChange;
                     }
                 }
-                if (current.Retail > import.Retail) {
+                if (current.Retail > import.Retail)
+                {
                     Down++;
-                    if (percentageChange < MaxPercentageUp) {
+                    if (percentageChange < MaxPercentageUp)
+                    {
                         MaxPercentageDown = percentageChange;
                     }
                 }
                 return false;
             };
-            scanner.Unchanged = (current, import) => {
+            scanner.Unchanged = (current, import) =>
+            {
                 Same++;
                 return false;
             };
@@ -52,13 +69,13 @@ namespace Api.Util {
             scanner.Scan();
         }
 
-        public void GetPercentageChangeBands() {
-            GetSummary();
+        public void GetPercentageChangeBands()
+        {
+            Scan();
 
-            float UpBand = MaxPercentageUp / 10;
-            float DownBand = MaxPercentageDown / 10;
+            UpChanges = new BandChanges(MaxPercentageUp);
+            DownChanges = new BandChanges(MaxPercentageDown);
+            //scanner.Scan();
         }
-
-
     }
 }

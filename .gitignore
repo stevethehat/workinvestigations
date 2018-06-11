@@ -1,1 +1,10 @@
 tests/obj/
+api/obj/
+filestest/obj/Debug/netcoreapp2.0/filestest.AssemblyInfo.cs
+tests/bin/Debug/netcoreapp2.0/api.dll
+tests/bin/
+util/bin/
+util/obj/
+filestest/obj/
+api/bin/Debug/netcoreapp2.0/api.deps.json
+api/bin/
