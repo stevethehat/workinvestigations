@@ -20,25 +20,33 @@ namespace Tests {
         {
             ClearDatabase();
             AddPair("Test 1", 10, 15);
-            AddPair("Test 1", 10, 12);
+            AddPair("Test 2", 10, 12);
+            AddPair("Test 3", 10, 7);
 
             RetailChangeSummary summary = new RetailChangeSummary(_databaseFixture.Db, 1, 2, "retail");
             summary.Scan();
-            BandChanges bands = new BandChanges(summary.MaxPercentageUp);
+            BandChanges bandsUp = new BandChanges(summary.MaxPercentageUp);
+            BandChanges bandsDown = new BandChanges(summary.MaxPercentageDown);
             Scanner scanner = new Scanner(_databaseFixture.Db, 1, 2, "retail");
             scanner.Changed = (current, import) =>
             {
                 float change = import.Retail - current.Retail;
                 float percentageChange = change / current.Retail * 100;
 
-                bands.Add(percentageChange);
+                if(percentageChange > 0) {
+                    bandsUp.Add(percentageChange);
+                }
+                else
+                {
+                    bandsDown.Add(percentageChange);
+                }
                 return true;
             };
             scanner.Scan();
 
             
-            Assert.Equal(bands.Bands.Length, 10);
-            Assert.Equal(bands.BandRange, 50);
+            Assert.Equal(bandsUp.Bands.Length, 10);
+            Assert.Equal(bandsUp.BandRange, 5);
         }
 
         [Fact]
@@ -54,9 +62,17 @@ namespace Tests {
             bands.Add(50f);
             bands.Add(100f);
 
-            Assert.Equal(bands.Bands.Length, 3);
+            Assert.Equal(bands.Bands.Length, 10);
             Assert.Equal(bands.BandRange, 10f);
-            Assert.Equal(bands.Bands[1], 1);
+            Assert.Equal(bands.Bands[0], 2);
+        }
+
+        [Fact]
+        [Trait("Category", "Bands")]
+        public void Random()
+        {
+            int[] values = new int[10];
+
         }
     }
 }
