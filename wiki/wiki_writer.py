@@ -6,20 +6,9 @@ from mwclient import Site
 import git
 
 class WikiWriter:
-    def __init__(self, links, extensionLinks, site = None):
-        if site != None:
-            self.site = site
-        else:
-            print "Connecting to the Zen Logic wiki..."        
-            self.site = Site('wiki.zenlogic.co.uk', path='/')
+    def __init__(self, site = None):
+        self.site = site
 
-            # log in
-            print "Logging in..."
-            self.site.login('Paul', 'il0ved0cumentati0n')
-
-        self.controls = {}
-        self.links = links
-        self.extensionLinks = extensionLinks
         self.load()
 
     def load(self):
@@ -32,7 +21,11 @@ class WikiWriter:
         # -------------------------------------------------------------------
         # concatenate all the wiki lines into a string, separated by newlines
         # -------------------------------------------------------------------
-        wiki_text = '\n'.join(self.wiki_lines)
+        print self.wiki_lines
+        wiki_text = "\n".join(self.wiki_lines)
+        #wiki_text = "helo a generated page"
+
+        print wiki_text
 
         # -------------------------------------------------------------------
         # write wiki text to a file named <controlname>.txt
@@ -57,152 +50,17 @@ class WikiWriter:
 
         #self.write_tohtmlfile(wiki_text, "control_%s.html" % control_name)
         
-    def create_link_if_found(self, text):
-        pre_text = text
-
-        """
-        if text == "loadView":
-            print "we have a loadView"
-        """
-
-        for link in self.links:
-            if link["type"] == "dslfile":
-                try:
-                    search_for = '"%s"' % link["name"]
-                    replace_with = '"[[%s|%s]]"' % (link["link"], link["name"])
-                    text = text.replace(search_for, replace_with)
-
-                    search_for = '"%s?' % link["name"]
-                    replace_with = '"[[%s|%s]]?' % (link["link"], link["name"])
-                    text = text.replace(search_for, replace_with)
-                except:
-                    pass
-
-            if link["type"] == "action":
-                search_for = "%s" % link["name"]
-                replace_with = "[[%s|%s]]" % (link["link"], link["name"])
-                text = text.replace(search_for, replace_with)
-
-                search_for = '"%s"' % link["name"]
-                replace_with = "[[%s|%s]]" % (link["link"], link["name"])
-                text = text.replace(search_for, replace_with)
-
-            if link["type"] == "control":
-                search_for = "%s" % link["name"]
-                replace_with = "[[%s|%s]]" % (link["link"], link["name"])
-                text = text.replace(search_for, replace_with)
-
-                # search for the link name in quotes (e.g. '"Button"') and replace it with a page link
-                search_for = '"%s"' % link["name"]
-                replace_with = '"[[%s|%s]]"' % (link["link"], link["name"])
-                text = text.replace(search_for, replace_with)
-
-                # search for the link name surrounded by spaces (e.g. ' Button ') and replace it with a page link
-                search_for = " %s " % link["name"]
-                replace_with = " [[%s|%s]] " % (link["link"], link["name"])
-                text = text.replace(search_for, replace_with)
-
-                search_for = " %s." % link["name"]
-                replace_with = " [[%s|%s]]." % (link["link"], link["name"])
-                text = text.replace(search_for, replace_with)
-
-                search_for = " %s," % link["name"]
-                replace_with = " [[%s|%s]]," % (link["link"], link["name"])
-                text = text.replace(search_for, replace_with)
-
-                search_for = "%s," % link["name"]
-                replace_with = "[[%s|%s]]," % (link["link"], link["name"])
-                text = text.replace(search_for, replace_with)
-
-                search_for = " %s" % link["name"]
-                replace_with = " [[%s|%s]]," % (link["link"], link["name"])
-                text = text.replace(search_for, replace_with)
-
-            """
-            if link["type"] == "user":
-                search_for = "%s" % link["name"]
-                replace_with = '<a href="%s">%s</a>' % (link["link"], link["name"])
-                text = text.replace(search_for, replace_with)
-            """
-            
-            if link["type"] == "param":
-                # search for the link name in quotes (e.g. '"Button"') and replace it with a page link
-
-                search_for = '"%s"' % link["name"]
-                replace_with = '"[[%s|%s]]"' % (link["link"], link["name"])
-                text = text.replace(search_for, replace_with)
-            
-            if text != pre_text:
-                return text
-            
-        return text
-
-    def create_quoted_link_if_found(self, text):
-        pre_text = text
-
-        for link in self.links:
-            if link["type"] == "dslfile":
-                search_for = '"%s"' % link["name"]
-                replace_with = '"[[%s|%s]]"' % (link["link"], link["name"])
-                text = text.replace(search_for, replace_with)
-
-                search_for = '"%s?' % link["name"]
-                replace_with = '"[[%s|%s]]?' % (link["link"], link["name"])
-                text = text.replace(search_for, replace_with)
-
-            if link["type"] == "action":
-                search_for = '"%s"' % link["name"]
-                replace_with = "[[%s|%s]]" % (link["link"], link["name"])
-                text = text.replace(search_for, replace_with)
-
-            if link["type"] == "control":
-                # search for the link name in quotes (e.g. '"Button"') and replace it with a page link
-                search_for = '"%s"' % link["name"]
-                replace_with = '"[[%s|%s]]"' % (link["link"], link["name"])
-                text = text.replace(search_for, replace_with)
-
-            if link["type"] == "param":
-                # search for the link name in quotes (e.g. '"Button"') and replace it with a page link
-                search_for = '"%s"' % link["name"]
-                replace_with = '"[[%s|%s]]"' % (link["link"], link["name"])
-                text = text.replace(search_for, replace_with)
-            
-            """
-            if text != pre_text:
-                return text
-            """
-
-        return text
-
-    def write_page_header(self, parent, source_file = None, source_documentation = None):
+    def write_page_header(self, parent = None, source_file = None, source_documentation = None):
         # -------------------------------------------------------------------
         # create the auto-generated page warning
         # -------------------------------------------------------------------
         self.wiki_lines.append("''[This page was auto-generated by a script.  If you edit this page manually, your changes will be overwritten the next time the page is regenerated.]''")
-        self.write_documentation_info(source_file, source_documentation)
         # -------------------------------------------------------------------
         # create the link back to the 'ZEN hierarchy' page
         # -------------------------------------------------------------------
         self.wiki_lines.append("")
-        self.wiki_lines.append(parent)
 
-        
-    def write_documentation_info(self, source_file, source_documentation):
-        if source_file != None:
-            writer = WikiWriter(self.links, self.extensionLinks, site = self.site)
-            writer.start_page()
-            writer.write_dsl_file("%s" % source_file)
-            writer.update_wiki_page(source_file)
-
-            self.wiki_lines.append("")
-            self.wiki_lines.append("The source for this documentation can be found in '[[%s]]'." % source_file)
-            
-
-        if source_documentation != None:
-            self.wiki_lines.append("See [[%s]] for info on how to update this documentation." % source_documentation)
-
-        pass
-
+      
     def create_table_header(self, cols):
         self.wiki_lines.append('{| class="wikitable"')
 
@@ -234,66 +92,6 @@ class WikiWriter:
             self.wiki_lines.append("%s" % self.create_link_if_found(paragraphs))
             self.wiki_lines.append("")
             
-    def write_dsl_examples(self, doc, doc_folder, indent = "=="):
-        # -------------------------------------------------------------------
-        # create each of the DSL examples (if any)
-        # -------------------------------------------------------------------
-        if 'dslExamples' in doc:
-            self.wiki_lines.append("")
-            self.wiki_lines.append("%s DSL Examples %s" % (indent, indent))
-            for example in doc['dslExamples']:
-
-                if 'description' in example:
-                    self.write_paragraphs(example['description'])
-
-                # read and output the example code block
-                if 'exampleFile' in example:
-                    self.process_example(os.path.join(doc_folder, example['exampleFile']))
-
-    def process_example(self, file_name):
-        with open(file_name, "r") as example_file:
-            # indent each line to create a wiki code block
-            for line in example_file:
-                self.wiki_lines.append(" %s" % self.create_quoted_link_if_found(line.rstrip()))
-
-    def write_dsl_file(self, file_name):
-        try:
-            with open(file_name, "r") as example_file:
-                dsl_json = json.loads(example_file.read())
-                #self.process_dsl_json(dsl_json)
-
-                # indent each line to create a wiki code block
-                for line in json.dumps(dsl_json, indent = 2).split("\n"):
-                    self.wiki_lines.append(" %s" % self.create_quoted_link_if_found(line.rstrip()))
-        except:
-            pass
-
-    def process_dsl_json(self, dsl_json):
-        if type(dsl_json) == list:
-            self.process_elements_in_list(dsl_json)
-
-        if type(dsl_json) == dict:                
-            self.process_elements_in_dict(dsl_json)
-
-
-    def process_elements_in_dict(self, dsl_json):
-        for child_element_name in dsl_json:
-            child_element = dsl_json[child_element_name]
-            self.process_dsl_json(dsl_json)
-
-    def process_elements_in_list(self, dsl_json):
-        for child_element in dsl_json:
-            self.process_dsl_json(child_element)
-
-
-
-
-    def write_tohtmlfile(self, text, filepath):
-        # create the example description paragraphs
-        html = parse(text)
-        with io.open(filepath, mode="wt", encoding="utf-8") as file:
-            file.write(html)
-
     def write_table(self, columns, control, key, table_writer, row_writer, sort_key = "name"):
         self.create_table_header(columns)
         
@@ -302,10 +100,11 @@ class WikiWriter:
         # end the table
         self.create_table_footer()
 
-    def write_git_commit_table(self, header, repo_root, file_name, indent = "==", branch = "3.1"):
+    def write_git_commit_table(self, header, repo_root, file_name, indent = "==", branch = "master", max = -1):
         repo = git.Repo(repo_root)
         commits = list(repo.iter_commits(branch, paths = "%s" % file_name ))
 
+        commit_count = 0
         if len(commits) > 0:
             self.wiki_lines.append("%s %s %s" % (indent, header, indent))
             self.create_table_header(["Date and Time", "Author", "Message"])
@@ -314,19 +113,19 @@ class WikiWriter:
                 formatted_date = datetime.datetime.fromtimestamp(commit.authored_date).strftime('%a %d %b %Y %H:%M:%S')
                 self.wiki_lines.append("|-")
                 self.wiki_lines.append("| %s" % formatted_date)
-                self.wiki_lines.append("| %s" % self.create_link_if_found(str(commit.author)))
+                self.wiki_lines.append("| %s" % commit.author)
                 self.wiki_lines.append("| %s" % commit.summary)
                 # print commit.summary
+
+                if max != -1 and commit_count > max:
+                    break
+
+                commit_count = commit_count +1
 
             # end the table
             self.create_table_footer()
 
-    def write_git(self, file_name, indent = "==", repo_root = "../"):
-        self.write_git_commit_table("Git Commits", repo_root, file_name, indent)
+    def write_git(self, file_name, indent = "=", repo_root = "../", max = 10):
+        self.write_git_commit_table("Git Commits", repo_root, file_name, indent, max = 10)
 
-        if file_name.startswith("vcode.userportal/app/"):
-            self.write_git_commit_table("Older Git Commits", "../../ZEN/vcode.userportal", file_name, indent, branch = "master")
-        
-        if file_name.startswith("vcode.userportal/zen/"):
-            self.write_git_commit_table("Older Git Commits", "../../ZEN/zen.ui", file_name, indent, branch = "master")
         
