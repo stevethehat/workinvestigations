@@ -10,14 +10,17 @@ namespace Tests
 {
     [Collection("Database Collection")]
 
-    public class RetailChangeSummaryTests : RetailTestBase {
-        public RetailChangeSummaryTests(DatabaseFixture df) {
-            databaseFixture = df;
+    public class RetailChangeSummaryTests : RetailTestBase
+    {
+        public RetailChangeSummaryTests(DatabaseFixture df)
+        {
+            _databaseFixture = df;
         }
 
         [Fact]
         [Trait("Category", "RetailChange")]
-        public void EmptyTable(){
+        public void EmptyTable()
+        {
             ClearDatabase();
 
             Test(0, 0, 0);
@@ -25,7 +28,8 @@ namespace Tests
 
         [Fact]
         [Trait("Category", "RetailChange")]
-        public void Up1() {
+        public void Up1()
+        {
             ClearDatabase();
             AddPair("More Expensive", 10, 20);
 
@@ -34,7 +38,8 @@ namespace Tests
 
         [Fact]
         [Trait("Category", "RetailChange")]
-        public void Same1() {
+        public void Same1()
+        {
             ClearDatabase();
             AddPair("Same", 10, 10);
 
@@ -43,7 +48,8 @@ namespace Tests
 
         [Fact]
         [Trait("Category", "RetailChange")]
-        public void Down1() {
+        public void Down1()
+        {
             ClearDatabase();
             AddPair("Cheaper", 20, 10);
 
@@ -52,7 +58,8 @@ namespace Tests
 
         [Fact]
         [Trait("Category", "RetailChange")]
-        public void Up50pc() {
+        public void Up50pc()
+        {
             ClearDatabase();
             AddPair("Cheaper", 10, 15);
 
@@ -61,7 +68,8 @@ namespace Tests
 
         [Fact]
         [Trait("Category", "RetailChange")]
-        public void Down50pc() {
+        public void Down50pc()
+        {
             ClearDatabase();
             AddPair("Cheaper", 10, 5);
 
@@ -70,24 +78,20 @@ namespace Tests
 
         [Fact]
         [Trait("Category", "RetailChange")]
-        public void Down50Bands() {
+        public void Down50Bands()
+        {
             ClearDatabase();
             AddPair("Cheaper", 10, 5);
 
             Test(0, 0, 1);
         }
 
-        [Fact]
-        [Trait("Category", "RetailChange")]
-        public void Fucked() {
-            var test = 97 / 10;
-            Assert.Equal(test, 9.7);
-        }
 
-        private void Test(int up, int same, int down) {
-            RetailChangeSummary retailChangeSummary = new RetailChangeSummary(databaseFixture.Db, 1, 2, "retail");
+        private void Test(int up, int same, int down)
+        {
+            RetailChangeSummary retailChangeSummary = new RetailChangeSummary(_databaseFixture.Db, 1, 2, "retail");
 
-            //retailChangeSummary.GetSummary();
+            retailChangeSummary.Scan();
             retailChangeSummary.GetPercentageChangeBands();
 
             Assert.Equal(retailChangeSummary.Down, down);
