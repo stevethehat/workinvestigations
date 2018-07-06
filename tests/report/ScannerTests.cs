@@ -19,10 +19,12 @@ namespace Tests
         private int addedCount = 0;
         private int deletedCount = 0;
 
+        /*
         public ScannerTests(DatabaseFixture df){
             databaseFixture = df;
         }
-
+        */
+        
         [Fact]
         [Trait("Category", "Scanner")]
         public void EmptyTable()

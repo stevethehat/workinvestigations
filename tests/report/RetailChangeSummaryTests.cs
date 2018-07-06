@@ -77,11 +77,17 @@ namespace Tests
             Test(0, 0, 1);
         }
 
+        [Fact]
+        [Trait("Category", "RetailChange")]
+        public void Fucked() {
+            var test = 97 / 10;
+            Assert.Equal(test, 9.7);
+        }
 
         private void Test(int up, int same, int down) {
             RetailChangeSummary retailChangeSummary = new RetailChangeSummary(databaseFixture.Db, 1, 2, "retail");
 
-            retailChangeSummary.GetSummary();
+            //retailChangeSummary.GetSummary();
             retailChangeSummary.GetPercentageChangeBands();
 
             Assert.Equal(retailChangeSummary.Down, down);
