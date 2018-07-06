@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
+//using Xunit;
+
 namespace Api.Util {
     public class RetailChangeSummary {
         public AppDb Db { get; private set; }
@@ -58,7 +60,7 @@ namespace Api.Util {
             float UpBand = MaxPercentageUp / 10;
             float DownBand = MaxPercentageDown / 10;
         }
-
+        
 
     }
 }
