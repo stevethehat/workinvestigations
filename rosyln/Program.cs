@@ -86,11 +86,12 @@ namespace Rosyln
             }
             //SyntaxTree tree = SyntaxTree.ParseCompilationUnit(code);
             */
-            var classNode = Class.FindClass(root);
+            var classNode = ClassInfo.FindClass(root);
 
             Console.WriteLine(classNode);
             Console.WriteLine(classNode.Name());
             Console.WriteLine(classNode.Comment());
+            Console.WriteLine(classNode.Document());
             
             Console.WriteLine("Done");
         }
