@@ -4,7 +4,7 @@ using MySql.Data.MySqlClient;
 
 using System.Data.Common;
 
-namespace Api.Util{
+namespace Api.Util2{
     public class AppDb: IDisposable{
         public DbConnection Connection;
 
