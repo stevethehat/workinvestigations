@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Newtonsoft.Json;
 
 
 namespace Rosyln{
@@ -41,7 +40,7 @@ namespace Rosyln{
             return new ClassInfo(classNode);
         }
 
-        public string Document(){
+        public object Definition(){
             var methods = Methods();
             var fields = Fields();
             var definition = new {
@@ -50,7 +49,7 @@ namespace Rosyln{
                 fields = fields
             };
 
-            return JsonConvert.SerializeObject(definition);
+            return definition;
         }
 
         protected List<MethodInfo> Methods(){
