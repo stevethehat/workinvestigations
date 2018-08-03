@@ -38,13 +38,15 @@ class MoneyFlow{
             "tax": new Box(this.canvas, { x: this.hSlots[0], y: 100, width: 300, height: height, lineColor: "black", lineWidth: 1, title: "Tax" }),
             "netProfit": new Box(this.canvas, { x: this.hSlots[0], y: 0, width: 300, height: height, lineColor: "black", lineWidth: 1, title: "Net Profit" })
         }
-        areas["capital"].join(areas["fixedAssets"], "bl", "tl");
-        areas["fixedAssets"].join(areas["sales"], "bc", "tc");
-        areas["sales"].join(areas["invoicing"], "bl", "r");
-        areas["invoicing"].join(areas["turnover"], "l", "br");
-        areas["turnover"].join(areas["grossProfit"], "tc", "bc");
-        areas["grossProfit"].join(areas["expenses"], "tc", "bc");
-        areas["expenses"].join(areas["operatingProfit"], "tc", "bc");
+
+        areas["capital"].join(areas["fixedAssets"], "bl", "tl")
+        .join(areas["sales"], "bc", "tc")
+        .join(areas["invoicing"], "bl", "r")
+        .join(areas["turnover"], "l", "br")
+        .join(areas["grossProfit"], "tc", "bc")
+        .join(areas["expenses"], "tc", "bc")
+        .join(areas["operatingProfit"], "tc", "bc");
+
         
     }
 }

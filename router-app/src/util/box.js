@@ -65,6 +65,8 @@ class Box{
 
         var fromDot = new Dot(this.canvas, from);
         var toDot = new Dot(this.canvas, to);
+
+        return box;
     }
 }
 
