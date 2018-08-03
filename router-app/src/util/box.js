@@ -1,4 +1,5 @@
 import Line from "../util/line"
+import Dot from "./dot";
 
 class Box{
     constructor(canvas, definition){
@@ -25,7 +26,6 @@ class Box{
     }
 
     dot(position){
-        const context = this.canvas.context;
         const anchor = this.anchors[position];
 
         context.beginPath();
@@ -63,8 +63,8 @@ class Box{
         const to = box.anchors[toAnchor];
         var line = new Line(this.canvas, from, to);
 
-        this.dot(fromAnchor);
-        box.dot(toAnchor);
+        var fromDot = new Dot(this.canvas, from);
+        var toDot = new Dot(this.canvas, to);
     }
 }
 
