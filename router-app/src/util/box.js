@@ -16,9 +16,9 @@ class Box{
             "tc": { x:definition.x + (definition.width * 0.5) , y:definition.y },
             "tr": { x:definition.x + (definition.width * 0.75) , y:definition.y },
             "r": { x:definition.x + definition.width , y:definition.y + (definition.height / 2) }, 
-            "br": { x:definition.x + (definition.width * 0.25) , y:definition.y + definition.height },
+            "br": { x:definition.x + (definition.width * 0.75) , y:definition.y + definition.height },
             "bc": { x:definition.x + (definition.width * 0.5) , y:definition.y + definition.height },
-            "bl": { x:definition.x + (definition.width * 0.75) , y:definition.y + definition.height }
+            "bl": { x:definition.x + (definition.width * 0.25) , y:definition.y + definition.height }
         }
     }
 
@@ -27,7 +27,7 @@ class Box{
         const anchor = this.anchors[position];
 
         context.beginPath();
-        context.arc(anchor.x, anchor.y, 1, 0, 2 * Math.PI, true);
+        context.arc(anchor.x, anchor.y, 2, 0, 2 * Math.PI, true);
         context.stroke();
     }
 
@@ -45,6 +45,7 @@ class Box{
         context.font = "16pt Arial";
         context.fillText(definition.title, definition.x + 4, definition.y + 24);
 
+        /*
         this.dot("l");
         this.dot("tl");
         this.dot("tc");
@@ -53,6 +54,20 @@ class Box{
         this.dot("br");
         this.dot("bc");
         this.dot("bl");
+        */
+    }
+    join(box, fromAnchor, toAnchor){
+        const from = this.anchors[fromAnchor];
+        const to = box.anchors[toAnchor];
+
+        const context = this.canvas.context;
+        context.beginPath();
+        context.moveTo(from.x, from.y);
+        context.lineTo(to.x, to.y);
+        context.stroke();
+
+        this.dot(fromAnchor);
+        box.dot(toAnchor);
     }
 }
 
