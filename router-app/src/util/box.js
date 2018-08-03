@@ -1,3 +1,5 @@
+import Line from "../util/line"
+
 class Box{
     constructor(canvas, definition){
         this.canvas = canvas;
@@ -59,12 +61,7 @@ class Box{
     join(box, fromAnchor, toAnchor){
         const from = this.anchors[fromAnchor];
         const to = box.anchors[toAnchor];
-
-        const context = this.canvas.context;
-        context.beginPath();
-        context.moveTo(from.x, from.y);
-        context.lineTo(to.x, to.y);
-        context.stroke();
+        var line = new Line(this.canvas, from, to);
 
         this.dot(fromAnchor);
         box.dot(toAnchor);
