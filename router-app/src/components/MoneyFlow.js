@@ -22,6 +22,19 @@ class MoneyFlow{
         }
     }
 
+    setupVSlots(count, height){
+        var totalHeight = (count * height) + ((count -1) * 20);
+        var margins = (this.canvas.displayCanvas.height - totalheight) / 2;
+
+        this.vSlots = [];
+
+        var y = margins;
+        for(var i = 0; i < count; i++){
+            this.vSlots[i] = y;
+            y = y + height + 20;
+        }
+    }
+
     setupAreas(){
         const height = 80;
         var areas = this.areas;
