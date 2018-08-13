@@ -6,20 +6,21 @@ import Dot from '@/util/canvas/dot';
 export interface IBoxDefinition {
     x: number;
     y: number;
-    Width: number;
-    Height: number;
-    LineWidth: number;
-    LineColor: string;
-    Title: string;
+    width: number;
+    height: number;
+    lineWidth: number;
+    lineColor: string;
+    title: string;
 }
 
 export class Box {
-    protected Canvas: Canvas;
-    protected Anchors: { [id: string]: IPoint};
-    protected Definition!: IBoxDefinition;
-    constructor(canvas: Canvas, definition: IBoxDefinition) {
-        this.Canvas = canvas;
-        this.Anchors = {};
+    //protected canvas: Canvas;
+    protected anchors: { [id: string]: IPoint };
+    protected definition!: IBoxDefinition;
+
+    constructor(readonly canvas: Canvas, definition: IBoxDefinition) {
+        //this.canvas = canvas;
+        this.anchors = {};
         if (definition) {
             this.draw(definition);
         }
@@ -27,40 +28,40 @@ export class Box {
     }
 
     public setupAnchors() {
-        const definition = this.Definition;
-        this.Anchors = {
-            l: { x: definition.x , y: definition.y + (definition.Height / 2)},
-            tl: { x: definition.x + (definition.Width * 0.25) , y: definition.y },
-            tc: { x: definition.x + (definition.Width * 0.5) , y: definition.y },
-            tr: { x: definition.x + (definition.Width * 0.75) , y: definition.y },
-            r: { x: definition.x + definition.Width , y: definition.y + (definition.Height / 2) },
-            br: { x: definition.x + (definition.Width * 0.75) , y: definition.y + definition.Height },
-            bc: { x: definition.x + (definition.Width * 0.5) , y: definition.y + definition.Height },
-            bl: { x: definition.x + (definition.Width * 0.25) , y: definition.y + definition.Height },
+        const definition: IBoxDefinition = this.definition;
+        this.anchors = {
+            l: { x: definition.x , y: definition.y + (definition.height / 2)},
+            tl: { x: definition.x + (definition.width * 0.25) , y: definition.y },
+            tc: { x: definition.x + (definition.width * 0.5) , y: definition.y },
+            tr: { x: definition.x + (definition.width * 0.75) , y: definition.y },
+            r: { x: definition.x + definition.width , y: definition.y + (definition.height / 2) },
+            br: { x: definition.x + (definition.width * 0.75) , y: definition.y + definition.height },
+            bc: { x: definition.x + (definition.width * 0.5) , y: definition.y + definition.height },
+            bl: { x: definition.x + (definition.width * 0.25) , y: definition.y + definition.height },
         };
     }
 
     public dot(position: string) {
-        const anchor: IPoint = this.Anchors[position];
+        const anchor: IPoint = this.anchors[position];
 
-        this.Canvas.Context.beginPath();
-        this.Canvas.Context.arc(anchor.x, anchor.y, 2, 0, 2 * Math.PI, true);
-        this.Canvas.Context.stroke();
+        this.canvas.context.beginPath();
+        this.canvas.context.arc(anchor.x, anchor.y, 2, 0, 2 * Math.PI, true);
+        this.canvas.context.stroke();
     }
 
     public draw(definition: IBoxDefinition) {
-        this.Definition = definition;
-        const context = this.Canvas.Context;
+        this.definition = definition;
+        const context = this.canvas.context;
 
         this.setupAnchors();
 
-        context.rect(definition.x, definition.y, definition.Width, definition.Height);
-        context.lineWidth = definition.LineWidth;
-        context.strokeStyle = definition.LineColor;
+        context.rect(definition.x, definition.y, definition.width, definition.height);
+        context.lineWidth = definition.lineWidth;
+        context.strokeStyle = definition.lineColor;
         context.stroke();
 
         context.font = '16pt Arial';
-        context.fillText(definition.Title, definition.x + 4, definition.y + 24);
+        context.fillText(definition.title, definition.x + 4, definition.y + 24);
 
         /*
         this.dot("l");
@@ -74,12 +75,12 @@ export class Box {
         */
     }
     public join(box: Box, fromAnchor: string, toAnchor: string) {
-        const from = this.Anchors[fromAnchor];
-        const to = box.Anchors[toAnchor];
-        const line = new Line(this.Canvas, from, to);
+        const from: IPoint = this.anchors[fromAnchor];
+        const to: IPoint = box.anchors[toAnchor];
+        const line: Line = new Line(this.canvas, from, to);
 
-        const fromDot = new Dot(this.Canvas, from);
-        const toDot = new Dot(this.Canvas, to);
+        const fromDot: Dot = new Dot(this.canvas, from);
+        const toDot: Dot = new Dot(this.canvas, to);
 
         return box;
     }

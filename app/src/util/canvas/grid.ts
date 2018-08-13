@@ -1,15 +1,15 @@
 import {Canvas} from '@/util/canvas/canvas';
 
 export default class Grid {
-    public Width: number;
-    public Height: number;
-    public VSlots: number[];
-    public HSlots: number[];
-    protected Canvas: Canvas;
-    protected Vertical: number;
-    protected Horrizontal: number;
-    protected HMargin: number;
-    protected VMargin: number;
+    public width: number;
+    public height: number;
+    public vSlots: number[];
+    public hSlots: number[];
+    protected canvas: Canvas;
+    protected vertical: number;
+    protected horrizontal: number;
+    protected hMargin: number;
+    protected vMargin: number;
 
     constructor(
         canvas: Canvas,
@@ -17,40 +17,40 @@ export default class Grid {
         width: number, height: number,
         hMargin: number, vMargin: number) {
 
-        this.Canvas = canvas;
-        this.Vertical = vertical;
-        this.Horrizontal = horrizontal;
-        this.Width = width;
-        this.Height = height;
-        this.HMargin = hMargin;
-        this.VMargin = vMargin;
-        this.VSlots = [];
-        this.HSlots = [];
+        this.canvas = canvas;
+        this.vertical = vertical;
+        this.horrizontal = horrizontal;
+        this.width = width;
+        this.height = height;
+        this.hMargin = hMargin;
+        this.vMargin = vMargin;
+        this.vSlots = [];
+        this.hSlots = [];
 
         this.setupHSlots();
         this.setupVSlots();
     }
 
     public setupHSlots() {
-        const totalWidth = (this.Horrizontal * this.Width) + ((this.Horrizontal - 2) * this.HMargin);
-        const margins = (this.Canvas.DisplayCanvas.width - totalWidth) / 2;
+        const totalWidth: number = (this.horrizontal * this.width) + ((this.horrizontal - 2) * this.hMargin);
+        const margins: number = (this.canvas.displayCanvas.width - totalWidth) / 2;
 
-        let x = margins;
-        for (let i = 0; i < this.Horrizontal; i++) {
-            this.HSlots[i] = x;
-            x = x + this.Width + this.HMargin;
+        let x: number = margins;
+        for (let i = 0; i < this.horrizontal; i++) {
+            this.hSlots[i] = x;
+            x = x + this.width + this.hMargin;
         }
     }
 
     public setupVSlots() {
         // debugger;
-        const totalHeight = (this.Vertical * this.Height) + ((this.Vertical - 1) * this.VMargin);
-        const margins = (this.Canvas.DisplayCanvas.height - totalHeight) / 2;
+        const totalHeight: number = (this.vertical * this.height) + ((this.vertical - 1) * this.vMargin);
+        const margins: number = (this.canvas.displayCanvas.height - totalHeight) / 2;
 
-        let y = margins;
-        for (let i = 0; i < this.Vertical; i++) {
-            this.VSlots[i] = y;
-            y = y + this.Height + this.VMargin;
+        let y: number = margins;
+        for (let i = 0; i < this.vertical; i++) {
+            this.vSlots[i] = y;
+            y = y + this.height + this.vMargin;
         }
     }
 }

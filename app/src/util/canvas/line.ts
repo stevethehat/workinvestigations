@@ -1,10 +1,10 @@
-import { Canvas, Point } from './canvas';
+import { Canvas, IPoint } from '@/util/canvas/canvas';
 
 export default class Line {
-    protected Canvas: Canvas;
-    constructor(canvas: Canvas, from: Point, to: Point) {
-        this.Canvas = canvas;
-        const context = this.Canvas.Context;
+    protected canvas: Canvas;
+    constructor(canvas: Canvas, from: IPoint, to: IPoint) {
+        this.canvas = canvas;
+        const context = this.canvas.context;
         context.beginPath();
         context.moveTo(from.x, from.y);
         context.lineTo(to.x, to.y);
