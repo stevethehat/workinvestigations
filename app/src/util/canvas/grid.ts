@@ -1,29 +1,15 @@
 import {Canvas} from '@/util/canvas/canvas';
 
 export default class Grid {
-    public width: number;
-    public height: number;
     public vSlots: number[];
     public hSlots: number[];
-    protected canvas: Canvas;
-    protected vertical: number;
-    protected horrizontal: number;
-    protected hMargin: number;
-    protected vMargin: number;
 
     constructor(
-        canvas: Canvas,
-        horrizontal: number, vertical: number,
-        width: number, height: number,
-        hMargin: number, vMargin: number) {
+        readonly canvas: Canvas,
+        readonly horrizontal: number, readonly vertical: number,
+        readonly width: number, readonly height: number,
+        readonly hMargin: number, readonly vMargin: number) {
 
-        this.canvas = canvas;
-        this.vertical = vertical;
-        this.horrizontal = horrizontal;
-        this.width = width;
-        this.height = height;
-        this.hMargin = hMargin;
-        this.vMargin = vMargin;
         this.vSlots = [];
         this.hSlots = [];
 

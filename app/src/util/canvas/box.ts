@@ -14,12 +14,10 @@ export interface IBoxDefinition {
 }
 
 export class Box {
-    //protected canvas: Canvas;
     protected anchors: { [id: string]: IPoint };
     protected definition!: IBoxDefinition;
 
     constructor(readonly canvas: Canvas, definition: IBoxDefinition) {
-        //this.canvas = canvas;
         this.anchors = {};
         if (definition) {
             this.draw(definition);

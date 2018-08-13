@@ -1,10 +1,7 @@
 import {Canvas, IPoint} from '@/util/canvas/canvas';
 
 export default class Dot {
-    protected canvas: Canvas;
-
-    constructor(canvas: Canvas, position: IPoint) {
-        this.canvas = canvas;
+    constructor(readonly canvas: Canvas, position: IPoint) {
         const context = canvas.context;
 
         context.beginPath();
