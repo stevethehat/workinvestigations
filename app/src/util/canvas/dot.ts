@@ -7,6 +7,5 @@ export default class Dot {
         context.beginPath();
         context.arc(position.x, position.y, 2, 0, 2 * Math.PI, true);
         context.stroke();
-
     }
 }

@@ -9,12 +9,17 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
+using Test.Interfaces;
+
 // https://github.com/domaindrivendev/Swashbuckle.AspNetCore
 using Swashbuckle;
 
 
 namespace Api
 {
+    public class MySettings{
+        public string Test { get; set; }
+    }
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -27,12 +32,15 @@ namespace Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOptions();
             services.AddMvc();
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = "My API", Version = "v1" });
             });
+
+            services.AddScoped<ITest1, Test1>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

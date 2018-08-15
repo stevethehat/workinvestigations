@@ -6,10 +6,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 using Dapper;
+using Test.Interfaces;
 
 namespace Async.Controllers
 {
     [Route("endpoints")]
+
+    /// <summary>
+    /// this is a summary in the comment for the class.
+    /// </summary>
     public class TestEndpoints : Controller
     {
         private ILogger<TestEndpoints> _logger {get;set;}
