@@ -8,3 +8,4 @@ util/obj/
 filestest/obj/
 api/bin/Debug/netcoreapp2.0/api.deps.json
 api/bin/
+node_modules
