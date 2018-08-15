@@ -4,6 +4,14 @@ using System.Text;
 
 namespace Api.Util
 {
+    public class BandChanges{
+        public BandChanges(float max){
+
+        }
+        public void Add(float value){
+            
+        }
+    }
     public class RetailChangeSummary
     {
         public AppDb Db { get; private set; }
