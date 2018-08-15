@@ -1,4 +1,4 @@
-import Line from "../util/line"
+import Line from "./line"
 import Dot from "./dot";
 
 class Box{

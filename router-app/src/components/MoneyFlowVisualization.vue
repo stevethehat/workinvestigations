@@ -1,7 +1,5 @@
 <template>
   <div class="moneyFlow">
-    <h1>Test</h1>
-
     <canvas id="displayCanvas"> </canvas>
   </div>
 </template>
