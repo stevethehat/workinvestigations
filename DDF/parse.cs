@@ -12,52 +12,109 @@ namespace DDF{
     }
 
     class BaseElement{
-        public dynamic Properties;
+        public dynamic properties;
         protected Dictionary<string, string> Tokens;
         public BaseElement(){
-            Properties = new ExpandoObject();
+            properties = new ExpandoObject();
             Tokens = new Dictionary<string, string>();
+            Tokens["description"] = @"Description\s+""([^""]+)""";
         }
         public virtual IElementParser Attach(IElementParser child){
             return child;
         }
         public void ParseLine(string line){
             Match match;
-            foreach(KeyValuePair<string, string> token in Tokens){
-                match = Regex.Match(line, token.Value);
-                if(match.Success){
-                    ProcessToken(token.Key, match);
+            line = line.TrimStart();
+            while(line != ""){
+                bool matched = false;
+                foreach(KeyValuePair<string, string> token in Tokens){
+                    match = Regex.Match(line, token.Value);
+                    if(match.Success){
+                        ProcessToken(token.Key, match);
+                        line = line.Substring(match.Groups[0].Value.Length).TrimStart(' ');
+                        Console.WriteLine($"MATCHED = '{match.Groups[0].Value}'");
+                        Console.WriteLine($"NEW LINE = '{line}'");
+                        matched = true;
+                        break;
+                    }
+                }
+                if(!matched){
+                    Console.WriteLine($"NOT MATCHED '{line}'");
+                    //Console.ReadLine();
+                    break;
                 }
             }
         }
+        protected void AddKey(string name, string value){
+            var dictionary = (IDictionary<string, object>)properties;
+
+            if(!dictionary.ContainsKey(name)){
+                dictionary.Add(name, value);
+            }
+        }
         protected virtual void ProcessToken(string name, Match match){
-            //match 
         }
     }
 
     class Structure: BaseElement, IElementParser{
         public Structure(){
-            Properties.Type = "Structure";
-            Properties.Fields = new List<IElementParser>();
-
-            Tokens["name"] = @"^Structure\s+([A-Z]+)";
+            properties.type = "structure";
+            properties.fields = new List<IElementParser>();
+            Tokens["name"] = @"^Structure\s+([A-Z_]+)";
+            Tokens["dbl"] = @"^DBL";
+            Tokens["isam"] = @"^ISAM";
         }
         public override IElementParser Attach(IElementParser child){
-            Properties.Fields.Add(child);
+            properties.fields.Add(child);
             return child;
         }
         protected override void ProcessToken(string name, Match match){
-            Properties.Name = match.Groups[1].Value;
+            properties.name = match.Groups[1].Value;
         }
     }
 
     class Field: BaseElement, IElementParser{
         public Field(): base() {
-            Properties.Type = "Field";
-            Tokens["name"] = @"^Field\s+([A-Z_]+)";
+            properties.type = "field";
+            Tokens["name"] = @"^Field\s+([A-Z_0-9]+)";
+            Tokens["template"] = @"Template\s+([A-Z_]+)";
+            Tokens["fieldtype"] = @"Type\s+([A-Z_]+)";
+            Tokens["size"] = @"Size\s+([0-9]+)";
+            Tokens["dimensions"] = @"Dimensions\s+([0-9]+)";
+            Tokens["precision"] = @"Precision\s+([0-9]+)";
+
+            Tokens["help"] = @"Help\s+""([^""]+)""";
+            Tokens["prompt"] = @"Prompt\s+""([^""]+)""";
+
+            Tokens["odbcname"] = @"ODBC Name\s+([A-Z_]+)";
         }
         protected override void ProcessToken(string name, Match match){
-            Properties.Name = match.Groups[1].Value;
+            switch(name){
+                case "template":
+                    properties.template = match.Groups[1].Value;
+                    break;
+                default:
+                    AddKey(name, match.Groups[1].Value);
+                    break;
+            }
+        }
+    }
+
+    class Key: BaseElement, IElementParser{
+        public Key(): base() {
+            properties.type = "key";
+            Tokens["name"] = @"^Field\s+([A-Z_0-9]+)";
+            Tokens["template"] = @"Template\s+([A-Z_]+)";
+        }
+        protected override void ProcessToken(string name, Match match){
+            switch(name){
+                case "template":
+                    properties.template = match.Groups[1].Value;
+                    break;
+                default:
+                    AddKey(name, match.Groups[1].Value);
+                    break;
+            }
         }
     }
 
@@ -81,6 +138,10 @@ namespace DDF{
                             break;
                         case var l when Regex.Match(line, @"^Field\s+([A-Za-z0-9_]+)").Success:
                             element = structure.Attach(new Field());
+                            element.ParseLine(l);
+                            break;
+                        case var l when Regex.Match(line, @"^Key\s+([A-Za-z0-9_]+)").Success:
+                            element = structure.Attach(new Key());
                             element.ParseLine(l);
                             break;
                         default:
