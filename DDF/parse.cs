@@ -6,56 +6,6 @@ using System.Dynamic;
 using Newtonsoft.Json;
 
 namespace DDF{
-    interface IElementParser{
-        void ParseLine(string line);
-        IElementParser Attach(IElementParser parent);
-    }
-
-    class BaseElement{
-        public dynamic properties;
-        protected Dictionary<string, string> Tokens;
-        public BaseElement(){
-            properties = new ExpandoObject();
-            Tokens = new Dictionary<string, string>();
-            Tokens["description"] = @"Description\s+""([^""]+)""";
-        }
-        public virtual IElementParser Attach(IElementParser child){
-            return child;
-        }
-        public void ParseLine(string line){
-            Match match;
-            line = line.TrimStart();
-            while(line != ""){
-                bool matched = false;
-                foreach(KeyValuePair<string, string> token in Tokens){
-                    match = Regex.Match(line, token.Value);
-                    if(match.Success){
-                        ProcessToken(token.Key, match);
-                        line = line.Substring(match.Groups[0].Value.Length).TrimStart(' ');
-                        Console.WriteLine($"MATCHED = '{match.Groups[0].Value}'");
-                        Console.WriteLine($"NEW LINE = '{line}'");
-                        matched = true;
-                        break;
-                    }
-                }
-                if(!matched){
-                    Console.WriteLine($"NOT MATCHED '{line}'");
-                    //Console.ReadLine();
-                    break;
-                }
-            }
-        }
-        protected void AddKey(string name, string value){
-            var dictionary = (IDictionary<string, object>)properties;
-
-            if(!dictionary.ContainsKey(name)){
-                dictionary.Add(name, value);
-            }
-        }
-        protected virtual void ProcessToken(string name, Match match){
-        }
-    }
-
     class Structure: BaseElement, IElementParser{
         public Structure(){
             properties.type = "structure";
@@ -80,11 +30,17 @@ namespace DDF{
             Tokens["template"] = @"Template\s+([A-Z_]+)";
             Tokens["fieldtype"] = @"Type\s+([A-Z_]+)";
             Tokens["size"] = @"Size\s+([0-9]+)";
-            Tokens["dimensions"] = @"Dimensions\s+([0-9]+)";
             Tokens["precision"] = @"Precision\s+([0-9]+)";
+
+            Tokens["dimension"] = @"Dimension\s+([0-9]+)";
+            Tokens["longdescription"] = @"Long Description";            
+            Tokens["subdescription"] = @"^""([^""]+)""";            
 
             Tokens["help"] = @"Help\s+""([^""]+)""";
             Tokens["prompt"] = @"Prompt\s+""([^""]+)""";
+            Tokens["infoline"] = @"Info Line\s+""([^""]+)""";
+
+            //Prompt "Value:"   Info Line "Enter an Alphanumeric Value"   Font ALPHA_FONT
 
             Tokens["odbcname"] = @"ODBC Name\s+([A-Z_]+)";
         }
@@ -92,6 +48,19 @@ namespace DDF{
             switch(name){
                 case "template":
                     properties.template = match.Groups[1].Value;
+                    break;
+                case "longdescription":
+                Console.WriteLine("Long description");
+                    //Console.ReadLine();
+                    properties.subdescriptions = new List<string>();
+                    break;
+                case "subdescription":
+                    if(!ContainsKey("subdescriptions")){
+                        properties.subdescriptions = new List<string>();
+                    }
+                    //Console.WriteLine($"sub desc '{match.Groups[1].Value}'");
+                    //Console.ReadLine();
+                    properties.subdescriptions.Add(match.Groups[1].Value);
                     break;
                 default:
                     AddKey(name, match.Groups[1].Value);
@@ -117,8 +86,10 @@ namespace DDF{
             }
         }
     }
-
-    class Dummy: BaseElement, IElementParser{
+    class Tag: BaseElement, IElementParser{
+        public Tag(): base() {
+            properties.type = "tag";
+        }
     }
 
     public class Parse{
@@ -134,21 +105,21 @@ namespace DDF{
                         case var l when Regex.Match(line, @"^Structure\s+([A-Z]+)").Success:
                             element = new Structure();
                             structure = element;
-                            element.ParseLine(l);
                             break;
                         case var l when Regex.Match(line, @"^Field\s+([A-Za-z0-9_]+)").Success:
                             element = structure.Attach(new Field());
-                            element.ParseLine(l);
                             break;
                         case var l when Regex.Match(line, @"^Key\s+([A-Za-z0-9_]+)").Success:
                             element = structure.Attach(new Key());
-                            element.ParseLine(l);
+                            break;
+                        case var l when Regex.Match(line, @"^Tag\s+([A-Za-z0-9_]+)").Success:
+                            element = structure.Attach(new Tag());
                             break;
                         default:
-                            if(element != null){
-                                element.ParseLine(line);
-                            }
                             break;
+                    }
+                    if(element != null){
+                        element.ParseLine(line);
                     }
                 }
             }
