@@ -46,6 +46,24 @@ namespace DDF{
                 }
             }
         }
+
+        protected void DefaultProcessToken(string name, Match match){
+            switch(name){
+                case "method":
+                    string key = match.Groups[1].Value;
+                    string value = match.Groups[2].Value;
+                    if(!ContainsKey("methods")){
+                        properties.methods = new Dictionary<string, string>();
+                    }
+                    properties.methods[key] = value;
+                    break;
+                default:
+                    AddKey(name, match.Groups[1].Value);        
+                    break;
+            }
+        }
+
+
         protected void AddKey(string name, string value){
             var dictionary = (IDictionary<string, object>)properties;
 

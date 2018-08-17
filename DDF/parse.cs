@@ -23,15 +23,22 @@ namespace DDF{
         }
     }
 
-    class Field: BaseElement, IElementParser{
-        public Field(): base() {
-            properties.type = "field";
-            Tokens["name"] = @"^Field\s+([A-Z_0-9]+)";
-            Tokens["template"] = @"Template\s+([A-Z_]+)";
-            Tokens["fieldtype"] = @"Type\s+([A-Z_]+)";
-            Tokens["size"] = @"Size\s+([0-9]+)";
-            Tokens["precision"] = @"Precision\s+([0-9]+)";
+    class FieldType: BaseElement, IElementParser{
+        public FieldType(): base() {
+            Tokens["fieldtype"] = @"^Type\s+([A-Z_]+)";
+            Tokens["size"] = @"^Size\s+([0-9]+)";
+            Tokens["precision"] = @"^Precision\s+([0-9]+)";
+            Tokens["prompt"] = @"^Prompt\s+""([^""]+)""";
+            Tokens["infoline"] = @"^Info Line\s+""([^""]+)""";
+            Tokens["dimension"] = @"^Dimension\s+([0-9]+)";
 
+
+            Tokens["selectionlist"] = @"^Selection List(.+)";
+            //Selection List 1 2 0  Entries "No", "Yes
+            Tokens["odbcname"] = @"^ODBC Name\s+([A-Z_]+)";
+            Tokens["method"] = @"^([A-Za-z_]+) Method\s+""([^""]+)""";
+
+            /* 
             Tokens["dimension"] = @"Dimension\s+([0-9]+)";
             Tokens["longdescription"] = @"Long Description";            
             Tokens["subdescription"] = @"^""([^""]+)""";            
@@ -39,15 +46,33 @@ namespace DDF{
             Tokens["help"] = @"Help\s+""([^""]+)""";
             Tokens["prompt"] = @"Prompt\s+""([^""]+)""";
             Tokens["infoline"] = @"Info Line\s+""([^""]+)""";
+            */
+            //Prompt "Value:"   Info Line "Enter an Alphanumeric Value"   Font ALPHA_FONT
+        }        
+    }
+
+    class Field: FieldType, IElementParser{
+        public Field(): base() {
+            properties.type = "field";
+            Tokens["name"] = @"^Field\s+([A-Z_0-9]+)";
+            Tokens["template"] = @"^Template\s+([A-Z_0-9]+)";
+
+            Tokens["longdescription"] = @"^Long Description";            
+            Tokens["subdescription"] = @"^""([^""]+)""";            
+
+            Tokens["help"] = @"^Help\s+""([^""]+)""";
 
             //Prompt "Value:"   Info Line "Enter an Alphanumeric Value"   Font ALPHA_FONT
 
-            Tokens["odbcname"] = @"ODBC Name\s+([A-Z_]+)";
         }
         protected override void ProcessToken(string name, Match match){
             switch(name){
                 case "template":
-                    properties.template = match.Groups[1].Value;
+                    DDFFile template = new DDFFile("template", match.Groups[1].Value);
+                    properties.template = new {
+                        name = match.Groups[1].Value,
+                        structure = template.Parse()
+                    };
                     break;
                 case "longdescription":
                 Console.WriteLine("Long description");
@@ -63,7 +88,7 @@ namespace DDF{
                     properties.subdescriptions.Add(match.Groups[1].Value);
                     break;
                 default:
-                    AddKey(name, match.Groups[1].Value);
+                    DefaultProcessToken(name, match);
                     break;
             }
         }
@@ -72,48 +97,70 @@ namespace DDF{
     class Key: BaseElement, IElementParser{
         public Key(): base() {
             properties.type = "key";
-            Tokens["name"] = @"^Field\s+([A-Z_0-9]+)";
-            Tokens["template"] = @"Template\s+([A-Z_]+)";
-        }
-        protected override void ProcessToken(string name, Match match){
-            switch(name){
-                case "template":
-                    properties.template = match.Groups[1].Value;
-                    break;
-                default:
-                    AddKey(name, match.Groups[1].Value);
-                    break;
-            }
+            Tokens["name"] = @"^Key\s+([A-Z_0-9]+)";
         }
     }
     class Tag: BaseElement, IElementParser{
         public Tag(): base() {
             properties.type = "tag";
+            Tokens["name"] = @"^Tag\s+([A-Z_0-9]+)";
         }
     }
 
-    public class Parse{
-        public Parse(){
+    class Template: FieldType, IElementParser{
+        public Template(): base() {
+            properties.type = "template";
+            Tokens["name"] = @"^Template\s+([A-Z_0-9]+)";
+            Tokens["parent"] = @"^Parent\s+([A-Z_0-9]+)";
+        }
+        protected override void ProcessToken(string name, Match match){
+            switch(name){
+                case "parent":
+                    DDFFile parent = new DDFFile("template", match.Groups[1].Value);
+                    properties.parent = new {
+                        name = match.Groups[1].Value,
+                        structure = parent.Parse()
+                    };
+                    break;
+                default:
+                    DefaultProcessToken(name, match);
+                    break;
+            }
+        }
+    }
+
+    public class DDFFile{
+        readonly string _fileName;
+        public DDFFile(string section, string name){
+            _fileName = Path.Combine("/Users/stevelamb/Development/ibcos/investigations/DDF/repository", section, $"{name}.ddf");
+            Console.WriteLine(_fileName);
+        }
+
+        public dynamic Parse(){
             string line = "";
-            IElementParser structure = new Dummy();
+            IElementParser root = new Dummy();
             IElementParser element = new Dummy();
 
 
-            using(StreamReader file = new StreamReader("/Users/stevelamb/Development/ibcos/investigations/DDF/repository/structure/PRIREC.DDF")){
+            using(StreamReader file = new StreamReader(_fileName)){
                 while((line = file.ReadLine()) != null){
                     switch(line){
                         case var l when Regex.Match(line, @"^Structure\s+([A-Z]+)").Success:
                             element = new Structure();
-                            structure = element;
+                            root = element;
                             break;
                         case var l when Regex.Match(line, @"^Field\s+([A-Za-z0-9_]+)").Success:
-                            element = structure.Attach(new Field());
+                            element = root.Attach(new Field());
                             break;
                         case var l when Regex.Match(line, @"^Key\s+([A-Za-z0-9_]+)").Success:
-                            element = structure.Attach(new Key());
+                            element = root.Attach(new Key());
                             break;
                         case var l when Regex.Match(line, @"^Tag\s+([A-Za-z0-9_]+)").Success:
-                            element = structure.Attach(new Tag());
+                            element = root.Attach(new Tag());
+                            break;
+                        case var l when Regex.Match(line, @"^Template\s+([A-Za-z0-9_]+)").Success:
+                            element = new Template();
+                            root = element;
                             break;
                         default:
                             break;
@@ -123,7 +170,8 @@ namespace DDF{
                     }
                 }
             }
-            Console.WriteLine(JsonConvert.SerializeObject(structure, Formatting.Indented));
+
+            return root;
         }
     }
 }
