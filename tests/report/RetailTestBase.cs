@@ -33,7 +33,7 @@ namespace Tests
         private void AddRecord(int importId, int partNumber, string description, int retail)
         {
             DbCommand command = _databaseFixture.Db.Connection.CreateCommand();
-            command.CommandText = $"insert into prices (import_id, partnumber, description, retail) values ({importId}, {partNumber}, '{description}', {retail})";
+            command.CommandText = $"insert into prices (importid, partnumber, description, retail) values ({importId}, {partNumber}, '{description}', {retail})";
 
             command.ExecuteNonQuery();
         }

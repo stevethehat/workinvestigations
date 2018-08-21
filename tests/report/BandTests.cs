@@ -14,6 +14,7 @@ namespace Tests {
             _databaseFixture = df;
         }
 
+        /*
         [Fact]
         [Trait("Category", "Bands")]
         public void Scan() 
@@ -66,7 +67,7 @@ namespace Tests {
             Assert.Equal(bands.BandRange, 10f);
             Assert.Equal(bands.Bands[0], 2);
         }
-
+        */
         [Fact]
         [Trait("Category", "Bands")]
         public void Random()

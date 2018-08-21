@@ -30,7 +30,7 @@ namespace Tests
         public void EmptyTable()
         {
             ClearDatabase();
-            Scanner scanner = new Scanner(databaseFixture.Db, 1, 2, "retail");
+            Scanner scanner = new Scanner(_databaseFixture.Db, 1, 2, "retail");
             scanner.Scan();
         }
 
@@ -170,7 +170,7 @@ namespace Tests
         }
 
         private void TestCounts(int changed, int unchanged, int added, int deleted) {
-            Scanner scanner = new Scanner(databaseFixture.Db, 1, 2, "retail");
+            Scanner scanner = new Scanner(_databaseFixture.Db, 1, 2, "retail");
             SetupWatchers(scanner);
             scanner.Scan();
 
