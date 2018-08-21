@@ -12,7 +12,7 @@ namespace DDF
     {
         static void Main(string[] args)
         {
-            DDFFile ddfFile = new DDFFile("structure", "cmfrec");
+            DDFFile ddfFile = new DDFFile("structure", "pmfrec");
             //DDFFile ddfFile = new DDFFile("template", "tbaseaddressline");
             var structure = ddfFile.Parse();
             Console.WriteLine(JsonConvert.SerializeObject(structure, Formatting.Indented));
