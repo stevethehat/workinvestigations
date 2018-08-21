@@ -68,7 +68,8 @@ namespace Rosyln{
             var definition = new {
                 name = Name,
                 methods = methods,
-                fields = fields
+                fields = fields,
+                all = All()
             };
 
             return definition;
@@ -93,6 +94,16 @@ namespace Rosyln{
 
             return result;
         }
+
+        protected List<BaseInfo> All(){
+            List<BaseInfo> result = new List<BaseInfo>();
+            foreach(var field in _classNode.DescendantNodes().OfType<BaseTypeDeclarationSyntax>()){
+                result.Add(new BaseInfo());
+            }
+
+            return result;
+        }
+
     }
 }
     
