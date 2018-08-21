@@ -12,10 +12,21 @@ namespace DDF
     {
         static void Main(string[] args)
         {
-            DDFFile ddfFile = new DDFFile("structure", "pmfrec");
+            string ddfType = "pcgrec";
+            DDFFile ddfFile = new DDFFile("structure", ddfType);
             //DDFFile ddfFile = new DDFFile("template", "tbaseaddressline");
             var structure = ddfFile.Parse();
-            Console.WriteLine(JsonConvert.SerializeObject(structure, Formatting.Indented));
+
+            string outputFile = Path.Combine("output", $"{ddfType}.json");
+            string json = JsonConvert.SerializeObject(structure, Formatting.Indented);
+            
+            Console.WriteLine(json);
+
+            if(File.Exists(outputFile)){
+                File.Delete(outputFile);
+            }
+            System.IO.File.WriteAllText(outputFile, json);
+
 
             Console.WriteLine("Hello World!");
         }
