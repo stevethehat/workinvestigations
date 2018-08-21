@@ -11,18 +11,15 @@ namespace Rosyln{
         public string Name;
         public string Comment;
         protected SyntaxNode _node;
-        /*
-        public BaseInfo(SyntaxNode node){
-            Name = node.Identifier.Text;
-        }
-        */
         protected void GetComment(){
             StringBuilder comment = new StringBuilder();
             SyntaxTriviaList trivia = _node.GetLeadingTrivia();
             var commentNodes = _node.DescendantNodes().OfType<DocumentationCommentTriviaSyntax>();
             foreach(var commentNode in trivia){
-                //comment.AppendLine(commentNode.GetText().ToString());
+                //if(commentNode.GetType() != WhitespaceTrivia){
                 comment.AppendLine(commentNode.ToString());
+                //commentNode.GetStructure()
+                //}
             }
 
             Comment = comment.ToString();

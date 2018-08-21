@@ -19,9 +19,9 @@ namespace Rosyln
 
             //string[] files = Directory.GetFiles(".", "*.cs");
             // "C:\\Users\\lambbste\\Documents\\Development\\ibcos\\priceupdates\\priceupdates"
-            string[] files = Directory.GetFiles("../../priceupdates/priceupdates", "*.cs", SearchOption.AllDirectories);
+            //string[] files = Directory.GetFiles("../../priceupdates/priceupdates", "*.cs", SearchOption.AllDirectories);
             //string[] files = Directory.GetFiles("C:\\Users\\lambbste\\Documents\\Development\\priceupdates\\priceupdates", "*.cs", SearchOption.AllDirectories);
-            //string[] files = Directory.GetFiles("C:\\Users\\lambbste\\Documents\\Development\\workinvestigations\\rosyln", "*.cs", SearchOption.AllDirectories);
+            string[] files = Directory.GetFiles(".", "*.cs", SearchOption.AllDirectories);
 
             foreach (string fileName in files){
                 var code = new StreamReader(fileName).ReadToEnd();
@@ -36,7 +36,7 @@ namespace Rosyln
                             classDefinition = classNode.Definition()
                         };
 
-                        Console.WriteLine(JsonConvert.SerializeObject(definition)); 
+                        Console.WriteLine(JsonConvert.SerializeObject(definition, Formatting.Indented)); 
                     }
                 }
             }

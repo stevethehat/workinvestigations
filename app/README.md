@@ -1,27 +1,21 @@
-# APP
+# app
 
-A test project for the frontend bits.
+## Project setup
+```
+npm install
+```
 
-Libraries etc used.
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
 
-* Vue
-    
-    js layout library.
+### Compiles and minifies for production
+```
+npm run build
+```
 
-    https://vuejs.org/
-
-
-* Bootstrap + Vue
-
-    bootstrap components for Vue.
-
-* axios
-
-    https://github.com/axios/axios
-
-    <pre>
-    npm install axios --save
-    </pre>
-
-
-
+### Lints and fixes files
+```
+npm run lint
+```
