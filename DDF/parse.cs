@@ -132,7 +132,9 @@ namespace DDF{
     public class DDFFile{
         readonly string _fileName;
         public DDFFile(string section, string name){
-            _fileName = Path.Combine("/Users/stevelamb/Development/ibcos/investigations/DDF/repository", section, $"{name}.ddf");
+            string root = @"repository";
+            //string root = "/Users/stevelamb/Development/ibcos/investigations/DDF/repository";
+            _fileName = Path.Combine(root, section, $"{name}.ddf");
             Console.WriteLine(_fileName);
         }
 
