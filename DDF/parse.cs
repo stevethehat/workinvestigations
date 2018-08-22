@@ -38,10 +38,12 @@ namespace DDF{
             Tokens["odbcname"] = @"^ODBC Name\s+([A-Z_]+)";
             Tokens["method"] = @"^([A-Za-z_]+) Method\s+""([^""]+)""";
 
+            Tokens["promptfont"] = @"^Promptfont\s+([A-Z_]+)";
+            Tokens["font"] = @"^Font\s+([A-Z_]+)";
             /* 
             Tokens["dimension"] = @"Dimension\s+([0-9]+)";
             Tokens["longdescription"] = @"Long Description";            
-            Tokens["subdescription"] = @"^""([^""]+)""";            
+            Tokens["longdescription"] = @"^""([^""]+)""";            
 
             Tokens["help"] = @"Help\s+""([^""]+)""";
             Tokens["prompt"] = @"Prompt\s+""([^""]+)""";
@@ -77,15 +79,15 @@ namespace DDF{
                 case "longdescription":
                 Console.WriteLine("Long description");
                     //Console.ReadLine();
-                    properties.subdescriptions = new List<string>();
+                    properties.longdescription = new List<string>();
                     break;
                 case "subdescription":
-                    if(!ContainsKey("subdescriptions")){
-                        properties.subdescriptions = new List<string>();
+                    if(!ContainsKey("longdescription")){
+                        properties.longdescription = new List<string>();
                     }
                     //Console.WriteLine($"sub desc '{match.Groups[1].Value}'");
                     //Console.ReadLine();
-                    properties.subdescriptions.Add(match.Groups[1].Value);
+                    properties.longdescription.Add(match.Groups[1].Value);
                     break;
                 default:
                     DefaultProcessToken(name, match);

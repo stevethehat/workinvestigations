@@ -12,7 +12,7 @@ namespace DDF
     {
         static void Main(string[] args)
         {
-            string ddfType = "pcgrec";
+            string ddfType = "cmfrec";
             DDFFile ddfFile = new DDFFile("structure", ddfType);
             //DDFFile ddfFile = new DDFFile("template", "tbaseaddressline");
             var structure = ddfFile.Parse();
