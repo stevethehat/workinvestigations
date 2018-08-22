@@ -17,6 +17,17 @@ wiki_site = Site(("http", "localhost"), path="/mediawiki/")
 print "Logging in..."
 wiki_site.login("steve", "V4l3n+!n4")
 
+# prerec, pmfrec, pcdrec, pcgrec, ctfrec, cmfrec
+definitions = {
+    "prerec": { },
+    "pmfrec": { },
+    "pcdrec": { },
+    "pcgrec": { },
+    "ctfrec": { },
+    "cmfrec": { }
+}
+
+
 def get_property(properties, key, default = "NOT SET"):
     if properties.has_key(key):
         return properties[key]
@@ -63,6 +74,7 @@ def merge_properties(properties):
     return (result, hierarchy_path)
 
 def writer_record_type_definition(record_type):
+    fields = {}
     wiki_writer.start_page()
     wiki_writer.write_page_header()
     wiki_writer.write_header(2, "Fields")
@@ -72,20 +84,27 @@ def writer_record_type_definition(record_type):
     with open(json_path) as json_definition:
         json_definition = json.load(json_definition)
 
+    if json_definition["properties"].has_key("description"):
+        definitions[record_type]["description"] = json_definition["properties"]["description"]
+    else:
+        definitions[record_type]["description"] = "UNKNOWN"
+
     wiki_writer.create_table_header(["Name", "Description", "Type", "Size", "Inheritence" ])
 
-    if json_definition.has_key("definition"):
-        wiki_writer.write_paragraphs(json_definition["description"])
+    wiki_writer.write_paragraphs(definitions[record_type]["description"])
 
     for field in json_definition["properties"]["fields"]:
         (properties, hierarchy_path) = merge_properties(field["properties"])
+        field_name = get_property(properties, "name")
+
+        fields[field_name] = properties
 
         path = ""
         for path_level in hierarchy_path:
             path = "%s > [[DDFReference_Template_%s|%s]]" % (path, path_level, path_level)
         wiki_writer.create_table_row(
             { 
-                "name": get_property(properties, "name"), 
+                "name": "[[DDFReference_Field_%s|%s]]" % (field_name, field_name),
                 "description": get_property(properties, "description"),
                 "type": get_property(properties, "fieldtype"),
                 "size": get_property(properties, "size"),
@@ -97,7 +116,10 @@ def writer_record_type_definition(record_type):
 
     wiki_writer.update_wiki_page("DDFReference_%s" % record_type.upper())
 
-def write_template_definition(name, properties):
+    for field in fields:
+        write_template_definition(field, "Field", fields[field])
+
+def write_template_definition(name, output_type, properties):
     (properties, hierarchy_path) = merge_properties(properties)
     wiki_writer.start_page()
     wiki_writer.write_page_header()
@@ -112,8 +134,13 @@ def write_template_definition(name, properties):
         del properties["methods"]
     if properties.has_key("type"):
         del properties["type"]
+  
     if properties.has_key("parent"):
+        properties["templatename"] = "[[DDFReference_Template_%s|%s]]" % (properties["parent"]["name"], properties["parent"]["name"])
         del properties["parent"]
+    if properties.has_key("template"):
+        properties["templatename"] = "[[DDFReference_Template_%s|%s]]" % (properties["template"]["name"], properties["template"]["name"])
+        del properties["template"]
 
     for property_item in properties:
         wiki_writer.create_table_row({
@@ -121,21 +148,26 @@ def write_template_definition(name, properties):
             "value": properties[property_item]
         }, ["property", "value"])
 
-    wiki_writer.update_wiki_page("DDFReference_Template_%s" % name)
+    wiki_writer.update_wiki_page("DDFReference_%s_%s" % (output_type, name))
 
 wiki_writer = wiki_writer.WikiWriter(wiki_site)
 
+for definition_name in definitions:
+    writer_record_type_definition(definition_name)
+
+
 wiki_writer.start_page()
 wiki_writer.write_page_header()
-wiki_writer.create_table_header(["File", "Types"])
-wiki_writer.create_table_row({ "file": "PCG_FILE", "types": "[[DDFReference_PCGREC|PCGREC]]"}, ["file", "types"])
+wiki_writer.create_table_header(["File", "Types", "Description"])
+for definition_name in definitions:
+    definition_name = definition_name.upper()
+    wiki_writer.create_table_row({ "file": "%s_FILE" % definition_name[:2], "types": "[[DDFReference_%s|%s]]" % (definition_name, definition_name), "description": definitions[definition_name.lower()]["description"]}, ["file", "types", "description"])
 #wiki_writer.write_table_footer()
 wiki_writer.update_wiki_page("DDFReference_Index")
 
-writer_record_type_definition("pcgrec")
 
 for template in templates:
-    write_template_definition(template, templates[template])
+    write_template_definition(template, "Template", templates[template])
 
 
 

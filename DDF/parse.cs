@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace DDF{
     class Structure: BaseElement, IElementParser{
-        public Structure(){
+        public Structure(): base(){
             properties.type = "structure";
             properties.fields = new List<IElementParser>();
             Tokens["name"] = @"^Structure\s+([A-Z_]+)";
@@ -17,9 +17,6 @@ namespace DDF{
         public override IElementParser Attach(IElementParser child){
             properties.fields.Add(child);
             return child;
-        }
-        protected override void ProcessToken(string name, Match match){
-            properties.name = match.Groups[1].Value;
         }
     }
 
@@ -35,7 +32,7 @@ namespace DDF{
 
             Tokens["selectionlist"] = @"^Selection List(.+)";
             //Selection List 1 2 0  Entries "No", "Yes
-            Tokens["odbcname"] = @"^ODBC Name\s+([A-Z_]+)";
+            Tokens["odbcname"] = @"^ODBC Name\s+([A-Z_0-9]+)";
             Tokens["method"] = @"^([A-Za-z_]+) Method\s+""([^""]+)""";
 
             Tokens["promptfont"] = @"^Promptfont\s+([A-Z_]+)";
