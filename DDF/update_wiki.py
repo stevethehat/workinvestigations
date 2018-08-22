@@ -26,9 +26,14 @@ def get_property(properties, key, default = "NOT SET"):
 def copy_properties(properties):
     pass
 
+templates = {}
+def add_template(name, properties):
+    if not(templates.has_key(name)):
+        templates[name] = properties
+
 def merge_properties(properties):
     hierarchy = []
-    hierarchy_path = ""
+    hierarchy_path = []
     result = {}
     property_level = properties
 
@@ -36,11 +41,16 @@ def merge_properties(properties):
 
     while property_level.has_key("template") or property_level.has_key("parent"):        
         if property_level.has_key("template"):
-            hierarchy_path = "%s > %s" % (hierarchy_path, property_level["template"]["name"])
+            name = property_level["template"]["name"]
+            hierarchy_path.append(name)
             property_level = property_level["template"]["structure"]["properties"]
+
+            add_template(name, property_level)
         elif property_level.has_key("parent"):
-            hierarchy_path = "%s > %s" % (hierarchy_path, property_level["parent"]["name"])
+            name = property_level["parent"]["name"]
+            hierarchy_path.append(name)
             property_level = property_level["parent"]["structure"]["properties"]
+            add_template(name, property_level)
 
         hierarchy.append(property_level)
 
@@ -51,16 +61,6 @@ def merge_properties(properties):
 
     print result
     return (result, hierarchy_path)
-
-wiki_writer = wiki_writer.WikiWriter(wiki_site)
-
-wiki_writer.start_page()
-wiki_writer.write_page_header()
-wiki_writer.create_table_header(["File", "Types"])
-wiki_writer.create_table_row({ "file": "PCG_FILE", "types": "[[DDFReference_PCGREC|PCGREC]]"}, ["file", "types"])
-#wiki_writer.write_table_footer()
-wiki_writer.update_wiki_page("DDFReference_Index")
-
 
 def writer_record_type_definition(record_type):
     wiki_writer.start_page()
@@ -73,22 +73,70 @@ def writer_record_type_definition(record_type):
         json_definition = json.load(json_definition)
 
     wiki_writer.create_table_header(["Name", "Description", "Type", "Size", "Inheritence" ])
+
+    if json_definition.has_key("definition"):
+        wiki_writer.write_paragraphs(json_definition["description"])
+
     for field in json_definition["properties"]["fields"]:
         (properties, hierarchy_path) = merge_properties(field["properties"])
 
+        path = ""
+        for path_level in hierarchy_path:
+            path = "%s > [[DDFReference_Template_%s|%s]]" % (path, path_level, path_level)
         wiki_writer.create_table_row(
             { 
                 "name": get_property(properties, "name"), 
                 "description": get_property(properties, "description"),
                 "type": get_property(properties, "fieldtype"),
                 "size": get_property(properties, "size"),
-                "inheritance": hierarchy_path 
+                "inheritance": path 
             }, ["name", "description", "type", "size", "inheritance"])
 
         if properties.has_key("longdescription"):
-            wiki_writer.create_table_row({ "title": "Long Description", "value": "<br/>".join(properties["longdescription"])}, ["title", { "name": "value", "colspan": 2 }])
+            wiki_writer.create_table_row({ "title": "Long Description", "value": "<br/>".join(properties["longdescription"])}, ["title", { "name": "value", "colspan": 4 }])
 
     wiki_writer.update_wiki_page("DDFReference_%s" % record_type.upper())
+
+def write_template_definition(name, properties):
+    (properties, hierarchy_path) = merge_properties(properties)
+    wiki_writer.start_page()
+    wiki_writer.write_page_header()
+    wiki_writer.write_header(2, "Properties")
+
+    if properties.has_key("parent"):
+        parent_name = properties["parent"]["name"]
+        wiki_writer.write_paragraphs("Descended from [[DDFReference_Template_%s|%s]]." % (parent_name, parent_name))
+
+    wiki_writer.create_table_header(["Property", "Value" ])
+    if properties.has_key("methods"):
+        del properties["methods"]
+    if properties.has_key("type"):
+        del properties["type"]
+    if properties.has_key("parent"):
+        del properties["parent"]
+
+    for property_item in properties:
+        wiki_writer.create_table_row({
+            "property": property_item,
+            "value": properties[property_item]
+        }, ["property", "value"])
+
+    wiki_writer.update_wiki_page("DDFReference_Template_%s" % name)
+
+wiki_writer = wiki_writer.WikiWriter(wiki_site)
+
+wiki_writer.start_page()
+wiki_writer.write_page_header()
+wiki_writer.create_table_header(["File", "Types"])
+wiki_writer.create_table_row({ "file": "PCG_FILE", "types": "[[DDFReference_PCGREC|PCGREC]]"}, ["file", "types"])
+#wiki_writer.write_table_footer()
+wiki_writer.update_wiki_page("DDFReference_Index")
+
+writer_record_type_definition("pcgrec")
+
+for template in templates:
+    write_template_definition(template, templates[template])
+
 
 
 print ""
