@@ -72,11 +72,21 @@ class WikiWriter:
 
         for col in cols:
             value = ""
-            if data.has_key(col):           
-                value = data[col] 
+            if type(col) == object:
+                if data.has_key(col["name"]):           
+                    value = data[col["name"]] 
 
-                #value = self.json_files.create_link_if_found(value)
-            self.wiki_lines.append('| %s' % value)
+                    #value = self.json_files.create_link_if_found(value)
+                if col.has_key("colspan"):
+                    self.wiki_lines.append('| colspan=%s %s' % (col["colspan"], value))
+                else:
+                    self.wiki_lines.append('| %s' % value)
+            else:
+                if data.has_key(col):           
+                    value = data[col] 
+
+                    #value = self.json_files.create_link_if_found(value)
+                self.wiki_lines.append('| %s' % value)
 
     def create_table_footer(self):
         self.wiki_lines.append('|}')
