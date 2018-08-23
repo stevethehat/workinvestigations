@@ -1,4 +1,4 @@
-import sys, os, io, datetime, json, re, pprint
+import sys, os, io, datetime, json, re, pprint, time
 
 import wiki_writer
 
@@ -10,12 +10,16 @@ from mwclient import Site
 # pip install py-wikimarkup
 #from wikimarkup import parse
 
-#wiki_site = Site("kb.ibcos.co.uk", path="/w/")
-wiki_site = Site(("http", "localhost"), path="/mediawiki/")
+print "Logging in..."
+
+wiki_site = Site("kb.ibcos.co.uk", path="/w/")
+wiki_site.login("stevelamb", "bh49bb")
+
+#
 
 # log in
-print "Logging in..."
-wiki_site.login("steve", "V4l3n+!n4")
+#wiki_site = Site(("http", "localhost"), path="/mediawiki/")
+#wiki_site.login("steve", "V4l3n+!n4")
 
 # prerec, pmfrec, pcdrec, pcgrec, ctfrec, cmfrec
 definitions = {
@@ -70,7 +74,7 @@ def merge_properties(properties):
         result = dict(result.items() + property_level.items())
 
 
-    print result
+    #print result
     return (result, hierarchy_path)
 
 def writer_record_type_definition(record_type):
@@ -80,7 +84,7 @@ def writer_record_type_definition(record_type):
     wiki_writer.write_header(2, "Fields")
 
     json_path = os.path.join("output", "%s.json" % record_type)
-    json_path = "/Users/stevelamb/Development/ibcos/investigations/DDF/output/%s.json" % record_type
+    #json_path = "/Users/stevelamb/Development/ibcos/investigations/DDF/output/%s.json" % record_type
     with open(json_path) as json_definition:
         json_definition = json.load(json_definition)
 
@@ -89,9 +93,9 @@ def writer_record_type_definition(record_type):
     else:
         definitions[record_type]["description"] = "UNKNOWN"
 
-    wiki_writer.create_table_header(["Name", "Description", "Type", "Size", "Inheritence" ])
-
     wiki_writer.write_paragraphs(definitions[record_type]["description"])
+
+    wiki_writer.create_table_header(["Name", "Description", "Type", "Size", "Inheritence" ])
 
     for field in json_definition["properties"]["fields"]:
         (properties, hierarchy_path) = merge_properties(field["properties"])
@@ -113,13 +117,15 @@ def writer_record_type_definition(record_type):
 
         if properties.has_key("longdescription"):
             wiki_writer.create_table_row({ "title": "Long Description", "value": "<br/>".join(properties["longdescription"])}, ["title", { "name": "value", "colspan": 4 }])
-
+    
+    wiki_writer.create_table_footer()
     wiki_writer.update_wiki_page("DDFReference_%s" % record_type.upper())
+    time.sleep(2)
 
     for field in fields:
-        write_template_definition(field, "Field", fields[field])
+        write_template_definition(field, "Field", fields[field], "[[DDFReference_%s|<< %s]]" % (record_type.upper(), record_type.upper()))
 
-def write_template_definition(name, output_type, properties):
+def write_template_definition(name, output_type, properties, back_link = None):
     (properties, hierarchy_path) = merge_properties(properties)
     wiki_writer.start_page()
     wiki_writer.write_page_header()
@@ -148,7 +154,13 @@ def write_template_definition(name, output_type, properties):
             "value": properties[property_item]
         }, ["property", "value"])
 
+    wiki_writer.create_table_footer()
+    if back_link != None:
+        wiki_writer.write_paragraphs(back_link)
+
     wiki_writer.update_wiki_page("DDFReference_%s_%s" % (output_type, name))
+
+    time.sleep(2)
 
 wiki_writer = wiki_writer.WikiWriter(wiki_site)
 
