@@ -12,23 +12,23 @@ from mwclient import Site
 
 print "Logging in..."
 
-wiki_site = Site("kb.ibcos.co.uk", path="/w/")
-wiki_site.login("stevelamb", "bh49bb")
+#wiki_site = Site("kb.ibcos.co.uk", path="/w/")
+#wiki_site.login("stevelamb", "bh49bb")
 
 #
 
 # log in
-#wiki_site = Site(("http", "localhost"), path="/mediawiki/")
-#wiki_site.login("steve", "V4l3n+!n4")
+wiki_site = Site(("http", "localhost"), path="/mediawiki/")
+wiki_site.login("steve", "V4l3n+!n4")
 
 # prerec, pmfrec, pcdrec, pcgrec, ctfrec, cmfrec
 definitions = {
-    "prerec": { },
-    "pmfrec": { },
+    #"prerec": { },
+    #"pmfrec": { },
     "pcdrec": { },
     "pcgrec": { },
-    "ctfrec": { },
-    "cmfrec": { }
+    #"ctfrec": { },
+    #"cmfrec": { }
 }
 
 
@@ -83,8 +83,8 @@ def writer_record_type_definition(record_type):
     wiki_writer.write_page_header()
     wiki_writer.write_header(2, "Fields")
 
-    json_path = os.path.join("output", "%s.json" % record_type)
-    #json_path = "/Users/stevelamb/Development/ibcos/investigations/DDF/output/%s.json" % record_type
+    #json_path = os.path.join("output", "%s.json" % record_type)
+    json_path = "/Users/stevelamb/Development/ibcos/investigations/DDF/output/%s.json" % record_type
     with open(json_path) as json_definition:
         json_definition = json.load(json_definition)
 
@@ -120,24 +120,26 @@ def writer_record_type_definition(record_type):
     
     wiki_writer.create_table_footer()
     wiki_writer.update_wiki_page("DDFReference_%s" % record_type.upper())
-    time.sleep(2)
+    #time.sleep(2)
 
     for field in fields:
         write_template_definition(field, "Field", fields[field], "[[DDFReference_%s|<< %s]]" % (record_type.upper(), record_type.upper()))
 
 def write_template_definition(name, output_type, properties, back_link = None):
+    print "Updating Template/Field %s - %s" % (output_type, name)
     (properties, hierarchy_path) = merge_properties(properties)
     wiki_writer.start_page()
     wiki_writer.write_page_header()
     wiki_writer.write_header(2, "Properties")
+
+    if properties.has_key("description"):
+        wiki_writer.write_paragraphs(properties["description"])
 
     if properties.has_key("parent"):
         parent_name = properties["parent"]["name"]
         wiki_writer.write_paragraphs("Descended from [[DDFReference_Template_%s|%s]]." % (parent_name, parent_name))
 
     wiki_writer.create_table_header(["Property", "Value" ])
-    if properties.has_key("methods"):
-        del properties["methods"]
     if properties.has_key("type"):
         del properties["type"]
   
@@ -149,10 +151,21 @@ def write_template_definition(name, output_type, properties, back_link = None):
         del properties["template"]
 
     for property_item in properties:
-        wiki_writer.create_table_row({
-            "property": property_item,
-            "value": properties[property_item]
-        }, ["property", "value"])
+        value = properties[property_item]
+
+        if type(value) == dict:
+            wiki_writer.create_table_row({
+                "property": property_item,
+            }, [ { "name": "property", "colspan": 2 } ])
+
+        else:
+            if type(value) == list:
+                value = "<pre>%s</pre>" % "\n".join(value)
+
+            wiki_writer.create_table_row({
+                "property": property_item,
+                "value": value
+            }, ["property", "value"])
 
     wiki_writer.create_table_footer()
     if back_link != None:
@@ -160,7 +173,7 @@ def write_template_definition(name, output_type, properties, back_link = None):
 
     wiki_writer.update_wiki_page("DDFReference_%s_%s" % (output_type, name))
 
-    time.sleep(2)
+    #time.sleep(2)
 
 wiki_writer = wiki_writer.WikiWriter(wiki_site)
 
