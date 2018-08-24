@@ -125,6 +125,27 @@ def writer_record_type_definition(record_type):
     for field in fields:
         write_template_definition(field, "Field", fields[field], "[[DDFReference_%s|<< %s]]" % (record_type.upper(), record_type.upper()))
 
+def property_compare(o1, o2):
+    if o1["name"] == "name":
+        return -1
+    else:
+        if o1["name"] < o2["name"]:
+            return -1
+        elif o1["name"] > o2["name"]:
+            return 1
+        else:
+            return 0
+
+def properties_list(properties):
+    result = []
+
+    for property_item in properties:
+        result.append({ "name": property_item, "value": properties[property_item]})
+
+    #result.sort(cmp = lambda o1, o2: property_compare(o1, o2))
+    result.sort(key = lambda o: o["name"])
+    return result
+
 def write_template_definition(name, output_type, properties, back_link = None):
     print "Updating Template/Field %s - %s" % (output_type, name)
     (properties, hierarchy_path) = merge_properties(properties)
@@ -135,11 +156,6 @@ def write_template_definition(name, output_type, properties, back_link = None):
     if properties.has_key("description"):
         wiki.write_paragraphs(properties["description"])
 
-    if properties.has_key("parent"):
-        parent_name = properties["parent"]["name"]
-        wiki.write_paragraphs("Descended from [[DDFReference_Template_%s|%s]]." % (parent_name, parent_name))
-
-    wiki.create_table_header(["Property", "Value" ])
     if properties.has_key("type"):
         del properties["type"]
   
@@ -150,29 +166,33 @@ def write_template_definition(name, output_type, properties, back_link = None):
         properties["templatename"] = "[[DDFReference_Template_%s|%s]]" % (properties["template"]["name"], properties["template"]["name"])
         del properties["template"]
 
-    for property_item in properties:
-        value = properties[property_item]
+    if properties.has_key("templatename"):
+        wiki.write_paragraphs("Descended from %s." % (properties["templatename"]))
+
+    wiki.create_table_header(["Property", "Value" ])
+    for property_item in properties_list(properties):
+        value = property_item["value"]
 
         if type(value) == dict:
             table = wiki_writer.Table()
             table.add_header()
 
-            for sub_property_item in value:
-                table.add_row([sub_property_item, value[sub_property_item]])
+            for sub_property_item in properties_list(value):
+                table.add_row([sub_property_item["name"], sub_property_item["value"]])
             table.add_footer()
 
             wiki.create_table_row({
-                "property": property_item,
+                "property": property_item["name"],
                 "value": table.to_string()
             }, ["property", "value"])
 
 
         else:
             if type(value) == list:
-                value = "<pre>%s</pre>" % "\n".join(value)
+                value = "<br/>".join(value)
 
             wiki.create_table_row({
-                "property": property_item,
+                "property": property_item["name"],
                 "value": value
             }, ["property", "value"])
 
