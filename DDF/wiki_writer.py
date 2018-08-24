@@ -147,5 +147,47 @@ class WikiWriter:
         
 
 class Table:
-    def add_header(self):
-        pass
+    def __init__(self):
+        self.lines = []
+
+    def add_header(self, cols = None):
+        self.lines.append('\n {| class="wikitable"')
+
+        if cols:
+            for col in cols:
+                self.lines.append('! %s' % col)
+
+    def add_row(self, data, cols = None):
+        self.lines.append('|-')
+
+        if cols:
+            for col in cols:
+                value = ""
+                if type(col) == dict:
+                    if data.has_key(col["name"]):           
+                        value = data[col["name"]] 
+
+                        #value = self.json_files.create_link_if_found(value)
+                    if col.has_key("colspan"):
+                        self.lines.append('| colspan=%s | %s' % (col["colspan"], value))
+                    else:
+                        self.lines.append('| %s' % value)
+                else:
+                    if data.has_key(col):           
+                        value = data[col] 
+
+                        #value = self.json_files.create_link_if_found(value)
+                    self.lines.append('| %s' % value)
+        else:
+            for data_item in data:
+                self.lines.append("|%s" % data_item)
+
+    def add_footer(self):
+        self.lines.append('|}')
+
+    def write(self, wiki_writer):
+        for line in self.lines:
+            wiki_writer.wiki_lines.append(line)
+
+    def to_string(self):
+        return "\n".join(self.lines)
