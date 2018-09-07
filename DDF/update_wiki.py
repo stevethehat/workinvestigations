@@ -201,8 +201,6 @@ def write_template_definition(name, output_type, properties, back_link = None):
 
     wiki.update_wiki_page("DDFReference_%s_%s" % (output_type, name))
 
-    #time.sleep(2)
-
 wiki = wiki_writer.WikiWriter(wiki_site)
 
 for definition_name in definitions:
@@ -210,13 +208,15 @@ for definition_name in definitions:
 
 
 wiki.start_page()
-wiki.create_table_header(["File", "Types", "Description"])
+table = wiki_writer.Table()
+table.add_header(["File", "Types", "Description"])
 for definition_name in definitions:
     definition_name = definition_name.upper()
-    wiki.create_table_row({ "file": "%s_FILE" % definition_name[:2], "types": "[[DDFReference_%s|%s]]" % (definition_name, definition_name), "description": definitions[definition_name.lower()]["description"]}, ["file", "types", "description"])
-#wiki.write_table_footer()
-wiki.update_wiki_page("DDFReference_Index")
+    table.add_row({ "file": "%s_FILE" % definition_name[:2], "types": "[[DDFReference_%s|%s]]" % (definition_name, definition_name), "description": definitions[definition_name.lower()]["description"]}, ["file", "types", "description"])
+table.add_footer()
 
+wiki.write_paragraphs(table.to_string())
+wiki.update_wiki_page("DDFReference_Index")
 
 for template in templates:
     write_template_definition(template, "Template", templates[template])
