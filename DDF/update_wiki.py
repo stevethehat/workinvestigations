@@ -38,9 +38,6 @@ def get_property(properties, key, default = "NOT SET"):
     else:
         return default
 
-def copy_properties(properties):
-    pass
-
 templates = {}
 def add_template(name, properties):
     if not(templates.has_key(name)):
@@ -81,9 +78,9 @@ def writer_record_type_definition(record_type):
     fields = {}
     wiki.start_page()
     wiki.write_page_header()
-    wiki.write_header(2, "Fields")
 
-    #json_path = os.path.join("output", "%s.json" % record_type)
+
+    wiki.write_header(2, "General", "general")
     json_path = "/Users/stevelamb/Development/ibcos/investigations/DDF/output/%s.json" % record_type
     with open(json_path) as json_definition:
         json_definition = json.load(json_definition)
@@ -94,6 +91,8 @@ def writer_record_type_definition(record_type):
         definitions[record_type]["description"] = "UNKNOWN"
 
     wiki.write_paragraphs(definitions[record_type]["description"])
+
+    wiki.write_header(2, "Fields", "fields")
 
     wiki.create_table_header(["Name", "Description", "Type", "Size", "Inheritence" ])
 
