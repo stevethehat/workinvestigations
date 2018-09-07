@@ -165,21 +165,22 @@ def write_template_definition(name, output_type, properties, back_link = None):
     if properties.has_key("templatename"):
         wiki.write_paragraphs("Descended from %s." % (properties["templatename"]))
 
-    wiki.create_table_header(["Property", "Value" ])
+    properties_table = wiki_writer.Table()
+    properties_table.add_header(["Property", "Value" ])
     for property_item in properties_list(properties):
         value = property_item["value"]
 
         if type(value) == dict:
-            table = wiki_writer.Table()
-            table.add_header()
+            sub_table = wiki_writer.Table()
+            sub_table.add_header()
 
             for sub_property_item in properties_list(value):
-                table.add_row([sub_property_item["name"], sub_property_item["value"]])
-            table.add_footer()
+                sub_table.add_row([sub_property_item["name"], sub_property_item["value"]])
+            sub_table.add_footer()
 
-            wiki.create_table_row({
+            properties_table.add_row({
                 "property": property_item["name"],
-                "value": table.to_string()
+                "value": sub_table.to_string()
             }, ["property", "value"])
 
 
@@ -187,12 +188,14 @@ def write_template_definition(name, output_type, properties, back_link = None):
             if type(value) == list:
                 value = "<br/>".join(value)
 
-            wiki.create_table_row({
+            properties_table.add_row({
                 "property": property_item["name"],
                 "value": value
             }, ["property", "value"])
 
-    wiki.create_table_footer()
+    properties_table.add_footer()
+
+    wiki.write_paragraphs(properties_table.to_string())
     if back_link != None:
         wiki.write_paragraphs(back_link)
 
