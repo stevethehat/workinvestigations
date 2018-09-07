@@ -93,7 +93,7 @@ class WikiWriter:
         self.wiki_lines.append('|}')
         
     def write_header(self, level, text):
-        self.wiki_lines.append("= %s = " % (text))
+        self.wiki_lines.append("== %s ==" % (text))
 
     def write_paragraphs(self, paragraphs):
         # create the example description paragraphs

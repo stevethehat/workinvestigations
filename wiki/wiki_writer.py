@@ -75,7 +75,7 @@ class WikiWriter:
             if data.has_key(col):           
                 value = data[col] 
 
-                value = self.json_files.create_link_if_found(value)
+                #value = self.json_files.create_link_if_found(value)
             self.wiki_lines.append('| %s' % value)
 
     def create_table_footer(self):

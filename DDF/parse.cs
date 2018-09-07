@@ -37,16 +37,6 @@ namespace DDF{
 
             Tokens["promptfont"] = @"^Promptfont\s+([A-Z_]+)";
             Tokens["font"] = @"^Font\s+([A-Z_]+)";
-            /* 
-            Tokens["dimension"] = @"Dimension\s+([0-9]+)";
-            Tokens["longdescription"] = @"Long Description";            
-            Tokens["longdescription"] = @"^""([^""]+)""";            
-
-            Tokens["help"] = @"Help\s+""([^""]+)""";
-            Tokens["prompt"] = @"Prompt\s+""([^""]+)""";
-            Tokens["infoline"] = @"Info Line\s+""([^""]+)""";
-            */
-            //Prompt "Value:"   Info Line "Enter an Alphanumeric Value"   Font ALPHA_FONT
         }        
     }
 
@@ -171,8 +161,21 @@ namespace DDF{
                     }
                 }
             }
-
+            this.root = root;
             return root;
+        }
+
+        public void Save(string fileName){
+            string outputFile = Path.Combine("output", $"{fileName}.json");
+            string json = JsonConvert.SerializeObject(this.root, Formatting.Indented);
+            
+            Console.WriteLine(json);
+
+            if(System.IO.File.Exists(outputFile)){
+                System.IO.File.Delete(outputFile);
+            }
+            System.IO.File.WriteAllText(outputFile, json);
+
         }
     }
 }
