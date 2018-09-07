@@ -25,9 +25,9 @@ wiki_site.login("steve", "V4l3n+!n4")
 definitions = {
     #"prerec": { },
     #"pmfrec": { },
-    "pcdrec": { },
-    "pcgrec": { },
-    #"ctfrec": { },
+    #"pcdrec": { },
+    #"pcgrec": { },
+    "ctfrec": { },
     #"cmfrec": { }
 }
 
@@ -77,10 +77,8 @@ def merge_properties(properties):
 def writer_record_type_definition(record_type):
     fields = {}
     wiki.start_page()
-    wiki.write_page_header()
 
-
-    wiki.write_header(2, "General", "general")
+    wiki.write_header(2, "General", "general", False)
     json_path = "/Users/stevelamb/Development/ibcos/investigations/DDF/output/%s.json" % record_type
     with open(json_path) as json_definition:
         json_definition = json.load(json_definition)
@@ -149,8 +147,7 @@ def write_template_definition(name, output_type, properties, back_link = None):
     print "Updating Template/Field %s - %s" % (output_type, name)
     (properties, hierarchy_path) = merge_properties(properties)
     wiki.start_page()
-    wiki.write_page_header()
-    wiki.write_header(2, "Properties")
+    wiki.write_header(2, "Properties", "properties")
 
     if properties.has_key("description"):
         wiki.write_paragraphs(properties["description"])
@@ -210,7 +207,6 @@ for definition_name in definitions:
 
 
 wiki.start_page()
-wiki.write_page_header()
 wiki.create_table_header(["File", "Types", "Description"])
 for definition_name in definitions:
     definition_name = definition_name.upper()
