@@ -22,15 +22,23 @@ wiki_site.login("stevelamb", "bh49bb")
 #wiki_site.login("steve", "V4l3n+!n4")
 
 # prerec, pmfrec, pcdrec, pcgrec, ctfrec, cmfrec
-definitions = {
-    "prerec": { },
-    "pmfrec": { },
-    "pcdrec": { },
-    "pcgrec": { },
-    "ctfrec": { },
-    "cmfrec": { }
-}
 
+definitions = {
+    "deprec": {},
+    #"prerec": {},
+    #"pmfrec": {},
+    #"pcdrec": {},
+    #"pcgrec": {},
+    #"ctfrec": {},
+    #"cmfrec": {},
+    #"ivtrec": {},
+    #"vatrec": {},
+    #"pihrec": {},
+    #"pilrec": {},
+    #"pohrec": {},
+    #"polrec": {},
+    #"powrec": {}
+}
 
 def get_property(properties, key, default = "NOT SET"):
     if properties.has_key(key):
@@ -80,8 +88,9 @@ def merge_properties(properties):
 def writer_record_type_definition(record_type):
     fields = {}
     wiki_writer.start_page()
-    wiki_writer.write_page_header()
-    wiki_writer.write_header(2, "Fields")
+    #wiki_writer.write_page_header()
+    wiki_writer.write_header(2, "General", "general")
+    wiki_writer.write_header(2, "Fields", "fields")
 
     json_path = os.path.join("output", "%s.json" % record_type)
     #json_path = "/Users/stevelamb/Development/ibcos/investigations/DDF/output/%s.json" % record_type
@@ -129,7 +138,8 @@ def write_template_definition(name, output_type, properties, back_link = None):
     (properties, hierarchy_path) = merge_properties(properties)
     wiki_writer.start_page()
     wiki_writer.write_page_header()
-    wiki_writer.write_header(2, "Properties")
+    wiki_writer.write_header(2, "General", "general")
+    wiki_writer.write_header(2, "Properties", "properties")
 
     if properties.has_key("parent"):
         parent_name = properties["parent"]["name"]
@@ -167,7 +177,7 @@ wiki_writer = wiki_writer.WikiWriter(wiki_site)
 for definition_name in definitions:
     writer_record_type_definition(definition_name)
 
-
+"""
 wiki_writer.start_page()
 wiki_writer.write_page_header()
 wiki_writer.create_table_header(["File", "Types", "Description"])
@@ -176,10 +186,13 @@ for definition_name in definitions:
     wiki_writer.create_table_row({ "file": "%s_FILE" % definition_name[:2], "types": "[[DDFReference_%s|%s]]" % (definition_name, definition_name), "description": definitions[definition_name.lower()]["description"]}, ["file", "types", "description"])
 #wiki_writer.write_table_footer()
 wiki_writer.update_wiki_page("DDFReference_Index")
+"""
 
+# DDFReference_PCGREC
 
 for template in templates:
     write_template_definition(template, "Template", templates[template])
+
 
 
 
