@@ -120,6 +120,7 @@ namespace DDF{
 
     public class DDFFile{
         readonly string _fileName;
+        dynamic root;
         public DDFFile(string section, string name){
             string root = @"repository";
             //string root = "/Users/stevelamb/Development/ibcos/investigations/DDF/repository";
