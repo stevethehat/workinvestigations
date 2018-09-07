@@ -67,11 +67,8 @@ def merge_properties(properties):
         hierarchy.append(property_level)
 
     for property_level in reversed(hierarchy):
-        # = result.update(property_level)
         result = dict(result.items() + property_level.items())
 
-
-    #print result
     return (result, hierarchy_path)
 
 def writer_record_type_definition(record_type):
@@ -92,7 +89,8 @@ def writer_record_type_definition(record_type):
 
     wiki.write_header(2, "Fields", "fields")
 
-    wiki.create_table_header(["Name", "Description", "Type", "Size", "Inheritence" ])
+    fields_table = wiki_writer.Table()
+    fields_table.add_header(["Name", "Description", "Type", "Size", "Inheritence" ])
 
     for field in json_definition["properties"]["fields"]:
         (properties, hierarchy_path) = merge_properties(field["properties"])
@@ -103,7 +101,7 @@ def writer_record_type_definition(record_type):
         path = ""
         for path_level in hierarchy_path:
             path = "%s > [[DDFReference_Template_%s|%s]]" % (path, path_level, path_level)
-        wiki.create_table_row(
+        fields_table.add_row(
             { 
                 "name": "[[DDFReference_Field_%s|%s]]" % (field_name, field_name),
                 "description": get_property(properties, "description"),
@@ -113,9 +111,13 @@ def writer_record_type_definition(record_type):
             }, ["name", "description", "type", "size", "inheritance"])
 
         if properties.has_key("longdescription"):
-            wiki.create_table_row({ "title": "Long Description", "value": "<br/>".join(properties["longdescription"])}, ["title", { "name": "value", "colspan": 4 }])
+            fields_table.add_row({ "title": "Long Description", "value": "<br/>".join(properties["longdescription"])}, ["title", { "name": "value", "colspan": 4 }])
     
-    wiki.create_table_footer()
+    fields_table.add_footer()
+
+    wiki.write_paragraphs(fields_table.to_string())
+    wiki.write_paragraphs("[[DDFReference_Index||<< Index]]")
+
     wiki.update_wiki_page("DDFReference_%s" % record_type.upper())
     #time.sleep(2)
 
