@@ -124,24 +124,12 @@ def writer_record_type_definition(record_type):
     for field in fields:
         write_template_definition(field, "Field", fields[field], "[[DDFReference_%s|<< %s]]" % (record_type.upper(), record_type.upper()))
 
-def property_compare(o1, o2):
-    if o1["name"] == "name":
-        return -1
-    else:
-        if o1["name"] < o2["name"]:
-            return -1
-        elif o1["name"] > o2["name"]:
-            return 1
-        else:
-            return 0
-
 def properties_list(properties):
     result = []
 
     for property_item in properties:
         result.append({ "name": property_item, "value": properties[property_item]})
 
-    #result.sort(cmp = lambda o1, o2: property_compare(o1, o2))
     result.sort(key = lambda o: o["name"])
     return result
 
@@ -149,11 +137,13 @@ def write_template_definition(name, output_type, properties, back_link = None):
     print "Updating Template/Field %s - %s" % (output_type, name)
     (properties, hierarchy_path) = merge_properties(properties)
     wiki.start_page()
-    section = wiki.add_section(2, "Properties", "properties")
+
+    section = wiki.add_section(2, "General", "general", False)
 
     if properties.has_key("description"):
         section.add_paragraphs(properties["description"])
 
+    section = wiki.add_section(2, "Properties", "properties")
     if properties.has_key("type"):
         del properties["type"]
   
