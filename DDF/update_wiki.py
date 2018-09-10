@@ -25,9 +25,9 @@ wiki_site.login("steve", "V4l3n+!n4")
 definitions = {
     #"prerec": { },
     #"pmfrec": { },
-    "pcdrec": { },
-    "pcgrec": { },
-    #"ctfrec": { },
+    #"pcdrec": { },
+    #"pcgrec": { },
+    "ctfrec": { },
     #"cmfrec": { }
 }
 
@@ -37,9 +37,6 @@ def get_property(properties, key, default = "NOT SET"):
         return properties[key]
     else:
         return default
-
-def copy_properties(properties):
-    pass
 
 templates = {}
 def add_template(name, properties):
@@ -70,20 +67,15 @@ def merge_properties(properties):
         hierarchy.append(property_level)
 
     for property_level in reversed(hierarchy):
-        # = result.update(property_level)
         result = dict(result.items() + property_level.items())
 
-
-    #print result
     return (result, hierarchy_path)
 
 def writer_record_type_definition(record_type):
     fields = {}
     wiki.start_page()
-    wiki.write_page_header()
-    wiki.write_header(2, "Fields")
 
-    #json_path = os.path.join("output", "%s.json" % record_type)
+    section = wiki.add_section(2, "General", "general", False)
     json_path = "/Users/stevelamb/Development/ibcos/investigations/DDF/output/%s.json" % record_type
     with open(json_path) as json_definition:
         json_definition = json.load(json_definition)
@@ -93,9 +85,12 @@ def writer_record_type_definition(record_type):
     else:
         definitions[record_type]["description"] = "UNKNOWN"
 
-    wiki.write_paragraphs(definitions[record_type]["description"])
+    section.add_paragraphs(definitions[record_type]["description"])
 
-    wiki.create_table_header(["Name", "Description", "Type", "Size", "Inheritence" ])
+    section = wiki.add_section(2, "Fields", "fields")
+
+    fields_table = wiki_writer.Table()
+    fields_table.add_header(["Name", "Description", "Type", "Size", "Inheritence" ])
 
     for field in json_definition["properties"]["fields"]:
         (properties, hierarchy_path) = merge_properties(field["properties"])
@@ -106,7 +101,7 @@ def writer_record_type_definition(record_type):
         path = ""
         for path_level in hierarchy_path:
             path = "%s > [[DDFReference_Template_%s|%s]]" % (path, path_level, path_level)
-        wiki.create_table_row(
+        fields_table.add_row(
             { 
                 "name": "[[DDFReference_Field_%s|%s]]" % (field_name, field_name),
                 "description": get_property(properties, "description"),
@@ -116,30 +111,39 @@ def writer_record_type_definition(record_type):
             }, ["name", "description", "type", "size", "inheritance"])
 
         if properties.has_key("longdescription"):
-            wiki.create_table_row({ "title": "Long Description", "value": "<br/>".join(properties["longdescription"])}, ["title", { "name": "value", "colspan": 4 }])
+            fields_table.add_row({ "title": "Long Description", "value": "<br/>".join(properties["longdescription"])}, ["title", { "name": "value", "colspan": 4 }])
     
-    wiki.create_table_footer()
+    fields_table.add_footer()
+
+    section.add_paragraphs(fields_table.to_string())
+    section.add_paragraphs("[[DDFReference_Index|<< Index]]")
+
     wiki.update_wiki_page("DDFReference_%s" % record_type.upper())
     #time.sleep(2)
 
     for field in fields:
         write_template_definition(field, "Field", fields[field], "[[DDFReference_%s|<< %s]]" % (record_type.upper(), record_type.upper()))
 
+def properties_list(properties):
+    result = []
+
+    for property_item in properties:
+        result.append({ "name": property_item, "value": properties[property_item]})
+
+    result.sort(key = lambda o: o["name"])
+    return result
+
 def write_template_definition(name, output_type, properties, back_link = None):
     print "Updating Template/Field %s - %s" % (output_type, name)
     (properties, hierarchy_path) = merge_properties(properties)
     wiki.start_page()
-    wiki.write_page_header()
-    wiki.write_header(2, "Properties")
+
+    section = wiki.add_section(2, "General", "general", False)
 
     if properties.has_key("description"):
-        wiki.write_paragraphs(properties["description"])
+        section.add_paragraphs(properties["description"])
 
-    if properties.has_key("parent"):
-        parent_name = properties["parent"]["name"]
-        wiki.write_paragraphs("Descended from [[DDFReference_Template_%s|%s]]." % (parent_name, parent_name))
-
-    wiki.create_table_header(["Property", "Value" ])
+    section = wiki.add_section(2, "Properties", "properties")
     if properties.has_key("type"):
         del properties["type"]
   
@@ -150,39 +154,44 @@ def write_template_definition(name, output_type, properties, back_link = None):
         properties["templatename"] = "[[DDFReference_Template_%s|%s]]" % (properties["template"]["name"], properties["template"]["name"])
         del properties["template"]
 
-    for property_item in properties:
-        value = properties[property_item]
+    if properties.has_key("templatename"):
+        section.add_paragraphs("Descended from %s." % (properties["templatename"]))
+
+    properties_table = wiki_writer.Table()
+    properties_table.add_header(["Property", "Value" ])
+    for property_item in properties_list(properties):
+        value = property_item["value"]
 
         if type(value) == dict:
-            table = wiki_writer.Table()
-            table.add_header()
+            sub_table = wiki_writer.Table()
+            sub_table.add_header()
 
-            for sub_property_item in value:
-                table.add_row([sub_property_item, value[sub_property_item]])
-            table.add_footer()
+            for sub_property_item in properties_list(value):
+                sub_table.add_row([sub_property_item["name"], sub_property_item["value"]])
+            sub_table.add_footer()
 
-            wiki.create_table_row({
-                "property": property_item,
-                "value": table.to_string()
+            properties_table.add_row({
+                "property": property_item["name"],
+                "value": sub_table.to_string()
             }, ["property", "value"])
 
 
         else:
             if type(value) == list:
-                value = "<pre>%s</pre>" % "\n".join(value)
+                value = "<br/>".join(value)
 
-            wiki.create_table_row({
-                "property": property_item,
+            properties_table.add_row({
+                "property": property_item["name"],
                 "value": value
             }, ["property", "value"])
 
-    wiki.create_table_footer()
+    properties_table.add_footer()
+
+    section.add_paragraphs(properties_table.to_string())
     if back_link != None:
-        wiki.write_paragraphs(back_link)
+        section.add_paragraphs(back_link)
 
     wiki.update_wiki_page("DDFReference_%s_%s" % (output_type, name))
-
-    #time.sleep(2)
 
 wiki = wiki_writer.WikiWriter(wiki_site)
 
@@ -191,14 +200,16 @@ for definition_name in definitions:
 
 
 wiki.start_page()
-wiki.write_page_header()
-wiki.create_table_header(["File", "Types", "Description"])
+section = wiki.add_section(2, "DDR Reference")
+table = wiki_writer.Table()
+table.add_header(["File", "Types", "Description"])
 for definition_name in definitions:
     definition_name = definition_name.upper()
-    wiki.create_table_row({ "file": "%s_FILE" % definition_name[:2], "types": "[[DDFReference_%s|%s]]" % (definition_name, definition_name), "description": definitions[definition_name.lower()]["description"]}, ["file", "types", "description"])
-#wiki.write_table_footer()
-wiki.update_wiki_page("DDFReference_Index")
+    table.add_row({ "file": "%s_FILE" % definition_name[:2], "types": "[[DDFReference_%s|%s]]" % (definition_name, definition_name), "description": definitions[definition_name.lower()]["description"]}, ["file", "types", "description"])
+table.add_footer()
 
+section.add_paragraphs(table.to_string())
+wiki.update_wiki_page("DDFReference_Index")
 
 for template in templates:
     write_template_definition(template, "Template", templates[template])

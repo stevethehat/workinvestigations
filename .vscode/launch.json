@@ -17,8 +17,8 @@
         "request": "launch",
         "preLaunchTask": "build",
         "program": "${workspaceRoot}/DDF/bin/Debug/netcoreapp2.1/DDF.dll",
-        "args": [],
-        "cwd": "${workspaceRoot}",
+        "args": ["ABI_FILE"],
+        "cwd": "${workspaceRoot}/DDF",
         "stopAtEntry": false,
         "console": "internalConsole"
     },
