@@ -1,0 +1,72 @@
+{
+	"name": "helloworld",
+	"displayName": "helloworld",
+	"description": "",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.31.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:extension.helloWorld",
+		"onCommand:extension.wanker",
+		"onLanguage:synddf"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"languages": [
+			{
+				"id": "synddf",
+				"extensions": [".ddf", ".DDF"]
+			}
+		],
+		"commands": [
+			{
+				"command": "extension.helloWorld",
+				"title": "Hello World"
+			},
+			{
+				"command": "extension.wanker",
+				"title": "Tell me what i am ;)"
+			}
+		],
+		"grammars": [{
+            "language": "synddf",
+            "scopeName": "source.ddf",
+            "path": "./syntaxes/synddf.tmLanguage.json"
+		}],
+		"configuration":{
+			"type": "object",
+			"title": "Repository Info",
+			"properties": {
+				"synddf.repositoryRootFolder":{
+					"type":"string",
+					"default": null,
+					"description": "Root rolder of the repository data"
+				},
+				"synddf.modelRootFolder":{
+					"type":"string",
+					"default": null,
+					"description": "Root rolder of the generated models"
+				}
+			}
+		}
+		
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"test": "npm run compile && node ./node_modules/vscode/bin/test"
+	},
+	"devDependencies": {
+		"typescript": "^3.3.1",
+		"vscode": "^1.1.28",
+		"tslint": "^5.12.1",
+		"@types/node": "^10.12.21",
+		"@types/mocha": "^2.2.42"
+	}
+}

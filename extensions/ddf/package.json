@@ -1,0 +1,25 @@
+{
+    "name": "ddf",
+    "displayName": "ddf",
+    "description": "",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.31.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "synddf",
+            "aliases": ["repo definitions", "synddf"],
+            "extensions": [".ddf",".DDF"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "synddf",
+            "scopeName": "source.ddf",
+            "path": "./syntaxes/synddf.tmLanguage.json"
+        }]
+    }
+}
