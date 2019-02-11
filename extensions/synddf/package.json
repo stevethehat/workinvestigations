@@ -1,6 +1,6 @@
 {
-	"name": "helloworld",
-	"displayName": "helloworld",
+	"name": "synddf",
+	"displayName": "Syn DDF",
 	"description": "",
 	"version": "0.0.1",
 	"engines": {
@@ -10,8 +10,7 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.helloWorld",
-		"onCommand:extension.wanker",
+		"onCommand:extension.synddf",
 		"onLanguage:synddf"
 	],
 	"main": "./out/extension.js",
@@ -19,41 +18,41 @@
 		"languages": [
 			{
 				"id": "synddf",
-				"extensions": [".ddf", ".DDF"]
+				"extensions": [
+					".ddf",
+					".DDF"
+				]
 			}
 		],
 		"commands": [
 			{
-				"command": "extension.helloWorld",
-				"title": "Hello World"
-			},
-			{
-				"command": "extension.wanker",
-				"title": "Tell me what i am ;)"
+				"command": "extension.synddf",
+				"title": "Syn DDF"
 			}
 		],
-		"grammars": [{
-            "language": "synddf",
-            "scopeName": "source.ddf",
-            "path": "./syntaxes/synddf.tmLanguage.json"
-		}],
-		"configuration":{
+		"grammars": [
+			{
+				"language": "synddf",
+				"scopeName": "source.ddf",
+				"path": "./syntaxes/synddf.tmLanguage.json"
+			}
+		],
+		"configuration": {
 			"type": "object",
 			"title": "Repository Info",
 			"properties": {
-				"synddf.repositoryRootFolder":{
-					"type":"string",
+				"synddf.repositoryRootFolder": {
+					"type": "string",
 					"default": null,
 					"description": "Root rolder of the repository data"
 				},
-				"synddf.modelRootFolder":{
-					"type":"string",
+				"synddf.modelRootFolder": {
+					"type": "string",
 					"default": null,
 					"description": "Root rolder of the generated models"
 				}
 			}
 		}
-		
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
