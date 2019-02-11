@@ -7,6 +7,15 @@
 		},
 		{
 			"include": "#strings"
+		},
+		{
+			"include": "#templates"
+		},
+		{
+			"include": "#names"
+		},
+		{
+			"include": "#types"
 		}
 	],
 	"repository": {
@@ -17,10 +26,18 @@
 			}]
 		},
 		"templates": {
-			"name": "entity.name.type",
-			"patterns": [
-				"TBASEALPHA"
-			]
+			
+			"patterns": [{
+                "name": "entity.name.type",
+                "match": "TBASEALPHA"
+            }]
+		},
+		"names": {
+			
+			"patterns": [{
+                "name": "entity.name.tag",
+                "match": "Field"
+            }]
 		},
 		"strings": {
 			"name": "string.quoted.double.synddf",
@@ -31,7 +48,13 @@
 					"name": "constant.character.escape.synddf",
 					"match": "\\\\."
 				}
-			]
+            ]
+        },            
+		"types": {
+			"name": "entity.name.type",
+			"begin": "Template\\s+",
+            "while": "[A-Z_]+",
+            "patterns": []
 		}
 	},
 	"scopeName": "source.ddf"
