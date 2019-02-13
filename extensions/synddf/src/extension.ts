@@ -1,6 +1,9 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import { TemplateParser } from './parsing';
+let fs = require('fs');
+let path = require('path');
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -21,14 +24,13 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 
 	vscode.languages.registerHoverProvider('synddf', {
-		provideHover(document, position, token) {
+		provideHover(document: vscode.TextDocument, position: vscode.Position, token) {
 			const range 	= document.getWordRangeAtPosition(position);
 			const text 		= document.getText(range);
 
 			var message 	= new vscode.MarkdownString();
-			message.appendMarkdown(`=Hover ${text} **Content**=\n`);
-			message.appendMarkdown(`this\n====`);
-			message.appendMarkdown(`##Hover ${text} Content\n`);
+			message.appendMarkdown(`=== Hover ${text} ===\n`);
+			message.appendMarkdown(`${position.character}`)
 			message.appendCodeblock('javascript', `var a = 'b'`);
 
 			const result = new vscode.Hover(message, range);
@@ -37,15 +39,16 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 
 	vscode.languages.registerDeclarationProvider('synddf', {
-		provideDeclaration(document, position, provider) {
+		provideDeclaration(document: vscode.TextDocument, position: vscode.Position, provider) {
 			const range 	    = document.getWordRangeAtPosition(position);
-			const text 		    = document.getText(range);
-            const rootFolder    = vscode.workspace.getConfiguration('synddf');
-            const file 		    = new vscode.Location(vscode.Uri.file(`${rootFolder.get('repositoryRootFolder')}\\template\\${text}.DDF`), new vscode.Position(0, 1));
+			const text 			= document.getText(range);
+			const template 		= new TemplateParser(text);
 
-			vscode.window.showInformationMessage(`we are gonna find a thing..in ${text} in ${document.uri}`);
-
-			return file;
+			if (template.Exists) {
+				return template.File;
+			} else {
+				return undefined;
+			}
 		}
 	});
 
