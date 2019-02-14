@@ -3,7 +3,7 @@ let fs = require('fs');
 let path = require('path');
 
 
-export class TemplateParser {
+export class Template {
     get File(): vscode.Location{
         return new vscode.Location(vscode.Uri.file(this.FileName), new vscode.Position(0, 1));
     }
