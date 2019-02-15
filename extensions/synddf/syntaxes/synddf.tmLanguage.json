@@ -10,7 +10,10 @@
 		},
 		{
 			"include": "#templates"
-		},
+        },
+        {
+            "include": "#numeric"
+        },
 		{
 			"include": "#names"
 		},
@@ -22,12 +25,18 @@
 		"keywords": {
 			"patterns": [{
 				"name": "keyword.control.synddf",
-				"match": "\\b(Description|Long Desciption|Info Line|Prompt|Size|Report|Noview)\\b"
+				"match": "\\b(Description|Long Desciption|Info Line|Prompt|Size|Report|Noview|Precision|Size)\\b"
 			}]
-		},
-
+        },
+        "numbers":{
+            "patterns": [
+                {
+                    "name": "constant.numeric",
+                    "match": "\\b[0-9]+\\b"
+                }
+            ]
+        },
 		"names": {
-			
 			"patterns": [{
                 "name": "entity.name.tag",
                 "match": "^Field|Key|Structure|Template"
@@ -53,7 +62,40 @@
 					"patterns": [
 						{
 							"name": "entity.name.type",
-							"match": "[A-Z_]+"
+							"match": "[A-Z_0-9]+"
+						}
+					]		
+				},
+				{
+					"name": "keyword.control.synddf",
+					"begin": "\\sType\\s+",
+					"end": "\\s",
+					"patterns": [
+						{
+							"name": "entity.name.type",
+							"match": "[A-Z_0-9]+"
+						}
+					]		
+				},
+				{
+					"name": "keyword.control.synddf",
+					"begin": "\\sParent\\s+",
+					"end": "\\s",
+					"patterns": [
+						{
+							"name": "entity.name.type",
+							"match": "[A-Z_0-9]+"
+						}
+					]		
+				},
+				{
+					"name": "keyword.control.synddf",
+					"begin": "\\sODBC Name\\s+",
+					"end": "\\s",
+					"patterns": [
+						{
+							"name": "entity.name.type",
+							"match": "[A-Z_0-9]+"
 						}
 					]		
 				}

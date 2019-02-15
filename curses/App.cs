@@ -39,7 +39,7 @@ namespace curses{
 
             InfoView infoView = new InfoView(scrollView);
             infoView.Add("hello");
-            infoView.Display("/Users/stevelamb/Development/curses/test.json");
+            //infoView.Display("/Users/stevelamb/Development/curses/test.json");
 
             Application.Run ();            
         }

@@ -6,6 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="consoletest\**" />
+    <EmbeddedResource Remove="consoletest\**" />
+    <None Remove="consoletest\**" />
   </ItemGroup>
 
   <ItemGroup>

@@ -20,5 +20,40 @@ export abstract class Base {
         this.Exists     = fs.existsSync(this.FileName);
     }
 
+    find(text: string): vscode.Range | null{
+        const textLines = this.getText().split('\n');
+        var found       = false;
+        var foundLine   = 0;
+
+        for(var line in textLines ){
+            if(line.indexOf(text) != -1){
+                found = true;
+                break;
+            }            
+            foundLine++;
+        }
+        
+        if(true === found){
+            const foundPosition = textLines[foundLine].indexOf(text);
+            const start = new vscode.Position(foundLine, foundPosition);
+            const end = new vscode.Position(foundLine, foundPosition + text.length);    
+
+            return new vscode.Range(start, end);
+        } else {
+            return null;
+        }
+
+        var start = new vscode.Position(1, 1);
+        var end = new vscode.Position(1, 10);
+        var result = new vscode.Range(start, end);
+
+        return result;
+    }
+
+    protected getText(): string{
+        return fs.readFileSync(this.FileName);
+    }
+
+
     abstract getFileName(): string;
 }

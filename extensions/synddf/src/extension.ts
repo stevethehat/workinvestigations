@@ -3,6 +3,7 @@
 import * as vscode from 'vscode';
 import { Template } from './template';
 import { CodeLenseProvider } from './codelense';
+import { Model } from './model';
 let fs = require('fs');
 let path = require('path');
 
@@ -42,9 +43,17 @@ export function activate(context: vscode.ExtensionContext) {
 	vscode.languages.registerDeclarationProvider('synddf', {
 		provideDeclaration(document: vscode.TextDocument, position: vscode.Position, provider) {
 			const range 	    = document.getWordRangeAtPosition(position);
-			const text 			= document.getText(range);
+            const text 			= document.getText(range);
+            var fileName        = document.fileName;
+            fileName            = fileName.substring(fileName.lastIndexOf(path.sep) +1);
+            fileName            = fileName.substring(0, fileName.indexOf('.'));
+            const name          = fileName;
+            const target        = new Model(name);
+            target.find(name);
+
 			const template 		= new Template(text);
 
+            //const test = new vscode.textdocument
 			if (template.Exists) {
 				return template.Location;
 			} else {
