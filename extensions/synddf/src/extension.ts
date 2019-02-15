@@ -31,7 +31,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 			var message 	= new vscode.MarkdownString();
 			message.appendMarkdown(`=== Hover ${text} ===\n`);
-			message.appendMarkdown(`${position.character}`)
+			message.appendMarkdown(`${position.character}`);
 			message.appendCodeblock('javascript', `var a = 'b'`);
 
 			const result = new vscode.Hover(message, range);
@@ -66,7 +66,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	});
 	*/
-	vscode.languages.registerCodeLensProvider('synddf', new CodeLenseProvider());
+	//vscode.languages.registerCodeLensProvider('synddf', new CodeLenseProvider());
 
 	context.subscriptions.push(disposable);
 }
