@@ -2,6 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import { Template } from './template';
+import { CodeLenseProvider } from './codelense';
 let fs = require('fs');
 let path = require('path');
 
@@ -30,7 +31,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 			var message 	= new vscode.MarkdownString();
 			message.appendMarkdown(`=== Hover ${text} ===\n`);
-			message.appendMarkdown(`${position.character}`)
+			message.appendMarkdown(`${position.character}`);
 			message.appendCodeblock('javascript', `var a = 'b'`);
 
 			const result = new vscode.Hover(message, range);
@@ -45,12 +46,27 @@ export function activate(context: vscode.ExtensionContext) {
 			const template 		= new Template(text);
 
 			if (template.Exists) {
-				return template.File;
+				return template.Location;
 			} else {
 				return undefined;
 			}
 		}
 	});
+
+	/*
+	vscode.languages.registerCodeLensProvider('synddf', {
+		provideCodeLenses(document: vscode.TextDocument, token): vscode.CodeLens[]{
+			var lense = new CodeLenseProvider(
+				new vscode.Range(
+					new vscode.Position(1, 1),
+					new vscode.Position(2, 1)
+				));
+			return [lense];
+
+		}
+	});
+	*/
+	//vscode.languages.registerCodeLensProvider('synddf', new CodeLenseProvider());
 
 	context.subscriptions.push(disposable);
 }
