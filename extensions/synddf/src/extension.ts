@@ -1,7 +1,8 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-import { TemplateParser } from './parsing';
+import { Template } from './template';
+import { CodeLenseProvider } from './codelense';
 let fs = require('fs');
 let path = require('path');
 
@@ -42,15 +43,30 @@ export function activate(context: vscode.ExtensionContext) {
 		provideDeclaration(document: vscode.TextDocument, position: vscode.Position, provider) {
 			const range 	    = document.getWordRangeAtPosition(position);
 			const text 			= document.getText(range);
-			const template 		= new TemplateParser(text);
+			const template 		= new Template(text);
 
 			if (template.Exists) {
-				return template.File;
+				return template.Location;
 			} else {
 				return undefined;
 			}
 		}
 	});
+
+	/*
+	vscode.languages.registerCodeLensProvider('synddf', {
+		provideCodeLenses(document: vscode.TextDocument, token): vscode.CodeLens[]{
+			var lense = new CodeLenseProvider(
+				new vscode.Range(
+					new vscode.Position(1, 1),
+					new vscode.Position(2, 1)
+				));
+			return [lense];
+
+		}
+	});
+	*/
+	vscode.languages.registerCodeLensProvider('synddf', new CodeLenseProvider());
 
 	context.subscriptions.push(disposable);
 }
