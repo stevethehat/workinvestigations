@@ -1,7 +1,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-import { SynDDF, Token } from './synddf';
+import { SynDDF, Token, TokenOrNull } from './synddf';
 import { Template } from './template';
 import { CodeLenseProvider } from './codelense';
 import { Model } from './model';
@@ -30,28 +30,32 @@ export function activate(context: vscode.ExtensionContext) {
 
 	vscode.languages.registerHoverProvider('synddf', {
 		provideHover(document: vscode.TextDocument, position: vscode.Position, token) {
-			const range 	= document.getWordRangeAtPosition(position);
+			const range = document.getWordRangeAtPosition(position);
+			const hoverToken: TokenOrNull = SynDDF.getTokenFromContext(document, position);
+
+			if (null !== hoverToken) {
+				return new vscode.Hover(hoverToken.getHover(), range);
+			} else {
+				return undefined;
+			}
+
+			/*
 			const text 		= document.getText(range);
 
 			var message 	= new vscode.MarkdownString();
-			message.appendMarkdown(`=== Hover ${text} ===\n`);
+			message.appendMarkdown(`### Hover ${text} ###\n`);
 			message.appendMarkdown(`${position.character}`);
 			message.appendCodeblock('javascript', `var a = 'b'`);
 
 			const result = new vscode.Hover(message, range);
 			return result;
+			*/
 		}
 	});
 
 	vscode.languages.registerDeclarationProvider('synddf', {
-		provideDeclaration(document: vscode.TextDocument, position: vscode.Position, provider) {
-			//const range 	    = document.getWordRangeAtPosition(position);
-			//const text 			= document.getText(range);
-			
-			//const target 		= new Model(SynDDF.modelFromFilename(document.fileName));
-			//const location = target.findLocation('Name');
-			
-			const declarationToken: Token | null = SynDDF.getTokenFromContext(document, position);
+		provideDeclaration(document: vscode.TextDocument, position: vscode.Position, provider) {			
+			const declarationToken: TokenOrNull = SynDDF.getTokenFromContext(document, position);
 
 			if (null !== declarationToken) {
 				return declarationToken.Location;

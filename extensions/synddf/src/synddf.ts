@@ -1,24 +1,26 @@
 import * as vscode from 'vscode';
-import * as _ from 'lodash';
+import * as _ from 'lodash'
 import { Template } from './template';
 import { Field } from './field';
 let path = require('path');
 
 export interface Token{
     Location                : vscode.Location;
-    getHover()              : string;
+    getHover()              : vscode.MarkdownString;
 }
+
+export type TokenOrNull     = Token | null;
+export type LocationOfNull  = vscode.Location | null;
 
 
 export class SynDDF{
-    static modelFromFilename(fileName: string): string{
-        fileName            = fileName.substring(fileName.lastIndexOf(path.sep) +1);
+    static modelFromFilename(filePath: string): string{
+        let fileName        = filePath.substring(filePath.lastIndexOf(path.sep) + 1);
         fileName            = fileName.substring(0, fileName.indexOf('.'));
         return fileName;
     }
 
-    static getTokenFromContext(document: vscode.TextDocument, position: vscode.Position): Token | null {
-        // get previous 
+    static getTokenFromContext(document: vscode.TextDocument, position: vscode.Position): TokenOrNull {
         let result = null;
         const range 	    = document.getWordRangeAtPosition(position);
         const text          = document.getText(range);
@@ -36,7 +38,6 @@ export class SynDDF{
                 break;
         }
 
-        // split by whitespace
         return result;
     }
 } 

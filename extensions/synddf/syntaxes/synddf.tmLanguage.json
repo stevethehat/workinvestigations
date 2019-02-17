@@ -57,6 +57,17 @@
 			"patterns": [
 				{
 					"name": "keyword.control.synddf",
+					"begin": "\\sField\\s+",
+					"end": "\\s",
+					"patterns": [
+						{
+							"name": "entity.name.type",
+							"match": "[A-Z_0-9]+"
+						}
+					]		
+				},
+				{
+					"name": "keyword.control.synddf",
 					"begin": "\\sTemplate\\s+",
 					"end": "\\s",
 					"patterns": [

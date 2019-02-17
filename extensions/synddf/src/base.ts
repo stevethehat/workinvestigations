@@ -1,4 +1,6 @@
 import * as vscode from 'vscode';
+import * as _ from 'lodash';
+
 let fs = require('fs');
 let path = require('path');
 
@@ -12,10 +14,16 @@ export abstract class Base {
     get Exists(): boolean{
         return fs.existsSync(this.FileName);
     }
-    //public  Exists      : boolean;
-    //public  FileName    : string;
+    get TextLines(): string[]{
+        if (null === this._textLines) {
+            this._textLines = this.getText().split('\n');
+        }
+        return this._textLines;
+    }
+    private _textLines  : string[] | null = null;
+    
     public  Name        : string;
-    protected _config     : vscode.WorkspaceConfiguration;
+    protected _config   : vscode.WorkspaceConfiguration;
 
     constructor(name: string) {
         this._config    = vscode.workspace.getConfiguration('synddf');
@@ -23,8 +31,8 @@ export abstract class Base {
     }
 
     findLocation(text: string): vscode.Location | null{
-        let result = null;
-        const start = this.find(text);
+        let result      = null;
+        const start     = this.find(text);
 
         if (null !== start) {
             result = new vscode.Location(vscode.Uri.file(this.FileName), start);
@@ -33,13 +41,44 @@ export abstract class Base {
         return result;
     }
 
+    getLineRange(start: number, end: number): string{
+        return _.slice(this.TextLines, start, end).join('\n');
+    }
+
+    findPrevious(position: vscode.Position, regex: RegExp): vscode.Position | null{
+        var result = null;
+        for (var i = position.line; i >= 0; i--){
+            if (regex.test(this.TextLines[i])) {
+                result = new vscode.Position(i, 0);   
+                break;
+            }
+        }
+        if (null === result) {
+            result = new vscode.Position(0, 0);
+        }
+        return result;
+    }
+
+    findNext(position: vscode.Position, regex: RegExp): vscode.Position | null{
+        var result = null;
+        for (var i = position.line; i <= this.TextLines.length; i++){
+            if (regex.test(this.TextLines[i])) {
+                result = new vscode.Position(i, 0);    
+                break;
+            }
+        }
+        if (null === result) {
+            result = new vscode.Position(this.TextLines.length, 0);
+        }
+        return result;
+    }
+
     find(text: string): vscode.Position | null{
-        const textLines = this.getText().split('\n');
         var found       = false;
         var foundLine   = 0;
 
-        for (var lineIndex in textLines) {
-            const line = textLines[lineIndex];
+        for (var lineIndex in this.TextLines) {
+            const line = this.TextLines[lineIndex];
             if(line.indexOf(text) !== -1){
                 found = true;
                 break;
@@ -48,20 +87,13 @@ export abstract class Base {
         }
         
         if(true === found){
-            const foundPosition = textLines[foundLine].indexOf(text);
+            const foundPosition = this.TextLines[foundLine].indexOf(text);
             const start = new vscode.Position(foundLine, foundPosition);
-            const end = new vscode.Position(foundLine, foundPosition + text.length);    
 
             return start;
         } else {
             return null;
         }
-
-        var start = new vscode.Position(1, 1);
-        var end = new vscode.Position(1, 10);
-        var result = new vscode.Range(start, end);
-
-        //return result;
     }
 
     protected getText(): string{
