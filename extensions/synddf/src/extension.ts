@@ -1,6 +1,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import { SynDDF, Token } from './synddf';
 import { Template } from './template';
 import { CodeLenseProvider } from './codelense';
 import { Model } from './model';
@@ -14,6 +15,8 @@ export function activate(context: vscode.ExtensionContext) {
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "synddf" is now active!');
+
+	let synDDF = new SynDDF();
 
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
@@ -42,20 +45,16 @@ export function activate(context: vscode.ExtensionContext) {
 
 	vscode.languages.registerDeclarationProvider('synddf', {
 		provideDeclaration(document: vscode.TextDocument, position: vscode.Position, provider) {
-			const range 	    = document.getWordRangeAtPosition(position);
-            const text 			= document.getText(range);
-            var fileName        = document.fileName;
-            fileName            = fileName.substring(fileName.lastIndexOf(path.sep) +1);
-            fileName            = fileName.substring(0, fileName.indexOf('.'));
-            const name          = fileName;
-            const target        = new Model(name);
-            target.find(name);
+			//const range 	    = document.getWordRangeAtPosition(position);
+			//const text 			= document.getText(range);
+			
+			//const target 		= new Model(SynDDF.modelFromFilename(document.fileName));
+			//const location = target.findLocation('Name');
+			
+			const declarationToken: Token | null = SynDDF.getTokenFromContext(document, position);
 
-			const template 		= new Template(text);
-
-            //const test = new vscode.textdocument
-			if (template.Exists) {
-				return template.Location;
+			if (null !== declarationToken) {
+				return declarationToken.Location;
 			} else {
 				return undefined;
 			}

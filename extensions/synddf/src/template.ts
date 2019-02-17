@@ -8,4 +8,7 @@ export class Template extends Base {
     getFileName(): string {
         return path.join(this._config.get('repositoryRootFolder'), 'template', `${this.Name}.DDF`);
     }
+    getHover(): string{
+        return '';
+    }
 }
