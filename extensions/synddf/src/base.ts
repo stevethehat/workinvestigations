@@ -41,8 +41,14 @@ export abstract class Base {
         return result;
     }
 
-    getLineRange(start: number, end: number): string{
-        return _.slice(this.TextLines, start, end).join('\n');
+    getLineRange(start: number, end: number, unIndent = true): string{
+        const lines     = _.slice(this.TextLines, start, end);
+        var result      = lines;
+
+        if(unIndent){
+            result = lines.map(l => _.trimStart(l));
+        }
+        return result.join('\n');
     }
 
     findPrevious(position: vscode.Position, regex: RegExp): vscode.Position | null{

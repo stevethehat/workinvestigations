@@ -25,9 +25,10 @@ export class Field extends Base{
             const endPos = this.findNext(declerationPosition, new RegExp('^\\s*$'));
 
             if (null !== startPos && null !== endPos) {
-                const code = this.getLineRange(startPos.line -1, endPos.line);
+                const code = this.getLineRange(startPos.line +1, endPos.line);
                 message.appendCodeblock(code, 'csharp');                    
             }
+            message.appendText('\n\n');
         }
 
         return message;

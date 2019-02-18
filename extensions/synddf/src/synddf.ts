@@ -34,6 +34,7 @@ export class SynDDF{
                 result = new Field(text, SynDDF.modelFromFilename(document.fileName));
                 break;
             case 'Template':
+            case 'Parent':
                 result = new Template(text);
                 break;
         }
