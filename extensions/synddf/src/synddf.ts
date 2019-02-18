@@ -1,8 +1,8 @@
-import * as vscode from 'vscode';
-import * as _ from 'lodash'
-import { Template } from './template';
-import { Field } from './field';
-let path = require('path');
+import * as vscode      from 'vscode';
+import * as _           from 'lodash';
+import { Template }     from './template';
+import { Field }        from './field';
+let path                = require('path');
 
 export interface Token{
     Location                : vscode.Location;
