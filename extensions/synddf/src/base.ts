@@ -48,7 +48,8 @@ export abstract class Base {
     findPrevious(position: vscode.Position, regex: RegExp): vscode.Position | null{
         var result = null;
         for (var i = position.line; i >= 0; i--){
-            if (regex.test(this.TextLines[i])) {
+            const line = this.TextLines[i];
+            if (regex.test(line)) {
                 result = new vscode.Position(i, 0);   
                 break;
             }

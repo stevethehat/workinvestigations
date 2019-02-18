@@ -7,6 +7,8 @@ let path = require('path');
 
 export class Model extends Base{
     getFileName(): string {
-        return path.join(this._config.get('modelRootFolder'), `${_.upperFirst(_.lowerCase(this.Name))}.cs`);
+        const root = this._config.get('modelRootFolder');
+        const fileName = `${_.upperFirst(_.lowerCase(this.Name))}.cs`;
+        return path.join(root, fileName);
     }
 }

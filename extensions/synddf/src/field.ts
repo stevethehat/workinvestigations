@@ -18,14 +18,14 @@ export class Field extends Base{
         var message 	= new vscode.MarkdownString();
         message.appendMarkdown(`### ${this.CSName} ###\n`);
         
-        const declerationPosition = this.find(`${this.CSName};`);
+        const declerationPosition = this.find(`${this.CSName} { get; set; }`);
         if (null !== declerationPosition) {
             message.appendText('___\n');
-            const startPos = this.findPrevious(declerationPosition, new RegExp('^\s*$'));
-            const endPos = this.findNext(declerationPosition, new RegExp('^\s*$'));
+            const startPos = this.findPrevious(declerationPosition, new RegExp('^\\s*$'));
+            const endPos = this.findNext(declerationPosition, new RegExp('^\\s*$'));
 
             if (null !== startPos && null !== endPos) {
-                const code = this.getLineRange(startPos.line, endPos.line);
+                const code = this.getLineRange(startPos.line -1, endPos.line);
                 message.appendCodeblock(code, 'csharp');                    
             }
         }
