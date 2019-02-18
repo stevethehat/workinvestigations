@@ -11,4 +11,7 @@ export class Model extends Base{
         const fileName = `${_.upperFirst(_.lowerCase(this.Name))}.cs`;
         return path.join(root, fileName);
     }
+    getTokenPosition(): vscode.Position | null{
+        return new vscode.Position(0,0);
+    }
 }

@@ -11,4 +11,7 @@ export class Template extends Base {
     getHover(): vscode.MarkdownString{
         return new vscode.MarkdownString();
     }
+    getTokenPosition(): vscode.Position | null{
+        return new vscode.Position(0,0);
+    }
 }

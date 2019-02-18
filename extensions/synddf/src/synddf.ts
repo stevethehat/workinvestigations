@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import * as _ from 'lodash'
+import * as _ from 'lodash';
 import { Template } from './template';
 import { Field } from './field';
 let path = require('path');
@@ -22,20 +22,22 @@ export class SynDDF{
 
     static getTokenFromContext(document: vscode.TextDocument, position: vscode.Position): TokenOrNull {
         let result = null;
-        const range 	    = document.getWordRangeAtPosition(position);
-        const text          = document.getText(range);
-        const line          = document.lineAt(position.line).text.replace(/ +/g, ' ');
-        const lineElements  = line.split(' ');
-        const textPos       = lineElements.indexOf(text);
-        const context       = lineElements[textPos - 1];
+        const range 	        = document.getWordRangeAtPosition(position);
+        const text              = document.getText(range);
+        const line              = document.lineAt(position.line).text.replace(/ +/g, ' ');
+        const lineElements      = line.split(' ');
+        const textPos           = lineElements.indexOf(text);
+        const previousElements  = _.slice(lineElements, 0, textPos);
+        const context           = _.reverse(previousElements);
         
-        switch (context) {
-            case 'Field':
+        switch (true) {
+            case context[0] === 'Field':
                 result = new Field(text, SynDDF.modelFromFilename(document.fileName));
                 break;
-            case 'Template':
-            case 'Parent':
+            case (context[0] === 'Template' || context[0] === 'Parent'):
                 result = new Template(text);
+                break;
+            case (lineElements[0] === 'Relation'):
                 break;
         }
 

@@ -5,8 +5,13 @@ let fs = require('fs');
 let path = require('path');
 
 export abstract class Base {
-    get Location(): vscode.Location{
-        return new vscode.Location(vscode.Uri.file(this.FileName), new vscode.Position(0, 1));
+    get Location(): vscode.Location {
+        var tokenPosition = this.getTokenPosition();
+        if(null === tokenPosition)
+        {
+            tokenPosition = new vscode.Position(0, 1);
+        }
+        return new vscode.Location(vscode.Uri.file(this.FileName), tokenPosition);
     }
     get FileName(): string{
         return this.getFileName();
@@ -20,10 +25,11 @@ export abstract class Base {
         }
         return this._textLines;
     }
-    private _textLines  : string[] | null = null;
-    
-    public  Name        : string;
-    protected _config   : vscode.WorkspaceConfiguration;
+
+    public  Name                : string;
+
+    private _textLines          : string[] | null = null;
+    protected _config           : vscode.WorkspaceConfiguration;
 
     constructor(name: string) {
         this._config    = vscode.workspace.getConfiguration('synddf');
@@ -110,4 +116,5 @@ export abstract class Base {
 
 
     abstract getFileName(): string;
+    abstract getTokenPosition(): vscode.Position | null;
 }
