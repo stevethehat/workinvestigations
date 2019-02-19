@@ -2,6 +2,8 @@ import * as vscode      from 'vscode';
 import * as _           from 'lodash';
 import { Template }     from './template';
 import { Field }        from './field';
+import { Format }       from './format';
+
 let path                = require('path');
 
 export interface Token{
@@ -37,6 +39,9 @@ export class SynDDF{
                 break;
             case ('Template' === context[0] || 'Parent' === context[0]):
                 result = new Template(text);
+                break;
+            case ('Format' === context[0]):
+                result = new Format(text);
                 break;
             case ('Relation' === lineElements[0]):
                 break;
