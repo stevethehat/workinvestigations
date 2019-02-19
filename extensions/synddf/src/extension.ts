@@ -38,18 +38,6 @@ export function activate(context: vscode.ExtensionContext) {
 			} else {
 				return undefined;
 			}
-
-			/*
-			const text 		= document.getText(range);
-
-			var message 	= new vscode.MarkdownString();
-			message.appendMarkdown(`### Hover ${text} ###\n`);
-			message.appendMarkdown(`${position.character}`);
-			message.appendCodeblock('javascript', `var a = 'b'`);
-
-			const result = new vscode.Hover(message, range);
-			return result;
-			*/
 		}
 	});
 
