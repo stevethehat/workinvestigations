@@ -19,14 +19,17 @@ export class Field extends Base{
         return this.find(`${this.CSName} { get; set; }`);
     }
     getHover(): MarkdownString{
-        var message 	= new vscode.MarkdownString();
-        message.appendMarkdown(`### ${this.CSName} ###\n`);
+        const message 	= new vscode.MarkdownString();
         const declarationPosition = this.getTokenPosition();
         
+        message.appendMarkdown(`### ${this.CSName} ###\n`);
         if (null !== declarationPosition) {
             message.appendText('___\n');
             const isamFieldInfoPos = this.findPrevious(declarationPosition, new RegExp('[IsamField(\\d, \\d)]'));
-
+            if(null !== isamFieldInfoPos){
+                message.appendText(`def line '${this.TextLines[isamFieldInfoPos.line]}'`);
+            }
+            
             const startPos = this.findPrevious(declarationPosition, new RegExp('^\\s*$'));
             const endPos = this.findNext(declarationPosition, new RegExp('^\\s*$'));
 

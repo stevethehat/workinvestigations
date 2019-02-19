@@ -9,6 +9,7 @@ export class Template extends Base {
         return path.join(this._config.get('repositoryRootFolder'), 'template', `${this.Name}.DDF`);
     }
     getHover(): vscode.MarkdownString{
+        
         return new vscode.MarkdownString();
     }
     getTokenPosition(): vscode.Position | null{
