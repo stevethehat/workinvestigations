@@ -15,10 +15,10 @@
             "include": "#numeric"
         },
 		{
-			"include": "#names"
+			"include": "#types"
 		},
 		{
-			"include": "#types"
+			"include": "#names"
 		}
 	],
 	"repository": {
@@ -57,7 +57,7 @@
 			"patterns": [
 				{
 					"name": "keyword.control.synddf",
-					"begin": "\\sField\\s+",
+					"begin": "^Field\\s+",
 					"end": "\\s",
 					"patterns": [
 						{
