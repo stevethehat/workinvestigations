@@ -7,6 +7,7 @@ import { MarkdownString } from "vscode";
 import { start } from 'repl';
 
 export class Field extends Base{
+    
     Model: Model;
     CSName: string;
     constructor(name: string, modelName: string) {
@@ -14,20 +15,26 @@ export class Field extends Base{
         this.Model = new Model(modelName);
         this.CSName = _.upperFirst(_.camelCase(name.substring(3).replace(/_/g, ' ')));
     }
+    getTokenPosition(): vscode.Position | null{
+        return this.find(`${this.CSName} { get; set; }`);
+    }
     getHover(): MarkdownString{
         var message 	= new vscode.MarkdownString();
         message.appendMarkdown(`### ${this.CSName} ###\n`);
+        const declarationPosition = this.getTokenPosition();
         
-        const declerationPosition = this.find(`${this.CSName} { get; set; }`);
-        if (null !== declerationPosition) {
+        if (null !== declarationPosition) {
             message.appendText('___\n');
-            const startPos = this.findPrevious(declerationPosition, new RegExp('^\\s*$'));
-            const endPos = this.findNext(declerationPosition, new RegExp('^\\s*$'));
+            const isamFieldInfoPos = this.findPrevious(declarationPosition, new RegExp('[IsamField(\\d, \\d)]'));
+
+            const startPos = this.findPrevious(declarationPosition, new RegExp('^\\s*$'));
+            const endPos = this.findNext(declarationPosition, new RegExp('^\\s*$'));
 
             if (null !== startPos && null !== endPos) {
-                const code = this.getLineRange(startPos.line -1, endPos.line);
+                const code = this.getLineRange(startPos.line +1, endPos.line);
                 message.appendCodeblock(code, 'csharp');                    
             }
+            message.appendText('\n\n');
         }
 
         return message;

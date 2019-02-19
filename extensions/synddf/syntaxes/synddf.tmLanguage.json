@@ -39,7 +39,7 @@
 		"names": {
 			"patterns": [{
                 "name": "entity.name.tag",
-                "match": "^Field|Key|Structure|Template"
+                "match": "^Field|Key|Structure|Template|Relation"
             }]
 		},
 		"strings": {
@@ -109,7 +109,7 @@
 							"match": "[A-Z_0-9]+"
 						}
 					]		
-				}
+                }
 			]
 		}
 	},

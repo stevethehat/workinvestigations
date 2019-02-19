@@ -11,6 +11,7 @@ export interface Token{
 
 export type TokenOrNull     = Token | null;
 export type LocationOfNull  = vscode.Location | null;
+export type PositionOrNull  = vscode.Position | null;
 
 
 export class SynDDF{
@@ -21,20 +22,23 @@ export class SynDDF{
     }
 
     static getTokenFromContext(document: vscode.TextDocument, position: vscode.Position): TokenOrNull {
-        let result = null;
-        const range 	    = document.getWordRangeAtPosition(position);
-        const text          = document.getText(range);
-        const line          = document.lineAt(position.line).text.replace(/ +/g, ' ');
-        const lineElements  = line.split(' ');
-        const textPos       = lineElements.indexOf(text);
-        const context       = lineElements[textPos - 1];
+        let result              = null;
+        const range 	        = document.getWordRangeAtPosition(position);
+        const text              = document.getText(range);
+        const line              = document.lineAt(position.line).text.replace(/ +/g, ' ');
+        const lineElements      = line.split(' ');
+        const textPos           = lineElements.indexOf(text);
+        const previousElements  = _.slice(lineElements, 0, textPos);
+        const context           = _.reverse(previousElements);
         
-        switch (context) {
-            case 'Field':
+        switch (true) {
+            case 'Field' === context[0]:
                 result = new Field(text, SynDDF.modelFromFilename(document.fileName));
                 break;
-            case 'Template':
+            case ('Template' === context[0] || 'Parent' === context[0]):
                 result = new Template(text);
+                break;
+            case ('Relation' === lineElements[0]):
                 break;
         }
 
