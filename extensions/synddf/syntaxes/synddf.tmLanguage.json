@@ -3,9 +3,6 @@
 	"name": "repo definitions",
 	"patterns": [
 		{
-			"include": "#keywords"
-		},
-		{
 			"include": "#strings"
 		},
 		{
@@ -19,13 +16,16 @@
 		},
 		{
 			"include": "#names"
+		},
+		{
+			"include": "#keywords"
 		}
 	],
 	"repository": {
 		"keywords": {
 			"patterns": [{
 				"name": "keyword.control.synddf",
-				"match": "\\b(Description|Long Desciption|Info Line|Prompt|Size|Report|Noview|Precision|Size|Uppercase|Method|Required|User Text)\\b"
+				"match": "\\b(Description|Long|Info Line|Prompt|Size|Report|Noview|Precision|Size|Uppercase|Method|Required|User|Text|Selection|List)\\b"
 			}]
         },
         "numbers":{

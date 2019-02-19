@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import * as _ from 'lodash';
+import * as synddf from './synddf';
 
 let fs = require('fs');
 let path = require('path');
@@ -57,7 +58,7 @@ export abstract class Base {
         return result.join('\n');
     }
 
-    findPrevious(position: vscode.Position, regex: RegExp): vscode.Position | null{
+    findPrevious(position: vscode.Position, regex: RegExp): synddf.PositionOrNull{
         var result = null;
         for (var i = position.line; i >= 0; i--){
             const line = this.TextLines[i];
@@ -72,7 +73,7 @@ export abstract class Base {
         return result;
     }
 
-    findNext(position: vscode.Position, regex: RegExp): vscode.Position | null{
+    findNext(position: vscode.Position, regex: RegExp): synddf.PositionOrNull{
         var result = null;
         for (var i = position.line; i <= this.TextLines.length; i++){
             if (regex.test(this.TextLines[i])) {
@@ -86,7 +87,7 @@ export abstract class Base {
         return result;
     }
 
-    find(text: string): vscode.Position | null{
+    find(text: string): synddf.PositionOrNull{
         var found       = false;
         var foundLine   = 0;
 
@@ -116,5 +117,5 @@ export abstract class Base {
 
 
     abstract getFileName(): string;
-    abstract getTokenPosition(): vscode.Position | null;
+    abstract getTokenPosition(): synddf.PositionOrNull;
 }

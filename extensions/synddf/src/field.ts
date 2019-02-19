@@ -22,26 +22,37 @@ export class Field extends Base{
         const message 	            = new vscode.MarkdownString();
         const declarationPosition   = this.getTokenPosition();
         
-        message.appendMarkdown(`### ${this.CSName} ###\n`);
+        message.appendMarkdown(`### ${this.CSName} ###\r`);
         if (null !== declarationPosition) {
-            message.appendText('___\n');
+            message.appendMarkdown('___\r');
 
             const isamFieldInfoPos = this.findPrevious(declarationPosition, /\[IsamField\(\d+, \d+\)\]/);
             if (null !== isamFieldInfoPos) {
-                message.appendText(`${this.TextLines[isamFieldInfoPos.line]}\n`);
+                message.appendText(`${this.extractFieldPosition(this.TextLines[isamFieldInfoPos.line])}\r`);
             }            
+            message.appendMarkdown('___\r');
+            message.appendMarkdown('   \r');
 
             const startPos  = this.findPrevious(declarationPosition, new RegExp('^\\s*$'));
             const endPos    = this.findNext(declarationPosition, new RegExp('^\\s*$'));
 
             if (null !== startPos && null !== endPos) {
-                const code = this.getLineRange(startPos.line +1, endPos.line);
+                const code = `\r${this.getLineRange(startPos.line +1, endPos.line +1)}\r  \r`;
                 message.appendCodeblock(code, 'csharp');                    
             }
-            message.appendText('\n\n');
+            message.appendMarkdown('   \r');
         }
 
         return message;
+    }
+
+    extractFieldPosition(line: string): string {
+        line = line.trimLeft();
+        line = line.replace('[IsamField(', '').replace(')]', '');
+        const commaPos = line.indexOf(',');
+        const start = Number(line.substr(0, line.indexOf(',')));
+        const len = Number(line.substr(commaPos + 1));
+        return `Position ${start} - ${start + len -1}`;
     }
 
     getFileName(): string {
