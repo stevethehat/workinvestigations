@@ -7,7 +7,7 @@ let path = require('path');
 
 export abstract class Base {
     get Location(): vscode.Location {
-        var tokenPosition = this.getTokenPosition();
+        let tokenPosition = this.getTokenPosition();
         if(null === tokenPosition)
         {
             tokenPosition = new vscode.Position(0, 1);
@@ -50,7 +50,7 @@ export abstract class Base {
 
     getLineRange(start: number, end: number, unIndent = true): string{
         const lines     = _.slice(this.TextLines, start, end);
-        var result      = lines;
+        let result      = lines;
 
         if(unIndent){
             result = lines.map(l => _.trimStart(l));
@@ -59,8 +59,8 @@ export abstract class Base {
     }
 
     findPrevious(position: vscode.Position, regex: RegExp): synddf.PositionOrNull{
-        var result = null;
-        for (var i = position.line; i >= 0; i--){
+        let result = null;
+        for (let i = position.line; i >= 0; i--){
             const line = this.TextLines[i];
             if (regex.test(line)) {
                 result = new vscode.Position(i, 0);   
@@ -74,8 +74,8 @@ export abstract class Base {
     }
 
     findNext(position: vscode.Position, regex: RegExp): synddf.PositionOrNull{
-        var result = null;
-        for (var i = position.line; i <= this.TextLines.length; i++){
+        let result = null;
+        for (let i = position.line; i <= this.TextLines.length; i++){
             if (regex.test(this.TextLines[i])) {
                 result = new vscode.Position(i, 0);    
                 break;
@@ -88,10 +88,10 @@ export abstract class Base {
     }
 
     find(text: string): synddf.PositionOrNull{
-        var found       = false;
-        var foundLine   = 0;
+        let found       = false;
+        let foundLine   = 0;
 
-        for (var lineIndex in this.TextLines) {
+        for (let lineIndex in this.TextLines) {
             const line = this.TextLines[lineIndex];
             if(line.indexOf(text) !== -1){
                 found = true;
