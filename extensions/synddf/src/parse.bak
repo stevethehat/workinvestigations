@@ -3,13 +3,11 @@ import { Template } from "./template";
 
 class ParseItem{
     Name: string;
-    Value: string;
-    Ancestor: Dictionary<ParseItem> | null;
+    Settings: Dictionary<string | ParseItem> | null;
 
-    constructor(name: string, value: string) {
+    constructor(name: string, settings: Dictionary<string | ParseItem> | null) {
         this.Name = name;
-        this.Value = value;
-        this.Ancestor = null;
+        this.Settings = settings;
     }
 }
 
@@ -18,7 +16,7 @@ export class Parse{
     private _results: Dictionary<ParseItem>;
     constructor(block: string[]){
         this._block = new Block(block);
-        this._results = {};
+        this._results = new ParseItem();
     }
     parseBlock(): Dictionary<ParseItem> {
         let chunk = this._block.getNextChunk();
@@ -48,7 +46,7 @@ export class Parse{
     }
 }
 
-class Block{
+class Chunker{
     private _block: string[];
     private _line: string | undefined = '';
     constructor(block: string[]){
