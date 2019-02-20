@@ -11,7 +11,7 @@ export class Field extends Base{
     constructor(name: string, modelName: string) {
         super(name);
         this.Model  = new Model(modelName);
-        this.CSName = _.upperFirst(_.camelCase(name.substring(3).replace(/_/g, ' ')));
+        this.CSName = _.upperFirst(_.camelCase(name.substring(modelName.length -3).replace(/_/g, ' ')));
     }
 
     getTokenPosition(): vscode.Position | null{
@@ -47,11 +47,11 @@ export class Field extends Base{
     }
 
     extractFieldPosition(line: string): string {
-        line = line.trimLeft();
-        line = line.replace('[IsamField(', '').replace(')]', '');
-        const commaPos = line.indexOf(',');
-        const start = Number(line.substr(0, line.indexOf(',')));
-        const len = Number(line.substr(commaPos + 1));
+        line            = line.trimLeft();
+        line            = line.replace('[IsamField(', '').replace(')]', '');
+        const commaPos  = line.indexOf(',');
+        const start     = Number(line.substr(0, line.indexOf(',')));
+        const len       = Number(line.substr(commaPos + 1));
         return `Position ${start} - ${start + len -1}`;
     }
 
