@@ -1,14 +1,16 @@
+import { Dictionary } from "lodash";
+
 export class Parse{
     private _block: Block;
+    private _results: Object;
     constructor(block: string[]){
         this._block = new Block(block);
+        this._results = {};
     }
     parseBlock() {
         let chunk = this._block.getNextChunk();
         while('' !== chunk){
             // process
-            //console.log(chunk);
-
             chunk = this._block.getNextChunk();
         }
         return {};
