@@ -1,21 +1,51 @@
 import { Dictionary } from "lodash";
+import { Template } from "./template";
+
+class ParseItem{
+    Name: string;
+    Value: string;
+    Ancestor: Dictionary<ParseItem> | null;
+
+    constructor(name: string, value: string) {
+        this.Name = name;
+        this.Value = value;
+        this.Ancestor = null;
+    }
+}
 
 export class Parse{
     private _block: Block;
-    private _results: Object;
+    private _results: Dictionary<ParseItem>;
     constructor(block: string[]){
         this._block = new Block(block);
         this._results = {};
     }
-    parseBlock() {
+    parseBlock(): Dictionary<ParseItem> {
         let chunk = this._block.getNextChunk();
-        while('' !== chunk){
+        while ('' !== chunk) {
             // process
             chunk = this._block.getNextChunk();
-        }
-        return {};
-    }
 
+            switch (chunk) {
+                case 'Template':
+                case 'Parent':
+                    const template = new Template(this._block.getNextChunk());
+                    const p = new Parse(template.TextLines);
+                    let parseItem = new ParseItem(template.Name, '');
+                    parseItem.Ancestor = p.parseBlock();
+                    this._results[template.Name] = parseItem;
+                    break;
+                case 'Size':
+                case 'Dimension':
+                case 'Description':
+                case 'SizPrompte':
+                    
+                    this._results[chunk] = new ParseItem(chunk, this._block.getNextChunk());
+                    break;
+            }
+        }
+        return this._results
+    }
 }
 
 class Block{

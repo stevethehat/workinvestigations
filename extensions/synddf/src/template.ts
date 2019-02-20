@@ -16,7 +16,7 @@ export class Template extends Base {
         message.appendMarkdown(`   \r`);
 
         const p = new Parse(this.TextLines);
-        p.parseBlock();
+        const s = p.parseBlock();
         return message;
     }
     getTokenPosition(): vscode.Position | null{
