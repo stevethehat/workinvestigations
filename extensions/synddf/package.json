@@ -26,8 +26,8 @@
 		],
 		"commands": [
 			{
-				"command": "extension.synddf",
-				"title": "Syn DDF"
+				"command": "extension.synddf.fieldat",
+				"title": "Syn DDF: Field @"
 			}
 		],
 		"grammars": [

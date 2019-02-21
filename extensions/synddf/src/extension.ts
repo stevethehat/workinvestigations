@@ -21,12 +21,33 @@ export function activate(context: vscode.ExtensionContext) {
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('extension.synddf', () => {
+	let disposable = vscode.commands.registerCommand('extension.synddf.fieldat', () => {
 		// The code you place here will be executed every time your command is executed
-
+		vscode.window.showInputBox({
+			prompt: 'a test'
+		}).then(
+			function (position) {
+				const modelName = SynDDF.modelFromFilename(vscode.window.activeTextEditor!.document.fileName);
+				const model = new Model(modelName);
+				if (model.Exists) {
+					const field = model.getFieldAtPosition(Number(position!));
+					vscode.window.showInformationMessage(`Got: ${position} in ${modelName}`);							
+				}
+			}
+		);
+		
 		// Display a message box to the user
-		vscode.window.showInformationMessage('WOW Hello World!');
+		//vscode.window.showInformationMessage('WOW Hello World!');
 	});
+
+	/*
+	vscode.workspace.onDidOpenTextDocument(function (document: vscode.TextDocument) {
+		const input = vscode.window.showInputBox({
+			prompt: 'a test'
+		})
+		synDDF.documentOpened(document);
+	});
+	*/
 
 	vscode.languages.registerHoverProvider('synddf', {
 		provideHover(document: vscode.TextDocument, position: vscode.Position, token) {

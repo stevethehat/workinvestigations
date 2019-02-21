@@ -3,6 +3,8 @@ import * as _           from 'lodash';
 import { Template }     from './template';
 import { Field }        from './field';
 import { Format }       from './format';
+import { Dictionary } from 'lodash';
+import { DDF } from './ddf';
 
 let path                = require('path');
 
@@ -15,8 +17,29 @@ export type TokenOrNull     = Token | null;
 export type LocationOfNull  = vscode.Location | null;
 export type PositionOrNull  = vscode.Position | null;
 
-
 export class SynDDF{
+    private _ddfs: Dictionary<DDF>;
+    protected _config           : vscode.WorkspaceConfiguration;
+    protected _documentRoot: string;
+        
+    constructor() {
+        this._config = vscode.workspace.getConfiguration('synddf');
+        const root = this._config.get<string>('repositoryRootFolder');
+        this._documentRoot = '';
+        if (undefined !== root) {
+            this._documentRoot = root;            
+        }
+        this._ddfs = {};
+    }
+        
+    documentOpened(document: vscode.TextDocument) {
+        let documentType = '';
+        if (true === document.fileName.startsWith(this._documentRoot) && false === document.fileName.endsWith('.git')) {
+            const section = document.fileName.substr(this._documentRoot.length);
+            vscode.window.showInformationMessage(`We opened a document ${section}`);
+        }        
+    }
+
     static modelFromFilename(filePath: string): string{
         let fileName        = filePath.substring(filePath.lastIndexOf(path.sep) + 1);
         fileName            = fileName.substring(0, fileName.indexOf('.'));
@@ -24,7 +47,7 @@ export class SynDDF{
     }
 
     static getTokenFromContext(document: vscode.TextDocument, position: vscode.Position): TokenOrNull {
-        let result              = null;
+        let   result            = null;
         const range 	        = document.getWordRangeAtPosition(position);
         const text              = document.getText(range);
         const line              = document.lineAt(position.line).text.replace(/ +/g, ' ');

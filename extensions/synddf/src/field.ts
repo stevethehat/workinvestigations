@@ -28,7 +28,9 @@ export class Field extends Base{
 
             const isamFieldInfoPos = this.findPrevious(declarationPosition, /\[IsamField\(\d+, \d+\)\]/);
             if (null !== isamFieldInfoPos) {
-                message.appendText(`${this.extractFieldPosition(this.TextLines[isamFieldInfoPos.line])}\r`);
+                //message.appendText(`${Field.extractFieldPosition(this.TextLines[isamFieldInfoPos.line])}\r`);
+                const fieldPosition = Field.extractFieldPosition(this.TextLines[isamFieldInfoPos.line]);
+                message.appendText(`Position ${fieldPosition[0]} - ${fieldPosition[1]}\r`);
             }            
             message.appendMarkdown('___\r');
             message.appendMarkdown('   \r');
@@ -46,13 +48,13 @@ export class Field extends Base{
         return message;
     }
 
-    extractFieldPosition(line: string): string {
+    static extractFieldPosition(line: string): [number, number] {
         line            = line.trimLeft();
         line            = line.replace('[IsamField(', '').replace(')]', '');
         const commaPos  = line.indexOf(',');
         const start     = Number(line.substr(0, line.indexOf(',')));
-        const len       = Number(line.substr(commaPos + 1));
-        return `Position ${start} - ${start + len -1}`;
+        const len = Number(line.substr(commaPos + 1));
+        return [start, start + len - 1];
     }
 
     getFileName(): string {
