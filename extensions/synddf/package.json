@@ -50,6 +50,11 @@
 					"type": "string",
 					"default": null,
 					"description": "Root rolder of the generated models"
+				},
+				"synddf.showOveriddenSettings": {
+					"type": "boolean",
+					"default": null,
+					"description": "Show overridden settings"
 				}
 			}
 		}

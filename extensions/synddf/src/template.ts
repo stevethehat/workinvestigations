@@ -53,10 +53,11 @@ export class Template extends Base {
                 message.appendMarkdown(`#### ${line.Name} ####\r`);
                 message.appendMarkdown(`___\r`);
             } else {
-                if (false === line.Overridden) {
-                    message.appendMarkdown(`**${line.Name}:** ${line.Value}\r\r`);                    
-                } else {
+                //  && this._config.get('showOverriddenSettings')
+                if (true === line.Overridden) {
                     message.appendMarkdown(`~~${line.Name}: ${line.Value}~~\r\r`);
+                } else {
+                    message.appendMarkdown(`**${line.Name}:** ${line.Value}\r\r`);                    
                 }
             }
         }
