@@ -28,9 +28,8 @@ export class Field extends Base{
 
             const isamFieldInfoPos = this.findPrevious(declarationPosition, /\[IsamField\(\d+, \d+\)\]/);
             if (null !== isamFieldInfoPos) {
-                //message.appendText(`${Field.extractFieldPosition(this.TextLines[isamFieldInfoPos.line])}\r`);
-                const fieldPosition = Field.extractFieldPosition(this.TextLines[isamFieldInfoPos.line]);
-                message.appendText(`Position ${fieldPosition[0]} - ${fieldPosition[1]}\r`);
+                const [start, end] = Field.extractFieldPosition(this.TextLines[isamFieldInfoPos.line]);
+                message.appendText(`Position ${start} - ${end}\r`);
             }            
             message.appendMarkdown('___\r');
             message.appendMarkdown('   \r');

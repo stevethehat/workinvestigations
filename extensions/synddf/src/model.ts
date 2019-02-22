@@ -18,8 +18,8 @@ export class Model extends Base{
             if (line.startsWith('public')) {
                 const isamFieldInfoPos = this.findPrevious(new vscode.Position(Number(lineNo), 0), /\[IsamField\(\d+, \d+\)\]/);
                 if (null !== isamFieldInfoPos && 0 !== isamFieldInfoPos.line) {
-                    const fieldPosition = Field.extractFieldPosition(this.TextLines[isamFieldInfoPos.line]);
-                    if (position >= fieldPosition[0] && position <= fieldPosition[1]) {
+                    const [start, end] = Field.extractFieldPosition(this.TextLines[isamFieldInfoPos.line]);
+                    if (position >= start && position <= end) {
                         vscode.window.showInformationMessage(line);                                            
                     }
                 }
