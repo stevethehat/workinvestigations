@@ -24,14 +24,25 @@ export function activate(context: vscode.ExtensionContext) {
 	let disposable = vscode.commands.registerCommand('extension.synddf.fieldat', () => {
 		// The code you place here will be executed every time your command is executed
 		vscode.window.showInputBox({
-			prompt: 'a test'
+			prompt: 'Enter the character position'
 		}).then(
 			function (position) {
-				const modelName = SynDDF.modelFromFilename(vscode.window.activeTextEditor!.document.fileName);
+                const document = vscode.window.activeTextEditor!.document;
+				const modelName = SynDDF.modelFromFilename(document.fileName);
 				const model = new Model(modelName);
 				if (model.Exists) {
 					const field = model.getFieldAtPosition(Number(position!));
-					vscode.window.showInformationMessage(`Got: ${position} in ${modelName}`);							
+                    vscode.window.showInformationMessage(`Find field @: ${position} in ${modelName}`);	
+                    
+                    if(null !== field){
+                        for(let lineNo = 0;lineNo < document.lineCount; lineNo++){
+                            if(document.lineAt(lineNo).text.startsWith(`Field ${field.Name}`)){
+                                vscode.window.activeTextEditor!.revealRange(new vscode.Range(new vscode.Position(lineNo, 1), new vscode.Position(lineNo, 1)), vscode.TextEditorRevealType.AtTop);
+                                break;
+                            }
+                        }
+                        
+                    }					
 				}
 			}
 		);
