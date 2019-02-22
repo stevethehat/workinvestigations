@@ -78,6 +78,17 @@
 					]		
 				},
 				{
+					"name": "entity.name.tag",
+					"begin": "^Format\\s+",
+					"end": "\\s",
+					"patterns": [
+						{
+							"name": "entity.name.type",
+							"match": "[A-Z_0-9]+"
+						}
+					]		
+				},
+				{
 					"name": "keyword.control.synddf",
 					"begin": "\\sType\\s+",
 					"end": "\\s",
