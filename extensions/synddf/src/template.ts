@@ -96,7 +96,8 @@ export class Template extends Base {
                 case 'Size'         === chunk ||
                      'Dimension'    === chunk ||
                      'Description'  === chunk ||
-                     'Size'         === chunk ||
+                     'Precision'    === chunk ||
+                     'Overlay'      === chunk ||
                      'Prompt'       === chunk:
                     this.Settings[chunk] = this._chunker.getNextChunk();
                     break;

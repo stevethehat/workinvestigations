@@ -7,11 +7,13 @@ import { Model }    from "./model";
 export class Field extends Base{
     Model   : Model;
     CSName  : string;
+    Prefix  : string;
     
     constructor(name: string, modelName: string) {
         super(name);
         this.Model  = new Model(modelName);
-        this.CSName = _.upperFirst(_.camelCase(name.substring(modelName.length -3).replace(/_/g, ' ')));
+        this.Prefix = this.Name.substring(0, modelName.length -3);
+        this.CSName = Field.getCSName(name, this.Prefix);
     }
 
     getTokenPosition(): vscode.Position | null{
@@ -28,9 +30,8 @@ export class Field extends Base{
 
             const isamFieldInfoPos = this.findPrevious(declarationPosition, /\[IsamField\(\d+, \d+\)\]/);
             if (null !== isamFieldInfoPos) {
-                //message.appendText(`${Field.extractFieldPosition(this.TextLines[isamFieldInfoPos.line])}\r`);
-                const fieldPosition = Field.extractFieldPosition(this.TextLines[isamFieldInfoPos.line]);
-                message.appendText(`Position ${fieldPosition[0]} - ${fieldPosition[1]}\r`);
+                const [start, end] = Field.extractFieldPosition(this.TextLines[isamFieldInfoPos.line]);
+                message.appendText(`Position ${start} - ${end}\r`);
             }            
             message.appendMarkdown('___\r');
             message.appendMarkdown('   \r');
@@ -46,6 +47,25 @@ export class Field extends Base{
         }
 
         return message;
+    }
+
+    static getCSName(name: string, prefix: string): string{
+        return _.upperFirst(_.camelCase(name.substring(prefix.length).replace(/_/g, ' ')));
+    }
+
+    static getDDFName(name: string, prefix: string){
+        let ddfName = `${prefix}`;
+
+        for(let i = 0;i < name.length;i++){
+            let char = name.substr(i, 1);
+            if(char.toUpperCase() === char && isNaN(Number(char))){
+                ddfName = `${ddfName}_${char}`;
+            } else{
+                ddfName = `${ddfName}${char}`;
+            }
+        }
+
+        return ddfName.toUpperCase();
     }
 
     static extractFieldPosition(line: string): [number, number] {
