@@ -8,6 +8,7 @@ import { Model } from './model';
 let fs = require('fs');
 let path = require('path');
 
+export var synDDF = new SynDDF();
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -16,7 +17,7 @@ export function activate(context: vscode.ExtensionContext) {
 	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "synddf" is now active!');
 
-    let synDDF = new SynDDF();
+    //let synDDF = new SynDDF();
     const codeLensProvider = new DDFCodeLenseProvider();
 
     vscode.languages.registerCodeLensProvider('synddf', codeLensProvider);
@@ -74,7 +75,7 @@ export function activate(context: vscode.ExtensionContext) {
 	vscode.languages.registerHoverProvider('synddf', {
 		provideHover(document: vscode.TextDocument, position: vscode.Position, token) {
 			const range = document.getWordRangeAtPosition(position);
-			const hoverToken: TokenOrNull = SynDDF.getTokenFromContext(document, position);
+			const hoverToken: TokenOrNull = synDDF.getTokenFromContext(document, position);
 
 			if (null !== hoverToken) {
 				return new vscode.Hover(hoverToken.getHover(), range);
@@ -86,7 +87,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	vscode.languages.registerDeclarationProvider('synddf', {
 		provideDeclaration(document: vscode.TextDocument, position: vscode.Position, provider) {			
-			const declarationToken: TokenOrNull = SynDDF.getTokenFromContext(document, position);
+			const declarationToken: TokenOrNull = synDDF.getTokenFromContext(document, position);
 
 			if (null !== declarationToken) {
 				return declarationToken.Location;

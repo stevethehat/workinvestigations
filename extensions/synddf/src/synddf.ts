@@ -20,7 +20,8 @@ export type PositionOrNull  = vscode.Position | null;
 export class SynDDF{
     private _ddfs           : Dictionary<DDF>;
     protected _config       : vscode.WorkspaceConfiguration;
-    protected _documentRoot : string;
+    protected _documentRoot: string;
+    protected _templates: Dictionary<Template> = {};
         
     constructor() {
         this._config        = vscode.workspace.getConfiguration('synddf');
@@ -48,7 +49,18 @@ export class SynDDF{
         return fileName;
     }
 
-    static getTokenFromContext(document: vscode.TextDocument, position: vscode.Position): TokenOrNull {
+    getTemplate(name: string): Template{
+        let result = null;
+        if (undefined !== this._templates[name]) {
+            result = this._templates[name];
+        } else {
+            result = new Template(name);
+            this._templates[name] = result;
+        }
+        return result;
+    }
+
+    getTokenFromContext(document: vscode.TextDocument, position: vscode.Position): TokenOrNull {
         let   result            = null;
         const range 	        = document.getWordRangeAtPosition(position);
         const text              = document.getText(range);
@@ -63,7 +75,8 @@ export class SynDDF{
                 result = new Field(text, SynDDF.modelFromFilename(document.fileName));
                 break;
             case ('Template' === context[0] || 'Parent' === context[0]):
-                result = new Template(text);
+                result = this.getTemplate(text);
+
                 break;
             case ('Format' === context[0]):
                 result = new Format(text);

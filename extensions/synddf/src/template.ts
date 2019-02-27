@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { Base } from './base';
 import { Dictionary } from "lodash";
+import { synDDF } from './extension';
 
 let fs = require('fs');
 let path = require('path');
@@ -120,7 +121,7 @@ export class Template extends Base {
     }
 }
 
-class Chunker{
+export class Chunker{
     private _block: string[];
     private _line: string | undefined = '';
     constructor(block: string[]){
@@ -128,6 +129,10 @@ class Chunker{
         this.advanceLine();
     }
 
+    gotoElement(element: string) {
+        let chunk = '';
+        while (this.getNextChunk() !== element) { }
+    }
     advanceLine(){
         this._line = this._block.shift();
     }
