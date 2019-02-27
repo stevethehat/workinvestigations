@@ -101,11 +101,12 @@ export class Template extends Base {
                      'Prompt'       === chunk:
                     this.Settings[chunk] = this._chunker.getNextChunk();
                     break;
-                case 'Type' === chunk:
+
+                case 'Type'         === chunk:
                     this.Ancestor = new Template(this._chunker.getNextChunk());
                     break;
                 
-                case 'Position' === chunk:
+                case 'Position'     === chunk:
                     this.Settings[chunk] = `${this._chunker.getNextChunk()} ${this._chunker.getNextChunk()}`;
                     break;
                 
