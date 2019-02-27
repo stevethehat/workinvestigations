@@ -25,7 +25,7 @@
 		"keywords": {
 			"patterns": [{
 				"name": "keyword.control.synddf",
-				"match": "\\b(Description|Long|Info Line|Prompt|Size|Report|Noview|Precision|Size|Uppercase|Method|Required|User|Text|Selection|List|ODBC|Name|NoAllow|Enumerated|Format|Font|Promptfont|Negative|Overlay|Noprompt|Position|NoODBC|Noallow|Default|Order|Dups|Insert|Modifiable|Segment|FIELD|Entries)\\b"
+				"match": "\\b(Description|Long|Info Line|Prompt|Size|Report|Noview|Precision|Size|Uppercase|Method|Required|User|Text|Selection|List|ODBC|Name|NoAllow|Enumerated|Format|Font|Promptfont|Negative|Overlay|Noprompt|Position|NoODBC|Noallow|Default|Order|Dups|Insert|Modifiable|Segment|FIELD|Entries|Dimension)\\b"
 			}]
         },
         "numbers":{

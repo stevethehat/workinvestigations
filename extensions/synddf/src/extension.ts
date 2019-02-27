@@ -3,7 +3,7 @@
 import * as vscode from 'vscode';
 import { SynDDF, Token, TokenOrNull } from './synddf';
 import { Template } from './template';
-import { CodeLenseProvider } from './codelense';
+import { DDFCodeLenseProvider } from './codelense';
 import { Model } from './model';
 let fs = require('fs');
 let path = require('path');
@@ -16,7 +16,11 @@ export function activate(context: vscode.ExtensionContext) {
 	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "synddf" is now active!');
 
-	let synDDF = new SynDDF();
+    let synDDF = new SynDDF();
+    const codeLensProvider = new DDFCodeLenseProvider();
+
+    vscode.languages.registerCodeLensProvider('synddf', codeLensProvider);
+
 
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
