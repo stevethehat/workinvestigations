@@ -13,6 +13,7 @@ export class DDFCodeLenseProvider implements vscode.CodeLensProvider{
     provideCodeLenses(document: vscode.TextDocument, token: vscode.CancellationToken): vscode.ProviderResult<vscode.CodeLens[]>{
         const result = new Array<vscode.CodeLens>();
 
+        /*
         for(let lineNo = 0; lineNo < document.lineCount; lineNo++){
             const line = document.lineAt(lineNo);
             if(line.text.startsWith('Field')){
@@ -20,7 +21,8 @@ export class DDFCodeLenseProvider implements vscode.CodeLensProvider{
                 result.push(codeLens);
             }
         }
-
+        */
+       
         return result;
     }
 
