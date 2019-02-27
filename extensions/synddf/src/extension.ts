@@ -23,6 +23,13 @@ export function activate(context: vscode.ExtensionContext) {
 	// The commandId parameter must match the command field in package.json
 	let disposable = vscode.commands.registerCommand('extension.synddf.fieldat', () => {
 		// The code you place here will be executed every time your command is executed
+
+		vscode.commands.getCommands().then(
+			function (commands) {
+				vscode.window.showErrorMessage('got commands');
+			}
+		);
+		return;
 		vscode.window.showInputBox({
 			prompt: 'Enter the character position'
 		}).then(

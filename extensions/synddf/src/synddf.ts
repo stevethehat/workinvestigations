@@ -18,19 +18,21 @@ export type LocationOfNull  = vscode.Location | null;
 export type PositionOrNull  = vscode.Position | null;
 
 export class SynDDF{
-    private _ddfs: Dictionary<DDF>;
-    protected _config           : vscode.WorkspaceConfiguration;
-    protected _documentRoot: string;
+    private _ddfs           : Dictionary<DDF>;
+    protected _config       : vscode.WorkspaceConfiguration;
+    protected _documentRoot : string;
         
     constructor() {
-        this._config = vscode.workspace.getConfiguration('synddf');
-        const root = this._config.get<string>('repositoryRootFolder');
-        this._documentRoot = '';
+        this._config        = vscode.workspace.getConfiguration('synddf');
+        const root          = this._config.get<string>('repositoryRootFolder');
+        this._documentRoot  = '';
         if (undefined !== root) {
             this._documentRoot = root;            
         }
         this._ddfs = {};
     }
+
+    
         
     documentOpened(document: vscode.TextDocument) {
         let documentType = '';
