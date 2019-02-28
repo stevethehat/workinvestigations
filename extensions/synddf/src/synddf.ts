@@ -49,12 +49,15 @@ export class SynDDF{
         return fileName;
     }
 
-    getTemplate(name: string): Template{
+    getTemplate(name: string, andParse: boolean = true): Template{
         let result = null;
         if (undefined !== this._templates[name]) {
             result = this._templates[name];
         } else {
             result = new Template(name);
+            if (andParse) {
+                result.parse();
+            }
             this._templates[name] = result;
         }
         return result;

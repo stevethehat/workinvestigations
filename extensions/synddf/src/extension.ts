@@ -34,7 +34,6 @@ export function activate(context: vscode.ExtensionContext) {
 				vscode.window.showErrorMessage('got commands');
 			}
 		);
-		return;
 		vscode.window.showInputBox({
 			prompt: 'Enter the character position'
 		}).then(

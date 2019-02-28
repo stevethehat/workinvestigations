@@ -130,8 +130,11 @@ export class Chunker{
     }
 
     gotoElement(element: string) {
-        let chunk = '';
-        while (this.getNextChunk() !== element) { }
+        let chunk = this.getNextChunk();
+
+        while (element !== chunk && '' !== chunk) {
+            chunk = this.getNextChunk();
+        }
     }
     advanceLine(){
         this._line = this._block.shift();
