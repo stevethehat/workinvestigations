@@ -16,6 +16,7 @@ export class DDFCodeLenseProvider implements vscode.CodeLensProvider {
         const result = new Array<vscode.CodeLens>();
         let position = 1;
 
+        
         for(let lineNo = 0; lineNo < document.lineCount; lineNo++){
             const line = document.lineAt(lineNo);
             if (line.text.startsWith('Field')) {
@@ -23,13 +24,17 @@ export class DDFCodeLenseProvider implements vscode.CodeLensProvider {
                     const chunker = new Chunker([line.text]);
                     chunker.gotoElement('Template');
                     const templateName = chunker.getNextChunk();
+
                     const template = synDDF.getTemplate(templateName);
                     if (null !== template) {
-                        if (null !== template.Settings) {
-                            let size = Number(template.Settings['Size']);
+                        let settings = template.mergeSettings();
+
+                        if (null !== settings) {
+                            let size = Number(settings['Size']);
                             if (NaN !== size) {
+                                const title = `Position ${position} - ${position + (size -1)} (${size})`;
                                 const codeLens = new vscode.CodeLens(line.range, {
-                                    title: `Position ${position} - ${position + (size -1)} (${size})`, command: ''
+                                    title: title, command: ''
                                 });
                                 result.push(codeLens);
                                 position += (size);
@@ -42,7 +47,7 @@ export class DDFCodeLenseProvider implements vscode.CodeLensProvider {
                 }
             }
         }
-        
+
         return result;
     }
     

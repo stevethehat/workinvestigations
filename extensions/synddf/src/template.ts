@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { Base } from './base';
 import { Dictionary } from "lodash";
+import * as _       from 'lodash';
 import { synDDF } from './extension';
 
 let fs = require('fs');
@@ -33,7 +34,7 @@ export class Template extends Base {
 
         this.parse();
         const settings = new Array<MarkdownSettingLine>();
-        this.addSettings(settings);
+        this.addMarkdownSettings(settings);
 
         settings.shift();
 
@@ -68,9 +69,23 @@ export class Template extends Base {
         return new vscode.Position(0, 0);
     }
 
-    addSettings(settings: MarkdownSettingLine[]) {
+    mergeSettings(): Dictionary<string>{
+        let mergedSettings = {};
+
+        if(null !== this.Ancestor){
+            _.extend(mergedSettings, this.Settings, this.Ancestor.mergeSettings());
+        } else {
+            if(null !== this.Settings){
+                mergedSettings = this.Settings;
+            }
+        }
+
+        return mergedSettings;
+    }
+
+    addMarkdownSettings(settings: MarkdownSettingLine[]) {
         if (null !== this.Ancestor) {
-            this.Ancestor.addSettings(settings);
+            this.Ancestor.addMarkdownSettings(settings);
         } 
 
         for (var setting in this.Settings) {

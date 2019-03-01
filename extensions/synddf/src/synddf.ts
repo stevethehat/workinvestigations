@@ -57,6 +57,7 @@ export class SynDDF{
             result = new Template(name);
             if (andParse) {
                 result.parse();
+                //this.addSettings(settings);
             }
             this._templates[name] = result;
         }
