@@ -1,13 +1,17 @@
 import { Dictionary } from 'vuex';
 
 export class TestHost{
-    Host: string = '';
-    Username: string = '';
-    Password: string = '';
-    Protocol: string = '';
+    Host        : string = '';
+    Username    : string = '';
+    Password    : string = '';
+    Protocol    : string = '';
 }
 
 export class ApiTester{
+    get Host(): string{
+        return this._host
+    }
+
     private _token: string = '';
     private _hosts: Dictionary<TestHost> = {
         'localhost':{

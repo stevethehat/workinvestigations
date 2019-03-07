@@ -15,36 +15,18 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { apiTester, TestHost } from '@/util/ApiTester.ts';
+import { apiTester, TestHost }  from '@/util/ApiTester.ts';
 
-import router from '@/router';
+import router                   from '@/router';
 
 @Component({})
 export default class Login extends Vue {
-    public Hosts: Array<string> = ['localhost', 'uat', 'staging', 'ibcdev'];
-    public Host: string = 'localhost';
+    public Hosts    : Array<string> = ['localhost', 'uat', 'staging', 'ibcdev'];
+    public Host     : string        = 'localhost';
 
     login(){
         apiTester.login(this.Host);
-        router.push('preview');
+        router.push('cpq');
     }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
