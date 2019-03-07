@@ -3,7 +3,7 @@
         <h1>CPQ</h1>
         {{Host}}
 
-        <div v-for="wholegood in Wholegoods" v-bind:key="wholegood">
+        <div v-for="wholegood in Wholegoods" v-bind:key="wholegood.StockNumber">
             <b-card :title="wholegood.StockNumber">
 
             </b-card>
@@ -14,6 +14,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue }     from 'vue-property-decorator';
+
 import { apiTester }                from '@/util/ApiTester.ts';
 import { CPQWholegood }             from '@/util/cpq.ts';
 
