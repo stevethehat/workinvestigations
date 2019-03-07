@@ -2,25 +2,41 @@
     <div class="login">
         <h1>CPQ</h1>
         {{Host}}
-        <h2>Wholegoods</h2>
-        <div v-for="wholegood in Wholegoods" v-bind:key="wholegood.StockNumber">
-            <b-card :title="wholegood.StockNumber">
-                <wholegood :wholegood="wholegood">
-                </wholegood>
-            </b-card>
-        </div>
-        <b-button @click="addWholegood">Add</b-button>
-        <h2>Trade Ins</h2>
-        <div v-for="tradeIn in TradeIns" v-bind:key="tradeIn.SerialNumber">
-            <b-card :title="tradeIn.SerialNumber">
-                <trade-in :tradein="tradeIn">
-                </trade-in>
-            </b-card>
-        </div>
-        <b-button @click="addTradeIn">Add</b-button>
-        <div>
-            <b-button @click="go">Go</b-button>
-        </div>
+        <b-card title="Wholegoods" 
+            _img-src="~/assets/tractor2.png">
+            <div v-for="wholegood in Wholegoods" v-bind:key="wholegood.StockNumber">
+                <div>
+                    <wholegood :wholegood="wholegood">
+                    </wholegood>
+                </div>
+            </div>
+
+            <b-button-toolbar>
+                <b-button-group size="sm">
+                    <b-button variant="primary" @click="addWholegood">Add</b-button>
+                </b-button-group>
+            </b-button-toolbar>
+        </b-card>
+        <b-card title="Trade Ins">
+            <div v-for="tradeIn in TradeIns" v-bind:key="tradeIn.SerialNumber">
+                <div>
+                    <trade-in :tradein="tradeIn">
+                    </trade-in>
+                </div>
+            </div>
+            <b-button-toolbar>
+                <b-button-group size="sm">
+                    <b-button variant="primary" @click="addTradeIn">Add</b-button>
+                </b-button-group>
+            </b-button-toolbar>
+        </b-card>
+        <b-card>
+            <b-button-toolbar>
+                <b-button-group size="sm">
+                    <b-button variant="primary" @click="go">Go</b-button>
+                </b-button-group>
+            </b-button-toolbar>
+        </b-card>
     </div>
 </template>
 
@@ -67,7 +83,11 @@ export default class CPQ extends Vue {
         this.TradeIns.push(new CPQTradeIn());
     }
     go(){
-        alert(JSON.stringify(this.Wholegoods, null, 2));
+        const requestData = {
+            wholegoods: this.Wholegoods,
+            tradins: this.TradeIns
+        }
+        alert(JSON.stringify(requestData, null, 2));
     }
 }
 </script>

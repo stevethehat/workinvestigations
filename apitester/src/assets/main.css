@@ -13,3 +13,15 @@ h3 {
     color: #42b983;
   }
   
+  input{
+    background-color: pink;
+    width: calc(100% - 120px);
+  }
+
+  .col{
+    background-color: orange;
+    border: solid 1px blue;
+    padding-left: 2px !important;
+    padding-right: 2px !important;
+    text-align: right;
+  }

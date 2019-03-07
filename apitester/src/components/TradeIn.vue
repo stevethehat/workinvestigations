@@ -15,6 +15,11 @@
                     <input type="text" v-model="internalTradeIn.Model"/>
                 </b-col>
             </b-row>
+            <b-row>
+                <b-col sm="12" class="col">
+                    Condition: <input type="text" style="width:max"/>
+                </b-col>
+            </b-row>
         </b-container>
     </div>
 </template>
