@@ -5,9 +5,11 @@
 
         <div v-for="wholegood in Wholegoods" v-bind:key="wholegood.StockNumber">
             <b-card :title="wholegood.StockNumber">
-
+                <wholegood :wholegood="wholegood">
+                </wholegood>
             </b-card>
         </div>
+        <button @click="add">Add</button>
         <button @click="go">Go</button>
     </div>
 </template>
@@ -18,12 +20,20 @@ import { Component, Prop, Vue }     from 'vue-property-decorator';
 import { apiTester }                from '@/util/ApiTester.ts';
 import { CPQWholegood }             from '@/util/cpq.ts';
 
-@Component({})
+import Wholegood                    from '@/components/Wholegood.vue';
+
+@Component({
+    components:{
+        Wholegood,
+    }
+})
 export default class CPQ extends Vue {
     public Host         : string = 'localhost';
     public Wholegoods   : Array<CPQWholegood> = [
         {
-            StockNumber: '1234'
+            StockNumber: '',
+            Make: '',
+            Model: ''
         }
     ];
 
@@ -32,13 +42,11 @@ export default class CPQ extends Vue {
         this.Host = apiTester.Host;
     }
 
+    add(){
+        this.Wholegoods.push(new CPQWholegood());
+    }
     go(){
-        //alert(JSON.stringify(this.Wholegoods, null, 2));
-        this.Wholegoods.push(
-            {
-                StockNumber: '5678'
-            }
-        );
+        alert(JSON.stringify(this.Wholegoods, null, 2));
     }
 }
 </script>
