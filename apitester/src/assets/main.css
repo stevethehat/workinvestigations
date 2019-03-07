@@ -18,10 +18,24 @@ h3 {
     width: calc(100% - 120px);
   }
 
+  .row{
+    padding-top: 4px;
+  }
+
   .col{
     background-color: orange;
     border: solid 1px blue;
     padding-left: 2px !important;
     padding-right: 2px !important;
     text-align: right;
+  }
+
+  .btn-toolbar{
+    padding-top: 10px;
+  }
+
+  .pageContent{
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
   }

@@ -20,6 +20,20 @@
                     Condition: <input type="text" style="width:max"/>
                 </b-col>
             </b-row>
+            <b-row>
+                <b-col>
+                    Price:
+                    <input type="text" />
+                </b-col>
+                <b-col>
+                    Book Price: 
+                    <input type="text" v-model="internalTradeIn.Make"/>
+                </b-col>
+                <b-col>
+                    <!-- Model:  -->
+                    <!-- <input type="text" v-model="internalTradeIn.Model"/> -->
+                </b-col>
+            </b-row>
         </b-container>
     </div>
 </template>

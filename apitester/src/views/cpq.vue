@@ -1,5 +1,5 @@
 <template>
-    <div class="login">
+    <div class="pageContent">
         <h1>CPQ</h1>
         {{Host}}
         <b-card title="Wholegoods" 
