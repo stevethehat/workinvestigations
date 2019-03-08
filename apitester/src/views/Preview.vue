@@ -1,10 +1,7 @@
 <template>
     <div class="pageContent">
-        <h1>Preview</h1>
-        {{Host}}
-        <pre class="requestPreview">
-            {{data}}
-        </pre>
+        {{StatusMessage}}
+        <pre class="requestPreview">{{data}}</pre>
 
         <b-button-toolbar>
             <b-button-group size="sm">
@@ -29,9 +26,15 @@ import { apiTester }                from '@/util/ApiTester.ts';
 @Component
 export default class Preview extends Vue {
     public data: string = JSON.stringify(apiTester.RequestData, null, 2);
+    public StatusMessage: string = ''
 
     constructor(){
         super();
+        this.StatusMessage = apiTester.StatusMessage;
+        var title: HTMLElement | null = document.getElementById('pageTitle');
+        if(null !== title){
+            title.innerHTML = 'Preview';
+        }
     }
 
     go(){

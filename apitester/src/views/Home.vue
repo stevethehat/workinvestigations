@@ -1,6 +1,5 @@
 <template>
     <div class="pageContent">
-        <h1>Login</h1>
         <b-card>
             <login>
 
@@ -18,5 +17,14 @@ import Login from '@/components/Login.vue'; // @ is an alias to /src
     Login,
   },
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {
+    constructor(){
+        super();
+        var title: HTMLElement | null = document.getElementById('pageTitle');
+        if(null !== title){
+            title.innerHTML = 'Preview';
+        }
+
+    }
+}
 </script>

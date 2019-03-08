@@ -1,31 +1,77 @@
 <template>
-  <div id="app">
-    <!--
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    -->
-    <router-view/>
-  </div>
+    <div id="app">
+        <div>
+            <div class="fixed-top">
+                <top-nav-bar></top-nav-bar>
+                <breadcrumb-bar></breadcrumb-bar>
+                <h1 id="pageTitle">Login</h1>
+                <!--
+                <settings-panel></settings-panel>
+                -->
+                <img class="logo" src="@/assets/gold_ring.png">
+            </div>
+
+            <div class="content-container container-fluid">
+                <div class="row">
+                    <side-nav-bar></side-nav-bar>
+                    <main role="main" id="main" class="col-md-10 ml-sm-auto col-lg-10 py-3 px-4 main" >
+                        <router-view></router-view>
+                    </main>
+                </div>
+            </div>
+        </div>
+    </div>      
 </template>
 
 <style lang="scss">
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
+    font-family: 'Ubuntu', 'Avenir', Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+
+body {
+  font-size: .875rem;
+  overflow: hidden;
+}
+
+.logo {
+    position: absolute;
+    top: 20px;
+    left: 45px;
+}
+
+.content-container {
+    padding-top: 110px;
+    padding-bottom: 70px;
+}
+
+.main {
+    overflow-y: scroll;
+
+    /*Total viewport height minus the height of the bottom bar
+    and the fixed top bar.*/
+    height: calc(100vh - 140px);
+}
+
+/*
+ * Utilities
+ */
+
+.border-top { border-top: 1px solid #e5e5e5; }
+.border-bottom { border-bottom: 1px solid #e5e5e5; }
+
+.mainDiv{
+    height:calc(100vh - 220px);
+}
+
+.fixed-top{
+    background-color: black;
+    height: 100px;
 }
 </style>

@@ -1,3 +1,137 @@
+h1, h2, h3{
+    margin-left:20px;
+}
+
+h2{
+    height: 40px;
+    font-size: 20px;
+}
+
+h3{
+    height: 40px;
+    font-size: 20px;
+}
+
+
+.mainDiv{
+    height: calc(100% - 280px);
+}
+
+.subDiv{
+    margin-left: 60px;
+    margin-right: 60px;
+    border: solid 1px#ddd;
+    height: calc(100% - 24px);
+}
+
+.navigation{
+    height: 100px;
+}
+
+.backLink{
+    margin-left: 26px;
+}
+
+.buttons{
+    margin:10px;
+    float: left;
+}
+
+legend{
+    margin-left: 10px;
+}
+
+th{
+    font-weight: bold;
+}
+
+.contentContainer{
+    height: calc(100% - 60px);
+    max-height: calc(100% - 60px);
+    /*overflow-y: auto;*/
+    /* not sure where i was getting a horizontal scrollbar - probably padding on sub items */
+    overflow-x: hidden;
+}
+
+.contentContainer .scrollregion{
+    overflow-y: auto;
+    max-height: calc(100% - 60px);
+    background-color: pink;
+}
+
+
+form{
+    height: 100%;
+    overflow-x: none;
+}
+
+#manufacturers td:nth-child(2){
+    width:40px;
+}
+
+#manufacturers td:nth-child(3){
+    width:140px;
+}
+
+#manufacturers td:nth-child(4){
+    width:150px;
+}
+
+#csvMappings td:nth-child(1){
+    width:30px;
+}
+
+#csvMappings .mappingButton, #csvMappings .mappingButton{
+    width:30px;
+}
+
+#fixedMappings td:nth-child(4), #fixedMappings td:nth-child(5){
+    width:30px;
+}
+
+#imports td:nth-child(7){
+    width:146px;
+}
+
+.inspector td:nth-child(3){
+    width:30px;
+}
+/* bootstrap extras */
+
+.btn.btn-xsm{
+    padding: 0.20rem 0.5rem;
+    font-size: 0.8rem;
+    line-height: 1.2;
+    border-radius: 0.2rem;    
+    background-color: #deb45d;
+}
+
+.page-item.active .page-link{
+    background-color:#deb45d;
+    border-color: #deb45d;    
+}
+
+button.btn-ibcos, a.btn-ibcos{
+    /*font-weight: bold;*/
+    background-color:#deb45d;
+    color: black;
+}
+
+.loading{
+    font-size: 30px;
+    color: #888;
+    padding: 10px;
+}
+
+fieldset legend{
+    padding-top: 20px;
+}
+
+.row{
+    padding-bottom:10px;
+}
+/* =================================================================================== */
+
 h3 {
     margin: 40px 0 0;
   }
@@ -43,4 +177,10 @@ h3 {
       text-align: left;
       background-color: black;
       color: white;
+  }
+
+  .fixed-top h1{
+    color:white;
+    padding-top: 40px;
+    padding-left: 110px;
   }

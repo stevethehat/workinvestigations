@@ -15,6 +15,7 @@ export class ApiTester{
     get Host(): string{
         return this._host
     }
+    public StatusMessage: string = 'Not logged in.'
 
     private _token: string = '';
     private _hosts: Dictionary<TestHost> = {
@@ -49,6 +50,7 @@ export class ApiTester{
         if(undefined !== window.loginDetails){
             this._host = window.loginDetails.host;
             this._token = window.loginDetails.host;
+            this.StatusMessage = window.loginDetails.statusMessage;
         }
     }
 
@@ -100,10 +102,12 @@ export class ApiTester{
             if (200 === xhr.status) {
                 const response = JSON.parse(xhr.responseText);
                 self._token = response['Token'];
+                self.StatusMessage = `Logged in: ${self._hosts[self._host].Username}@${self._host} [${self._token}].`;
                 
                 window.loginDetails = {
                     host: self._host,
-                    token: self._token
+                    token: self._token,
+                    statusMessage: self.StatusMessage
                 }
             }
             else if (200 !== xhr.status) {

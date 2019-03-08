@@ -1,7 +1,6 @@
 <template>
     <div class="pageContent">
-        <h1>CPQ</h1>
-        {{Host}}
+        {{StatusMessage}}
         <b-card title="Wholegoods" 
             _img-src="~/assets/tractor2.png">
             <div v-for="wholegood in Wholegoods" v-bind:key="wholegood.Id">
@@ -46,7 +45,7 @@
         <b-card>
             <b-button-toolbar>
                 <b-button-group size="sm">
-                    <b-button variant="primary" @click="go">Go</b-button>
+                    <b-button variant="primary" @click="go">Preview</b-button>
                 </b-button-group>
             </b-button-toolbar>
         </b-card>
@@ -72,12 +71,19 @@ import router                   from '@/router';
 })
 export default class CPQ extends Vue {
     public Host         : string = 'localhost';
+    public StatusMessage: string = ''
     public Wholegoods   : Array<CPQWholegood> = [ new CPQWholegood() ];
     public TradeIns   : Array<CPQTradeIn> = [ ];
     public AdditionalItems: Array<CPQAdditionalItem> = [];
 
     constructor(){
         super();
+        this.StatusMessage = apiTester.StatusMessage;
+        var title: HTMLElement | null = document.getElementById('pageTitle');
+        if(null !== title){
+            title.innerHTML = 'CPQ Configuration';
+        }
+
         if(!apiTester.LoggedIn){
             router.push('');    
         }
