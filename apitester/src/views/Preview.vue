@@ -6,6 +6,7 @@
         <b-button-toolbar>
             <b-button-group size="sm">
                 <b-button variant="primary" @click="go">Go</b-button>
+                <b-button v-if="'' !== DataSent" variant="primary" @click="retry">Retry</b-button>
             </b-button-group>
         </b-button-toolbar>
         
@@ -51,6 +52,13 @@ export default class Preview extends Vue {
             }
             
         });
+    }
+
+    retry(){
+        const self = this;
+
+        self.data = self.DataSent;
+        self.DataSent = '';
     }
     /*
     //public 
