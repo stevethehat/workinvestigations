@@ -26,7 +26,8 @@ import { apiTester }                from '@/util/ApiTester.ts';
 @Component
 export default class Preview extends Vue {
     public data: string = JSON.stringify(apiTester.RequestData, null, 2);
-    public StatusMessage: string = ''
+    public StatusMessage: string = '';
+    private DataSent: string = '';
 
     constructor(){
         super();
@@ -39,10 +40,16 @@ export default class Preview extends Vue {
 
     go(){
         const self = this;
+        self.DataSent = self.data;
         // http://localhost:8080/api/v1/manufacturer/agco/cpq
 
         apiTester.post('manufacturer/agco/cpq', apiTester.RequestData, function(result){
-            self.data = JSON.stringify(result, null, 2);
+            if(false === result){
+                
+            } else {
+                self.data = JSON.stringify(result, null, 2);
+            }
+            
         });
     }
     /*

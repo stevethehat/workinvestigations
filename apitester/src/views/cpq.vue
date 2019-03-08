@@ -78,7 +78,7 @@ export default class CPQ extends Vue {
 
     constructor(){
         super();
-        this.StatusMessage = apiTester.StatusMessage;
+        //this.StatusMessage = apiTester.StatusMessage;
         var title: HTMLElement | null = document.getElementById('pageTitle');
         if(null !== title){
             title.innerHTML = 'CPQ Configuration';

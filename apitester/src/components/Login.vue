@@ -24,8 +24,12 @@ export default class Login extends Vue {
     public Host     : string        = 'localhost';
 
     login(){
-        apiTester.login(this.Host);
-        router.push('cpq');
+        apiTester.login(this.Host, function(ok: boolean){
+            if(ok){
+                router.push('cpq');
+            }
+        });
+        
     }
 }
 </script>

@@ -1,5 +1,13 @@
 import { Dictionary } from 'vuex';
 
+interface IDataCallback{
+    (data: object | boolean): void;
+}
+
+interface IBoolCallback{
+    (ok: boolean): void;
+}
+
 export class TestHost{
     Host        : string = '';
     Username    : string = '';
@@ -58,6 +66,11 @@ export class ApiTester{
         return this._hosts[this._host].Host + `/api/v1/${url}`;
     }
 
+    error(callback: IBoolCallback){
+        alert('Api connection error.');
+        callback(false);
+    }
+    
     get(url: string) {
         const xhr = new XMLHttpRequest();
         xhr.open('GET', url);
@@ -70,7 +83,8 @@ export class ApiTester{
         xhr.send();    
     }
 
-    post(url: string, data: any, callback) {
+
+    post(url: string, data: any, callback: IDataCallback) {
         var self = this;
 
         const xhr = new XMLHttpRequest();
@@ -79,6 +93,7 @@ export class ApiTester{
         xhr.open('POST', fullUrl);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.setRequestHeader('Authorization', this._token);
+        xhr.onerror = () => this.error(callback); 
         xhr.onload = function() {
             if (200 === xhr.status) {
                 callback(JSON.parse(xhr.responseText));
@@ -90,7 +105,7 @@ export class ApiTester{
         xhr.send(JSON.stringify(data));    
     }
 
-    login(host: string){
+    login(host: string, callback: IBoolCallback){
         const self = this;
         self._host = host;
 
@@ -98,6 +113,7 @@ export class ApiTester{
 
         xhr.open('POST', this.getUrl('account/login'));
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onerror = () => this.error(callback); 
         xhr.onload = function() {
             if (200 === xhr.status) {
                 const response = JSON.parse(xhr.responseText);
@@ -109,8 +125,12 @@ export class ApiTester{
                     token: self._token,
                     statusMessage: self.StatusMessage
                 }
+
+                callback(true);
             }
             else if (200 !== xhr.status) {
+                alert(`Could not log in. ${xhr.statusText} [${xhr.status}]`);
+                callback(false);
             }
         };
         xhr.send(encodeURI('Username=' + self._hosts[self._host].Username + '&Password=ibcos.1234&Applicationid=bc83bacc-483f-47aa-8f8c-eff98586b146'));    
