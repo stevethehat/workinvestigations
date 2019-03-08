@@ -17,17 +17,22 @@
             </b-row>
             <b-row>
                 <b-col sm="12" class="col">
-                    Condition: <input type="text" style="width:max"/>
+                    Description: <input type="text" style="width:max" v-model="internalTradeIn.Description"/>
+                </b-col>
+            </b-row>
+            <b-row>
+                <b-col sm="12" class="col">
+                    Condition: <input type="text" style="width:max" v-model="internalTradeIn.Condition"/>
                 </b-col>
             </b-row>
             <b-row>
                 <b-col>
-                    Price:
-                    <input type="text" />
+                    Compensation:
+                    <input type="number" v-model="internalTradeIn.CompensationValue"/>
                 </b-col>
                 <b-col>
                     Book Price: 
-                    <input type="text" v-model="internalTradeIn.Make"/>
+                    <input type="number" v-model="internalTradeIn.BookValue"/>
                 </b-col>
                 <b-col>
                     <!-- Model:  -->
@@ -50,20 +55,20 @@ import router                   from '@/router';
 @Component({})
 export default class TradeIn extends Vue{
     @Prop({})
-    public tradein!: CPQTradeIn;
-    private internalTradeIn: CPQTradeIn = this.tradein;
+    public tradeIn!: CPQTradeIn;
+    private internalTradeIn: CPQTradeIn = this.tradeIn;
     constructor(){
         super();
-        this.internalTradeIn = this.tradein;
+        this.internalTradeIn = this.tradeIn;
     }
-    @Watch('internalWholegood')
-    internalWholegoodChanged(newValue: CPQTradeIn, oldValue: CPQTradeIn){
+    @Watch('internalTradeIn')
+    internalTradeInChanged(newValue: CPQTradeIn, oldValue: CPQTradeIn){
         if(newValue !== oldValue) {
             this.$emit('input', newValue);
         }
     }
-    @Watch('wholegood')
-    wholegoodChanged(newValue: CPQTradeIn, oldValue: CPQTradeIn){
+    @Watch('wholegtradeinood')
+    tradeInChanged(newValue: CPQTradeIn, oldValue: CPQTradeIn){
         if(newValue !== oldValue) {
             this.internalTradeIn = newValue;
         }

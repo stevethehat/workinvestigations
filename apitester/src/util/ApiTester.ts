@@ -8,6 +8,10 @@ export class TestHost{
 }
 
 export class ApiTester{
+    public RequestData: object = {};
+    get LoggedIn(): boolean{
+        return '' !== this._token;
+    }
     get Host(): string{
         return this._host
     }
@@ -42,6 +46,14 @@ export class ApiTester{
     private _host: string = 'localhost';
 
     constructor(){
+        if(undefined !== window.loginDetails){
+            this._host = window.loginDetails.host;
+            this._token = window.loginDetails.host;
+        }
+    }
+
+    getUrl(url: string): string{
+        return this._hosts[this._host].Host + `/api/v1/${url}`;
     }
 
     get(url: string) {
@@ -56,16 +68,21 @@ export class ApiTester{
         xhr.send();    
     }
 
-    post(url: string, data: any) {
+    post(url: string, data: any, callback) {
         var self = this;
 
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', url);
+        const fullUrl = this.getUrl(url);
+        console.log(`POST to ${fullUrl} ${this._token}`)
+        xhr.open('POST', fullUrl);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.setRequestHeader('Authorization', this._token);
         xhr.onload = function() {
             if (200 === xhr.status) {
+                callback(JSON.parse(xhr.responseText));
             } else {
+                alert(`Error calling ${fullUrl}`);
+                callback(JSON.parse(xhr.responseText));
             }
         };
         xhr.send(JSON.stringify(data));    
@@ -77,12 +94,17 @@ export class ApiTester{
 
         const xhr = new XMLHttpRequest();
 
-        xhr.open('POST', this._hosts[this._host].Host + '/api/v1/account/login');
+        xhr.open('POST', this.getUrl('account/login'));
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.onload = function() {
             if (200 === xhr.status) {
                 const response = JSON.parse(xhr.responseText);
                 self._token = response['Token'];
+                
+                window.loginDetails = {
+                    host: self._host,
+                    token: self._token
+                }
             }
             else if (200 !== xhr.status) {
             }

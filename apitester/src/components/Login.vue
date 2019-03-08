@@ -1,6 +1,5 @@
 <template>
-    <div class="login">
-        <h1>API Tester</h1>
+    <div>
         <div>
             <label>Host</label>
             <select type="text" v-model="Host">

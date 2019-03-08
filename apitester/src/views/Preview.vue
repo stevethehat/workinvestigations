@@ -1,9 +1,19 @@
 <template>
-    <div class="preview">
+    <div class="pageContent">
         <h1>Preview</h1>
+        {{Host}}
+        <pre class="requestPreview">
+            {{data}}
+        </pre>
 
-        <editor v-model="content" @init="editorInit" lang="html" theme="chrome" width="500" height="100"></editor>
+        <b-button-toolbar>
+            <b-button-group size="sm">
+                <b-button variant="primary" @click="go">Go</b-button>
+            </b-button-group>
+        </b-button-toolbar>
+        
         <!--
+        <editor v-model="content" @init="editorInit" lang="html" theme="chrome" width="500" height="100"></editor>
         <editor v-model="exsamplecontent"
                         v-bind:options="exsampleoptions">
         </editor>
@@ -14,11 +24,25 @@
 <script lang="ts">
 
 import { Component, Vue, Watch } from 'vue-property-decorator';
-var editor =  require('vue2-ace-editor');
-//import Editor from '@/vue2-ace-editor';
+import { apiTester }                from '@/util/ApiTester.ts';
 
 @Component
 export default class Preview extends Vue {
+    public data: string = JSON.stringify(apiTester.RequestData, null, 2);
+
+    constructor(){
+        super();
+    }
+
+    go(){
+        const self = this;
+        // http://localhost:8080/api/v1/manufacturer/agco/cpq
+
+        apiTester.post('manufacturer/agco/cpq', apiTester.RequestData, function(result){
+            self.data = JSON.stringify(result, null, 2);
+        });
+    }
+    /*
     //public 
     data(){
         return {
@@ -35,6 +59,7 @@ export default class Preview extends Vue {
             require('brace/mode/less')
             require('brace/theme/chrome')
             require('brace/snippets/javascript') //snippet
-        }
+    }
+    */
 }
 </script>

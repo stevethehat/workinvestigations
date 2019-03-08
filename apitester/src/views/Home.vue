@@ -1,8 +1,11 @@
 <template>
-    <div class="home">
-        <login>
+    <div class="pageContent">
+        <h1>Login</h1>
+        <b-card>
+            <login>
 
-        </login>
+            </login>
+        </b-card>
     </div>
 </template>
 

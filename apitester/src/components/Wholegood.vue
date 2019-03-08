@@ -15,6 +15,20 @@
                     <input type="text" v-model="internalWholegood.Model"/>
                 </b-col>
             </b-row>
+            <b-row>
+                <b-col>
+                    Price:
+                    <input type="number" v-model="internalWholegood.Price"/>
+                </b-col>
+                <b-col>
+                    List Price: 
+                    <input type="number" v-model="internalWholegood.ListPrice"/>
+                </b-col>
+                <b-col>
+                    Discount: 
+                    <input type="number" v-model="internalWholegood.DealerDiscount"/>
+                </b-col>
+            </b-row>
         </b-container>
     </div>
 </template>

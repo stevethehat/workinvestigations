@@ -14,8 +14,7 @@ h3 {
   }
   
   input{
-    background-color: pink;
-    width: calc(100% - 120px);
+    width: calc(100% - 140px);
   }
 
   .row{
@@ -23,8 +22,6 @@ h3 {
   }
 
   .col{
-    background-color: orange;
-    border: solid 1px blue;
     padding-left: 2px !important;
     padding-right: 2px !important;
     text-align: right;
@@ -38,4 +35,12 @@ h3 {
     width: 800px;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .requestPreview{
+      width:100%;
+      font-family: 'Courier New', Courier, monospace;
+      text-align: left;
+      background-color: black;
+      color: white;
   }
