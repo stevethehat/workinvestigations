@@ -1,6 +1,9 @@
 <template>
     <div class="pageContent">
         {{StatusMessage}}
+        <b-card title="Customer">
+            <customer :customer="Customer"/>
+        </b-card>
         <b-card title="Wholegoods" 
             _img-src="~/assets/tractor2.png">
             <div v-for="wholegood in Wholegoods" v-bind:key="wholegood.Id">
@@ -17,6 +20,10 @@
             </b-button-toolbar>
         </b-card>
         <b-card title="Trade Ins">
+            <b-card-header>
+                e.g. JJE687268132, 327HS380923, 277HH662223, TN75A-636552443
+            </b-card-header>
+            
             <div v-for="tradeIn in TradeIns" v-bind:key="tradeIn.Id">
                 <div>
                     <trade-in :tradeIn="tradeIn">
@@ -45,7 +52,7 @@
         <b-card>
             <b-button-toolbar>
                 <b-button-group size="sm">
-                    <b-button variant="primary" @click="go">Preview</b-button>
+                    <b-button variant="primary" @click="preview">Preview</b-button>
                 </b-button-group>
             </b-button-toolbar>
         </b-card>
@@ -58,6 +65,7 @@ import { Component, Prop, Vue }     from 'vue-property-decorator';
 import { apiTester }                from '@/util/ApiTester.ts';
 import { CPQWholegood, CPQTradeIn, CPQAdditionalItem }             from '@/util/cpq.ts';
 
+import Customer                     from '@/components/Customer.vue';
 import Wholegood                    from '@/components/Wholegood.vue';
 import TradeIn                      from '@/components/TradeIn.vue';
 import AdditionalItem               from '@/components/AdditionalItem.vue';
@@ -66,19 +74,20 @@ import router                   from '@/router';
 
 @Component({
     components:{
-        Wholegood, TradeIn, AdditionalItem,
+        Wholegood, TradeIn, AdditionalItem, Customer, 
     }
 })
 export default class CPQ extends Vue {
-    public Host         : string = 'localhost';
-    public StatusMessage: string = ''
-    public Wholegoods   : Array<CPQWholegood> = [ new CPQWholegood() ];
-    public TradeIns   : Array<CPQTradeIn> = [ ];
-    public AdditionalItems: Array<CPQAdditionalItem> = [];
+    public Host             : string = 'localhost';
+    public Customer         : string = '1800';
+    public StatusMessage    : string = ''
+    public Wholegoods       : Array<CPQWholegood> = [ new CPQWholegood() ];
+    public TradeIns         : Array<CPQTradeIn> = [ ];
+    public AdditionalItems  : Array<CPQAdditionalItem> = [];
 
     constructor(){
         super();
-        //this.StatusMessage = apiTester.StatusMessage;
+        this.StatusMessage = apiTester.UserDetails.StatusMessage;
         var title: HTMLElement | null = document.getElementById('pageTitle');
         if(null !== title){
             title.innerHTML = 'CPQ Configuration';
@@ -105,17 +114,19 @@ export default class CPQ extends Vue {
         additionalItem.Id = this.AdditionalItems.length;
         this.AdditionalItems.push(additionalItem);
     }
-    go(){
+    preview(){
         apiTester.RequestData = this.createConfiguration();
         router.push('preview');
     }
 
     createConfiguration(){
         const configurationItems: any[] = [];
+        /*
         this.Wholegoods.forEach(wholegood => {
             configurationItems.push(wholegood.getCPQData());
         });
-
+        */
+       
         const tradeInItems: any[] = [];
         this.TradeIns.forEach(tradeIn => {
             tradeInItems.push(tradeIn.getCPQData());
@@ -128,6 +139,7 @@ export default class CPQ extends Vue {
 
         return {
             quotation:{
+                dealerCustomerId: this.Customer,
                 configuration: {
                     lineItems: configurationItems
                 },

@@ -1,15 +1,18 @@
 <template>
-    <div>
-        <div>
-            <label>Host</label>
-            <select type="text" v-model="Host">
-                <option v-for="host in Hosts" v-bind:key="host" :value="host" :v-model="Host">
-                    {{host}}
-                </option>
-            </select>
-        </div>
+    <b-container>
+        <b-row>
+            <b-col>
+                <label>Host</label>
+                <select type="text" v-model="Host">
+                    <option v-for="host in Hosts" v-bind:key="host" :value="host" :v-model="Host">
+                        {{host}}
+                    </option>
+                </select>
+            </b-col>
+            <b-col sm="8"></b-col>
+        </b-row>
         <button @click="login">Login</button>
-    </div>
+    </b-container>
 </template>
 
 <script lang="ts">

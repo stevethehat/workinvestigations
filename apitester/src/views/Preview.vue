@@ -32,7 +32,7 @@ export default class Preview extends Vue {
 
     constructor(){
         super();
-        this.StatusMessage = apiTester.StatusMessage;
+        this.StatusMessage = apiTester.UserDetails.StatusMessage;
         var title: HTMLElement | null = document.getElementById('pageTitle');
         if(null !== title){
             title.innerHTML = 'Preview';

@@ -9,11 +9,11 @@ export class CPQWholegood{
 
     constructor() {
         this.Id             = 0;
-        this.StockNumber    = '10001005';
-        this.Make           = 'VA';
-        this.Model          = 'S274';
-        this.Price          = 110000;
-        this.ListPrice      = 100000;
+        this.StockNumber    = '10001052';
+        this.Make           = 'AM';
+        this.Model          = 'AM-323s';
+        this.Price          = 73000;
+        this.ListPrice      = 75000;
         this.DealerDiscount = 2000;
     }
 
@@ -40,6 +40,8 @@ export class CPQTradeIn{
     public Condition            : string;
     public CompensationValue    : number;
     public BookValue            : number;
+    public YearOfReg            : number;
+    public Clock                : number;
     
     constructor() {
         this.Id                 = 0;
@@ -50,17 +52,21 @@ export class CPQTradeIn{
         this.Condition          = '';
         this.CompensationValue  = 0;
         this.BookValue          = 0;
+        this.YearOfReg          = 0;
+        this.Clock              = 0;
     }
 
     getCPQData(){
         const result = {
-            serialNumber: this.SerialNumber,
-            brand: this.Make,
-            model: this.Model,
-            modelVariant: this.Description,
-            compensationValue : this.CompensationValue,
-            bookValue: this.BookValue,
-            machineCondition: this.Condition,
+            serialNumber        : this.SerialNumber,
+            brand               : this.Make,
+            model               : this.Model,
+            modelVariant        : this.Description,
+            compensationValue   : this.CompensationValue,
+            bookValue           : this.BookValue,
+            machineCondition    : this.Condition,
+            yearOfReg           : this.YearOfReg,
+            runningHours        : this.Clock
         }   
         return result; 
     }
