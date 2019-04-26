@@ -2,7 +2,28 @@
     <div class="pageContent">
         {{StatusMessage}}
         <b-card title="Customer">
-            <customer :customer="Customer"/>
+            <customer :customer="Customer" v-model="Customer"/>
+        </b-card>
+        <b-card title="Order type">
+            <b-container>
+                <b-row>
+                    <b-col>
+                        Order type:
+                        <select type="text" v-model="OrderType">
+                            <option value="DEALER">DEALER</option>
+                            <option value="RETAIL">RETAIL</option>
+                        </select>
+                    </b-col>
+                    <b-col>
+                        FulFilment Type:
+                        <select type="text" v-model="FulFilmentType">   
+                            <option value="NEW">NEW</option>
+                            <option value="DEALER_PIPELINE">DEALER PIPELINE</option>
+                            <option value="DEALER_YARD">DEALER YARD</option>
+                        </select>
+                    </b-col>
+                </b-row>
+            </b-container>
         </b-card>
         <b-card title="Wholegoods" 
             _img-src="~/assets/tractor2.png">
@@ -52,7 +73,8 @@
         <b-card>
             <b-button-toolbar>
                 <b-button-group size="sm">
-                    <b-button variant="primary" @click="preview">Preview</b-button>
+                    <b-button variant="primary" @click="preview">Preview</b-button>&nbsp;
+                    <b-button variant="primary" @click="clear">Clear</b-button>
                 </b-button-group>
             </b-button-toolbar>
         </b-card>
@@ -81,8 +103,10 @@ export default class CPQ extends Vue {
     public Host             : string = 'localhost';
     public Customer         : string = '1800';
     public StatusMessage    : string = ''
-    public Wholegoods       : Array<CPQWholegood> = [ new CPQWholegood() ];
-    public TradeIns         : Array<CPQTradeIn> = [ ];
+    public OrderType        : string = 'DEALER';
+    public FulFilmentType   : string = 'NEW';
+    public Wholegoods       : Array<CPQWholegood> = [ ];
+    public TradeIns         : Array<CPQTradeIn> = [  ];
     public AdditionalItems  : Array<CPQAdditionalItem> = [];
 
     constructor(){
@@ -118,28 +142,54 @@ export default class CPQ extends Vue {
         apiTester.RequestData = this.createConfiguration();
         router.push('preview');
     }
+    clear(){
+        this.Wholegoods         = [];
+        this.TradeIns           = [];
+        this.AdditionalItems    = [];
+    }
 
     createConfiguration(){
-        const configurationItems: any[] = [];
-        /*
+        const self = this;
+        const configurationItems: any[]     = [];
+        const tradeInItems: any[]           = [];
+        const additionalItems: any[]        = [];
+
         this.Wholegoods.forEach(wholegood => {
-            configurationItems.push(wholegood.getCPQData());
-        });
-        */
-       
-        const tradeInItems: any[] = [];
-        this.TradeIns.forEach(tradeIn => {
-            tradeInItems.push(tradeIn.getCPQData());
+            /*
+            // if wholegood has warranty we add an additional item ending in "EW"!!
+            if(0 !== wholegood.WarrantyCost){
+                const warranty: CPQAdditionalItem = new CPQAdditionalItem();
+                warranty.PartId = wholegood.StockNumber;
+                warranty.Name = '11123EW';
+                warranty.Description = wholegood.WarrantyDescription + 'EW';
+                warranty.Price = wholegood.WarrantyCost;
+                additionalItems.push(warranty.getCPQData());
+            }
+            */
+            configurationItems.push(wholegood.getCPQData(this.OrderType, this.FulFilmentType))  ;
         });
 
-        const additionalItems: any[] = [];
+        
+        this.TradeIns.forEach(tradeIn => {
+            if(tradeIn.Make != ""){
+                tradeInItems.push(tradeIn.getCPQData());
+            }
+        });
+
+        
         this.AdditionalItems.forEach(additionalItem => {
             additionalItems.push(additionalItem.getCPQData());
         });
 
+        let date = new Date();
+        date.setMonth(date.getMonth() + 1);
+
         return {
             quotation:{
                 dealerCustomerId: this.Customer,
+                depot: 1,
+                //indicativeDeliveryDate: date.toString(),
+                //indicativeDeliveryDate : 'Tue Jan 01 00:00:00 UTC 2019',
                 configuration: {
                     lineItems: configurationItems
                 },

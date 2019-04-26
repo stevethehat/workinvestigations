@@ -3,12 +3,16 @@
         <b-container>
             <b-row>
                 <b-col>
-                    Stock Number:
-                    <input type="text" v-model="internalWholegood.StockNumber"/>
+                    Configuration Id:
+                    <input type="text" v-model="internalWholegood.ConfigurationId"/>
                 </b-col>
                 <b-col>
-                    Make: 
-                    <input type="text" v-model="internalWholegood.Make"/>
+                    Quantity:
+                    <input type="number" v-model="internalWholegood.Quantity"/>
+                </b-col>
+                <b-col>
+                    Series: 
+                    <input type="text" v-model="internalWholegood.Series"/>
                 </b-col>
                 <b-col>
                     Model: 
@@ -17,18 +21,26 @@
             </b-row>
             <b-row>
                 <b-col>
-                    Price:
-                    <input type="number" v-model="internalWholegood.Price"/>
-                </b-col>
-                <b-col>
-                    List Price: 
-                    <input type="number" v-model="internalWholegood.ListPrice"/>
+                    Price pre VAT: 
+                    <input type="number" v-model="internalWholegood.PriceBeforeVat"/>
                 </b-col>
                 <b-col>
                     Discount: 
                     <input type="number" v-model="internalWholegood.DealerDiscount"/>
                 </b-col>
             </b-row>
+            <!--
+            <b-row>
+                <b-col cols="9">
+                    Warranty: 
+                    <input type="string" v-model="internalWholegood.WarrantyDescription"/>
+                </b-col>
+                <b-col clas="3">
+                    Cost: 
+                    <input type="number" v-model="internalWholegood.WarrantyCost"/>
+                </b-col>
+            </b-row>
+            -->
         </b-container>
     </div>
 </template>

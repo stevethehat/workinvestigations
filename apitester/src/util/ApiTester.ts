@@ -1,5 +1,40 @@
 import { Dictionary } from 'vuex';
-import store from '@/store.ts';
+//import store from '@/store.ts';
+import Vue      from 'vue'
+import Vuex     from 'vuex'
+
+Vue.use(Vuex)
+
+interface IUserDetails{
+    Token           : string;
+    Username        : string;
+    StatusMessage   : string;
+}
+
+
+const store = new Vuex.Store({
+    state: {
+        LoggedIn: false,
+        Details: {
+            Token: '',
+            Username: '',
+            StatusMessage: ''
+        }
+    },
+    mutations: {
+        login(state, details){
+            state.LoggedIn = true;
+            state.Details = details;
+        },
+        logout: state => state.LoggedIn = false,
+    },
+    getters: {
+        userDetails: state => state.Details
+    },
+    actions: {
+
+    }
+});
 
 interface IDataCallback{
     (data: object | boolean): void;
@@ -16,11 +51,6 @@ export class TestHost{
     Protocol    : string = '';
 }
 
-interface IUserDetails{
-    Token           : string;
-    Username        : string;
-    StatusMessage   : string;
-}
 
 export class ApiTester{
     public RequestData: object = {};
@@ -103,7 +133,7 @@ export class ApiTester{
             if (200 === xhr.status) {
                 callback(JSON.parse(xhr.responseText));
             } else {
-                alert(`Error calling ${fullUrl}`);
+                //alert(`Error calling ${fullUrl}`);
                 callback(JSON.parse(xhr.responseText));
             }
         };
@@ -122,8 +152,9 @@ export class ApiTester{
     getUserDetails(){
         if(undefined === this._userDetails){
             const test = store;
-        
-            const userDetails = test.userDetails;
+            //debugger;
+            
+            const userDetails = store.state.Details;
             if(undefined !== userDetails){
                 this._userDetails = userDetails;
             }
