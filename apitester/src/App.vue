@@ -2,18 +2,23 @@
     <div id="app">
         <div>
             <div class="fixed-top">
+                 
+                <!--
                 <top-nav-bar></top-nav-bar>
                 <breadcrumb-bar></breadcrumb-bar>
+                -->
                 <h1 id="pageTitle">Login</h1>
                 <!--
                 <settings-panel></settings-panel>
                 -->
-                <img class="logo" src="@/assets/gold_ring.png">
+                <a id="home" href="/">
+                    <img class="logo" src="@/assets/gold_ring.png">
+                </a>
             </div>
 
             <div class="content-container container-fluid">
                 <div class="row">
-                    <side-nav-bar></side-nav-bar>
+                    <!--<side-nav-bar></side-nav-bar>-->
                     <main role="main" id="main" class="col-md-10 ml-sm-auto col-lg-10 py-3 px-4 main" >
                         <router-view></router-view>
                     </main>
@@ -45,6 +50,8 @@ body {
     top: 20px;
     left: 45px;
 }
+
+
 
 .content-container {
     padding-top: 110px;

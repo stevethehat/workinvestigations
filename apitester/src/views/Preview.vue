@@ -1,68 +1,79 @@
 <template>
     <div class="pageContent">
         {{StatusMessage}}
-        <pre class="requestPreview">{{data}}</pre>
-
+        <editor v-model="data" @init="editorInit" lang="json" theme="monokai" width="800" height="600"></editor>
         <b-button-toolbar>
             <b-button-group size="sm">
-                <b-button variant="primary" @click="go">Go</b-button>
+                <b-button variant="primary" @click="back">&lt; Back</b-button>&nbsp;
+                <b-button variant="primary" @click="go">Go</b-button>&nbsp;
+                <b-button v-if="'' !== DataSent" variant="primary" @click="retry">Retry</b-button>
             </b-button-group>
         </b-button-toolbar>
-        
-        <!--
-        <editor v-model="content" @init="editorInit" lang="html" theme="chrome" width="500" height="100"></editor>
-        <editor v-model="exsamplecontent"
-                        v-bind:options="exsampleoptions">
-        </editor>
-        -->
     </div>
 </template>
 
 <script lang="ts">
 
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import { Component, Vue, Watch }    from 'vue-property-decorator';
 import { apiTester }                from '@/util/ApiTester.ts';
 
-@Component
+import router                       from '@/router';
+const editor                        = require('vue2-ace-editor');
+
+@Component(
+    {
+        components: {
+            editor
+        }
+    }
+)
 export default class Preview extends Vue {
-    public data: string = JSON.stringify(apiTester.RequestData, null, 2);
-    public StatusMessage: string = ''
+    public data: string             = JSON.stringify(apiTester.RequestData, null, 2);
+    public StatusMessage: string    = '';
+    private DataSent: string        = '';
 
     constructor(){
         super();
-        this.StatusMessage = apiTester.StatusMessage;
-        var title: HTMLElement | null = document.getElementById('pageTitle');
+        this.StatusMessage              = apiTester.UserDetails.StatusMessage;
+        var title: HTMLElement | null   = document.getElementById('pageTitle');
         if(null !== title){
-            title.innerHTML = 'Preview';
+            title.innerHTML             = 'Preview';
         }
     }
 
     go(){
         const self = this;
+        self.DataSent = self.data;
         // http://localhost:8080/api/v1/manufacturer/agco/cpq
 
-        apiTester.post('manufacturer/agco/cpq', apiTester.RequestData, function(result){
-            self.data = JSON.stringify(result, null, 2);
+        //apiTester.post('manufacturer/agco/cpq', apiTester.RequestData, function(result){
+        apiTester.post('manufacturer/agco/cpq', self.DataSent, function(result){
+            if(false === result){
+                
+            } else {
+                self.data = JSON.stringify(result, null, 2);
+            }
+            
         });
     }
-    /*
-    //public 
-    data(){
-        return {
-            content: 'hello'
-        }
+
+    retry(){
+        const self = this;
+
+        self.data = self.DataSent;
+        self.DataSent = '';
     }
-    components =  {
-        editor: editor
+
+    back(){
+        router.push('cpq');
     }
-        editorInit() {
-            require('brace/ext/language_tools') //language extension prerequsite...
-            require('brace/mode/html')                
-            require('brace/mode/javascript')    //language
-            require('brace/mode/less')
-            require('brace/theme/chrome')
-            require('brace/snippets/javascript') //snippet
+
+    editorInit() {
+        require('brace/ext/language_tools') //language extension prerequsite...
+        require('brace/mode/json')    //language
+        require('brace/mode/less')
+        require('brace/theme/monokai')
+        require('brace/snippets/json') //snippet
     }
-    */
 }
 </script>

@@ -39,6 +39,20 @@
                     <!-- <input type="text" v-model="internalTradeIn.Model"/> -->
                 </b-col>
             </b-row>
+            <b-row>
+                <b-col>
+                    Running Hours:
+                    <input type="number" v-model="internalTradeIn.Clock"/>
+                </b-col>
+                <b-col>
+                    Year of Reg: 
+                    <input type="number" v-model="internalTradeIn.YearOfReg"/>
+                </b-col>
+                <b-col>
+                    <!-- Model:  -->
+                    <!-- <input type="text" v-model="internalTradeIn.Model"/> -->
+                </b-col>
+            </b-row>
         </b-container>
     </div>
 </template>
@@ -67,7 +81,7 @@ export default class TradeIn extends Vue{
             this.$emit('input', newValue);
         }
     }
-    @Watch('wholegtradeinood')
+    @Watch('tradein')
     tradeInChanged(newValue: CPQTradeIn, oldValue: CPQTradeIn){
         if(newValue !== oldValue) {
             this.internalTradeIn = newValue;
