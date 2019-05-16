@@ -1,5 +1,4 @@
-import sys, re, argparse
-
+import sys, re, argparse, os, subprocess
 
 def new_search(search):
     return {
@@ -47,8 +46,11 @@ def scan_file(file_name, block_end, line_process):
         if None != block and None != line_process:
             line_process(block, line_number, trimmed_src_line)
  
-        line_number += 1
+            block["lines"] += 1
 
+        line_number += 1
+    
+    block_end(block)
     src_file.close()
 
 
@@ -70,38 +72,65 @@ global function_match_count
 
 function_match_count = 0
 
+def format_description(block):
+    return "\n%s (%s)" % (block["description"].replace("\n", ""), block["lines"])
+
 def outline_display(block):
-    print("\nO:%s (%s)" % (block["description"], block["lines"]))
+    print(format_description(block))
 
 def search_display(block):
     global function_match_count
     if len(block["matches"]) > 0:
-        print("\nS:%s (%s)" % (block["description"], block["lines"]))
+        print(format_description(block))
         block["matches"].insert(0, "")
         print("\n\t".join(block["matches"]))
         function_match_count += 1
 
-def line_process(block, line_number, trimmed_src_line):
-    block["lines"] += 1
+def search_all_display(block):
+    global function_match_count
+
+    if len(block["matches"]) > 0:
+        found_all = True
+        for search in block["searches"]:
+            if 0 == search["count"]:
+                found_all = False
+
+        if found_all:
+            print(format_description(block))
+            block["matches"].insert(0, "")
+            print("\n\t".join(block["matches"]))
+            function_match_count += 1
+
+def line_process_search(block, line_number, trimmed_src_line):
     for search in block["searches"]:
         match = re.search(search["search"], trimmed_src_line)
         lower_match = re.search(search["search"], trimmed_src_line.lower())
 
         if None != match or None != lower_match:
             block["matches"].append("%s - %s" % (line_number, trimmed_src_line))
-
-
+            search["count"] += 1
+ 
+def line_process_lineno(block, line_number, trimmed_src_line):
+    if line_number == int(block["searches"][0]["search"]):
+        block["matches"].append("%s - %s" % (line_number, trimmed_src_line))
+\
 if "outline" == mode:
     scan_file(file_name, outline_display, None)
 
 if "findall" == mode:
-    scan_file(file_name, search_display, line_process)
+    scan_file(file_name, search_all_display, line_process_search)
 
 if "findany" == mode:
-    scan_file(file_name, search_display, line_process)
+    scan_file(file_name, search_display, line_process_search)
+
+if "finddef" == mode:
+    subprocess.call("grep -irn '.define\s%s' %s" % (searches[0], file_name), shell=True)
+
+if "line" == mode:
+    scan_file(file_name, search_display, line_process_lineno)
 
 #print("%s lines" % line_number)
 #print("%s functions" % function_count)
 print("%s functions matched" % function_match_count)
-print("done")
+print("done!!")
 
