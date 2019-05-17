@@ -53,6 +53,11 @@ def scan_file(file_name, block_end, line_process):
     block_end(block)
     src_file.close()
 
+    return {
+        "lines": line_number,
+        "functions": function_count
+    }
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("mode", help="mode - outline, findall, findany")
@@ -114,23 +119,28 @@ def line_process_lineno(block, line_number, trimmed_src_line):
     if line_number == int(block["searches"][0]["search"]):
         block["matches"].append("%s - %s" % (line_number, trimmed_src_line))
 
+result = None
+
 if "outline" == mode:
-    scan_file(file_name, outline_display, None)
+    result = scan_file(file_name, outline_display, None)
 
 if "findall" == mode:
-    scan_file(file_name, search_all_display, line_process_search)
+    result = scan_file(file_name, search_all_display, line_process_search)
 
 if "findany" == mode:
-    scan_file(file_name, search_display, line_process_search)
+    result = scan_file(file_name, search_display, line_process_search)
 
 if "finddef" == mode:
-    subprocess.call("grep -irn '.define\s%s' %s" % (searches[0], file_name), shell=True)
+    result = subprocess.call("grep -irn '.define\s%s' %s" % (searches[0], file_name), shell=True)
+
+if "finduse" == mode:
+    result = subprocess.call("grep -irn 'call\s%s\|xcall\s%s' %s" % (searches[0], searches[0], file_name), shell=True)
 
 if "line" == mode:
-    scan_file(file_name, search_display, line_process_lineno)
+    result = scan_file(file_name, search_display, line_process_lineno)
 
-#print("%s lines" % line_number)
-#print("%s functions" % function_count)
+print("%s lines" % result["lines"])
+print("%s functions" % result["functions"])
 print("%s functions matched" % function_match_count)
 print("done!!")
 
