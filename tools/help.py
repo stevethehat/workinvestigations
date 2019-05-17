@@ -113,7 +113,7 @@ def line_process_search(block, line_number, trimmed_src_line):
 def line_process_lineno(block, line_number, trimmed_src_line):
     if line_number == int(block["searches"][0]["search"]):
         block["matches"].append("%s - %s" % (line_number, trimmed_src_line))
-\
+
 if "outline" == mode:
     scan_file(file_name, outline_display, None)
 
