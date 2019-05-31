@@ -46,7 +46,8 @@ def scan_file(file_name, block_end, line_process):
         if None != block and None != line_process:
             line_process(block, line_number, trimmed_src_line)
  
-            block["lines"] += 1
+        if block != None:
+            block["lines"] = block["lines"] + 1
 
         line_number += 1
     
@@ -81,6 +82,7 @@ def format_description(block):
     return "\n%s (%s)" % (block["description"].replace("\n", ""), block["lines"])
 
 def outline_display(block):
+#    print(block)
     print(format_description(block))
 
 def search_display(block):
