@@ -1,0 +1,64 @@
+b WHGINE
+%DBG-E-Undefined routine name {WHGINE}
+
+Break at 462 in WHGINE (WHGINE.DBL) on entry
+
+DBG> v
+   458:                 sms_tab_id,     i4
+   459:                 no_access,      i4
+   460:                 f_some_idt_os,  i4
+   461: .proc
+   462>         clear gen, ^i(ivars), vj_line1_id, vj_line2_id, vb_line1_id, vb_line2_id
+   463:         clear doc_drf_chn, doc_doc_chn, doc_dct_chn, wnd_id
+   464:
+   465:         ; main despatcher routine - initialised to do setup first
+   466:         g_rtn = WR_SETUP
+
+   Step to 463 in WHGINE (WHGINE.DBL)
+   463>         clear doc_drf_chn, doc_doc_chn, doc_dct_chn, wnd_id
+
+DBG> tr
+
+%DBR-I-ATLINE, At line 462 in routine WHGINE (WHGINE.DBL)
+%DBR-I-ATLINE, At line 2167 in routine GOLD (GOLD.DBL)
+%DBR-I-CALFRM, Called from line 358
+%DBR-I-ATLINE, At line 74 in routine GOLD (GOLD.DBL)
+
+DBG> show break
+
+WHGINE on entry
+WHGINE:1.466
+
+DBG> s
+Step to 466 in WHGINE (WHGINE.DBL)
+   466>         g_rtn = WR_SETUP
+DBG> s
+Step to 470 in WHGINE (WHGINE.DBL)
+   470>                 case g_rtn of
+DBG> s
+Step to 472 in WHGINE (WHGINE.DBL)
+   472>                         WR_SETUP:       call set_up
+DBG> s
+Step to 1663 in WHGINE (WHGINE.DBL) after CALL
+  1663>         init add_part_passed
+DBG> s
+Step to 1665 in WHGINE (WHGINE.DBL)
+  1665>         if(%passed(pm_type).and.pm_type) then
+DBG> s
+Step to 1668 in WHGINE (WHGINE.DBL)
+  1668>                 pass_gen_data.plan_maint=false
+DBG> s
+Step to 1670 in WHGINE (WHGINE.DBL)
+  1670>         if(pass_gen_data.plan_maint) then
+DBG> s
+Step to 1673 in WHGINE (WHGINE.DBL)
+  1673>                 xcall syn_up( T$PRG_TITLE )
+DBG> s
+Step to 1675 in WHGINE (WHGINE.DBL)
+  1675>         xcall cmpdep( cn, dt, reject )              ; get company/depot
+DBG> s
+Step to 1676 in WHGINE (WHGINE.DBL)
+  1676>         if(.not.reject)
+DBG> s
+Step to 1678 in WHGINE (WHGINE.DBL)
+  1678>                 xcall get_globals(reject,D_COM_UPD,D_FCF_IN)
