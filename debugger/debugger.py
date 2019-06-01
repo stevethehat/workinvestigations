@@ -18,7 +18,7 @@ class Debugger:
 
         self.main_window = stdscr
         self.code = curses_util.Window(self.main_window, 2, 2, 140, 50)
-        self.variables = self.main_window.subwin(50, 80, 2, 142)
+        self.variables = curses_util.Window(self.main_window, 2, 142, 80, 50)
 
         self.update(0)
 
@@ -98,11 +98,12 @@ class Debugger:
             pass
 
         self.show_code("/Users/stevelamb/Development/ibcos/investigations/WHGINE.DBL", 100)
+        self.variables.output_lines(["v1 = 2", "v2 = 'hello'"])
 
         self.main_window.addstr(52, 0, self.statusbar, curses.color_pair(3))
 
-        self.variables.box()
-        self.variables.addstr(1, 1, "Variables.", curses.color_pair(1))
+        #self.variables.box()
+        #self.variables.addstr(1, 1, "Variables.", curses.color_pair(1))
 
         self.main_window.refresh()
 
