@@ -17,6 +17,15 @@ class Debugger:
 
 
         self.main_window = stdscr
+        self.code = curses_util.Window(self.main_window, 2, 2, 140, 50)
+        self.variables = self.main_window.subwin(50, 80, 2, 142)
+
+        self.update(0)
+
+
+
+
+
         self.s = socket.socket(
             socket.AF_INET, socket.SOCK_STREAM)
         self.s.connect(("127.0.0.1", 80))
@@ -31,7 +40,7 @@ class Debugger:
     def show_code(self, file_name, line):
         self.load_file(file_name)
 
-        self.output_lines(self.code, self.file_lines[line - 20 :line + 20], [9, 11, 18  ])
+        self.code.output_lines(self.file_lines[line - 20 :line + 20], [9, 11, 18  ])
 
     def send_request(self, request):
         return "a response"
@@ -89,29 +98,17 @@ class Debugger:
             pass
 
         self.show_code("/Users/stevelamb/Development/ibcos/investigations/WHGINE.DBL", 100)
-            #self.output_lines(self.code, ["1", "hjhjhghjghjghj", "ygjhgjgjghj", "hgjhghgjhghj"])
 
-        self.main_window.attron(curses.color_pair(3))
-        self.main_window.addstr(52, 0, self.statusbar)
-        #self.main_window.addstr(51, len(statusbarstr), " " * (width - len(statusbarstr) - 1))
-        self.main_window.attroff(curses.color_pair(3))
-
-        self.code.box()
-        self.code.addstr(1, 1, "Code.", curses.color_pair(1))
-        ##self.code.bkgd(' ', curses.color_pair(1))
+        self.main_window.addstr(52, 0, self.statusbar, curses.color_pair(3))
 
         self.variables.box()
-
         self.variables.addstr(1, 1, "Variables.", curses.color_pair(1))
-        self.variables.bkgd(' ', curses.color_pair(1))
 
         self.main_window.refresh()
 
 
 def main_window(stdscr):
     k = 0
-    cursor_x = 0
-    cursor_y = 0
 
     stdscr.clear()
     stdscr.refresh()
@@ -119,43 +116,8 @@ def main_window(stdscr):
     debugger = Debugger()
     debugger.init(stdscr)
 
-
-
-
-    debugger.code = stdscr.subwin(50, 140, 2, 2)
-    debugger.variables = stdscr.subwin(50, 80, 2, 142)
-
     # Loop where k is the last character pressed
     while (k != ord('q')):
-
-        # Initialization
-        stdscr.clear()
-        height, width = stdscr.getmaxyx()
-
-        if k == curses.KEY_DOWN:
-            cursor_y = cursor_y + 1
-        elif k == curses.KEY_UP:
-            cursor_y = cursor_y - 1
-        elif k == curses.KEY_RIGHT:
-            cursor_x = cursor_x + 1
-        elif k == curses.KEY_LEFT:
-            cursor_x = cursor_x - 1
-
-        cursor_x = max(0, cursor_x)
-        cursor_x = min(width-1, cursor_x)
-
-        cursor_y = max(0, cursor_y)
-        cursor_y = min(height-1, cursor_y)
-
-        # Declaration of strings
-        statusbarstr = "Press 'q' to exit | STATUS BAR | Pos: {}, {}, Last Key {} {}".format(cursor_x, cursor_y, k, curses.keyname(k))
-        if k == 0:
-            keystr = "No key press detected..."[:width-1]
-
-        start_y = int((height // 2) - 2)
-
-
-
         # Refresh the screen
         debugger.update(k)
 
