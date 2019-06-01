@@ -7,14 +7,20 @@ class Debugger:
         self.current_input = ""
 
     def init(self, stdscr):
+        curses.start_color()
+        curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLACK)
+        curses.init_pair(2, curses.COLOR_WHITE, curses.COLOR_RED)
+        curses.init_pair(3, curses.COLOR_BLACK, curses.COLOR_WHITE)
+
+        self.highlight = curses.color_pair(2)
+
+
         self.main_window = stdscr
         self.s = socket.socket(
             socket.AF_INET, socket.SOCK_STREAM)
         self.s.connect(("127.0.0.1", 80))
         print("in init")
         self.current_input = ""
-
-    
 
     def load_file(self, file_name):
         src_file = open(file_name, "rt")
@@ -24,8 +30,7 @@ class Debugger:
     def show_code(self, file_name, line):
         self.load_file(file_name)
 
-        self.output_lines(self.code, self.file_lines[line - 20 :line + 20])
-            
+        self.output_lines(self.code, self.file_lines[line - 20 :line + 20], [9, 11, 18  ])
 
     def send_request(self, request):
         return "a response"
@@ -33,12 +38,18 @@ class Debugger:
     def process_current_input(self):
         return "arequset"
 
-    def output_lines(self, window, lines):
+    def output_lines(self, window, lines, highlights = []):
         i = 2
         for line in lines:
-            window.addstr(i + 1, 1, line)
+            if i in highlights:
+                window.addstr(i + 1, 2, line, self.highlight)
+            else:
+                window.addstr(i + 1, 2, line)
             i += 1
+
+        
         window.addstr(i + 1, 1, "done.. %s lines.." % len(self.file_lines))
+        window.refresh()
 
     def process_key(self, key):
         needs_update = False
@@ -74,22 +85,24 @@ class Debugger:
         self.statusbar = "Press 'q' to exit {} {}".format(key, self.current_input)
 
         if needs_update:
-            self.show_code("/Users/stevelamb/Development/ibcos/investigations/WHGINE.DBL", 100)
+            pass
+
+        self.show_code("/Users/stevelamb/Development/ibcos/investigations/WHGINE.DBL", 100)
             #self.output_lines(self.code, ["1", "hjhjhghjghjghj", "ygjhgjgjghj", "hgjhghgjhghj"])
 
-            self.main_window.attron(curses.color_pair(3))
-            self.main_window.addstr(52, 0, self.statusbar)
-            #self.main_window.addstr(51, len(statusbarstr), " " * (width - len(statusbarstr) - 1))
-            self.main_window.attroff(curses.color_pair(3))
+        self.main_window.attron(curses.color_pair(3))
+        self.main_window.addstr(52, 0, self.statusbar)
+        #self.main_window.addstr(51, len(statusbarstr), " " * (width - len(statusbarstr) - 1))
+        self.main_window.attroff(curses.color_pair(3))
 
-            self.code.box()
-            self.code.addstr(1, 1, "Code.", curses.color_pair(1))
-            self.code.bkgd(' ', curses.color_pair(1))
+        self.code.box()
+        self.code.addstr(1, 1, "Code.", curses.color_pair(1))
+        ##self.code.bkgd(' ', curses.color_pair(1))
 
-            self.variables.box()
+        self.variables.box()
 
-            self.variables.addstr(1, 1, "Variables.", curses.color_pair(1))
-            self.variables.bkgd(' ', curses.color_pair(1))
+        self.variables.addstr(1, 1, "Variables.", curses.color_pair(1))
+        self.variables.bkgd(' ', curses.color_pair(1))
 
         self.main_window.refresh()
 
@@ -99,19 +112,14 @@ def main_window(stdscr):
     cursor_x = 0
     cursor_y = 0
 
+    stdscr.clear()
+    stdscr.refresh()
+
     debugger = Debugger()
     debugger.init(stdscr)
 
 
-    # Clear and refresh the screen for a blank canvas
-    stdscr.clear()
-    stdscr.refresh()
 
-    # Start colors in curses
-    curses.start_color()
-    curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLACK)
-    curses.init_pair(2, curses.COLOR_RED, curses.COLOR_BLACK)
-    curses.init_pair(3, curses.COLOR_BLACK, curses.COLOR_WHITE)
 
     debugger.code = stdscr.subwin(50, 140, 2, 2)
     debugger.variables = stdscr.subwin(50, 80, 2, 142)
