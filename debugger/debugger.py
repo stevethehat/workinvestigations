@@ -1,6 +1,7 @@
 import sys,os
 import curses
 import socket
+import curses_util
 
 class Debugger:
     def __init__(self):
