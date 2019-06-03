@@ -17,8 +17,8 @@ class Debugger:
 
 
         self.main_window = stdscr
-        self.code = curses_util.Window(self.main_window, 2, 2, 140, 50)
-        self.variables = curses_util.Window(self.main_window, 2, 142, 80, 50)
+        self.code = curses_util.Window(self.main_window, "Code...", 2, 2, 140, 50)
+        self.variables = curses_util.Window(self.main_window, "Variables..", 2, 142, 80, 50)
 
         self.update(0)
 
@@ -47,19 +47,6 @@ class Debugger:
 
     def process_current_input(self):
         return "arequset"
-
-    def output_lines(self, window, lines, highlights = []):
-        i = 2
-        for line in lines:
-            if i in highlights:
-                window.addstr(i + 1, 2, line, self.highlight)
-            else:
-                window.addstr(i + 1, 2, line)
-            i += 1
-
-        
-        window.addstr(i + 1, 1, "done.. %s lines.." % len(self.file_lines))
-        window.refresh()
 
     def process_key(self, key):
         needs_update = False
@@ -101,9 +88,6 @@ class Debugger:
         self.variables.output_lines(["v1 = 2", "v2 = 'hello'"])
 
         self.main_window.addstr(52, 0, self.statusbar, curses.color_pair(3))
-
-        #self.variables.box()
-        #self.variables.addstr(1, 1, "Variables.", curses.color_pair(1))
 
         self.main_window.refresh()
 
