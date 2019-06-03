@@ -13,6 +13,8 @@ class Debugger:
         curses.init_pair(2, curses.COLOR_WHITE, curses.COLOR_RED)
         curses.init_pair(3, curses.COLOR_BLACK, curses.COLOR_WHITE)
 
+        self.output = file("debugout.log", "w")
+
         self.highlight = curses.color_pair(2)
 
 
@@ -20,17 +22,22 @@ class Debugger:
         self.code = curses_util.Window(self.main_window, "Code...", 2, 2, 140, 50)
         self.variables = curses_util.Window(self.main_window, "Variables..", 2, 142, 80, 50)
 
-        self.update(0)
+        self.init_socket()
+        self.send_request("se st ov")
+        self.send_request("s")
+        self.send_request("b WHGINE")
+        self.update(103)
 
+    def init_socket(self):
+        HOST = '172.16.128.21'          # The remote host
+        PORT = 1024                 # The same port as used by the server
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.socket.connect((HOST, PORT))
 
+    def close(self):
+        self.socket.close()     
+        self.output.close()
 
-
-
-        self.s = socket.socket(
-            socket.AF_INET, socket.SOCK_STREAM)
-        self.s.connect(("127.0.0.1", 80))
-        print("in init")
-        self.current_input = ""
 
     def load_file(self, file_name):
         src_file = open(file_name, "rt")
@@ -43,22 +50,35 @@ class Debugger:
         self.code.output_lines(self.file_lines[line - 20 :line + 20], [9, 11, 18  ])
 
     def send_request(self, request):
-        return "a response"
+        request = "%s\n" % request
+        self.output.write(request)
+
+        self.socket.sendall(request)
+        response = self.socket.recv(1024)
+        self.output.write(response)
+
+
+        self.variables.output_lines([response])
+        
 
     def process_current_input(self):
         return "arequset"
 
     def process_key(self, key):
         needs_update = False
-        request = ""
-
+        response = ""
+        
         if key == 0:
             needs_update = True
+
+        if key == 103:
+            needs_update = True
+            response = self.send_request("g")
 
         # step
         if key == 115 or key == 274:
             request = "s"
-            needs_update = True
+            response = self.send_request("s")
 
         # go
         if key == 269:
@@ -74,6 +94,11 @@ class Debugger:
         else:
             self.current_input = self.current_input + curses.keyname(key)
 
+        if "" != response and None != response and response.strip().startswith("Break at "):
+            line_no = int(response[8:].strip())
+            self.output("GO %s\n" % line_no)
+            self.show_code("wgd/WHGINE.DBL", line_no)    
+
         return needs_update
 
     
@@ -84,8 +109,10 @@ class Debugger:
         if needs_update:
             pass
 
-        self.show_code("/Users/stevelamb/Development/ibcos/investigations/WHGINE.DBL", 100)
-        self.variables.output_lines(["v1 = 2", "v2 = 'hello'"])
+        
+        #self.show_code("/Users/stevelamb/Development/ibcos/investigations/WHGINE.DBL", 100)
+        #self.show_code("wgd/WHGINE.DBL", 100)
+        #self.variables.output_lines(["v1 = 2", "v2 = 'hello'"])
 
         self.main_window.addstr(52, 0, self.statusbar, curses.color_pair(3))
 
@@ -108,6 +135,7 @@ def main_window(stdscr):
 
         # Wait for next input
         k = stdscr.getch()
+    debugger.close()
 
 def main():
     print("starting")
