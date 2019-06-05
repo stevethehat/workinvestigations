@@ -1,4 +1,4 @@
-import sys,os,io
+import sys, os, io, re
 import curses
 import socket
 import curses_util
@@ -18,7 +18,7 @@ class Debugger:
         curses.init_pair(2, curses.COLOR_WHITE, curses.COLOR_RED)
         curses.init_pair(3, curses.COLOR_BLACK, curses.COLOR_WHITE)
 
-        self.output = open("debugout.log", "w")
+        self.output = open("out.log", "w")
 
         self.highlight = curses.color_pair(2)
 
@@ -26,12 +26,24 @@ class Debugger:
         self.main_window = stdscr
         self.code = curses_util.Window(self.main_window, "Code...", 2, 2, 140, 50)
         self.variables = curses_util.Window(self.main_window, "Variables..", 2, 142, 80, 50)
-
+        self.init_matches()
         self.init_socket()
         self.send_request("se st ov")
         self.send_request("s")
         self.send_request("b WHGINE")
         self.update(103)
+
+    def goto(self, match):
+        pass
+
+    def init_matches(self):
+        self.matches = []
+        self.matches.append(
+            {
+                "regex": r'Break',
+                "func": self.goto
+            }
+        )
 
     def init_socket(self):
         #HOST = '172.16.128.21'          # The remote host
@@ -73,7 +85,9 @@ class Debugger:
         self.socket.sendall(request)
         response = self.socket.recv(1024)
         self.output.write(response)
-        self.variables.add_line(response)        
+        self.variables.add_line(response)   
+
+        return response     
 
     def process_current_input(self):
         return "arequset"
@@ -108,10 +122,15 @@ class Debugger:
         else:
             self.current_input = self.current_input + curses.keyname(key)
 
-        if "" != response and None != response and response.strip().startswith("Break at "):
-            line_no = int(response[8:].strip())
-            self.output("GO %s\n" % line_no)
-            self.show_code("wgd/WHGINE.DBL", line_no)    
+        if [] != response and None != response:
+            for match in self.matches:
+                re_match = re.match(match["regex"], response)
+
+                if None != re_match:
+                    self.variables.add_line("we have a match")
+
+            #self.output("GO %s\n" % line_no)
+            #self.show_code("wgd/WHGINE.DBL", line_no)    
 
         return needs_update
     
