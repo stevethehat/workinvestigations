@@ -27,8 +27,6 @@ class Debugger:
         self.code = curses_util.Window(self.main_window, "Code...", 2, 2, 140, 50)
         self.variables = curses_util.Window(self.main_window, "Variables..", 2, 142, 80, 50)
 
-        return
-
         self.init_socket()
         self.send_request("se st ov")
         self.send_request("s")
@@ -36,7 +34,8 @@ class Debugger:
         self.update(103)
 
     def init_socket(self):
-        HOST = '172.16.128.21'          # The remote host
+        #HOST = '172.16.128.21'          # The remote host
+        HOST = "127.0.0.1"
         PORT = 1024                 # The same port as used by the server
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.connect((HOST, PORT))
@@ -45,6 +44,14 @@ class Debugger:
         if None != self.socket:
             self.socket.close()     
 
+    def find_file(self, file_name):
+        result = None
+        for root, dirs, files in os.walk(self.root_directory):
+            for file in files:
+                if file == file_name:
+                    result = os.path.join(root, file)
+
+        return result
 
     def load_file(self, file_name):
         src_file = open(file_name, "rt")
@@ -52,10 +59,12 @@ class Debugger:
         src_file.close()
 
     def show_code(self, file_name, line):
-        self.load_file(file_name)
+        if None != file_name:
+            self.load_file(file_name)
 
-        #self.code.output_lines(self.file_lines[line - 20 :line + 20], [9, 11, 18  ])
-        self.code.output_lines(self.file_lines[line - 20 :line + 20])
+            self.code.output_lines(self.file_lines[line - 20 :line + 20], line -20, [20])
+        else:
+            self.code.output_lines(["file %s not found.." % file_name])
 
     def send_request(self, request):
         request = "%s\n" % request
@@ -64,10 +73,7 @@ class Debugger:
         self.socket.sendall(request)
         response = self.socket.recv(1024)
         self.output.write(response)
-
-
-        self.variables.output_lines([response])
-        
+        self.variables.add_line(response)        
 
     def process_current_input(self):
         return "arequset"
@@ -108,16 +114,6 @@ class Debugger:
             self.show_code("wgd/WHGINE.DBL", line_no)    
 
         return needs_update
-
-    def find_file(self, file_name):
-        print("find file %s" % file_name)
-        result = "wgd/WHGINE.DBL"
-        for root, dirs, files in os.walk(self.root_directory):
-            for file in files:
-                if file == file_name:
-                    result = os.path.join(root, file)
-
-        return result
     
     def update(self, key):
         needs_update = self.process_key(key)

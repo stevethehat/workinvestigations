@@ -8,6 +8,7 @@ class Window:
         self.window = parent.subwin(height, width, top, left)
         self.window.box()
 
+        self.current_lines = []
         self.normal = curses.color_pair(1)
         self.highlight = curses.color_pair(2)
         self.title = curses.color_pair(3)
@@ -17,22 +18,25 @@ class Window:
     def output_line(self, line_no, line, colour):
         line = line.rstrip("\n").rstrip("\b").rstrip("\r").rstrip("\t").rstrip(" ")
 
-        #line_format = "\{:%s.%s\}" % (self.width, self.width)
-        
-
         line = "{line:{width}.{width}}".format(line=line, width=self.width -4)
         self.window.addstr(line_no, 2, line, colour)
         
-
-    def output_lines(self, lines, highlights = []):
+    def add_line(self, line):
+        self.current_lines.append(line)
+        self.output_lines(self.current_lines)
+        
+    def output_lines(self, lines, start_line = 1, highlights = []):
+        self.current_lines = lines
         i = 2
+
         for line in lines:
             if i in highlights:
-                self.output_line(i +1, line, self.highlight)
+                self.output_line(i +1, "%s %s" % (start_line, line), self.highlight)
             else:
-                self.output_line(i +1, line, self.normal)
+                self.output_line(i +1, "%s %s" % (start_line, line), self.normal)
                 
             i += 1
+            start_line += 1
 
         self.window.box()
         self.window.refresh()
