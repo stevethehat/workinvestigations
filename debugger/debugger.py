@@ -3,9 +3,13 @@ import curses
 import socket
 import curses_util
 
+
+
 class Debugger:
     def __init__(self):
         self.current_input = ""
+        # "/Users/stevelamb/Development/ibcos/investigations
+        self.root_directory = "."
 
     def init(self, stdscr):
         self.socket = None
@@ -105,6 +109,15 @@ class Debugger:
 
         return needs_update
 
+    def find_file(self, file_name):
+        print("find file %s" % file_name)
+        result = "wgd/WHGINE.DBL"
+        for root, dirs, files in os.walk(self.root_directory):
+            for file in files:
+                if file == file_name:
+                    result = os.path.join(root, file)
+
+        return result
     
     def update(self, key):
         needs_update = self.process_key(key)
@@ -113,9 +126,9 @@ class Debugger:
         if needs_update:
             pass
 
-        
-        self.show_code("/Users/stevelamb/Development/ibcos/investigations/WHGINE.DBL", 2000)
-        #self.show_code("wgd/WHGINE.DBL", 100)
+        code_file_name = self.find_file("WHGINE.DBL")
+        self.show_code(code_file_name, 2000)
+        #self.show_code(, 100)
         #self.variables.output_lines(["v1 = 2", "v2 = 'hello'"])
 
         self.main_window.addstr(52, 0, self.statusbar, curses.color_pair(3))
