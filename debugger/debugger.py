@@ -1,4 +1,4 @@
-import sys,os
+import sys,os,io
 import curses
 import socket
 import curses_util
@@ -8,12 +8,13 @@ class Debugger:
         self.current_input = ""
 
     def init(self, stdscr):
+        self.socket = None
         curses.start_color()
         curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLACK)
         curses.init_pair(2, curses.COLOR_WHITE, curses.COLOR_RED)
         curses.init_pair(3, curses.COLOR_BLACK, curses.COLOR_WHITE)
 
-        self.output = file("debugout.log", "w")
+        self.output = open("debugout.log", "w")
 
         self.highlight = curses.color_pair(2)
 
@@ -21,6 +22,8 @@ class Debugger:
         self.main_window = stdscr
         self.code = curses_util.Window(self.main_window, "Code...", 2, 2, 140, 50)
         self.variables = curses_util.Window(self.main_window, "Variables..", 2, 142, 80, 50)
+
+        return
 
         self.init_socket()
         self.send_request("se st ov")
@@ -35,8 +38,8 @@ class Debugger:
         self.socket.connect((HOST, PORT))
 
     def close(self):
-        self.socket.close()     
-        self.output.close()
+        if None != self.socket:
+            self.socket.close()     
 
 
     def load_file(self, file_name):
@@ -47,7 +50,8 @@ class Debugger:
     def show_code(self, file_name, line):
         self.load_file(file_name)
 
-        self.code.output_lines(self.file_lines[line - 20 :line + 20], [9, 11, 18  ])
+        #self.code.output_lines(self.file_lines[line - 20 :line + 20], [9, 11, 18  ])
+        self.code.output_lines(self.file_lines[line - 20 :line + 20])
 
     def send_request(self, request):
         request = "%s\n" % request
@@ -110,7 +114,7 @@ class Debugger:
             pass
 
         
-        #self.show_code("/Users/stevelamb/Development/ibcos/investigations/WHGINE.DBL", 100)
+        self.show_code("/Users/stevelamb/Development/ibcos/investigations/WHGINE.DBL", 2000)
         #self.show_code("wgd/WHGINE.DBL", 100)
         #self.variables.output_lines(["v1 = 2", "v2 = 'hello'"])
 

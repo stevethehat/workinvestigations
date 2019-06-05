@@ -8,20 +8,19 @@ class Window:
         self.window = parent.subwin(height, width, top, left)
         self.window.box()
 
-        self.normal = curses.color_pair(3)
+        self.normal = curses.color_pair(1)
         self.highlight = curses.color_pair(2)
+        self.title = curses.color_pair(3)
+        self.output_line(1, title, self.title)
         self.window.refresh()
 
     def output_line(self, line_no, line, colour):
-        #line = line.encode("utf-8").decode("utf-8")
+        line = line.rstrip("\n").rstrip("\b").rstrip("\r").rstrip("\t").rstrip(" ")
 
-        line = line.rstrip("\n").rstrip("\r").rstrip("\t").rstrip(" ")
+        #line_format = "\{:%s.%s\}" % (self.width, self.width)
         
 
-        #line = "{line: <{width}}".format(line=line, width=self.width - 20)
-        if len(line) > self.width - 10:
-            line = "@" + line[:self.width -10] 
-        line = "%s- %s" % (len(line), line)
+        line = "{line:{width}.{width}}".format(line=line, width=self.width -4)
         self.window.addstr(line_no, 2, line, colour)
         
 
@@ -35,4 +34,5 @@ class Window:
                 
             i += 1
 
+        self.window.box()
         self.window.refresh()
