@@ -40,14 +40,20 @@ class Debugger:
         self.matches = []
         self.matches.append(
             {
-                "regex": r'Break',
+                "regex": r'Break at (\d*) in ([A-Z]*) \(([A-Z]*\.[A-Z]*)\)',
+                "func": self.goto
+            }
+        )
+        self.matches.append(
+            {
+                "regex": r'Step to (\d*) in ([A-Z]*) \(([A-Z]*\.[A-Z]*)\)',
                 "func": self.goto
             }
         )
 
     def init_socket(self):
-        #HOST = '172.16.128.21'          # The remote host
-        HOST = "127.0.0.1"
+        HOST = '172.16.128.21'          # The remote host
+        #HOST = "127.0.0.1"
         PORT = 1024                 # The same port as used by the server
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.connect((HOST, PORT))
@@ -55,6 +61,7 @@ class Debugger:
     def close(self):
         if None != self.socket:
             self.socket.close()     
+        self.output.close()
 
     def find_file(self, file_name):
         result = None
@@ -74,7 +81,7 @@ class Debugger:
         if None != file_name:
             self.load_file(file_name)
 
-            self.code.output_lines(self.file_lines[line - 20 :line + 20], line -20, [20])
+            self.code.output_lines(self.file_lines[line - 20 :line + 20], line -20, [21])
         else:
             self.code.output_lines(["file %s not found.." % file_name])
 
@@ -83,9 +90,12 @@ class Debugger:
         self.output.write(request)
 
         self.socket.sendall(request)
-        response = self.socket.recv(1024)
-        self.output.write(response)
-        self.variables.add_line(response)   
+        response = self.socket.recv(4096).split('\n')
+        #response = self.socket.makefile().readlines()
+
+        #self.output.write(response)
+        for line in response:
+            self.variables.add_line(line)   
 
         return response     
 
@@ -122,16 +132,19 @@ class Debugger:
         else:
             self.current_input = self.current_input + curses.keyname(key)
 
+        self.variables.add_line(type(response))
         if [] != response and None != response:
-            for match in self.matches:
-                re_match = re.match(match["regex"], response)
+            for response_line in response:
+                for match in self.matches:
+                    re_match = re.match(match["regex"], response_line)
 
-                if None != re_match:
-                    self.variables.add_line("we have a match")
+                    if None != re_match:
+                        self.variables.add_line("we have a match %s " % re_match.groups()[0])
+                        self.show_code("wgd/WHGINE.DBL", int(re_match.groups()[0]))
+                        #self.variables.add_line("we have a match")
 
             #self.output("GO %s\n" % line_no)
             #self.show_code("wgd/WHGINE.DBL", line_no)    
-
         return needs_update
     
     def update(self, key):
@@ -142,8 +155,6 @@ class Debugger:
             pass
 
         code_file_name = self.find_file("WHGINE.DBL")
-        self.show_code(code_file_name, 2000)
-        #self.show_code(, 100)
         #self.variables.output_lines(["v1 = 2", "v2 = 'hello'"])
 
         self.main_window.addstr(52, 0, self.statusbar, curses.color_pair(3))
