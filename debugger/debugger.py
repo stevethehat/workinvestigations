@@ -18,16 +18,20 @@ class Debugger:
         curses.init_pair(2, curses.COLOR_WHITE, curses.COLOR_RED)
         curses.init_pair(3, curses.COLOR_BLACK, curses.COLOR_WHITE)
 
-        self.output = open("out.log", "w")
+        self.output_file = open("out.log", "w")
 
         self.highlight = curses.color_pair(2)
 
-
         self.main_window = stdscr
+        
         self.code = curses_util.Window(self.main_window, "Code...", 2, 2, 140, 50)
-        self.variables = curses_util.Window(self.main_window, "Variables..", 2, 142, 80, 50)
+        self.variables = curses_util.Window(self.main_window, "Variables..", 2, 142, 80, 19)
+        self.stack = curses_util.Window(self.main_window, "Stack..", 21, 142, 80, 15)
+        self.output = curses_util.Window(self.main_window, "Output..", 36, 142, 80, 16)
+        
         self.init_matches()
         self.init_socket()
+
         self.send_request("se st ov")
         self.send_request("s")
         self.send_request("b WHGINE")
@@ -52,16 +56,19 @@ class Debugger:
         )
 
     def init_socket(self):
-        HOST = '172.16.128.21'          # The remote host
-        #HOST = "127.0.0.1"
-        PORT = 1024                 # The same port as used by the server
-        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.socket.connect((HOST, PORT))
+        #HOST = '172.16.128.21'          # The remote host
+        HOST = "127.0.0.1"
+        PORT = 1024  # The same port as used by the server
+        try:
+            self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.socket.connect((HOST, PORT))
+        except:
+            self.error = "No connection..."
 
     def close(self):
         if None != self.socket:
             self.socket.close()     
-        self.output.close()
+        self.output_file.close()
 
     def find_file(self, file_name):
         result = None
@@ -87,15 +94,19 @@ class Debugger:
 
     def send_request(self, request):
         request = "%s\n" % request
-        self.output.write(request)
+        self.output_file.write(request)
+        self.error = None
 
-        self.socket.sendall(request)
-        response = self.socket.recv(4096).split('\n')
-        #response = self.socket.makefile().readlines()
+        try:
+            self.socket.sendall(request)
+            response = self.socket.recv(4096).split('\n')
 
-        #self.output.write(response)
-        for line in response:
-            self.variables.add_line(line)   
+            for line in response:
+                if "" != line:
+                    self.variables.add_line(line)   
+        except:
+            self.error = "Connection closed.."
+            response = []
 
         return response     
 
@@ -132,24 +143,23 @@ class Debugger:
         else:
             self.current_input = self.current_input + curses.keyname(key)
 
-        self.variables.add_line(type(response))
-        if [] != response and None != response:
+        if None != response:
             for response_line in response:
-                for match in self.matches:
-                    re_match = re.match(match["regex"], response_line)
+                if "" != response_line:
+                    for match in self.matches:
+                        re_match = re.match(match["regex"], response_line)
 
-                    if None != re_match:
-                        self.variables.add_line("we have a match %s " % re_match.groups()[0])
-                        self.show_code("wgd/WHGINE.DBL", int(re_match.groups()[0]))
-                        #self.variables.add_line("we have a match")
-
-            #self.output("GO %s\n" % line_no)
-            #self.show_code("wgd/WHGINE.DBL", line_no)    
+                        if None != re_match:
+                            self.show_code(self.find_file("WHGINE.DBL"), int(re_match.groups()[0]))
+                            
         return needs_update
     
     def update(self, key):
         needs_update = self.process_key(key)
-        self.statusbar = "Press 'q' to exit {} {}".format(key, self.current_input)
+        if None != self.error:
+            self.statusbar = "{} Press 'q' to exit".format(self.error)
+        else:
+            self.statusbar = "Press 'q' to exit {} {}".format(key, self.current_input)
 
         if needs_update:
             pass

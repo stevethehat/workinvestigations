@@ -7,9 +7,14 @@ matches.append(
         "func": "goto"
     }
 )
+matches.append(
+    {
+        "regex": r'Step to (\d*) in ([A-Z]*) \(([A-Z]*\.[A-Z]*)\)',
+        "func": "goto"
+    }
+)
 
-response = "Break at 462 in WHGINE (WHGINE.DBL) on entry"
-
+response = "Step to 463 in WHGINE (WHGINE.DBL)"
 for match in matches:
     print("check '%s'" % match["regex"])
 
