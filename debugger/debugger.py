@@ -24,10 +24,10 @@ class Debugger:
 
         self.main_window = stdscr
         
-        self.code = curses_util.Window(self.main_window, "Code...", 2, 2, 140, 50)
-        self.variables = curses_util.Window(self.main_window, "Variables..", 2, 142, 80, 19)
-        self.stack = curses_util.Window(self.main_window, "Stack..", 21, 142, 80, 15)
-        self.output = curses_util.Window(self.main_window, "Output..", 36, 142, 80, 16)
+        self.code = curses_util.Window(self.main_window, " Code...", 2, 2, 140, 50)
+        self.variables = curses_util.Window(self.main_window, " Variables..", 2, 142, 80, 19)
+        self.stack = curses_util.Window(self.main_window, " Stack..", 21, 142, 80, 15)
+        self.output = curses_util.Window(self.main_window, " Output..", 36, 142, 80, 16)
         
         self.init_matches()
         self.init_socket()
@@ -55,6 +55,12 @@ class Debugger:
             }
         )
 
+    def close(self):
+        if None != self.socket:
+            self.socket.close()     
+        self.output_file.close()
+    
+
     def init_socket(self):
         #HOST = '172.16.128.21'          # The remote host
         HOST = "127.0.0.1"
@@ -65,10 +71,24 @@ class Debugger:
         except:
             self.error = "No connection..."
 
-    def close(self):
-        if None != self.socket:
-            self.socket.close()     
-        self.output_file.close()
+    def send_request(self, request, output = True):
+        request = "%s\n" % request
+        self.output_file.write(request)
+        self.error = None
+
+        try:
+            self.socket.sendall(request)
+            response = self.socket.recv(4096).split('\n')
+
+            if output:
+                for line in response:
+                    if "" != line:
+                        self.output.add_line(line)   
+        except:
+            self.error = "Connection closed.."
+            response = []
+
+        return response     
 
     def find_file(self, file_name):
         result = None
@@ -92,24 +112,13 @@ class Debugger:
         else:
             self.code.output_lines(["file %s not found.." % file_name])
 
-    def send_request(self, request):
-        request = "%s\n" % request
-        self.output_file.write(request)
-        self.error = None
+    def show_stack(self):
+        response = self.send_request("tr", output = False)
+        self.stack.output_lines(response)
 
-        try:
-            self.socket.sendall(request)
-            response = self.socket.recv(4096).split('\n')
-
-            for line in response:
-                if "" != line:
-                    self.variables.add_line(line)   
-        except:
-            self.error = "Connection closed.."
-            response = []
-
-        return response     
-
+    def show_variables(self):
+        pass
+        
     def process_current_input(self):
         return "arequset"
 
@@ -161,14 +170,9 @@ class Debugger:
         else:
             self.statusbar = "Press 'q' to exit {} {}".format(key, self.current_input)
 
-        if needs_update:
-            pass
-
-        code_file_name = self.find_file("WHGINE.DBL")
-        #self.variables.output_lines(["v1 = 2", "v2 = 'hello'"])
-
         self.main_window.addstr(52, 0, self.statusbar, curses.color_pair(3))
 
+        self.show_stack()
         self.main_window.refresh()
 
 
