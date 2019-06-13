@@ -1,5 +1,7 @@
 import sys, os, io, re
 import socket
+import telnetlib
+
 
 class Debugger:
     def __init__(self):
@@ -11,13 +13,6 @@ class Debugger:
         self.socket = None
 
         self.output_file = open("out.log", "w")
-
-        """        
-        self.code = curses_util.Window(self.main_window, " Code...", 2, 2, 140, 50)
-        self.variables = curses_util.Window(self.main_window, " Variables..", 2, 142, 80, 19)
-        self.stack = curses_util.Window(self.main_window, " Stack..", 21, 142, 80, 15)
-        self.output = curses_util.Window(self.main_window, " Output..", 36, 142, 80, 16)
-        """
 
         self.code = []
         self.variables = []
@@ -62,16 +57,20 @@ class Debugger:
     
 
     def init_socket(self):
-        HOST = '172.16.128.21'          # The remote host
-        #HOST = "127.0.0.1"
+        #HOST = '172.16.128.21'          # The remote host
+        HOST = "127.0.0.1"
         PORT = 1024  # The same port as used by the server
+        """
         try:
             self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.socket.connect((HOST, PORT))
         except:
             self.error = "No connection..."
-
-    def send_request(self, request, output = True):
+        """
+        self.connection = telnetlib.Telnet(HOST, PORT)
+        print("connected..")
+        
+    def _send_request(self, request, output = True):
         request = "%s\n" % request
         self.output_file.write(request)
         self.error = None
@@ -80,6 +79,27 @@ class Debugger:
             self.socket.sendall(request)
             response = self.socket.recv(4096).split('\n')
 
+            if output:
+                for line in response:
+                    self.log_out(line)
+                    if "" != line:
+                        self.output.append(line)   
+        except Exception as e:
+            self.error = "Connection closed.. %s" % e
+            response = []
+
+        return response
+      
+    def send_request(self, request, output = True):
+        request = "%s\n" % request
+        print("Sending %s" % request)
+
+        self.output_file.write(request)
+        self.error = None
+
+        try:
+            self.connection.write(request)
+            index, match, response = self.connection.expect(["DBR>"])
             if output:
                 for line in response:
                     self.log_out(line)
