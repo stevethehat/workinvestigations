@@ -23,6 +23,7 @@ class Debugger:
         self.variables = []
         self.stack = []
         self.variables = []
+        self.output = []
 
         self.init_matches()
         self.init_socket()
@@ -76,20 +77,28 @@ class Debugger:
         self.output_file.write(request)
         self.error = None
 
+        full_response = []
         try:
             self.socket.sendall(request)
-            response = self.socket.recv(4096).split('\n')
 
-            if output:
+            done = False
+            while not(done):
+                response = self.socket.recv(4096).split('\n')
+
                 for line in response:
-                    self.log_out(line)
+                    if output:
+                        self.log_out(line)
+                    full_response.append(line)
                     if "" != line:
                         self.output.append(line)   
+                    if line.startswith("DBG>"):
+                        done = True
+
         except Exception as e:
             self.error = "Connection closed.. %s" % e
-            response = []
+            full_response = []
 
-        return response     
+        return full_response     
 
     def find_file(self, file_name):
         result = None
@@ -107,7 +116,7 @@ class Debugger:
         src_file.close()
 
     def get_code(self, file_name, line):
-        self.code.title = " code - %s" % file_name
+        #self.code.title = " code - %s" % file_name
         if None != file_name:
             self.load_file(file_name)
 
@@ -167,8 +176,8 @@ class Debugger:
                         re_match = re.match(match["regex"], response_line)
 
                         if None != re_match:
-                            self.log_out("nav match . %s %s %s" % (re_match.groups()[2], re_match.groups()[0]))
-                            self.show_code(self.find_file(re_match.groups()[2]), int(re_match.groups()[0]))
+                            self.log_out("nav match . %s %s" % (re_match.groups()[2], re_match.groups()[0]))
+                            self.get_code(self.find_file(re_match.groups()[2]), int(re_match.groups()[0]))
 
     def update(self, key):
         needs_update = self.process_key(key)
