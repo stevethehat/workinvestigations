@@ -15,6 +15,7 @@ def main():
         # Refresh the screen
         debugger.update(k)
 
+        print(debugger.output)
         print("\n".join(debugger.code))
         print(len(debugger.code))
         # Wait for next input

@@ -1,7 +1,5 @@
 import sys, os, io, re
 import socket
-import telnetlib
-
 
 class Debugger:
     def __init__(self):
@@ -14,10 +12,18 @@ class Debugger:
 
         self.output_file = open("out.log", "w")
 
+        """        
+        self.code = curses_util.Window(self.main_window, " Code...", 2, 2, 140, 50)
+        self.variables = curses_util.Window(self.main_window, " Variables..", 2, 142, 80, 19)
+        self.stack = curses_util.Window(self.main_window, " Stack..", 21, 142, 80, 15)
+        self.output = curses_util.Window(self.main_window, " Output..", 36, 142, 80, 16)
+        """
+
         self.code = []
         self.variables = []
         self.stack = []
         self.variables = []
+        self.output = []
 
         self.init_matches()
         self.init_socket()
@@ -57,59 +63,42 @@ class Debugger:
     
 
     def init_socket(self):
-        #HOST = '172.16.128.21'          # The remote host
-        HOST = "127.0.0.1"
+        HOST = '172.16.128.21'          # The remote host
+        #HOST = "127.0.0.1"
         PORT = 1024  # The same port as used by the server
-        """
         try:
             self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.socket.connect((HOST, PORT))
         except:
             self.error = "No connection..."
-        """
-        self.connection = telnetlib.Telnet(HOST, PORT)
-        print("connected..")
-        
-    def _send_request(self, request, output = True):
-        request = "%s\n" % request
-        self.output_file.write(request)
-        self.error = None
 
-        try:
-            self.socket.sendall(request)
-            response = self.socket.recv(4096).split('\n')
-
-            if output:
-                for line in response:
-                    self.log_out(line)
-                    if "" != line:
-                        self.output.append(line)   
-        except Exception as e:
-            self.error = "Connection closed.. %s" % e
-            response = []
-
-        return response
-      
     def send_request(self, request, output = True):
         request = "%s\n" % request
-        print("Sending %s" % request)
-
         self.output_file.write(request)
         self.error = None
 
+        full_response = []
         try:
-            self.connection.write(request)
-            index, match, response = self.connection.expect(["DBR>"])
-            if output:
+            self.socket.sendall(request)
+
+            done = False
+            while not(done):
+                response = self.socket.recv(4096).split('\n')
+
                 for line in response:
-                    self.log_out(line)
+                    if output:
+                        self.log_out(line)
+                    full_response.append(line)
                     if "" != line:
                         self.output.append(line)   
+                    if line.startswith("DBG>"):
+                        done = True
+
         except Exception as e:
             self.error = "Connection closed.. %s" % e
-            response = []
+            full_response = []
 
-        return response     
+        return full_response     
 
     def find_file(self, file_name):
         result = None
@@ -127,7 +116,7 @@ class Debugger:
         src_file.close()
 
     def get_code(self, file_name, line):
-        self.code.title = " code - %s" % file_name
+        #self.code.title = " code - %s" % file_name
         if None != file_name:
             self.load_file(file_name)
 
@@ -187,8 +176,8 @@ class Debugger:
                         re_match = re.match(match["regex"], response_line)
 
                         if None != re_match:
-                            self.log_out("nav match . %s %s %s" % (re_match.groups()[2], re_match.groups()[0]))
-                            self.show_code(self.find_file(re_match.groups()[2]), int(re_match.groups()[0]))
+                            self.log_out("nav match . %s %s" % (re_match.groups()[2], re_match.groups()[0]))
+                            self.get_code(self.find_file(re_match.groups()[2]), int(re_match.groups()[0]))
 
     def update(self, key):
         needs_update = self.process_key(key)

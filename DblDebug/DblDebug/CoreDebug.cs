@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Sockets;
 using System.Threading.Tasks;
-using PrimS.Telnet;
+//using PrimS.Telnet;
 
 namespace DblDebug
 {
@@ -9,13 +12,20 @@ namespace DblDebug
         private readonly Func<bool, string> _input;
         private readonly string _host;
         private readonly int _port;
-        private Client _client;
+        private TcpClient _client;
+        private NetworkStream _clientStream;
+        //private Client _client;
 
         public CoreDebug(string host, int port)
         {
             _host = host;
             _port = port;
+            _response = new List<string>();
             Connect();
+
+            GetResponse();
+            SendCommand("se st ov");
+            SendCommand("s");
         }
 
         public bool Command(string command)
@@ -25,25 +35,57 @@ namespace DblDebug
             {
                 result = false;
             }
+            else
+            {
+                SendCommand(command);
+                Console.WriteLine(string.Join("\n",_response));
+
+            }
             return result;
         }
 
-        protected string SendCommand(string command)
+        protected bool GetResponse()
         {
-            Task result;
-            _client.WriteLine(command);
+            Byte[] recData = new Byte[4096];
 
-            //result = await _client.G("DBG>");
-            return "";
+            int bytes = _clientStream.Read(recData, 0, recData.Length);
+
+            string rec = System.Text.Encoding.ASCII.GetString(recData, 0, bytes).Replace("\r", "");
+            _response.AddRange(rec.Split('\n').ToList());
+            if (rec.EndsWith("DBG> "))
+            {
+                //_response.Remove(_response.Count - 1);
+                return false;
+            }
+
+            return true;
+        }
+
+        protected void SendCommand(string command)
+        {
+            string result;
+            _response = new List<string>();
+
+
+            Byte[] sendData = System.Text.Encoding.ASCII.GetBytes($"{command}\n");
+            _clientStream.Write(sendData, 0, sendData.Length);
+
+            while (GetResponse())
+            {
+
+            }
         }
 
         protected void Connect()
         {
-            _client = new Client(_host, _port, new System.Threading.CancellationToken()); 
+            _client = new TcpClient();
+            _client.Connect(_host, _port);
+            _clientStream = _client.GetStream();
         }
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
+        private List<string> _response;
 
         protected virtual void Dispose(bool disposing)
         {
@@ -52,6 +94,7 @@ namespace DblDebug
                 if (disposing)
                 {
                     // TODO: dispose managed state (managed objects).
+                    _clientStream.Close();
                     _client.Dispose();
                 }
 
