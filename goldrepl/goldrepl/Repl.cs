@@ -45,27 +45,78 @@ namespace GoldRepl
         }
         public void Run()
         {
-
-            string code = "print \"hello lets explore\"";
-            while (code != "q")
+            Console.WriteLine("Gold Repl");
+            string code = "";
+            while (code != "q\n")
             {
-                ScriptSource source = _python.CreateScriptSourceFromString(code);
-                try
+                if (false == string.IsNullOrEmpty(code))
                 {
-                    dynamic result = source.Execute(_scope);
+                    ScriptSource source = _python.CreateScriptSourceFromString(code);
+                    try
+                    {
+                        dynamic result = source.Execute(_scope);
+                    }
+                    catch (IronPython.Runtime.UnboundNameException e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
                 }
-                catch (IronPython.Runtime.UnboundNameException e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-
-                code = Console.ReadLine();
+                code = GetCode();
             }
+        }
 
+        protected string GetCode()
+        {
+            string result = "";
+            bool codeComplete = false;
+            int indent = 0;
+
+            while(false == codeComplete)
+            {
+                Console.Write("".PadLeft(indent, '>'));
+                if(indent > 0)
+                {
+                    Console.Write(" ");
+                }
+
+                string line = GetCodeLine();
+                result = $"{result}{"".PadLeft(indent * 2, ' ')}{line}\n";
+
+                if (line.EndsWith(":", StringComparison.InvariantCulture))
+                {
+                    indent++;
+                }
+                else
+                {
+                    if(true == string.IsNullOrEmpty(line))
+                    {
+                        indent--;
+                    }
+                    codeComplete = 0 == indent;
+                }
+
+            }
+            return result;
+        }
+
+        protected string GetCodeLine()
+        {
+            string result = "";
+            ConsoleKeyInfo key = new ConsoleKeyInfo();
+
+            while (ConsoleKey.Enter != key.Key)
+            {
+                if ('\0' != key.KeyChar)
+                {
+                    result = result + key.KeyChar;
+                }
+                key = Console.ReadKey();
+            }
+            return result;
         }
     }
 }
