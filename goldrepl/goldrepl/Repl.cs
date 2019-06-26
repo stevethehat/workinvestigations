@@ -33,28 +33,34 @@ namespace GoldRepl
                 if (false == string.IsNullOrEmpty(code))
                 {
                     ScriptSource source = _python.CreateScriptSourceFromString(code);
-                    try
-                    {
-                        dynamic result = source.Execute(_scope);
-                        /*
-                        if(null != result)
-                        {
-                            Console.WriteLine(result);
-                        }
-                        */
-                        //Console.WriteLine(Convert.ToString(result));
-                    }
-                    catch (IronPython.Runtime.UnboundNameException e)
-                    {
-                        Console.WriteLine(e.Message);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e.Message);
-                    }
+                    RunCode(source);
                 }
                 code = GetCode();
             }
+        }
+
+        public void Init(string fullPath)
+        {
+            ScriptSource source = _python.CreateScriptSourceFromFile(fullPath);
+            RunCode(source);
+        }
+
+        protected dynamic RunCode(ScriptSource source)
+        {
+            dynamic result = new {};
+            try
+            {
+                result = source.Execute(_scope);
+            }
+            catch (IronPython.Runtime.UnboundNameException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return result;
         }
 
         protected string GetCode()
@@ -72,7 +78,7 @@ namespace GoldRepl
                 }
 
                 string line = GetCodeLine();
-                result = $"{result}{"".PadLeft(indent * 2, ' ')}{line}\n";
+                result = $"{result}{"".PadLeft(indent * 2, ' ')}{line}{Environment.NewLine}";
 
                 if (line.EndsWith(":", StringComparison.InvariantCulture))
                 {

@@ -27,8 +27,11 @@ namespace GoldRepl
                 if (initFile.HasValue())
                 {
                     string path = initFile.Value();
-                    Console.WriteLine($"Init {path}");
-                    string extension = Path.GetExtension(path);
+                    string fullPath = Path.GetFullPath(path);
+
+                    Console.WriteLine($"Init {fullPath}");
+
+                    repl.Init(fullPath);
 
                 }
 
