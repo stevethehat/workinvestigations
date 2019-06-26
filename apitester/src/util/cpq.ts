@@ -23,7 +23,7 @@ export class CPQWholegood{
         this.PriceBeforeVat         = 56000;
         this.RecommendedRetailPrice = 96000;
         this.DealerDiscount         = 40000;
-        this.WarrantyDescription    = '3 Year warranty';
+        this.WarrantyDescription    = 'no warranty';
         this.WarrantyCost           = 5000;
     }
 

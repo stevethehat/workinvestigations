@@ -9,17 +9,19 @@ interface IUserDetails{
     Token           : string;
     Username        : string;
     StatusMessage   : string;
+    Data : any;
 }
 
 
-const store = new Vuex.Store({
+export const store = new Vuex.Store({
     state: {
         LoggedIn: false,
         Details: {
             Token: '',
             Username: '',
-            StatusMessage: ''
-        }
+            StatusMessage: '',
+        },
+        RequestData: {}
     },
     mutations: {
         login(state, details){
@@ -53,7 +55,12 @@ export class TestHost{
 
 
 export class ApiTester{
-    public RequestData: object = {};
+    get RequestData(): object{
+        return store.state.RequestData;
+    }
+    set RequestData(value: object){
+        store.state.RequestData = value;
+    }
     get LoggedIn(): boolean{
         var result = false;
         if(undefined !== this.UserDetails.Token){

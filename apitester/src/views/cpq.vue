@@ -12,6 +12,7 @@
                         <select type="text" v-model="OrderType">
                             <option value="DEALER">DEALER</option>
                             <option value="RETAIL">RETAIL</option>
+                            <option value="DEMO">DEMO</option>
                         </select>
                     </b-col>
                     <b-col>
@@ -155,17 +156,15 @@ export default class CPQ extends Vue {
         const additionalItems: any[]        = [];
 
         this.Wholegoods.forEach(wholegood => {
-            /*
             // if wholegood has warranty we add an additional item ending in "EW"!!
             if(0 !== wholegood.WarrantyCost){
                 const warranty: CPQAdditionalItem = new CPQAdditionalItem();
-                warranty.PartId = wholegood.StockNumber;
+                warranty.PartId = '11123EW';
                 warranty.Name = '11123EW';
                 warranty.Description = wholegood.WarrantyDescription + 'EW';
                 warranty.Price = wholegood.WarrantyCost;
                 additionalItems.push(warranty.getCPQData());
             }
-            */
             configurationItems.push(wholegood.getCPQData(this.OrderType, this.FulFilmentType))  ;
         });
 
@@ -185,21 +184,23 @@ export default class CPQ extends Vue {
         date.setMonth(date.getMonth() + 1);
 
         return {
-            quotation:{
-                dealerCustomerId: this.Customer,
-                depot: 1,
-                //indicativeDeliveryDate: date.toString(),
-                //indicativeDeliveryDate : 'Tue Jan 01 00:00:00 UTC 2019',
-                configuration: {
-                    lineItems: configurationItems
-                },
-                tradein: {
-                    lineItems: tradeInItems
-                },
-                additionalItems: {
-                    lineItems: additionalItems
-                }               
-            }
+            quotation:[
+                {
+                    dealerCustomerId: this.Customer,
+                    depot: 1,
+                    //indicativeDeliveryDate: date.toString(),
+                    //indicativeDeliveryDate : 'Tue Jan 01 00:00:00 UTC 2019',
+                    configuration: {
+                        lineItems: configurationItems
+                    },
+                    tradein: {
+                        lineItems: tradeInItems
+                    },
+                    additionalItems: {
+                        lineItems: additionalItems
+                    }               
+                }
+            ]
         };
     }
 }

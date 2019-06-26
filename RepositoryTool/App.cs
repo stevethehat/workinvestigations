@@ -42,15 +42,20 @@ namespace Curses{
                     List<string> items = RepositoryInfo.GetIsamTypes(remainder);
 
                     Selector selector = new Selector(items);
-                    string selected = items[selector._list.SelectedItem];
-                    infoBar.Text = $"Parse '{selected}'...";
+                    //selector._list.
+                    if (selector.SelectedItem != null)
+                    {
+                        string selected = items[selector.SelectedItem.Value];
+                        infoBar.Text = $"Parse '{selected}'...";
 
-                    if(selected != ""){
-                        DDFFile ddfFile = new DDFFile("structure", selected);
-                        var structure = ddfFile.Parse();
-                        ddfFile.Save(selected);
-                        var mb = MessageBox.Query(100, 20, "Parse","Parse complete", new string[] {"OK"});
-                        infoBar.Text = $"{selected} Done.";
+                        if (selected != "")
+                        {
+                            DDFFile ddfFile = new DDFFile("structure", selected);
+                            var structure = ddfFile.Parse();
+                            ddfFile.Save(selected);
+                            var mb = MessageBox.Query(100, 20, "Parse", "Parse complete", new string[] { "OK" });
+                            infoBar.Text = $"{selected} Done.";
+                        }
                     }
                 }
 
@@ -65,7 +70,7 @@ namespace Curses{
 
             InfoView infoView = new InfoView(scrollView);
             infoView.Add("hello");
-            infoView.Display("/Users/stevelamb/Development/curses/test.json");
+            //infoView.Display("/Users/stevelamb/Development/curses/test.json");
 
             Application.Run ();            
         }

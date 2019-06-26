@@ -29,18 +29,19 @@
                     <input type="number" v-model="internalWholegood.DealerDiscount"/>
                 </b-col>
             </b-row>
-            <!--
             <b-row>
-                <b-col cols="9">
+                <b-col>
                     Warranty: 
-                    <input type="string" v-model="internalWholegood.WarrantyDescription"/>
+                    <select type="text" v-model="internalWholegood.WarrantyDescription">   
+                        <option value="no warranty">No warranty</option>
+                        <option value="3 year warranty">3 year warranty EW</option>
+                    </select>
                 </b-col>
-                <b-col clas="3">
+                <b-col>
                     Cost: 
                     <input type="number" v-model="internalWholegood.WarrantyCost"/>
                 </b-col>
             </b-row>
-            -->
         </b-container>
     </div>
 </template>

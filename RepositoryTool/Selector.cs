@@ -6,6 +6,7 @@ namespace Curses{
         protected readonly Dialog _dialog;
         protected readonly Button _ok;
         public ListView _list;
+        public int? SelectedItem;
         public Selector(List<string> items){
             _dialog = new Dialog($"Select", 60, 20);
             _ok = new Button($"Ok", true);
@@ -20,6 +21,8 @@ namespace Curses{
                 Height = Dim.Fill() - 2
             };
             _dialog.Add(_list);
+
+            _list.SelectedChanged += () => { SelectedItem = _list.SelectedItem; };
 
             Application.Run(_dialog);
         }

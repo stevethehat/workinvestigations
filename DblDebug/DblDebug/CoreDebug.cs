@@ -37,9 +37,11 @@ namespace DblDebug
             }
             else
             {
-                SendCommand(command);
-                Console.WriteLine(string.Join("\n",_response));
-
+                if(false == string.IsNullOrEmpty(command))
+                {
+                    SendCommand(command);
+                    Console.WriteLine(string.Join("\n", _response));
+                }
             }
             return result;
         }
