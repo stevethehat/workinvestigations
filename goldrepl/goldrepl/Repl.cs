@@ -5,23 +5,6 @@ using Microsoft.Scripting.Hosting;
 
 namespace GoldRepl
 {
-    public class Isams
-    {
-        public void Write(string output)
-        {
-            Console.WriteLine($"write >> {output}");
-        }
-        public Dictionary<string, object> Get(string isam)
-        {
-            Dictionary<string, object> result = new Dictionary<string, object>();
-
-            result.Add("one", 1);
-            result.Add("s", "a string");
-
-            return result;
-        }
-    }
-
     public class Repl
     {
         private readonly ScriptEngine _python;
@@ -34,18 +17,15 @@ namespace GoldRepl
 
             _scope.ImportModule("clr");
             _python.Execute("import clr");
-            _python.Execute("clr.AddReference(\"ironpython\")", _scope);
+            _python.Execute("clr.AddReference(\"goldrepl\")", _scope);
+            _python.Execute("from GoldRepl import *", _scope);
             
             Isams isams = new Isams();
             _scope.SetVariable("isams", isams);
-
-            //_python.Execute("def func():");
-            //_python.Execute("\tisams.Write(\"hi\")\n");
-            //_python.Execute("\tpass");
         }
-        public void Run()
+
+        public void RunInteractive()
         {
-            Console.WriteLine("Gold Repl");
             string code = "";
             while (code != "q\n")
             {
@@ -55,6 +35,13 @@ namespace GoldRepl
                     try
                     {
                         dynamic result = source.Execute(_scope);
+                        /*
+                        if(null != result)
+                        {
+                            Console.WriteLine(result);
+                        }
+                        */
+                        //Console.WriteLine(Convert.ToString(result));
                     }
                     catch (IronPython.Runtime.UnboundNameException e)
                     {
@@ -92,7 +79,7 @@ namespace GoldRepl
                 }
                 else
                 {
-                    if(true == string.IsNullOrEmpty(line))
+                    if(true == string.IsNullOrEmpty(line) && indent > 0)
                     {
                         indent--;
                     }
@@ -110,12 +97,26 @@ namespace GoldRepl
 
             while (ConsoleKey.Enter != key.Key)
             {
+                bool echoChar = true;
+                if('\t' == key.KeyChar)
+                {
+                    result += "hello";
+                    Console.Write("hello");
+                    echoChar = false;
+                }
                 if ('\0' != key.KeyChar)
                 {
                     result = result + key.KeyChar;
                 }
-                key = Console.ReadKey();
+                if (echoChar)
+                {
+                    Console.Write(key.KeyChar);
+                }
+                key = Console.ReadKey(true);
             }
+
+            Console.Write(key.KeyChar);
+
             return result;
         }
     }
