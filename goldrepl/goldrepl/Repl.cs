@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
 
@@ -98,24 +99,76 @@ namespace GoldRepl
             while (ConsoleKey.Enter != key.Key)
             {
                 bool echoChar = true;
-                if('\t' == key.KeyChar)
+
+                switch (key.Key)
                 {
-                    result += "hello";
-                    Console.Write("hello");
+                    case ConsoleKey.Tab:
+                        string completion = TabComplete(result);
+                        result += completion;
+                        Console.Write(completion);
+                        echoChar = false;
+                        break;
+
+                    case ConsoleKey.Backspace:
+                        Console.Write($"\r{"".PadLeft(result.Length, ' ')}");
+                        result = result.Substring(0, result.Length - 1);
+                        Console.Write($"\r{result}");
+                        echoChar = false;
+                        break;
+
+                    default:
+                        if ('\0' != key.KeyChar)
+                        {
+                            result = result + key.KeyChar;
+                        }
+                        break;
+
+                }
+                /*
+                if (ConsoleKey.Tab == key.Key)
+                {
+                    string completion = TabComplete(result);
+                    result += completion;
+                    Console.Write(completion);
                     echoChar = false;
                 }
+                if(ConsoleKey.Backspace == key.Key)
+                {
+                    result = result.Substring(0, result.Length - 1);
+                    Console.Write($"\r{result}");
+                    echoChar = false;
+                }
+
                 if ('\0' != key.KeyChar)
                 {
                     result = result + key.KeyChar;
                 }
+                */
+
                 if (echoChar)
                 {
                     Console.Write(key.KeyChar);
                 }
+
                 key = Console.ReadKey(true);
             }
 
             Console.Write(key.KeyChar);
+
+            return result;
+        }
+
+        protected string TabComplete(string line)
+        {
+            string result = string.Empty;
+            Regex regex = new Regex(@"([a-zA-Z0-9_]*)\.([a-zA-Z0-9_]*)$");
+            Match match = regex.Match(line);
+
+            if(default(Match) != match)
+            {
+                string variable = match.Groups[1].Value;
+                string soFar = match.Groups[2].Value;
+            }
 
             return result;
         }
