@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
+using Gold;
 
 namespace GoldRepl
 {
@@ -19,10 +20,26 @@ namespace GoldRepl
             _scope.ImportModule("clr");
             _python.Execute("import clr");
             _python.Execute("clr.AddReference(\"goldrepl\")", _scope);
+            _python.Execute("clr.AddReference(\"GoldApiServer.DataLayer\")", _scope);
+            _python.Execute("from Net.Ibcos.GoldAPIServer.DataLayer.Models import *", _scope);
+        }
+
+        public void InitData(string dataFolder = "~/gold/data")
+        {
+            Gold.Gold gold = new Gold.Gold(dataFolder);
+
+            _scope.SetVariable("gold", gold);
             _python.Execute("from GoldRepl import *", _scope);
-            
+
             Isams isams = new Isams();
             _scope.SetVariable("isams", isams);
+
+        }
+
+        internal void Execute(string scriptFile)
+        {
+            ScriptSource source = _python.CreateScriptSourceFromFile(scriptFile);
+            RunCode(source);
         }
 
         public void RunInteractive()
@@ -99,6 +116,8 @@ namespace GoldRepl
 
         protected string GetCodeLine()
         {
+            return Console.ReadLine();
+
             string result = "";
             ConsoleKeyInfo key = new ConsoleKeyInfo();
 

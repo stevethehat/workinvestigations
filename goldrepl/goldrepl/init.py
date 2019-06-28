@@ -1,5 +1,6 @@
 import sys
 sys.path.append("/home/steve/winc/ibcos/Repositorys/gold/api-server/Build/Debug")
+clr.AddReference("Microsoft.Extensions.Options")
 clr.AddReference("System.ComponentModel.DataAnnotations")
 clr.AddReference("GoldApiServer.DataLayer")
 clr.AddReference("Gold")
