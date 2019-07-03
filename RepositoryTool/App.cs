@@ -1,23 +1,15 @@
 using System;
 using System.Collections.Generic;
-
-using Microsoft.Extensions.Configuration;
-
 using Terminal.Gui;
 using Repository;
 
 namespace Curses{
     public class App{
-        protected IConfigurationRoot _config;
         public App(){
             //var windowManager = new WindowManager();
             Application.Init ();
             //Application.Driver
             var top = Application.Top;
-
-            var builder = new ConfigurationBuilder()
-                     .AddJsonFile("appsettings.json");
-            _config = builder.Build();
 
             // Creates the top-level window to show
             var win = new Window (new Rect (0, 1, top.Frame.Width, top.Frame.Height-1), "MyApp");
@@ -50,15 +42,20 @@ namespace Curses{
                     List<string> items = RepositoryInfo.GetIsamTypes(remainder);
 
                     Selector selector = new Selector(items);
-                    string selected = items[selector._list.SelectedItem];
-                    infoBar.Text = $"Parse '{selected}'...";
+                    //selector._list.
+                    if (selector.SelectedItem != null)
+                    {
+                        string selected = items[selector.SelectedItem.Value];
+                        infoBar.Text = $"Parse '{selected}'...";
 
-                    if(selected != ""){
-                        DDFFile ddfFile = new DDFFile("structure", selected);
-                        var structure = ddfFile.Parse();
-                        ddfFile.Save(selected);
-                        var mb = MessageBox.Query(100, 20, "Parse","Parse complete", new string[] {"OK"});
-                        infoBar.Text = $"{selected} Done.";
+                        if (selected != "")
+                        {
+                            DDFFile ddfFile = new DDFFile("structure", selected);
+                            var structure = ddfFile.Parse();
+                            ddfFile.Save(selected);
+                            var mb = MessageBox.Query(100, 20, "Parse", "Parse complete", new string[] { "OK" });
+                            infoBar.Text = $"{selected} Done.";
+                        }
                     }
                 }
 
@@ -72,7 +69,7 @@ namespace Curses{
             win.SetFocus(command);
 
             InfoView infoView = new InfoView(scrollView);
-            infoView.Add($"hello '{_config["repopath"]}'");
+            infoView.Add("hello");
             //infoView.Display("/Users/stevelamb/Development/curses/test.json");
 
             Application.Run ();            

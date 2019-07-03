@@ -21,24 +21,45 @@ namespace GoldRepl
                 "The init file to use.",
                 CommandOptionType.SingleValue);
 
+            CommandOption dataFolder = app.Option(
+                "-d |--data <data>",
+                "The data folder to use.",
+                CommandOptionType.SingleValue);
 
             app.OnExecute(() =>
             {
+                /*
+                if (dataFolder.HasValue())
+                {
+                    repl.InitData(dataFolder.Value());
+                } else
+                {
+                    repl.InitData();
+                }
+                */
+                repl.InitData("C:\\ibcos\\Repositorys\\golddata\\gold\\data");
+                //repl.InitData();
+
                 if (initFile.HasValue())
                 {
                     string path = initFile.Value();
-                    Console.WriteLine($"Init {path}");
-                    string extension = Path.GetExtension(path);
+                    string fullPath = Path.GetFullPath(path);
 
+                    Console.WriteLine($"Init {fullPath}");
+
+                    repl.Init(fullPath);
                 }
 
                 if (false == string.IsNullOrEmpty(script.Value))
                 {
                     string scriptFile = script.Value;
-                    string outputFile = Path.GetFileName(scriptFile);
+                    string fullPath = Path.GetFullPath(scriptFile);
+                    
+                    Console.WriteLine($"Running {fullPath} ...");
+                    repl.Execute(fullPath);
 
-                    Console.WriteLine($"Running {scriptFile} ...");
-
+                    Console.WriteLine("Press any key to continue..");
+                    Console.ReadLine();
                 }
                 else
                 {

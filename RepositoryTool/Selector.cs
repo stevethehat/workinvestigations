@@ -22,10 +22,7 @@ namespace Curses{
             };
             _dialog.Add(_list);
 
-            _list.SelectedChanged += () =>
-            {
-                SelectedItem = _list.SelectedItem;
-            };
+            _list.SelectedChanged += () => { SelectedItem = _list.SelectedItem; };
 
             Application.Run(_dialog);
         }

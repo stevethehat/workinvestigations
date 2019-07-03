@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Repository{
     public class RepositoryInfo{
-        public static string Repository = "/Users/stevelamb/Development/ibcos/investigations/DDF/repository";
+        public static string Repository = "C:\\ibcos\\Repositorys\\gold\\repository";
         public static List<string> GetIsamTypes(string filter){
             List<string> result = new List<string>();
             string structureFolder = Path.Combine(RepositoryInfo.Repository, "structure");

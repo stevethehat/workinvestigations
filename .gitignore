@@ -14,3 +14,4 @@ DDF/obj/
 DDF/bin/
 DDF/repository/
 DDF/output/
+*.log

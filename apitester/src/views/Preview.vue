@@ -1,12 +1,13 @@
 <template>
     <div class="pageContent">
-        {{StatusMessage}}
+        <p>{{StatusMessage}}</p>
         <editor v-model="data" @init="editorInit" lang="json" theme="monokai" width="800" height="600"></editor>
         <b-button-toolbar>
             <b-button-group size="sm">
                 <b-button variant="primary" @click="back">&lt; Back</b-button>&nbsp;
                 <b-button variant="primary" @click="go">Go</b-button>&nbsp;
-                <b-button v-if="'' !== DataSent" variant="primary" @click="retry">Retry</b-button>
+                <b-button variant="primary" @click="reset">Reset preview</b-button>&nbsp;
+                <b-button v-if="'' !== ActualSentData" variant="primary" @click="retry">Reload sent data</b-button>
             </b-button-group>
         </b-button-toolbar>
     </div>
@@ -30,7 +31,7 @@ const editor                        = require('vue2-ace-editor');
 export default class Preview extends Vue {
     public data: string             = JSON.stringify(apiTester.RequestData, null, 2);
     public StatusMessage: string    = '';
-    private DataSent: string        = '';
+    private ActualSentData: string        = '';
 
     constructor(){
         super();
@@ -43,11 +44,10 @@ export default class Preview extends Vue {
 
     go(){
         const self = this;
-        self.DataSent = self.data;
+        self.ActualSentData = self.data;
         // http://localhost:8080/api/v1/manufacturer/agco/cpq
 
-        //apiTester.post('manufacturer/agco/cpq', apiTester.RequestData, function(result){
-        apiTester.post('manufacturer/agco/cpq', self.DataSent, function(result){
+        apiTester.post('manufacturer/agco/cpq', JSON.parse(self.ActualSentData), function(result){
             if(false === result){
                 
             } else {
@@ -60,8 +60,14 @@ export default class Preview extends Vue {
     retry(){
         const self = this;
 
-        self.data = self.DataSent;
-        self.DataSent = '';
+        self.data = self.ActualSentData;
+        self.ActualSentData = '';
+    }
+
+    reset(){
+        const self = this;
+
+        self.data = JSON.stringify(apiTester.RequestData, null, 2);
     }
 
     back(){

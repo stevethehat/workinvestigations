@@ -8,11 +8,12 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import '@fortawesome/fontawesome-free/css/all.css'
 
-import './signalr'
+import SignalR from './signalr'
 
 Vue.config.productionTip = false
 
 Vue.use(BootstrapVue)
+
 
 new Vue({
   router,

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
-using Readline;
+using Gold;
 
 namespace GoldRepl
 {
@@ -20,10 +20,26 @@ namespace GoldRepl
             _scope.ImportModule("clr");
             _python.Execute("import clr");
             _python.Execute("clr.AddReference(\"goldrepl\")", _scope);
+            _python.Execute("clr.AddReference(\"GoldApiServer.DataLayer\")", _scope);
+            _python.Execute("from Net.Ibcos.GoldAPIServer.DataLayer.Models import *", _scope);
+        }
+
+        public void InitData(string dataFolder = "~/gold/data")
+        {
+            Gold.Gold gold = new Gold.Gold(dataFolder);
+
+            _scope.SetVariable("gold", gold);
             _python.Execute("from GoldRepl import *", _scope);
-            
+
             Isams isams = new Isams();
             _scope.SetVariable("isams", isams);
+
+        }
+
+        internal void Execute(string scriptFile)
+        {
+            ScriptSource source = _python.CreateScriptSourceFromFile(scriptFile);
+            RunCode(source);
         }
 
         public void RunInteractive()
@@ -34,28 +50,34 @@ namespace GoldRepl
                 if (false == string.IsNullOrEmpty(code))
                 {
                     ScriptSource source = _python.CreateScriptSourceFromString(code);
-                    try
-                    {
-                        dynamic result = source.Execute(_scope);
-                        /*
-                        if(null != result)
-                        {
-                            Console.WriteLine(result);
-                        }
-                        */
-                        //Console.WriteLine(Convert.ToString(result));
-                    }
-                    catch (IronPython.Runtime.UnboundNameException e)
-                    {
-                        Console.WriteLine(e.Message);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e.Message);
-                    }
+                    RunCode(source);
                 }
                 code = GetCode();
             }
+        }
+
+        public void Init(string fullPath)
+        {
+            ScriptSource source = _python.CreateScriptSourceFromFile(fullPath);
+            RunCode(source);
+        }
+
+        protected dynamic RunCode(ScriptSource source)
+        {
+            dynamic result = new {};
+            try
+            {
+                result = source.Execute(_scope);
+            }
+            catch (IronPython.Runtime.UnboundNameException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return result;
         }
 
         protected string GetCode()
@@ -73,7 +95,7 @@ namespace GoldRepl
                 }
 
                 string line = GetCodeLine();
-                result = $"{result}{"".PadLeft(indent * 2, ' ')}{line}\n";
+                result = $"{result}{"".PadLeft(indent * 2, ' ')}{line}{Environment.NewLine}";
 
                 if (line.EndsWith(":", StringComparison.InvariantCulture))
                 {
@@ -94,6 +116,8 @@ namespace GoldRepl
 
         protected string GetCodeLine()
         {
+            return Console.ReadLine();
+
             string result = "";
             ConsoleKeyInfo key = new ConsoleKeyInfo();
 
