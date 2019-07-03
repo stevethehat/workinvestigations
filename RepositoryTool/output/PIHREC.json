@@ -1,0 +1,4487 @@
+{
+  "properties": {
+    "type": "structure",
+    "fields": [
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_INV_TYP",
+          "template": {
+            "name": "INVOICE_TYPE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "INVOICE_TYPE",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "2",
+                "description": "Invoice type",
+                "prompt": "Invoice Type:",
+                "infoline": "Enter the Invoice Type",
+                "odbcname": "INVOICE_TYPE",
+                "font": "CHAR_FONT",
+                "methods": {
+                  "Drill": "ivt_drill",
+                  "Change": "ivt_change",
+                  "Display": "ivt_display"
+                }
+              }
+            }
+          },
+          "infoline": "Enter the Invoice Type or <Enter> for Selection"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_ADVICE_NO",
+          "template": {
+            "name": "ACCOUNT_REFERENCE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "ACCOUNT_REFERENCE",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "6",
+                "description": "Accounts reference",
+                "prompt": "Ref No.:",
+                "infoline": "Enter the Document Reference - <Enter> for Auto",
+                "odbcname": "DOCUMENT_REF",
+                "methods": {
+                  "Change": "auto_ref_change"
+                }
+              }
+            }
+          },
+          "description": "advice note number",
+          "odbcname": "ADVICE_NO"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_CUST_ACC",
+          "template": {
+            "name": "CUSTOMER_ACCOUNT",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "CUSTOMER_ACCOUNT",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "6",
+                "description": "Customer Account",
+                "prompt": "Customer:",
+                "infoline": "Enter the Customer Account Number or Search Option",
+                "odbcname": "CUST_ACCOUNT_NO",
+                "methods": {
+                  "Arrive": "cmf_arrive",
+                  "Leave": "cmf_leave",
+                  "Drill": "cmf_popdrill",
+                  "Change": "cmf_change",
+                  "Display": "cmf_display"
+                }
+              }
+            }
+          },
+          "description": "customer account no",
+          "odbcname": "CUST_ACCOUNT"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "IDT_TO_DEP",
+          "template": {
+            "name": "DEPOT_CODE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "DEPOT_CODE",
+                "parent": {
+                  "name": "TBASE_CHAR",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_CHAR",
+                      "parent": {
+                        "name": "TBASEALPHA",
+                        "structure": {
+                          "properties": {
+                            "type": "template",
+                            "name": "TBASEALPHA",
+                            "fieldtype": "ALPHA",
+                            "size": "1",
+                            "description": "Base alphanumeric template",
+                            "prompt": "Value:",
+                            "infoline": "Enter an Alphanumeric Value",
+                            "font": "ALPHA_FONT",
+                            "promptfont": "PROMPT_FONT"
+                          }
+                        }
+                      },
+                      "font": "CHAR_FONT"
+                    }
+                  }
+                },
+                "description": "Depot code",
+                "prompt": "Depot Code:",
+                "infoline": "Enter the Depot Code",
+                "methods": {
+                  "Drill": "dep_drill",
+                  "Change": "dep_change",
+                  "Display": "dep_display"
+                }
+              }
+            }
+          },
+          "odbcname": "IDT_TO_DEPOT"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "IDT_FROM_DEP",
+          "template": {
+            "name": "DEPOT_CODE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "DEPOT_CODE",
+                "parent": {
+                  "name": "TBASE_CHAR",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_CHAR",
+                      "parent": {
+                        "name": "TBASEALPHA",
+                        "structure": {
+                          "properties": {
+                            "type": "template",
+                            "name": "TBASEALPHA",
+                            "fieldtype": "ALPHA",
+                            "size": "1",
+                            "description": "Base alphanumeric template",
+                            "prompt": "Value:",
+                            "infoline": "Enter an Alphanumeric Value",
+                            "font": "ALPHA_FONT",
+                            "promptfont": "PROMPT_FONT"
+                          }
+                        }
+                      },
+                      "font": "CHAR_FONT"
+                    }
+                  }
+                },
+                "description": "Depot code",
+                "prompt": "Depot Code:",
+                "infoline": "Enter the Depot Code",
+                "methods": {
+                  "Drill": "dep_drill",
+                  "Change": "dep_change",
+                  "Display": "dep_display"
+                }
+              }
+            }
+          },
+          "odbcname": "IDT_FROM_DEPOT"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_NICK_NAME",
+          "template": {
+            "name": "NICKNAME",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "NICKNAME",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "10",
+                "description": "Nickname",
+                "prompt": "Nickname:",
+                "infoline": "Enter the Nickname",
+                "odbcname": "NICKNAME"
+              }
+            }
+          },
+          "description": "customer nickname",
+          "longdescription": [
+            "entered for cash sale accounts"
+          ],
+          "odbcname": "NICKNAME"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_FULL_SHIP",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Prevent Short-Ship?",
+          "prompt": "Prevent Short-Ship     ?",
+          "infoline": "Select Yes to prevent Advice Note print while parts are on order"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_ADEPOT",
+          "template": {
+            "name": "DEPOT_CODE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "DEPOT_CODE",
+                "parent": {
+                  "name": "TBASE_CHAR",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_CHAR",
+                      "parent": {
+                        "name": "TBASEALPHA",
+                        "structure": {
+                          "properties": {
+                            "type": "template",
+                            "name": "TBASEALPHA",
+                            "fieldtype": "ALPHA",
+                            "size": "1",
+                            "description": "Base alphanumeric template",
+                            "prompt": "Value:",
+                            "infoline": "Enter an Alphanumeric Value",
+                            "font": "ALPHA_FONT",
+                            "promptfont": "PROMPT_FONT"
+                          }
+                        }
+                      },
+                      "font": "CHAR_FONT"
+                    }
+                  }
+                },
+                "description": "Depot code",
+                "prompt": "Depot Code:",
+                "infoline": "Enter the Depot Code",
+                "methods": {
+                  "Drill": "dep_drill",
+                  "Change": "dep_change",
+                  "Display": "dep_display"
+                }
+              }
+            }
+          },
+          "description": "depot number"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_CUST_ORD",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "10",
+          "description": "customer order number",
+          "infoline": "Enter the Customer Order Number",
+          "odbcname": "CUST_ORDER_NO"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_INV_DES",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "20",
+          "description": "invoice description",
+          "infoline": "Enter the Invoice Goods/Service Description",
+          "odbcname": "INVOICE_DESC",
+          "methods": {
+            "Change": "capitalise_change"
+          }
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SETDUE",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "is settlement due in current month",
+          "odbcname": "SETT_IN_CURR_MTH"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SUGG_IDT",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Created by Suggested IDT Report",
+          "odbcname": "SUGGEST_IDT"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_VATNO",
+          "template": {
+            "name": "VAT_REG_CODE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "VAT_REG_CODE",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "16",
+                "description": "Vat registration code",
+                "prompt": "V.A.T. Number:",
+                "infoline": "Enter the V.A.T. Number",
+                "methods": {
+                  "Drill": "cou_drill",
+                  "Change": "vatno_change"
+                }
+              }
+            }
+          },
+          "description": "Customer VAT No. (Self-bill)",
+          "odbcname": "VAT_NUMBER"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_TRADE_PFX",
+          "template": {
+            "name": "SUPPLIER_PREFIX",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "SUPPLIER_PREFIX",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "2",
+                "description": "Supplier Prefix Code",
+                "prompt": "Prefix Code:",
+                "infoline": "Enter the Supplier Prefix Code",
+                "odbcname": "PREFIX",
+                "methods": {
+                  "Drill": "pre_drill",
+                  "Change": "pre_change",
+                  "Display": "pre_display"
+                }
+              }
+            }
+          },
+          "description": "S/Bill Prefix for Overtrade",
+          "odbcname": "SELFBILL_PREFIX"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_TYPE",
+          "template": {
+            "name": "TBASE_ENUM",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASE_ENUM",
+                "fieldtype": "DECIMAL",
+                "size": "1",
+                "description": "Enumerated d1 Field",
+                "infoline": "Select the Option Required",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT",
+                "selectionlist": " 1 2 0  Entries \"Entry 1\""
+              }
+            }
+          },
+          "description": "Advice Type",
+          "odbcname": "ADVICE_TYPE",
+          "selectionlist": " 1 2 0  Entries \"Invoice\", \"Cr.Note\", \"Quote\", \"S-Bill\",",
+          "longdescription": [
+            "IDT"
+          ]
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_STATUS",
+          "template": {
+            "name": "TBASE_ENUM",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASE_ENUM",
+                "fieldtype": "DECIMAL",
+                "size": "1",
+                "description": "Enumerated d1 Field",
+                "infoline": "Select the Option Required",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT",
+                "selectionlist": " 1 2 0  Entries \"Entry 1\""
+              }
+            }
+          },
+          "description": "Status",
+          "odbcname": "ADVICE_STATUS",
+          "selectionlist": " 1 2 0  Entries \"New\", \"Adv Req/IDT Prt\", \"Adv Prt\",",
+          "longdescription": [
+            "Inv Req/IDT Dsp"
+          ]
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_ADV_NO",
+          "template": {
+            "name": "ACCOUNT_REFERENCE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "ACCOUNT_REFERENCE",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "6",
+                "description": "Accounts reference",
+                "prompt": "Ref No.:",
+                "infoline": "Enter the Document Reference - <Enter> for Auto",
+                "odbcname": "DOCUMENT_REF",
+                "methods": {
+                  "Change": "auto_ref_change"
+                }
+              }
+            }
+          },
+          "description": "advice number",
+          "odbcname": "ADVICE_NUMBER"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_INV_ANUM",
+          "template": {
+            "name": "ACCOUNT_REFERENCE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "ACCOUNT_REFERENCE",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "6",
+                "description": "Accounts reference",
+                "prompt": "Ref No.:",
+                "infoline": "Enter the Document Reference - <Enter> for Auto",
+                "odbcname": "DOCUMENT_REF",
+                "methods": {
+                  "Change": "auto_ref_change"
+                }
+              }
+            }
+          },
+          "description": "invoice number",
+          "odbcname": "INVOICE_NO"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SALESMAN",
+          "template": {
+            "name": "REP_CODE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "REP_CODE",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "4",
+                "description": "Representative Code",
+                "prompt": "Rep Code:",
+                "infoline": "Enter the Representative Code",
+                "odbcname": "REP_CODE",
+                "methods": {
+                  "Drill": "SRP_DRILL",
+                  "Hyperlink": "srp_hyper",
+                  "Change": "srp_change",
+                  "Display": "srp_display"
+                }
+              }
+            }
+          },
+          "description": "salesman",
+          "odbcname": "REP_CODE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_STOREMAN",
+          "template": {
+            "name": "OPERATOR_INITIALS",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "OPERATOR_INITIALS",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "3",
+                "description": "Operator initials",
+                "prompt": "Operator:",
+                "infoline": "Enter the Operator Initials",
+                "methods": {
+                  "Drill": "acc_drill",
+                  "Change": "acc_change",
+                  "Display": "acc_display"
+                }
+              }
+            }
+          },
+          "description": "storeman who entered invoi",
+          "odbcname": "STOREMAN"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SETT_CRED",
+          "template": {
+            "name": "SETT_CRED_FLAG",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "SETT_CRED_FLAG",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Settlement/Credit Charge Flag",
+                "prompt": "Credit or Settlement:",
+                "infoline": "Select Option For Credit Charge/Settlement Discount",
+                "odbcname": "SETT_CRED_CHG",
+                "selectionlist": " 1 2 0  Entries \"Not Used\", \"Credit Charge\","
+              }
+            }
+          },
+          "odbcname": "SETT_CRED_FLAG"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_S_C_PERC",
+          "template": {
+            "name": "CURRENCY",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "CURRENCY",
+                "parent": {
+                  "name": "CURRENCY_ARRAY",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "CURRENCY_ARRAY",
+                      "parent": {
+                        "name": "TBASECURRENCY",
+                        "structure": {
+                          "properties": {
+                            "type": "template",
+                            "name": "TBASECURRENCY",
+                            "fieldtype": "DECIMAL",
+                            "size": "10",
+                            "description": "Base currency template",
+                            "prompt": "Amount:",
+                            "infoline": "Enter a Currency Amount",
+                            "font": "CURRENCY_PROMPT",
+                            "promptfont": "PROMPT_FONT",
+                            "methods": {
+                              "Display": "CURRENCY_DISPLAY"
+                            }
+                          }
+                        }
+                      },
+                      "dimension": "2",
+                      "methods": {
+                        "Change": "currency_change",
+                        "Editfmt": "currency_edit"
+                      }
+                    }
+                  }
+                },
+                "dimension": "1"
+              }
+            }
+          },
+          "size": "8",
+          "description": "sett/cr charge % or amount",
+          "odbcname": "SETT_CREDIT_AMOUNT",
+          "methods": {
+            "Change": "currency_na_change",
+            "Display": "currency_na_display",
+            "Editfmt": "currency_na_edit"
+          }
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_LINE_USD",
+          "template": {
+            "name": "LINE_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "LINE_NO",
+                "parent": {
+                  "name": "TBASENUMERIC",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASENUMERIC",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base numeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter a Numeric Value",
+                      "font": "NUMBER_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "4",
+                "description": "Line Number",
+                "prompt": "Line:",
+                "odbcname": "LINE_NUMBER"
+              }
+            }
+          },
+          "description": "last line number used",
+          "odbcname": "LAST_LINE_NO"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_DATE_ENT",
+          "template": {
+            "name": "DATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "DATE",
+                "fieldtype": "DATE",
+                "size": "8",
+                "description": "Master d8 date template",
+                "prompt": "Date:",
+                "infoline": "Enter the Date",
+                "methods": {
+                  "Drill": "calendar_drill",
+                  "Display": "date_display"
+                }
+              }
+            }
+          },
+          "description": "date order entered",
+          "odbcname": "ORDER_DATE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_TIME_ENT",
+          "template": {
+            "name": "TBASETIME",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASETIME",
+                "fieldtype": "TIME",
+                "size": "4",
+                "description": "Base time template",
+                "prompt": "Time:",
+                "infoline": "Enter the Time"
+              }
+            }
+          },
+          "description": "time order entered",
+          "odbcname": "ORDER_TIME"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_F_OS_PRTVAL",
+          "template": {
+            "name": "CURRENCY",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "CURRENCY",
+                "parent": {
+                  "name": "CURRENCY_ARRAY",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "CURRENCY_ARRAY",
+                      "parent": {
+                        "name": "TBASECURRENCY",
+                        "structure": {
+                          "properties": {
+                            "type": "template",
+                            "name": "TBASECURRENCY",
+                            "fieldtype": "DECIMAL",
+                            "size": "10",
+                            "description": "Base currency template",
+                            "prompt": "Amount:",
+                            "infoline": "Enter a Currency Amount",
+                            "font": "CURRENCY_PROMPT",
+                            "promptfont": "PROMPT_FONT",
+                            "methods": {
+                              "Display": "CURRENCY_DISPLAY"
+                            }
+                          }
+                        }
+                      },
+                      "dimension": "2",
+                      "methods": {
+                        "Change": "currency_change",
+                        "Editfmt": "currency_edit"
+                      }
+                    }
+                  }
+                },
+                "dimension": "1"
+              }
+            }
+          },
+          "size": "11",
+          "description": "outstanding parts value",
+          "odbcname": "OS_PARTS_VALUE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_CUST_NAME",
+          "template": {
+            "name": "TBASENAME",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENAME",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "32",
+                "description": "Alphanumeric name type",
+                "prompt": "Name:",
+                "infoline": "Enter the Name",
+                "methods": {
+                  "Change": "capitalise_change"
+                }
+              }
+            }
+          },
+          "description": "Customer Name",
+          "odbcname": "CUSTOMER_NAME"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_CUST_ADD1",
+          "template": {
+            "name": "TBASEADDRESSLINE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEADDRESSLINE",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "32",
+                "dimension": "1",
+                "description": "Address array",
+                "prompt": "Address:",
+                "infoline": "Enter the Address",
+                "odbcname": "ADDRESS_LINE",
+                "methods": {
+                  "Change": "capitalise_change"
+                }
+              }
+            }
+          },
+          "description": "Address line",
+          "odbcname": "CUST_ADDR_LINE_1"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_CUST_ADD2",
+          "template": {
+            "name": "TBASEADDRESSLINE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEADDRESSLINE",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "32",
+                "dimension": "1",
+                "description": "Address array",
+                "prompt": "Address:",
+                "infoline": "Enter the Address",
+                "odbcname": "ADDRESS_LINE",
+                "methods": {
+                  "Change": "capitalise_change"
+                }
+              }
+            }
+          },
+          "description": "Address line",
+          "odbcname": "CUST_ADDR_LINE_2"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_CUST_ADD3",
+          "template": {
+            "name": "TBASEADDRESSLINE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEADDRESSLINE",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "32",
+                "dimension": "1",
+                "description": "Address array",
+                "prompt": "Address:",
+                "infoline": "Enter the Address",
+                "odbcname": "ADDRESS_LINE",
+                "methods": {
+                  "Change": "capitalise_change"
+                }
+              }
+            }
+          },
+          "description": "Address line3",
+          "odbcname": "CUST_ADDR_LINE_3"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_CUST_ADD4",
+          "template": {
+            "name": "TBASEADDRESSLINE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEADDRESSLINE",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "32",
+                "dimension": "1",
+                "description": "Address array",
+                "prompt": "Address:",
+                "infoline": "Enter the Address",
+                "odbcname": "ADDRESS_LINE",
+                "methods": {
+                  "Change": "capitalise_change"
+                }
+              }
+            }
+          },
+          "description": "Address line 4",
+          "odbcname": "CUST_ADDR_LINE_4"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_CUS_ADD",
+          "template": {
+            "name": "TBASEADDRESS",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEADDRESS",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "32",
+                "dimension": "4",
+                "description": "Address array",
+                "prompt": "Address:",
+                "infoline": "Enter the Address",
+                "odbcname": "ADDRESS"
+              }
+            }
+          },
+          "dimension": "5",
+          "description": "customer address"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_CUS_POST",
+          "template": {
+            "name": "TBASEPOSTCODE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEPOSTCODE",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "9",
+                "description": "Postcode template",
+                "prompt": "Postcode:",
+                "infoline": "Enter the Postcode"
+              }
+            }
+          },
+          "description": "customer postcode",
+          "odbcname": "CUST_POSTCODE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_DEL_ADDRESS1",
+          "template": {
+            "name": "TBASENAME",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENAME",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "32",
+                "description": "Alphanumeric name type",
+                "prompt": "Name:",
+                "infoline": "Enter the Name",
+                "methods": {
+                  "Change": "capitalise_change"
+                }
+              }
+            }
+          },
+          "description": "Delivery address line1",
+          "odbcname": "DEL_ADDR_LINE_1"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_DEL_ADDRESS2",
+          "template": {
+            "name": "TBASENAME",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENAME",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "32",
+                "description": "Alphanumeric name type",
+                "prompt": "Name:",
+                "infoline": "Enter the Name",
+                "methods": {
+                  "Change": "capitalise_change"
+                }
+              }
+            }
+          },
+          "description": "Delivery address line2",
+          "odbcname": "DEL_ADDR_LINE_2"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_DEL_ADDRESS3",
+          "template": {
+            "name": "TBASENAME",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENAME",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "32",
+                "description": "Alphanumeric name type",
+                "prompt": "Name:",
+                "infoline": "Enter the Name",
+                "methods": {
+                  "Change": "capitalise_change"
+                }
+              }
+            }
+          },
+          "description": "Delivery address line3",
+          "odbcname": "DEL_ADDR_LINE_3"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_DEL_ADDRESS4",
+          "template": {
+            "name": "TBASENAME",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENAME",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "32",
+                "description": "Alphanumeric name type",
+                "prompt": "Name:",
+                "infoline": "Enter the Name",
+                "methods": {
+                  "Change": "capitalise_change"
+                }
+              }
+            }
+          },
+          "description": "Delivery address line4",
+          "odbcname": "DEL_ADDR_LINE_4"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_DEL_ADDRESS5",
+          "template": {
+            "name": "TBASENAME",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENAME",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "32",
+                "description": "Alphanumeric name type",
+                "prompt": "Name:",
+                "infoline": "Enter the Name",
+                "methods": {
+                  "Change": "capitalise_change"
+                }
+              }
+            }
+          },
+          "description": "Delivery address line5",
+          "odbcname": "DEL_ADDR_LINE_5"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_DEL_ADD",
+          "template": {
+            "name": "TBASEADDRESS",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEADDRESS",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "32",
+                "dimension": "4",
+                "description": "Address array",
+                "prompt": "Address:",
+                "infoline": "Enter the Address",
+                "odbcname": "ADDRESS"
+              }
+            }
+          },
+          "dimension": "5",
+          "description": "delivery address"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_DEL_POST",
+          "template": {
+            "name": "TBASEPOSTCODE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEPOSTCODE",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "9",
+                "description": "Postcode template",
+                "prompt": "Postcode:",
+                "infoline": "Enter the Postcode"
+              }
+            }
+          },
+          "description": "delivery postcode",
+          "odbcname": "DEL_POSTCODE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_CMF_VAT",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "vat allowed",
+          "odbcname": "VAT_ALLOWED"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_CONTACT",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "28",
+          "description": "contact name",
+          "infoline": "Enter the Contact Name",
+          "odbcname": "CONTACT_NAME"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_CONT_TEL",
+          "template": {
+            "name": "TBASEPHONE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEPHONE",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "20",
+                "description": "Phone number template",
+                "prompt": "Phone No.:",
+                "infoline": "Enter the Telephone Number"
+              }
+            }
+          },
+          "size": "20",
+          "description": "contact telephone number",
+          "infoline": "Enter the Contact Telephone Number",
+          "odbcname": "CONTACT_TELEPHONE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_DESP_NOTE",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "lines to print on despatch",
+          "odbcname": "PRINT_ON_DESP"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_OS_ORDVAL",
+          "template": {
+            "name": "CURRENCY",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "CURRENCY",
+                "parent": {
+                  "name": "CURRENCY_ARRAY",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "CURRENCY_ARRAY",
+                      "parent": {
+                        "name": "TBASECURRENCY",
+                        "structure": {
+                          "properties": {
+                            "type": "template",
+                            "name": "TBASECURRENCY",
+                            "fieldtype": "DECIMAL",
+                            "size": "10",
+                            "description": "Base currency template",
+                            "prompt": "Amount:",
+                            "infoline": "Enter a Currency Amount",
+                            "font": "CURRENCY_PROMPT",
+                            "promptfont": "PROMPT_FONT",
+                            "methods": {
+                              "Display": "CURRENCY_DISPLAY"
+                            }
+                          }
+                        }
+                      },
+                      "dimension": "2",
+                      "methods": {
+                        "Change": "currency_change",
+                        "Editfmt": "currency_edit"
+                      }
+                    }
+                  }
+                },
+                "dimension": "1"
+              }
+            }
+          },
+          "size": "11",
+          "description": "Outstanding order value",
+          "odbcname": "OS_ORDER_VALUE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_ORDER_NO",
+          "template": {
+            "name": "PURCHASE_ORDER",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "PURCHASE_ORDER",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "8",
+                "description": "Purchase Order Number",
+                "prompt": "Order No.:",
+                "infoline": "Enter the Purchase Order Number",
+                "odbcname": "PO_NUMBER",
+                "methods": {
+                  "Drill": "poh_drill",
+                  "Change": "poh_change"
+                }
+              }
+            }
+          },
+          "description": "Purchase Order No for inter company"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SPARE2",
+          "template": {
+            "name": "SPARE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "SPARE",
+                "fieldtype": "ALPHA",
+                "size": "1000",
+                "description": "Spare"
+              }
+            }
+          },
+          "size": "12"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_CUR_COD",
+          "template": {
+            "name": "CURRENCY_CODE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "CURRENCY_CODE",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "3",
+                "description": "Currency code",
+                "prompt": "Currency Code:",
+                "infoline": "Enter the Currency Code or <Enter> for Lookup",
+                "methods": {
+                  "Drill": "fcf_drill",
+                  "Change": "fcf_change",
+                  "Display": "fcf_display"
+                }
+              }
+            }
+          },
+          "description": "Sales Currency Code"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_CUR_CNV",
+          "template": {
+            "name": "CONVERSION_RATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "CONVERSION_RATE",
+                "parent": {
+                  "name": "TBASENUMERIC",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASENUMERIC",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base numeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter a Numeric Value",
+                      "font": "NUMBER_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "11",
+                "precision": "6",
+                "description": "Conversion Rate",
+                "prompt": "Conversion Rate:",
+                "infoline": "Enter the Conversion Rate",
+                "odbcname": "CONVERSION_RATE"
+              }
+            }
+          },
+          "description": "Conversion rate when invoiced"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_QUOTE_NO",
+          "template": {
+            "name": "ACCOUNT_REFERENCE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "ACCOUNT_REFERENCE",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "6",
+                "description": "Accounts reference",
+                "prompt": "Ref No.:",
+                "infoline": "Enter the Document Reference - <Enter> for Auto",
+                "odbcname": "DOCUMENT_REF",
+                "methods": {
+                  "Change": "auto_ref_change"
+                }
+              }
+            }
+          },
+          "description": "Quotation Number",
+          "odbcname": "QUOTE_NUMBER"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SETT_DAYS",
+          "template": {
+            "name": "TBASENUMERIC",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENUMERIC",
+                "fieldtype": "DECIMAL",
+                "size": "10",
+                "description": "Base numeric template",
+                "prompt": "Value:",
+                "infoline": "Enter a Numeric Value",
+                "font": "NUMBER_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "3",
+          "description": "Settlement days",
+          "odbcname": "SETT_DAYS"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SETT_BASE",
+          "template": {
+            "name": "TBASE_ENUM",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASE_ENUM",
+                "fieldtype": "DECIMAL",
+                "size": "1",
+                "description": "Enumerated d1 Field",
+                "infoline": "Select the Option Required",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT",
+                "selectionlist": " 1 2 0  Entries \"Entry 1\""
+              }
+            }
+          },
+          "description": "Settlement date calc from",
+          "odbcname": "SETT_DATE_CALC",
+          "selectionlist": " 1 2 0  Entries \"Normal\", \"Invoice\", \"End of Mth\""
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_ORIG_INV",
+          "template": {
+            "name": "ACCOUNT_REFERENCE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "ACCOUNT_REFERENCE",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "6",
+                "description": "Accounts reference",
+                "prompt": "Ref No.:",
+                "infoline": "Enter the Document Reference - <Enter> for Auto",
+                "odbcname": "DOCUMENT_REF",
+                "methods": {
+                  "Change": "auto_ref_change"
+                }
+              }
+            }
+          },
+          "description": "Original Invoice No for Cr",
+          "odbcname": "ORIG_INV_NO"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_ORIG_IDATE",
+          "template": {
+            "name": "DATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "DATE",
+                "fieldtype": "DATE",
+                "size": "8",
+                "description": "Master d8 date template",
+                "prompt": "Date:",
+                "infoline": "Enter the Date",
+                "methods": {
+                  "Drill": "calendar_drill",
+                  "Display": "date_display"
+                }
+              }
+            }
+          },
+          "description": "Original Invoice Date for Cr",
+          "odbcname": "ORIGIN_INV_DATE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_DISC_TYP",
+          "template": {
+            "name": "TBASE_ENUM",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASE_ENUM",
+                "fieldtype": "DECIMAL",
+                "size": "1",
+                "description": "Enumerated d1 Field",
+                "infoline": "Select the Option Required",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT",
+                "selectionlist": " 1 2 0  Entries \"Entry 1\""
+              }
+            }
+          },
+          "description": "Discount Type",
+          "infoline": "Select the Required Discount Type",
+          "odbcname": "DISC_TYPE",
+          "selectionlist": " 1 2 0  Entries \"Standard\", \"Special\", \"Emergency\""
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_PICK_ALL",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "All Picked",
+          "odbcname": "PICKED_FLAG"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_DESPATCH",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "OK to Despatch",
+          "odbcname": "OK_TO_DESPATCH"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_INVOICE",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "OK to invoice",
+          "odbcname": "OK_TO_INVOICE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_ADV_SEQ",
+          "template": {
+            "name": "TBASENUMERIC",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENUMERIC",
+                "fieldtype": "DECIMAL",
+                "size": "10",
+                "description": "Base numeric template",
+                "prompt": "Value:",
+                "infoline": "Enter a Numeric Value",
+                "font": "NUMBER_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "2",
+          "description": "Advice Sequence No",
+          "odbcname": "ADVICE_SEQ_NO"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_MIN_VAL",
+          "template": {
+            "name": "TBASE_ENUM",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASE_ENUM",
+                "fieldtype": "DECIMAL",
+                "size": "1",
+                "description": "Enumerated d1 Field",
+                "infoline": "Select the Option Required",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT",
+                "selectionlist": " 1 2 0  Entries \"Entry 1\""
+              }
+            }
+          },
+          "description": "Apply min Invoice Value",
+          "odbcname": "APPLY_MIN_INV_CHG",
+          "selectionlist": " 1 2 0  Entries \"Not Asked\", \"No\", \"Yes\""
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_DEPOSIT_AMT",
+          "template": {
+            "name": "CURRENCY_NON_ARRAYED",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "CURRENCY_NON_ARRAYED",
+                "parent": {
+                  "name": "TBASECURRENCY",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASECURRENCY",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base currency template",
+                      "prompt": "Amount:",
+                      "infoline": "Enter a Currency Amount",
+                      "font": "CURRENCY_PROMPT",
+                      "promptfont": "PROMPT_FONT",
+                      "methods": {
+                        "Display": "CURRENCY_DISPLAY"
+                      }
+                    }
+                  }
+                },
+                "description": "10 digit non arrayed currency template",
+                "methods": {
+                  "Change": "CURRENCY_NA_CHANGE",
+                  "Display": "CURRENCY_NA_DISPLAY",
+                  "Editfmt": "CURRENCY_NA_EDIT"
+                }
+              }
+            }
+          },
+          "size": "10",
+          "description": "Deposit Taken",
+          "prompt": "Orig Deposit Amount :",
+          "infoline": "Enter the Deposit Amount",
+          "odbcname": "DEPOSIT_TAKEN"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_DEPOSIT_STAT",
+          "template": {
+            "name": "TBASE_ENUM",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASE_ENUM",
+                "fieldtype": "DECIMAL",
+                "size": "1",
+                "description": "Enumerated d1 Field",
+                "infoline": "Select the Option Required",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT",
+                "selectionlist": " 1 2 0  Entries \"Entry 1\""
+              }
+            }
+          },
+          "description": "Current status of deposit",
+          "longdescription": [
+            "0=No Deposit Taken                       D_DEPOSIT_NONE",
+            "1=Taken & Outstanding                   D_DEPOSIT_TAKEN",
+            "2=Deposit Printed                          D_DEPOSIT_PRINTED",
+            "3=Deposit Returned                        D_DEPOSIT_RETURNED",
+            "4=Credited Against Invoice              D_DEPOSIT_CREDITED",
+            "5=Partially Credited Against Invoice D_DEPOSIT_PART_CRED",
+            "Deposit Returned"
+          ],
+          "prompt": "Status:",
+          "odbcname": "DEPOSIT_STATUS"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_DEPOSIT_METH",
+          "template": {
+            "name": "TBASENUMERIC",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENUMERIC",
+                "fieldtype": "DECIMAL",
+                "size": "10",
+                "description": "Base numeric template",
+                "prompt": "Value:",
+                "infoline": "Enter a Numeric Value",
+                "font": "NUMBER_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "2",
+          "description": "Deposit Payment Method",
+          "longdescription": [
+            "(Link to (CM4REC)                     cm4_pay_mthd)"
+          ],
+          "prompt": "Deposit Method:",
+          "infoline": "Select the Deposit Payment Method",
+          "odbcname": "DEPOSIT_PAY_METHOD",
+          "selectionlist": " 0 0 0  Entries \"No Pay Methods\""
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_DEPOSIT_DATE",
+          "template": {
+            "name": "DATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "DATE",
+                "fieldtype": "DATE",
+                "size": "8",
+                "description": "Master d8 date template",
+                "prompt": "Date:",
+                "infoline": "Enter the Date",
+                "methods": {
+                  "Drill": "calendar_drill",
+                  "Display": "date_display"
+                }
+              }
+            }
+          },
+          "description": "Date Deposit Taken",
+          "odbcname": "DEPOSIT_DATE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_DEPOSIT_INIT",
+          "template": {
+            "name": "OPERATOR_INITIALS",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "OPERATOR_INITIALS",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "3",
+                "description": "Operator initials",
+                "prompt": "Operator:",
+                "infoline": "Enter the Operator Initials",
+                "methods": {
+                  "Drill": "acc_drill",
+                  "Change": "acc_change",
+                  "Display": "acc_display"
+                }
+              }
+            }
+          },
+          "description": "User Taking Deposit",
+          "odbcname": "DEPOSIT_TAKEN_BY"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_DEPOSIT_DESC1",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "40",
+          "prompt": "Narrative:",
+          "infoline": "Enter Narrative if Required",
+          "odbcname": "DEPOSIT_DESC_LINE_1"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_DEPOSIT_DESC2",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "40",
+          "odbcname": "DEPOSIT_DESC_LINE_2"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_DEPOSIT_DESC",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "40",
+          "dimension": "2",
+          "description": "Deposit Narrative"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_DEPOSIT_TERM",
+          "template": {
+            "name": "TBASENUMERIC",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENUMERIC",
+                "fieldtype": "DECIMAL",
+                "size": "10",
+                "description": "Base numeric template",
+                "prompt": "Value:",
+                "infoline": "Enter a Numeric Value",
+                "font": "NUMBER_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "3",
+          "description": "Terminal No (till no)",
+          "prompt": "Terminal:",
+          "odbcname": "TERMINAL_NO"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_AUTO_ALL",
+          "template": {
+            "name": "TBASE_ENUM",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASE_ENUM",
+                "fieldtype": "DECIMAL",
+                "size": "1",
+                "description": "Enumerated d1 Field",
+                "infoline": "Select the Option Required",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT",
+                "selectionlist": " 1 2 0  Entries \"Entry 1\""
+              }
+            }
+          },
+          "description": "Allocate if free stock",
+          "odbcname": "AUTO_ALLOCATE",
+          "selectionlist": " 1 2 0  Entries \"Yes\", \"Not this Time\", \"On Hold\""
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_DATE_REQ",
+          "template": {
+            "name": "DATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "DATE",
+                "fieldtype": "DATE",
+                "size": "8",
+                "description": "Master d8 date template",
+                "prompt": "Date:",
+                "infoline": "Enter the Date",
+                "methods": {
+                  "Drill": "calendar_drill",
+                  "Display": "date_display"
+                }
+              }
+            }
+          },
+          "description": "date order required",
+          "odbcname": "REQD_DATE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_ORIGIN",
+          "template": {
+            "name": "TBASE_ENUM",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASE_ENUM",
+                "fieldtype": "DECIMAL",
+                "size": "1",
+                "description": "Enumerated d1 Field",
+                "infoline": "Select the Option Required",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT",
+                "selectionlist": " 1 2 0  Entries \"Entry 1\""
+              }
+            }
+          },
+          "description": "Origin: 0 - POS",
+          "odbcname": "ORIGIN",
+          "selectionlist": " 1 2 0  Entries \"POS\", \"TILL\", \"Dlr Inp\", \"Dlr Email\""
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_USER_INIT",
+          "template": {
+            "name": "OPERATOR_INITIALS",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "OPERATOR_INITIALS",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "3",
+                "description": "Operator initials",
+                "prompt": "Operator:",
+                "infoline": "Enter the Operator Initials",
+                "methods": {
+                  "Drill": "acc_drill",
+                  "Change": "acc_change",
+                  "Display": "acc_display"
+                }
+              }
+            }
+          },
+          "description": "User Initials",
+          "odbcname": "OPERATOR"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_DEPOSIT_OS",
+          "template": {
+            "name": "CURRENCY_NON_ARRAYED",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "CURRENCY_NON_ARRAYED",
+                "parent": {
+                  "name": "TBASECURRENCY",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASECURRENCY",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base currency template",
+                      "prompt": "Amount:",
+                      "infoline": "Enter a Currency Amount",
+                      "font": "CURRENCY_PROMPT",
+                      "promptfont": "PROMPT_FONT",
+                      "methods": {
+                        "Display": "CURRENCY_DISPLAY"
+                      }
+                    }
+                  }
+                },
+                "description": "10 digit non arrayed currency template",
+                "methods": {
+                  "Change": "CURRENCY_NA_CHANGE",
+                  "Display": "CURRENCY_NA_DISPLAY",
+                  "Editfmt": "CURRENCY_NA_EDIT"
+                }
+              }
+            }
+          },
+          "description": "Outstanding deposit value.",
+          "longdescription": [
+            "Only applicable if pih_deposit_new = true"
+          ],
+          "prompt": "Deposit Outstanding:",
+          "odbcname": "DEPOSIT_OS"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_DEPOSIT_NEW",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Temporary field",
+          "longdescription": [
+            "Set to true whenever deposits are applicable from now on",
+            "until further notice. This will distinguish old deposits",
+            "entered prior to the addition of new field",
+            "pih_deposit_os from, new ones where a zero oustanding",
+            "deposit is used to indicate it is fully used up."
+          ]
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_DEPOSIT_RTN",
+          "template": {
+            "name": "CURRENCY_NON_ARRAYED",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "CURRENCY_NON_ARRAYED",
+                "parent": {
+                  "name": "TBASECURRENCY",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASECURRENCY",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base currency template",
+                      "prompt": "Amount:",
+                      "infoline": "Enter a Currency Amount",
+                      "font": "CURRENCY_PROMPT",
+                      "promptfont": "PROMPT_FONT",
+                      "methods": {
+                        "Display": "CURRENCY_DISPLAY"
+                      }
+                    }
+                  }
+                },
+                "description": "10 digit non arrayed currency template",
+                "methods": {
+                  "Change": "CURRENCY_NA_CHANGE",
+                  "Display": "CURRENCY_NA_DISPLAY",
+                  "Editfmt": "CURRENCY_NA_EDIT"
+                }
+              }
+            }
+          },
+          "description": "Amount of deposit returned",
+          "longdescription": [
+            "This only applies if the return",
+            "done by advice note rather than invoice"
+          ],
+          "odbcname": "DEPOSIT_RETURN"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_DEPOSIT_RTN_DATE",
+          "template": {
+            "name": "DATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "DATE",
+                "fieldtype": "DATE",
+                "size": "8",
+                "description": "Master d8 date template",
+                "prompt": "Date:",
+                "infoline": "Enter the Date",
+                "methods": {
+                  "Drill": "calendar_drill",
+                  "Display": "date_display"
+                }
+              }
+            }
+          },
+          "description": "Deposit return date",
+          "longdescription": [
+            "This only applies if the return",
+            "done by advice note rather than invoice"
+          ],
+          "odbcname": "DEPOSIT_RETURNED_DATE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SEC40",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Override Manifest System if Access=40"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_PAY_MTHD",
+          "template": {
+            "name": "TBASE_ENUM",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASE_ENUM",
+                "fieldtype": "DECIMAL",
+                "size": "1",
+                "description": "Enumerated d1 Field",
+                "infoline": "Select the Option Required",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT",
+                "selectionlist": " 1 2 0  Entries \"Entry 1\""
+              }
+            }
+          },
+          "size": "2",
+          "description": "POS Payment Type",
+          "odbcname": "POS_PAY_METHOD"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_DEP_CASH_ALLOC",
+          "template": {
+            "name": "TBASE_ENUM",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASE_ENUM",
+                "fieldtype": "DECIMAL",
+                "size": "1",
+                "description": "Enumerated d1 Field",
+                "infoline": "Select the Option Required",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT",
+                "selectionlist": " 1 2 0  Entries \"Entry 1\""
+              }
+            }
+          },
+          "description": "Deposit on cash reps-0=no,1=on eod rep",
+          "odbcname": "DEPOSIT_ON_CASH_REP",
+          "selectionlist": " 1 2 0  Entries \"Not printed\", \"Printed on end of day\""
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SB_ON_EOD",
+          "template": {
+            "name": "TBASE_ENUM",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASE_ENUM",
+                "fieldtype": "DECIMAL",
+                "size": "1",
+                "description": "Enumerated d1 Field",
+                "infoline": "Select the Option Required",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT",
+                "selectionlist": " 1 2 0  Entries \"Entry 1\""
+              }
+            }
+          },
+          "description": "Self Bill Printed  EOD-0=no,1=on eod rep",
+          "odbcname": "DEPOSIT_ON_EOD",
+          "selectionlist": " 1 2 0  Entries \"Not printed\", \"Printed on end of day\""
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_FINANCE_CO",
+          "template": {
+            "name": "CUSTOMER_ACCOUNT",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "CUSTOMER_ACCOUNT",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "6",
+                "description": "Customer Account",
+                "prompt": "Customer:",
+                "infoline": "Enter the Customer Account Number or Search Option",
+                "odbcname": "CUST_ACCOUNT_NO",
+                "methods": {
+                  "Arrive": "cmf_arrive",
+                  "Leave": "cmf_leave",
+                  "Drill": "cmf_popdrill",
+                  "Change": "cmf_change",
+                  "Display": "cmf_display"
+                }
+              }
+            }
+          },
+          "description": "Finance company a/c no",
+          "prompt": "Finance Co.:",
+          "infoline": "Enter the Finance Company Account Number or Search Option"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_INV_MTHD",
+          "template": {
+            "name": "TBASE_ENUM",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASE_ENUM",
+                "fieldtype": "DECIMAL",
+                "size": "1",
+                "description": "Enumerated d1 Field",
+                "infoline": "Select the Option Required",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT",
+                "selectionlist": " 1 2 0  Entries \"Entry 1\""
+              }
+            }
+          },
+          "description": "Invoice method (as CMF)",
+          "odbcname": "POS_INV_METHOD",
+          "selectionlist": " 1 2 0  Entries \"Immediate Invoice\", \"Batch Invoice\",",
+          "longdescription": [
+            "Cash Sale Invoice",
+            "Select At POS"
+          ]
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_PREV_INV",
+          "template": {
+            "name": "ACCOUNT_REFERENCE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "ACCOUNT_REFERENCE",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "6",
+                "description": "Accounts reference",
+                "prompt": "Ref No.:",
+                "infoline": "Enter the Document Reference - <Enter> for Auto",
+                "odbcname": "DOCUMENT_REF",
+                "methods": {
+                  "Change": "auto_ref_change"
+                }
+              }
+            }
+          },
+          "odbcname": "PREV_INV"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_PREV_IDATE",
+          "template": {
+            "name": "TBASEDATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEDATE",
+                "fieldtype": "DATE",
+                "size": "8",
+                "description": "Base d8 date template",
+                "prompt": "Date:",
+                "infoline": "Enter the Date",
+                "methods": {
+                  "Drill": "calendar_drill",
+                  "Display": "date_display"
+                }
+              }
+            }
+          },
+          "odbcname": "PREV_INV_DATE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_NEXT_INV",
+          "template": {
+            "name": "ACCOUNT_REFERENCE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "ACCOUNT_REFERENCE",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "6",
+                "description": "Accounts reference",
+                "prompt": "Ref No.:",
+                "infoline": "Enter the Document Reference - <Enter> for Auto",
+                "odbcname": "DOCUMENT_REF",
+                "methods": {
+                  "Change": "auto_ref_change"
+                }
+              }
+            }
+          },
+          "odbcname": "NEXT_INV"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_NEXT_IDATE",
+          "template": {
+            "name": "TBASEDATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEDATE",
+                "fieldtype": "DATE",
+                "size": "8",
+                "description": "Base d8 date template",
+                "prompt": "Date:",
+                "infoline": "Enter the Date",
+                "methods": {
+                  "Drill": "calendar_drill",
+                  "Display": "date_display"
+                }
+              }
+            }
+          },
+          "odbcname": "NEXT_INV_DATE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_ORIG_CMP",
+          "template": {
+            "name": "COMPANY_NUMBER",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "COMPANY_NUMBER",
+                "parent": {
+                  "name": "TBASENUMERIC",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASENUMERIC",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base numeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter a Numeric Value",
+                      "font": "NUMBER_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "3",
+                "description": "Company Number",
+                "prompt": "Company:",
+                "infoline": "Enter the Company Number",
+                "methods": {
+                  "Drill": "com_drill",
+                  "Change": "com_change",
+                  "Display": "com_display"
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_DDS_CODE",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "3",
+          "description": "Web Carrier Code (from DDS)",
+          "odbcname": "CARRIER_CODE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SPLIT_PERC1",
+          "template": {
+            "name": "TBASEPERCENTAGE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEPERCENTAGE",
+                "parent": {
+                  "name": "TBASENUMERIC",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASENUMERIC",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base numeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter a Numeric Value",
+                      "font": "NUMBER_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "4",
+                "description": "Percentage base template",
+                "prompt": "Percentage%:",
+                "infoline": "Enter a Percentage Amount",
+                "methods": {
+                  "Change": "percent_change",
+                  "Display": "percent_display",
+                  "Editfmt": "percent_edit"
+                }
+              }
+            }
+          },
+          "size": "5",
+          "prompt": "1) Split %:"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SPLIT_PERC2",
+          "template": {
+            "name": "TBASEPERCENTAGE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEPERCENTAGE",
+                "parent": {
+                  "name": "TBASENUMERIC",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASENUMERIC",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base numeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter a Numeric Value",
+                      "font": "NUMBER_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "4",
+                "description": "Percentage base template",
+                "prompt": "Percentage%:",
+                "infoline": "Enter a Percentage Amount",
+                "methods": {
+                  "Change": "percent_change",
+                  "Display": "percent_display",
+                  "Editfmt": "percent_edit"
+                }
+              }
+            }
+          },
+          "size": "5",
+          "prompt": "2) Split %:"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SPLIT_PERC3",
+          "template": {
+            "name": "TBASEPERCENTAGE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEPERCENTAGE",
+                "parent": {
+                  "name": "TBASENUMERIC",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASENUMERIC",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base numeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter a Numeric Value",
+                      "font": "NUMBER_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "4",
+                "description": "Percentage base template",
+                "prompt": "Percentage%:",
+                "infoline": "Enter a Percentage Amount",
+                "methods": {
+                  "Change": "percent_change",
+                  "Display": "percent_display",
+                  "Editfmt": "percent_edit"
+                }
+              }
+            }
+          },
+          "size": "5",
+          "prompt": "3) Split %:"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SPLIT_PERC4",
+          "template": {
+            "name": "TBASEPERCENTAGE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEPERCENTAGE",
+                "parent": {
+                  "name": "TBASENUMERIC",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASENUMERIC",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base numeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter a Numeric Value",
+                      "font": "NUMBER_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "4",
+                "description": "Percentage base template",
+                "prompt": "Percentage%:",
+                "infoline": "Enter a Percentage Amount",
+                "methods": {
+                  "Change": "percent_change",
+                  "Display": "percent_display",
+                  "Editfmt": "percent_edit"
+                }
+              }
+            }
+          },
+          "size": "5",
+          "prompt": "4) Split %:"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SPLIT_PERC5",
+          "template": {
+            "name": "TBASEPERCENTAGE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEPERCENTAGE",
+                "parent": {
+                  "name": "TBASENUMERIC",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASENUMERIC",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base numeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter a Numeric Value",
+                      "font": "NUMBER_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "4",
+                "description": "Percentage base template",
+                "prompt": "Percentage%:",
+                "infoline": "Enter a Percentage Amount",
+                "methods": {
+                  "Change": "percent_change",
+                  "Display": "percent_display",
+                  "Editfmt": "percent_edit"
+                }
+              }
+            }
+          },
+          "size": "5",
+          "prompt": "5) Split %:"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SPLIT_PERC",
+          "template": {
+            "name": "TBASEPERCENTAGE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEPERCENTAGE",
+                "parent": {
+                  "name": "TBASENUMERIC",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASENUMERIC",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base numeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter a Numeric Value",
+                      "font": "NUMBER_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "4",
+                "description": "Percentage base template",
+                "prompt": "Percentage%:",
+                "infoline": "Enter a Percentage Amount",
+                "methods": {
+                  "Change": "percent_change",
+                  "Display": "percent_display",
+                  "Editfmt": "percent_edit"
+                }
+              }
+            }
+          },
+          "size": "5",
+          "dimension": "5"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SPLIT_DATE1",
+          "template": {
+            "name": "TBASEDATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEDATE",
+                "fieldtype": "DATE",
+                "size": "8",
+                "description": "Base d8 date template",
+                "prompt": "Date:",
+                "infoline": "Enter the Date",
+                "methods": {
+                  "Drill": "calendar_drill",
+                  "Display": "date_display"
+                }
+              }
+            }
+          },
+          "methods": {
+            "Change": "stored_date_change",
+            "Display": "stored_date_display",
+            "Editfmt": "stored_date_edit"
+          }
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SPLIT_DATE2",
+          "template": {
+            "name": "TBASEDATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEDATE",
+                "fieldtype": "DATE",
+                "size": "8",
+                "description": "Base d8 date template",
+                "prompt": "Date:",
+                "infoline": "Enter the Date",
+                "methods": {
+                  "Drill": "calendar_drill",
+                  "Display": "date_display"
+                }
+              }
+            }
+          },
+          "methods": {
+            "Change": "stored_date_change",
+            "Display": "stored_date_display",
+            "Editfmt": "stored_date_edit"
+          }
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SPLIT_DATE3",
+          "template": {
+            "name": "TBASEDATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEDATE",
+                "fieldtype": "DATE",
+                "size": "8",
+                "description": "Base d8 date template",
+                "prompt": "Date:",
+                "infoline": "Enter the Date",
+                "methods": {
+                  "Drill": "calendar_drill",
+                  "Display": "date_display"
+                }
+              }
+            }
+          },
+          "methods": {
+            "Change": "stored_date_change",
+            "Display": "stored_date_display",
+            "Editfmt": "stored_date_edit"
+          }
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SPLIT_DATE4",
+          "template": {
+            "name": "TBASEDATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEDATE",
+                "fieldtype": "DATE",
+                "size": "8",
+                "description": "Base d8 date template",
+                "prompt": "Date:",
+                "infoline": "Enter the Date",
+                "methods": {
+                  "Drill": "calendar_drill",
+                  "Display": "date_display"
+                }
+              }
+            }
+          },
+          "methods": {
+            "Change": "stored_date_change",
+            "Display": "stored_date_display",
+            "Editfmt": "stored_date_edit"
+          }
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SPLIT_DATE5",
+          "template": {
+            "name": "TBASEDATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEDATE",
+                "fieldtype": "DATE",
+                "size": "8",
+                "description": "Base d8 date template",
+                "prompt": "Date:",
+                "infoline": "Enter the Date",
+                "methods": {
+                  "Drill": "calendar_drill",
+                  "Display": "date_display"
+                }
+              }
+            }
+          },
+          "methods": {
+            "Change": "stored_date_change",
+            "Display": "stored_date_display",
+            "Editfmt": "stored_date_edit"
+          }
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SPLIT_DATE",
+          "template": {
+            "name": "TBASEDATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEDATE",
+                "fieldtype": "DATE",
+                "size": "8",
+                "description": "Base d8 date template",
+                "prompt": "Date:",
+                "infoline": "Enter the Date",
+                "methods": {
+                  "Drill": "calendar_drill",
+                  "Display": "date_display"
+                }
+              }
+            }
+          },
+          "dimension": "5",
+          "methods": {
+            "Change": "stored_date_change",
+            "Display": "stored_date_display",
+            "Editfmt": "stored_date_edit"
+          }
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_ORIG_SUPPLIER",
+          "template": {
+            "name": "SUPPLIER_ACCOUNT",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "SUPPLIER_ACCOUNT",
+                "parent": {
+                  "name": "TBASENUMERIC",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASENUMERIC",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base numeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter a Numeric Value",
+                      "font": "NUMBER_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "4",
+                "description": "Supplier Account",
+                "prompt": "Supplier A/c.:",
+                "infoline": "Enter the Supplier Account Number",
+                "odbcname": "SUPP_ACCOUNT_NO"
+              }
+            }
+          },
+          "description": "Originating Supplier Account"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_AUTO_GEN",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Advice auto generated from inv recall"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_FORCE_CSH_PAY",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Account cust forced to cash pay"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_INTER_CMP",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Inter company order on this advice?"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_CRLIM_PASS_ENT",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Was crlim password entered (for tracking"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SPLIT_VAL1",
+          "template": {
+            "name": "TBASENUMERIC",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENUMERIC",
+                "fieldtype": "DECIMAL",
+                "size": "10",
+                "description": "Base numeric template",
+                "prompt": "Value:",
+                "infoline": "Enter a Numeric Value",
+                "font": "NUMBER_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "12",
+          "description": "Split Value"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SPLIT_VAL2",
+          "template": {
+            "name": "TBASENUMERIC",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENUMERIC",
+                "fieldtype": "DECIMAL",
+                "size": "10",
+                "description": "Base numeric template",
+                "prompt": "Value:",
+                "infoline": "Enter a Numeric Value",
+                "font": "NUMBER_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "12",
+          "description": "Split Value"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SPLIT_VAL3",
+          "template": {
+            "name": "TBASENUMERIC",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENUMERIC",
+                "fieldtype": "DECIMAL",
+                "size": "10",
+                "description": "Base numeric template",
+                "prompt": "Value:",
+                "infoline": "Enter a Numeric Value",
+                "font": "NUMBER_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "12",
+          "description": "Split Value"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SPLIT_VAL4",
+          "template": {
+            "name": "TBASENUMERIC",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENUMERIC",
+                "fieldtype": "DECIMAL",
+                "size": "10",
+                "description": "Base numeric template",
+                "prompt": "Value:",
+                "infoline": "Enter a Numeric Value",
+                "font": "NUMBER_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "12",
+          "description": "Split Value"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_SPLIT_VAL5",
+          "template": {
+            "name": "TBASENUMERIC",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENUMERIC",
+                "fieldtype": "DECIMAL",
+                "size": "10",
+                "description": "Base numeric template",
+                "prompt": "Value:",
+                "infoline": "Enter a Numeric Value",
+                "font": "NUMBER_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "12",
+          "description": "Split Value"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SPLIT_VAL",
+          "template": {
+            "name": "TBASENUMERIC",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENUMERIC",
+                "fieldtype": "DECIMAL",
+                "size": "10",
+                "description": "Base numeric template",
+                "prompt": "Value:",
+                "infoline": "Enter a Numeric Value",
+                "font": "NUMBER_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "12",
+          "dimension": "5",
+          "description": "Split Value"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SPLIT_NON_VAL1",
+          "template": {
+            "name": "TBASENUMERIC",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENUMERIC",
+                "fieldtype": "DECIMAL",
+                "size": "10",
+                "description": "Base numeric template",
+                "prompt": "Value:",
+                "infoline": "Enter a Numeric Value",
+                "font": "NUMBER_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "12",
+          "description": "Split Value (if not paid by)"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SPLIT_NON_VAL2",
+          "template": {
+            "name": "TBASENUMERIC",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENUMERIC",
+                "fieldtype": "DECIMAL",
+                "size": "10",
+                "description": "Base numeric template",
+                "prompt": "Value:",
+                "infoline": "Enter a Numeric Value",
+                "font": "NUMBER_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "12",
+          "description": "Split Value (if not paid by)"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SPLIT_NON_VAL3",
+          "template": {
+            "name": "TBASENUMERIC",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENUMERIC",
+                "fieldtype": "DECIMAL",
+                "size": "10",
+                "description": "Base numeric template",
+                "prompt": "Value:",
+                "infoline": "Enter a Numeric Value",
+                "font": "NUMBER_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "12",
+          "description": "Split Value (if not paid by)"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SPLIT_NON_VAL4",
+          "template": {
+            "name": "TBASENUMERIC",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENUMERIC",
+                "fieldtype": "DECIMAL",
+                "size": "10",
+                "description": "Base numeric template",
+                "prompt": "Value:",
+                "infoline": "Enter a Numeric Value",
+                "font": "NUMBER_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "12",
+          "description": "Split Value (if not paid by)"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SPLIT_NON_VAL5",
+          "template": {
+            "name": "TBASENUMERIC",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENUMERIC",
+                "fieldtype": "DECIMAL",
+                "size": "10",
+                "description": "Base numeric template",
+                "prompt": "Value:",
+                "infoline": "Enter a Numeric Value",
+                "font": "NUMBER_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "12",
+          "description": "Split Value (if not paid by)"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SPLIT_NON_VAL",
+          "template": {
+            "name": "TBASENUMERIC",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENUMERIC",
+                "fieldtype": "DECIMAL",
+                "size": "10",
+                "description": "Base numeric template",
+                "prompt": "Value:",
+                "infoline": "Enter a Numeric Value",
+                "font": "NUMBER_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "12",
+          "dimension": "5",
+          "description": "Split Value (if not paid by)"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SDC_CALC",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "SDC calculation done flag"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_WGSTK",
+          "template": {
+            "name": "WHOLEGOOD_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "WHOLEGOOD_NO",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "8",
+                "description": "Wholegood Stock No.",
+                "prompt": "{WHOLEGD} No:",
+                "infoline": "Enter the {WHOLEGD} No. or <Enter> for Search",
+                "odbcname": "WHOLEGOOD_NO",
+                "methods": {
+                  "Drill": "vm_drill",
+                  "Change": "vm_change"
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SEND_SMS",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Send SMS Messages?",
+          "prompt": "Send SMS Messages?",
+          "infoline": "Is Customer happy to receive text messages for this Advice?",
+          "odbcname": "SEND_SMS"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_PREFIX_NAME",
+          "template": {
+            "name": "NICKNAME",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "NICKNAME",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "10",
+                "description": "Nickname",
+                "prompt": "Nickname:",
+                "infoline": "Enter the Nickname",
+                "odbcname": "NICKNAME"
+              }
+            }
+          },
+          "description": "Supplier Prefix Nickname",
+          "odbcname": "PREFIX_NAME"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_DEPOSIT_PRV_AMT",
+          "template": {
+            "name": "CURRENCY_NON_ARRAYED",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "CURRENCY_NON_ARRAYED",
+                "parent": {
+                  "name": "TBASECURRENCY",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASECURRENCY",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base currency template",
+                      "prompt": "Amount:",
+                      "infoline": "Enter a Currency Amount",
+                      "font": "CURRENCY_PROMPT",
+                      "promptfont": "PROMPT_FONT",
+                      "methods": {
+                        "Display": "CURRENCY_DISPLAY"
+                      }
+                    }
+                  }
+                },
+                "description": "10 digit non arrayed currency template",
+                "methods": {
+                  "Change": "CURRENCY_NA_CHANGE",
+                  "Display": "CURRENCY_NA_DISPLAY",
+                  "Editfmt": "CURRENCY_NA_EDIT"
+                }
+              }
+            }
+          },
+          "size": "10",
+          "description": "Deposit Previously Taken",
+          "prompt": "Orig Deposit Amount :",
+          "infoline": "Enter the Deposit Amount",
+          "odbcname": "ORIG_DEPOSIT_TAKEN"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_DEPOSIT_PRV_STAT",
+          "template": {
+            "name": "TBASE_ENUM",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASE_ENUM",
+                "fieldtype": "DECIMAL",
+                "size": "1",
+                "description": "Enumerated d1 Field",
+                "infoline": "Select the Option Required",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT",
+                "selectionlist": " 1 2 0  Entries \"Entry 1\""
+              }
+            }
+          },
+          "description": "Previous status of deposit",
+          "longdescription": [
+            "0=No Deposit Taken                       D_DEPOSIT_NONE",
+            "1=Taken & Outstanding                   D_DEPOSIT_TAKEN",
+            "2=Deposit Printed                          D_DEPOSIT_PRINTED",
+            "3=Deposit Returned                        D_DEPOSIT_RETURNED",
+            "4=Credited Against Invoice              D_DEPOSIT_CREDITED",
+            "5=Partially Credited Against Invoice D_DEPOSIT_PART_CRED",
+            "Deposit Returned"
+          ],
+          "prompt": "Status:",
+          "odbcname": "ORIG_DEPOSIT_STATUS"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_DEPOSIT_PRV_METH",
+          "template": {
+            "name": "TBASENUMERIC",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENUMERIC",
+                "fieldtype": "DECIMAL",
+                "size": "10",
+                "description": "Base numeric template",
+                "prompt": "Value:",
+                "infoline": "Enter a Numeric Value",
+                "font": "NUMBER_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "2",
+          "description": "Previous Deposit Payment Method",
+          "longdescription": [
+            "(Link to (CM4REC)                     cm4_pay_mthd)"
+          ],
+          "prompt": "Deposit Method:",
+          "infoline": "Select the Deposit Payment Method",
+          "odbcname": "ORIG_DEP_PAY",
+          "selectionlist": " 0 0 0  Entries \"No Pay Methods\""
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_POS_BAC",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "allow partial invoices",
+          "prompt": "Allow partial deliveries:"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_TOLERANCE_EXCEEDED",
+          "fieldtype": "DECIMAL",
+          "size": "1",
+          "description": "Tolerance exceeded flag for tracking"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIH_SPARE",
+          "template": {
+            "name": "SPARE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "SPARE",
+                "fieldtype": "ALPHA",
+                "size": "1000",
+                "description": "Spare"
+              }
+            }
+          },
+          "size": "1028"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "PIH_ADV",
+          "description": "Advice No"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "PIH_IVT_ADV",
+          "description": "Invoice Type / Advice No"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "PIH_CUS_ADV",
+          "description": "Customer / Advice No"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "PIH_NICK_ADV",
+          "description": "Nickname / Advice No"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "PIH_OPER_ADV",
+          "description": "Storeman / Advice No"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "PIH_TELE_ADV",
+          "description": "Contact Telephone / Advice No"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "PIH_CUSORD_ADV",
+          "description": "Customer Order / Advice No"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "F_PIH_REP_CODE",
+          "description": "Representative"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "F_PIH_COMMENT",
+          "description": "POS Comment"
+        }
+      }
+    ],
+    "name": "PIHREC",
+    "dbl": "",
+    "isam": "",
+    "description": "POS Advice Header"
+  }
+}

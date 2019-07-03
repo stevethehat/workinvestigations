@@ -51,11 +51,18 @@
     <Reference Include="IronPython.Wpf">
       <HintPath>..\packages\IronPython.2.7.9\lib\net45\IronPython.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Extensions.CommandLineUtils">
+      <HintPath>..\packages\Microsoft.Extensions.CommandLineUtils.1.1.1\lib\net451\Microsoft.Extensions.CommandLineUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="ReadLine">
+      <HintPath>..\packages\ReadLine.2.0.1\lib\netstandard2.0\ReadLine.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repl.cs" />
+    <Compile Include="Isams.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

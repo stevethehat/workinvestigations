@@ -1,15 +1,23 @@
 using System;
 using System.Collections.Generic;
+
+using Microsoft.Extensions.Configuration;
+
 using Terminal.Gui;
 using Repository;
 
 namespace Curses{
     public class App{
+        protected IConfigurationRoot _config;
         public App(){
             //var windowManager = new WindowManager();
             Application.Init ();
             //Application.Driver
             var top = Application.Top;
+
+            var builder = new ConfigurationBuilder()
+                     .AddJsonFile("appsettings.json");
+            _config = builder.Build();
 
             // Creates the top-level window to show
             var win = new Window (new Rect (0, 1, top.Frame.Width, top.Frame.Height-1), "MyApp");
@@ -64,8 +72,8 @@ namespace Curses{
             win.SetFocus(command);
 
             InfoView infoView = new InfoView(scrollView);
-            infoView.Add("hello");
-            infoView.Display("/Users/stevelamb/Development/curses/test.json");
+            infoView.Add($"hello '{_config["repopath"]}'");
+            //infoView.Display("/Users/stevelamb/Development/curses/test.json");
 
             Application.Run ();            
         }

@@ -1,0 +1,178 @@
+{
+  "properties": {
+    "type": "structure",
+    "fields": [
+      {
+        "properties": {
+          "type": "tag",
+          "name": "FIELD"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "ABI_BT_TYPE",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "2",
+          "description": "Record Type - BT Batch trailer"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "ABI_BT_FILE_UNITS",
+          "template": {
+            "name": "TBASENUMERIC",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENUMERIC",
+                "fieldtype": "DECIMAL",
+                "size": "10",
+                "description": "Base numeric template",
+                "prompt": "Value:",
+                "infoline": "Enter a Numeric Value",
+                "font": "NUMBER_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "6",
+          "description": "File Unit Quantity"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "ABI_BT_FILE_WEIGHT",
+          "template": {
+            "name": "TBASENUMERIC",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENUMERIC",
+                "fieldtype": "DECIMAL",
+                "size": "10",
+                "description": "Base numeric template",
+                "prompt": "Value:",
+                "infoline": "Enter a Numeric Value",
+                "font": "NUMBER_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "7",
+          "description": "File Total Weight"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "ABI_BT_FILE_VALUE",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "9",
+          "description": "File Total Value"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "ABI_BT_DESPATCHES",
+          "template": {
+            "name": "TBASENUMERIC",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENUMERIC",
+                "fieldtype": "DECIMAL",
+                "size": "10",
+                "description": "Base numeric template",
+                "prompt": "Value:",
+                "infoline": "Enter a Numeric Value",
+                "font": "NUMBER_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "4",
+          "description": "File No. of Despatches"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "ABI_BT_DESPATCH_LINES",
+          "template": {
+            "name": "TBASENUMERIC",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENUMERIC",
+                "fieldtype": "DECIMAL",
+                "size": "10",
+                "description": "Base numeric template",
+                "prompt": "Value:",
+                "infoline": "Enter a Numeric Value",
+                "font": "NUMBER_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "5",
+          "description": "File No. of Despatched Lines"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "ABI_SPARE",
+          "template": {
+            "name": "SPARE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "SPARE",
+                "fieldtype": "ALPHA",
+                "size": "1000",
+                "description": "Spare"
+              }
+            }
+          },
+          "size": "80"
+        }
+      }
+    ],
+    "name": "ABI_BT_REC",
+    "description": "ABI Export Batch Trailer"
+  }
+}

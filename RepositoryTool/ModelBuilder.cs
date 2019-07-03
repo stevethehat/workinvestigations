@@ -695,7 +695,7 @@ namespace Api.Util
 
             int index = 1;
             Log($"Generating class {structor.ClassName} with {structor.Fields.Count} properties");
-            int size = 0;
+            //int size = 0;
 
             foreach (var propItem in structor.Fields)
             {

@@ -21,7 +21,9 @@ namespace DDF
             //ConvertDDF("pmfrec");
             //ConvertDDF("pcdrec");
             //ConvertDDF("pcgrec");
-            //ConvertDDF("ctfrec");
+            //
+            
+            ConvertDDF("ctfrec");
             //ConvertDDF("cmfrec");
 
             Console.Write($"{args.Length} arguments.");
@@ -29,12 +31,14 @@ namespace DDF
         }
 
         protected static void ConvertDDF(string ddfType){
-            DDFFile ddfFile = new DDFFile("file", ddfType);
+            DDFFile ddfFile = new DDFFile("structure", ddfType);
             //DDFFile ddfFile = new DDFFile("template", "tbaseaddressline");
             var structure = ddfFile.Parse();
             
 
-            string outputFile = Path.Combine("output", $"{ddfType}.json");
+            //string outputFile = Path.Combine("output", $"{ddfType}.json");
+            ddfFile.Save(ddfType);
+            /*
             string json = JsonConvert.SerializeObject(structure, Formatting.Indented);
             
             Console.WriteLine(json);
@@ -43,6 +47,7 @@ namespace DDF
                 System.IO.File.Delete(outputFile);
             }
             System.IO.File.WriteAllText(outputFile, json);
+            */
         }
     }
 }

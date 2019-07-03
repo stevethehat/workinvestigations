@@ -1,0 +1,3622 @@
+{
+  "properties": {
+    "type": "structure",
+    "fields": [
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_ITYP",
+          "template": {
+            "name": "INVOICE_TYPE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "INVOICE_TYPE",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "2",
+                "description": "Invoice type",
+                "prompt": "Invoice Type:",
+                "infoline": "Enter the Invoice Type",
+                "odbcname": "INVOICE_TYPE",
+                "font": "CHAR_FONT",
+                "methods": {
+                  "Drill": "ivt_drill",
+                  "Change": "ivt_change",
+                  "Display": "ivt_display"
+                }
+              }
+            }
+          },
+          "description": "Invoice Type",
+          "odbcname": "INV_TYPE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VIJOB",
+          "template": {
+            "name": "ACCOUNT_REFERENCE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "ACCOUNT_REFERENCE",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "6",
+                "description": "Accounts reference",
+                "prompt": "Ref No.:",
+                "infoline": "Enter the Document Reference - <Enter> for Auto",
+                "odbcname": "DOCUMENT_REF",
+                "methods": {
+                  "Change": "auto_ref_change"
+                }
+              }
+            }
+          },
+          "description": "Advice Note Number",
+          "odbcname": "ADVICE_NO"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VITYPE",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "8",
+          "description": "Invoice type/advice note no (Primary Ind"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VINICK",
+          "template": {
+            "name": "NICKNAME",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "NICKNAME",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "10",
+                "description": "Nickname",
+                "prompt": "Nickname:",
+                "infoline": "Enter the Nickname",
+                "odbcname": "NICKNAME"
+              }
+            }
+          },
+          "description": "Customer Nickname",
+          "odbcname": "CUST_NICK"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VICUST",
+          "template": {
+            "name": "CUSTOMER_ACCOUNT",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "CUSTOMER_ACCOUNT",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "6",
+                "description": "Customer Account",
+                "prompt": "Customer:",
+                "infoline": "Enter the Customer Account Number or Search Option",
+                "odbcname": "CUST_ACCOUNT_NO",
+                "methods": {
+                  "Arrive": "cmf_arrive",
+                  "Leave": "cmf_leave",
+                  "Drill": "cmf_popdrill",
+                  "Change": "cmf_change",
+                  "Display": "cmf_display"
+                }
+              }
+            }
+          },
+          "description": "Customer Account",
+          "odbcname": "CUST_ACC"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VIFCUS",
+          "template": {
+            "name": "CUSTOMER_ACCOUNT",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "CUSTOMER_ACCOUNT",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "6",
+                "description": "Customer Account",
+                "prompt": "Customer:",
+                "infoline": "Enter the Customer Account Number or Search Option",
+                "odbcname": "CUST_ACCOUNT_NO",
+                "methods": {
+                  "Arrive": "cmf_arrive",
+                  "Leave": "cmf_leave",
+                  "Drill": "cmf_popdrill",
+                  "Change": "cmf_change",
+                  "Display": "cmf_display"
+                }
+              }
+            }
+          },
+          "description": "Finance Company",
+          "odbcname": "FIN_CO_ACC"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VIFPRO",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "20",
+          "description": "Finance Profile",
+          "odbcname": "FIN_PROF"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VIORD",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "10",
+          "description": "Customer Order Number",
+          "odbcname": "CUST_ORDER_NO"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VIREP",
+          "template": {
+            "name": "REP_CODE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "REP_CODE",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "4",
+                "description": "Representative Code",
+                "prompt": "Rep Code:",
+                "infoline": "Enter the Representative Code",
+                "odbcname": "REP_CODE",
+                "methods": {
+                  "Drill": "SRP_DRILL",
+                  "Hyperlink": "srp_hyper",
+                  "Change": "srp_change",
+                  "Display": "srp_display"
+                }
+              }
+            }
+          },
+          "size": "4",
+          "description": "Rep"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_DEPOT",
+          "template": {
+            "name": "DEPOT_CODE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "DEPOT_CODE",
+                "parent": {
+                  "name": "TBASE_CHAR",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_CHAR",
+                      "parent": {
+                        "name": "TBASEALPHA",
+                        "structure": {
+                          "properties": {
+                            "type": "template",
+                            "name": "TBASEALPHA",
+                            "fieldtype": "ALPHA",
+                            "size": "1",
+                            "description": "Base alphanumeric template",
+                            "prompt": "Value:",
+                            "infoline": "Enter an Alphanumeric Value",
+                            "font": "ALPHA_FONT",
+                            "promptfont": "PROMPT_FONT"
+                          }
+                        }
+                      },
+                      "font": "CHAR_FONT"
+                    }
+                  }
+                },
+                "description": "Depot code",
+                "prompt": "Depot Code:",
+                "infoline": "Enter the Depot Code",
+                "methods": {
+                  "Drill": "dep_drill",
+                  "Change": "dep_change",
+                  "Display": "dep_display"
+                }
+              }
+            }
+          },
+          "description": "Depot Code"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VIIVCR",
+          "template": {
+            "name": "TBASE_ENUM",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASE_ENUM",
+                "fieldtype": "DECIMAL",
+                "size": "1",
+                "description": "Enumerated d1 Field",
+                "infoline": "Select the Option Required",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT",
+                "selectionlist": " 1 2 0  Entries \"Entry 1\""
+              }
+            }
+          },
+          "description": "TX Type 0=inv,1=Crd,2=Part Crd,3=Part In",
+          "odbcname": "TRANS_TYPE",
+          "selectionlist": " 1 2 0  Entries \"Invoice\", \"Credit\", \"Part Credit\",",
+          "longdescription": [
+            "Part Invoice"
+          ]
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_DEL_ADD_01",
+          "template": {
+            "name": "TBASEADDRESS",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEADDRESS",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "32",
+                "dimension": "4",
+                "description": "Address array",
+                "prompt": "Address:",
+                "infoline": "Enter the Address",
+                "odbcname": "ADDRESS"
+              }
+            }
+          },
+          "size": "32",
+          "dimension": "1",
+          "description": "Delivery Address 1",
+          "odbcname": "DEL_ADDRESS_01"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_DEL_ADD_02",
+          "template": {
+            "name": "TBASEADDRESS",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEADDRESS",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "32",
+                "dimension": "4",
+                "description": "Address array",
+                "prompt": "Address:",
+                "infoline": "Enter the Address",
+                "odbcname": "ADDRESS"
+              }
+            }
+          },
+          "size": "32",
+          "dimension": "1",
+          "description": "Delivery Address 2",
+          "odbcname": "DEL_ADDRESS_02"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_DEL_ADD_03",
+          "template": {
+            "name": "TBASEADDRESS",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEADDRESS",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "32",
+                "dimension": "4",
+                "description": "Address array",
+                "prompt": "Address:",
+                "infoline": "Enter the Address",
+                "odbcname": "ADDRESS"
+              }
+            }
+          },
+          "size": "32",
+          "dimension": "1",
+          "description": "Delivery Address 3",
+          "odbcname": "DEL_ADDRESS_03"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_DEL_ADD_04",
+          "template": {
+            "name": "TBASEADDRESS",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEADDRESS",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "32",
+                "dimension": "4",
+                "description": "Address array",
+                "prompt": "Address:",
+                "infoline": "Enter the Address",
+                "odbcname": "ADDRESS"
+              }
+            }
+          },
+          "size": "32",
+          "dimension": "1",
+          "description": "Delivery Address 4",
+          "odbcname": "DEL_ADDRESS_04"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_DEL_ADD_05",
+          "template": {
+            "name": "TBASEADDRESS",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEADDRESS",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "32",
+                "dimension": "4",
+                "description": "Address array",
+                "prompt": "Address:",
+                "infoline": "Enter the Address",
+                "odbcname": "ADDRESS"
+              }
+            }
+          },
+          "size": "32",
+          "dimension": "1",
+          "description": "Delivery Address 5",
+          "odbcname": "DEL_ADDRESS_05"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VIDELA",
+          "template": {
+            "name": "TBASEADDRESS",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEADDRESS",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "32",
+                "dimension": "4",
+                "description": "Address array",
+                "prompt": "Address:",
+                "infoline": "Enter the Address",
+                "odbcname": "ADDRESS"
+              }
+            }
+          },
+          "size": "32",
+          "dimension": "5",
+          "description": "Delivery Address",
+          "odbcname": "DEL_ADDR_"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VIADDR",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "160",
+          "description": "Delivery Address"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VIDATE",
+          "template": {
+            "name": "DATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "DATE",
+                "fieldtype": "DATE",
+                "size": "8",
+                "description": "Master d8 date template",
+                "prompt": "Date:",
+                "infoline": "Enter the Date",
+                "methods": {
+                  "Drill": "calendar_drill",
+                  "Display": "date_display"
+                }
+              }
+            }
+          },
+          "description": "Date Advice Created",
+          "odbcname": "ADVICE_DATE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VIIDAT",
+          "template": {
+            "name": "DATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "DATE",
+                "fieldtype": "DATE",
+                "size": "8",
+                "description": "Master d8 date template",
+                "prompt": "Date:",
+                "infoline": "Enter the Date",
+                "methods": {
+                  "Drill": "calendar_drill",
+                  "Display": "date_display"
+                }
+              }
+            }
+          },
+          "description": "Invoice Date Required",
+          "odbcname": "INV_REQD_DATE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VISETT",
+          "template": {
+            "name": "TBASENUMERIC",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENUMERIC",
+                "fieldtype": "DECIMAL",
+                "size": "10",
+                "description": "Base numeric template",
+                "prompt": "Value:",
+                "infoline": "Enter a Numeric Value",
+                "font": "NUMBER_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "3",
+          "description": "Terms in Days",
+          "odbcname": "TERMS_IN_DAYS"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VIINVO",
+          "template": {
+            "name": "ACCOUNT_REFERENCE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "ACCOUNT_REFERENCE",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "6",
+                "description": "Accounts reference",
+                "prompt": "Ref No.:",
+                "infoline": "Enter the Document Reference - <Enter> for Auto",
+                "odbcname": "DOCUMENT_REF",
+                "methods": {
+                  "Change": "auto_ref_change"
+                }
+              }
+            }
+          },
+          "description": "Final Invoice No",
+          "odbcname": "FINAL_INV_NO"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VISTAT",
+          "template": {
+            "name": "TBASE_ENUM",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASE_ENUM",
+                "fieldtype": "DECIMAL",
+                "size": "1",
+                "description": "Enumerated d1 Field",
+                "infoline": "Select the Option Required",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT",
+                "selectionlist": " 1 2 0  Entries \"Entry 1\""
+              }
+            }
+          },
+          "description": "Status",
+          "odbcname": "STATUS",
+          "selectionlist": " 1 2 0  Entries \"Open\", \"Closed\", \"Invoiced\", \"Printed\""
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VISTOK",
+          "template": {
+            "name": "WHOLEGOOD_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "WHOLEGOOD_NO",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "8",
+                "description": "Wholegood Stock No.",
+                "prompt": "{WHOLEGD} No:",
+                "infoline": "Enter the {WHOLEGD} No. or <Enter> for Search",
+                "odbcname": "WHOLEGOOD_NO",
+                "methods": {
+                  "Drill": "vm_drill",
+                  "Change": "vm_change"
+                }
+              }
+            }
+          },
+          "description": "Main Stock Number Being sold",
+          "odbcname": "MAIN_STOCK_NO"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VIDDAT",
+          "template": {
+            "name": "DATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "DATE",
+                "fieldtype": "DATE",
+                "size": "8",
+                "description": "Master d8 date template",
+                "prompt": "Date:",
+                "infoline": "Enter the Date",
+                "methods": {
+                  "Drill": "calendar_drill",
+                  "Display": "date_display"
+                }
+              }
+            }
+          },
+          "description": "Due Date",
+          "odbcname": "DUE_DATE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VITIGR",
+          "template": {
+            "name": "WHOLEGOOD_GROUP",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "WHOLEGOOD_GROUP",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "4",
+                "description": "Wholegood Group Code",
+                "prompt": "Group:",
+                "infoline": "Enter the {WHOLEGD} Group",
+                "methods": {
+                  "Drill": "vg_drill",
+                  "Change": "vg_change",
+                  "Display": "vg_display"
+                }
+              }
+            }
+          },
+          "description": "SELF BILL ONLY - trade in group code",
+          "odbcname": "SB_TRADEIN_GRP"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_HIRE",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "0=no 1= yes",
+          "odbcname": "HIRE_FLAG"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_SEQ",
+          "template": {
+            "name": "TBASENUMERIC",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENUMERIC",
+                "fieldtype": "DECIMAL",
+                "size": "10",
+                "description": "Base numeric template",
+                "prompt": "Value:",
+                "infoline": "Enter a Numeric Value",
+                "font": "NUMBER_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "4",
+          "description": "Last autosequence number for parts entry",
+          "odbcname": "LAST_PARTS_SEQ_NO"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_CR_CHRG",
+          "template": {
+            "name": "TBASEPERCENTAGE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEPERCENTAGE",
+                "parent": {
+                  "name": "TBASENUMERIC",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASENUMERIC",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base numeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter a Numeric Value",
+                      "font": "NUMBER_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "4",
+                "description": "Percentage base template",
+                "prompt": "Percentage%:",
+                "infoline": "Enter a Percentage Amount",
+                "methods": {
+                  "Change": "percent_change",
+                  "Display": "percent_display",
+                  "Editfmt": "percent_edit"
+                }
+              }
+            }
+          },
+          "description": "Credit charge percentage if applicable",
+          "odbcname": "CRED_CHG_PERC"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_F_TOTINV",
+          "template": {
+            "name": "CURRENCY",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "CURRENCY",
+                "parent": {
+                  "name": "CURRENCY_ARRAY",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "CURRENCY_ARRAY",
+                      "parent": {
+                        "name": "TBASECURRENCY",
+                        "structure": {
+                          "properties": {
+                            "type": "template",
+                            "name": "TBASECURRENCY",
+                            "fieldtype": "DECIMAL",
+                            "size": "10",
+                            "description": "Base currency template",
+                            "prompt": "Amount:",
+                            "infoline": "Enter a Currency Amount",
+                            "font": "CURRENCY_PROMPT",
+                            "promptfont": "PROMPT_FONT",
+                            "methods": {
+                              "Display": "CURRENCY_DISPLAY"
+                            }
+                          }
+                        }
+                      },
+                      "dimension": "2",
+                      "methods": {
+                        "Change": "currency_change",
+                        "Editfmt": "currency_edit"
+                      }
+                    }
+                  }
+                },
+                "dimension": "1"
+              }
+            }
+          },
+          "description": "Total credit / invoice value (FC)",
+          "odbcname": "TOTAL_VALUE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_F_TOTVAT",
+          "template": {
+            "name": "CURRENCY",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "CURRENCY",
+                "parent": {
+                  "name": "CURRENCY_ARRAY",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "CURRENCY_ARRAY",
+                      "parent": {
+                        "name": "TBASECURRENCY",
+                        "structure": {
+                          "properties": {
+                            "type": "template",
+                            "name": "TBASECURRENCY",
+                            "fieldtype": "DECIMAL",
+                            "size": "10",
+                            "description": "Base currency template",
+                            "prompt": "Amount:",
+                            "infoline": "Enter a Currency Amount",
+                            "font": "CURRENCY_PROMPT",
+                            "promptfont": "PROMPT_FONT",
+                            "methods": {
+                              "Display": "CURRENCY_DISPLAY"
+                            }
+                          }
+                        }
+                      },
+                      "dimension": "2",
+                      "methods": {
+                        "Change": "currency_change",
+                        "Editfmt": "currency_edit"
+                      }
+                    }
+                  }
+                },
+                "dimension": "1"
+              }
+            }
+          },
+          "description": "Total vat for invoice/credit (FC)",
+          "odbcname": "TOTAL_VAT"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_VAT_CODE",
+          "template": {
+            "name": "VAT_CODE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "VAT_CODE",
+                "parent": {
+                  "name": "TBASENUMERIC",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASENUMERIC",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base numeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter a Numeric Value",
+                      "font": "NUMBER_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "2",
+                "description": "VAT Code",
+                "prompt": "VAT Code:",
+                "infoline": "Enter the V.A.T. Code",
+                "methods": {
+                  "Drill": "vat_drill",
+                  "Change": "vat_change",
+                  "Display": "vat_display"
+                }
+              }
+            }
+          },
+          "dimension": "10"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_VRAT",
+          "template": {
+            "name": "VAT_RATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "VAT_RATE",
+                "parent": {
+                  "name": "TBASEPERCENTAGE",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEPERCENTAGE",
+                      "parent": {
+                        "name": "TBASENUMERIC",
+                        "structure": {
+                          "properties": {
+                            "type": "template",
+                            "name": "TBASENUMERIC",
+                            "fieldtype": "DECIMAL",
+                            "size": "10",
+                            "description": "Base numeric template",
+                            "prompt": "Value:",
+                            "infoline": "Enter a Numeric Value",
+                            "font": "NUMBER_FONT",
+                            "promptfont": "PROMPT_FONT"
+                          }
+                        }
+                      },
+                      "size": "4",
+                      "description": "Percentage base template",
+                      "prompt": "Percentage%:",
+                      "infoline": "Enter a Percentage Amount",
+                      "methods": {
+                        "Change": "percent_change",
+                        "Display": "percent_display",
+                        "Editfmt": "percent_edit"
+                      }
+                    }
+                  }
+                },
+                "description": "VAT % Rate"
+              }
+            }
+          },
+          "dimension": "10",
+          "description": "Vat table at the time of invoice update"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_CR_SETT_YN",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "1",
+          "description": "Credit within settlement period (Y)es,(N",
+          "odbcname": "CRED_WITHIN_SETT"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VINARR",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "20",
+          "description": "Narrative used on the invoice and posted",
+          "odbcname": "INV_NARR"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_FP_EDATE",
+          "template": {
+            "name": "DATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "DATE",
+                "fieldtype": "DATE",
+                "size": "8",
+                "description": "Master d8 date template",
+                "prompt": "Date:",
+                "infoline": "Enter the Date",
+                "methods": {
+                  "Drill": "calendar_drill",
+                  "Display": "date_display"
+                }
+              }
+            }
+          },
+          "description": "Finance Profile End Date",
+          "odbcname": "FIN_PROF_END_DATE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_QUAL",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "used car qualifying - 0=no,1=yes",
+          "odbcname": "QUAL_FLAG"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_NOT_SB",
+          "template": {
+            "name": "TBASE_ENUM",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASE_ENUM",
+                "fieldtype": "DECIMAL",
+                "size": "1",
+                "description": "Enumerated d1 Field",
+                "infoline": "Select the Option Required",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT",
+                "selectionlist": " 1 2 0  Entries \"Entry 1\""
+              }
+            }
+          },
+          "description": "Trade ins - 0=Self Bill,1=Purchase inv",
+          "odbcname": "TRADE_IN_TYPE",
+          "selectionlist": " 1 2 0  Entries \"Print Self Biller\", \"Purchase Invoice\",",
+          "longdescription": [
+            "Purchase Self Bill"
+          ]
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_SELL_CUR",
+          "template": {
+            "name": "CURRENCY_CODE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "CURRENCY_CODE",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "3",
+                "description": "Currency code",
+                "prompt": "Currency Code:",
+                "infoline": "Enter the Currency Code or <Enter> for Lookup",
+                "methods": {
+                  "Drill": "fcf_drill",
+                  "Change": "fcf_change",
+                  "Display": "fcf_display"
+                }
+              }
+            }
+          },
+          "description": "Selling Currency",
+          "odbcname": "SELL_CURR"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_CUR_CNV",
+          "template": {
+            "name": "CONVERSION_RATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "CONVERSION_RATE",
+                "parent": {
+                  "name": "TBASENUMERIC",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASENUMERIC",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base numeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter a Numeric Value",
+                      "font": "NUMBER_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "11",
+                "precision": "6",
+                "description": "Conversion Rate",
+                "prompt": "Conversion Rate:",
+                "infoline": "Enter the Conversion Rate",
+                "odbcname": "CONVERSION_RATE"
+              }
+            }
+          },
+          "description": "Currency Conversion Rate at time of inv",
+          "odbcname": "SELL_CONV_RATE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_CRST",
+          "template": {
+            "name": "SETT_CRED_FLAG",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "SETT_CRED_FLAG",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Settlement/Credit Charge Flag",
+                "prompt": "Credit or Settlement:",
+                "infoline": "Select Option For Credit Charge/Settlement Discount",
+                "odbcname": "SETT_CRED_CHG",
+                "selectionlist": " 1 2 0  Entries \"Not Used\", \"Credit Charge\","
+              }
+            }
+          }
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_PRO_FORM_PRN",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Pro Forma Invoice Entered",
+          "odbcname": "PROFORMA_PRINT"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_PRO_FORM_DATE",
+          "template": {
+            "name": "DATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "DATE",
+                "fieldtype": "DATE",
+                "size": "8",
+                "description": "Master d8 date template",
+                "prompt": "Date:",
+                "infoline": "Enter the Date",
+                "methods": {
+                  "Drill": "calendar_drill",
+                  "Display": "date_display"
+                }
+              }
+            }
+          },
+          "description": "Date Pro Forma Invoice Printed",
+          "odbcname": "PROFORMA_DATE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_PRO_FORM_BY",
+          "template": {
+            "name": "OPERATOR_INITIALS",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "OPERATOR_INITIALS",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "3",
+                "description": "Operator initials",
+                "prompt": "Operator:",
+                "infoline": "Enter the Operator Initials",
+                "methods": {
+                  "Drill": "acc_drill",
+                  "Change": "acc_change",
+                  "Display": "acc_display"
+                }
+              }
+            }
+          },
+          "description": "Operator Initials Who printed",
+          "odbcname": "PROFORMA_PRINTED_BY"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_QUOTE",
+          "template": {
+            "name": "ACCOUNT_REFERENCE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "ACCOUNT_REFERENCE",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "6",
+                "description": "Accounts reference",
+                "prompt": "Ref No.:",
+                "infoline": "Enter the Document Reference - <Enter> for Auto",
+                "odbcname": "DOCUMENT_REF",
+                "methods": {
+                  "Change": "auto_ref_change"
+                }
+              }
+            }
+          },
+          "description": "Quote No",
+          "odbcname": "QUOTE_NO"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_IGNORE_IVACC",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Where invoice a/c, use entered a/c",
+          "prompt": "Ignore Invoice A/c?:"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_DEPOSIT_STATUS",
+          "template": {
+            "name": "TBASE_ENUM",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASE_ENUM",
+                "fieldtype": "DECIMAL",
+                "size": "1",
+                "description": "Enumerated d1 Field",
+                "infoline": "Select the Option Required",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT",
+                "selectionlist": " 1 2 0  Entries \"Entry 1\""
+              }
+            }
+          },
+          "description": "Status 0=None, 1=Printe, 2=Wg Inv raised",
+          "prompt": "Deposit Status:",
+          "odbcname": "DEPOSIT_STAT",
+          "selectionlist": " 1 2 0  Entries \"Not Applicable\", \"Printed\", \"WG Inv Raised\""
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_DEPOSIT_AMT",
+          "template": {
+            "name": "CURRENCY",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "CURRENCY",
+                "parent": {
+                  "name": "CURRENCY_ARRAY",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "CURRENCY_ARRAY",
+                      "parent": {
+                        "name": "TBASECURRENCY",
+                        "structure": {
+                          "properties": {
+                            "type": "template",
+                            "name": "TBASECURRENCY",
+                            "fieldtype": "DECIMAL",
+                            "size": "10",
+                            "description": "Base currency template",
+                            "prompt": "Amount:",
+                            "infoline": "Enter a Currency Amount",
+                            "font": "CURRENCY_PROMPT",
+                            "promptfont": "PROMPT_FONT",
+                            "methods": {
+                              "Display": "CURRENCY_DISPLAY"
+                            }
+                          }
+                        }
+                      },
+                      "dimension": "2",
+                      "methods": {
+                        "Change": "currency_change",
+                        "Editfmt": "currency_edit"
+                      }
+                    }
+                  }
+                },
+                "dimension": "1"
+              }
+            }
+          },
+          "description": "Deposit Amount",
+          "prompt": "Deposit Amount:",
+          "infoline": "Enter the deposit amount",
+          "odbcname": "DEPOSIT_VALUE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_DEPOSIT_VAT",
+          "template": {
+            "name": "CURRENCY",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "CURRENCY",
+                "parent": {
+                  "name": "CURRENCY_ARRAY",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "CURRENCY_ARRAY",
+                      "parent": {
+                        "name": "TBASECURRENCY",
+                        "structure": {
+                          "properties": {
+                            "type": "template",
+                            "name": "TBASECURRENCY",
+                            "fieldtype": "DECIMAL",
+                            "size": "10",
+                            "description": "Base currency template",
+                            "prompt": "Amount:",
+                            "infoline": "Enter a Currency Amount",
+                            "font": "CURRENCY_PROMPT",
+                            "promptfont": "PROMPT_FONT",
+                            "methods": {
+                              "Display": "CURRENCY_DISPLAY"
+                            }
+                          }
+                        }
+                      },
+                      "dimension": "2",
+                      "methods": {
+                        "Change": "currency_change",
+                        "Editfmt": "currency_edit"
+                      }
+                    }
+                  }
+                },
+                "dimension": "1"
+              }
+            }
+          },
+          "description": "Deposit Vat Amount",
+          "prompt": "Deposit Vat Amount:",
+          "infoline": "Enter the deposit amount",
+          "odbcname": "DEPOSIT_VAT"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_DEPOSIT_TOTAL",
+          "template": {
+            "name": "CURRENCY",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "CURRENCY",
+                "parent": {
+                  "name": "CURRENCY_ARRAY",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "CURRENCY_ARRAY",
+                      "parent": {
+                        "name": "TBASECURRENCY",
+                        "structure": {
+                          "properties": {
+                            "type": "template",
+                            "name": "TBASECURRENCY",
+                            "fieldtype": "DECIMAL",
+                            "size": "10",
+                            "description": "Base currency template",
+                            "prompt": "Amount:",
+                            "infoline": "Enter a Currency Amount",
+                            "font": "CURRENCY_PROMPT",
+                            "promptfont": "PROMPT_FONT",
+                            "methods": {
+                              "Display": "CURRENCY_DISPLAY"
+                            }
+                          }
+                        }
+                      },
+                      "dimension": "2",
+                      "methods": {
+                        "Change": "currency_change",
+                        "Editfmt": "currency_edit"
+                      }
+                    }
+                  }
+                },
+                "dimension": "1"
+              }
+            }
+          },
+          "description": "Deposit Total i. deposit + vat",
+          "prompt": "Deposit Total:",
+          "infoline": "Enter the deposit Total",
+          "odbcname": "DEPOSIT_TOTAL"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_DEP_DESC_01",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "32",
+          "dimension": "1",
+          "description": "Deposit Description",
+          "prompt": "Deposit Description",
+          "infoline": "Enter deposit text",
+          "odbcname": "DEP_DESC_01"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_DEP_DESC_02",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "32",
+          "dimension": "1",
+          "description": "Deposit Description",
+          "prompt": "Deposit Description",
+          "infoline": "Enter deposit text",
+          "odbcname": "DEP_DESC_02"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_DEP_DESC_03",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "32",
+          "dimension": "1",
+          "description": "Deposit Description",
+          "prompt": "Deposit Description",
+          "infoline": "Enter deposit text",
+          "odbcname": "DEP_DESC_03"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_DEP_DESC_04",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "32",
+          "dimension": "1",
+          "description": "Deposit Description",
+          "prompt": "Deposit Description",
+          "infoline": "Enter deposit text",
+          "odbcname": "DEP_DESC_04"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_DEP_DESC_05",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "32",
+          "dimension": "1",
+          "description": "Deposit Description",
+          "prompt": "Deposit Description",
+          "infoline": "Enter deposit text",
+          "odbcname": "DEP_DESC_05"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_DEP_DESC_06",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "32",
+          "dimension": "1",
+          "description": "Deposit Description",
+          "prompt": "Deposit Description",
+          "infoline": "Enter deposit text",
+          "odbcname": "DEP_DESC_06"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_DEP_DESC_07",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "32",
+          "dimension": "1",
+          "description": "Deposit Description",
+          "prompt": "Deposit Description",
+          "infoline": "Enter deposit text",
+          "odbcname": "DEP_DESC_07"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_DEP_DESC_08",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "32",
+          "dimension": "1",
+          "description": "Deposit Description",
+          "prompt": "Deposit Description",
+          "infoline": "Enter deposit text",
+          "odbcname": "DEP_DESC_08"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_DEP_DESC_09",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "32",
+          "dimension": "1",
+          "description": "Deposit Description",
+          "prompt": "Deposit Description",
+          "infoline": "Enter deposit text",
+          "odbcname": "DEP_DESC_09"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_DEP_DESC_10",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "32",
+          "dimension": "1",
+          "description": "Deposit Description",
+          "prompt": "Deposit Description",
+          "infoline": "Enter deposit text",
+          "odbcname": "DEP_DESC_10"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_DEPOSIT_DESC",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "32",
+          "dimension": "10",
+          "description": "Deposit Description",
+          "prompt": "Deposit Description:-",
+          "infoline": "Enter deposit text"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_PX_FIN_SETT",
+          "template": {
+            "name": "CURRENCY",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "CURRENCY",
+                "parent": {
+                  "name": "CURRENCY_ARRAY",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "CURRENCY_ARRAY",
+                      "parent": {
+                        "name": "TBASECURRENCY",
+                        "structure": {
+                          "properties": {
+                            "type": "template",
+                            "name": "TBASECURRENCY",
+                            "fieldtype": "DECIMAL",
+                            "size": "10",
+                            "description": "Base currency template",
+                            "prompt": "Amount:",
+                            "infoline": "Enter a Currency Amount",
+                            "font": "CURRENCY_PROMPT",
+                            "promptfont": "PROMPT_FONT",
+                            "methods": {
+                              "Display": "CURRENCY_DISPLAY"
+                            }
+                          }
+                        }
+                      },
+                      "dimension": "2",
+                      "methods": {
+                        "Change": "currency_change",
+                        "Editfmt": "currency_edit"
+                      }
+                    }
+                  }
+                },
+                "dimension": "1"
+              }
+            }
+          },
+          "description": "P/X Finance Settlement o/s",
+          "prompt": "P/X Finance Settlement O/S:",
+          "infoline": "Enter the finance settlement outstanding amount",
+          "odbcname": "FIN_SETT"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_PX_FIN_SUPP",
+          "template": {
+            "name": "SUPPLIER_ACCOUNT",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "SUPPLIER_ACCOUNT",
+                "parent": {
+                  "name": "TBASENUMERIC",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASENUMERIC",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base numeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter a Numeric Value",
+                      "font": "NUMBER_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "4",
+                "description": "Supplier Account",
+                "prompt": "Supplier A/c.:",
+                "infoline": "Enter the Supplier Account Number",
+                "odbcname": "SUPP_ACCOUNT_NO"
+              }
+            }
+          },
+          "prompt": "P/X Finance Supplier a/c",
+          "infoline": "Enter the Finance Supplier Account Number",
+          "odbcname": "PX_FIN_SUPP_ACC"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_PX_FIN_DES_01",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "32",
+          "dimension": "1",
+          "description": "PX Finance Settlement Description",
+          "prompt": "Deposit Description",
+          "infoline": "Enter deposit text",
+          "odbcname": "FIN_DESC_01"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_PX_FIN_DES_02",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "32",
+          "dimension": "1",
+          "description": "PX Finance Settlement Description",
+          "prompt": "Deposit Description",
+          "infoline": "Enter deposit text",
+          "odbcname": "FIN_DESC_02"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_PX_FIN_DES_03",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "32",
+          "dimension": "1",
+          "description": "PX Finance Settlement Description",
+          "prompt": "Deposit Description",
+          "infoline": "Enter deposit text",
+          "odbcname": "FIN_DESC_03"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_PX_FIN_DES_04",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "32",
+          "dimension": "1",
+          "description": "PX Finance Settlement Description",
+          "prompt": "Deposit Description",
+          "infoline": "Enter deposit text",
+          "odbcname": "FIN_DESC_04"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_PX_FIN_DES_05",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "32",
+          "dimension": "1",
+          "description": "PX Finance Settlement Description",
+          "prompt": "Deposit Description",
+          "infoline": "Enter deposit text",
+          "odbcname": "FIN_DESC_05"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_PX_FIN_DES_06",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "32",
+          "dimension": "1",
+          "description": "PX Finance Settlement Description",
+          "prompt": "Deposit Description",
+          "infoline": "Enter deposit text",
+          "odbcname": "FIN_DESC_06"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_PX_FIN_DES_07",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "32",
+          "dimension": "1",
+          "description": "PX Finance Settlement Description",
+          "prompt": "Deposit Description",
+          "infoline": "Enter deposit text",
+          "odbcname": "FIN_DESC_07"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_PX_FIN_DES_08",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "32",
+          "dimension": "1",
+          "description": "PX Finance Settlement Description",
+          "prompt": "Deposit Description",
+          "infoline": "Enter deposit text",
+          "odbcname": "FIN_DESC_08"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_PX_FIN_DES_09",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "32",
+          "dimension": "1",
+          "description": "PX Finance Settlement Description",
+          "prompt": "Deposit Description",
+          "infoline": "Enter deposit text",
+          "odbcname": "FIN_DESC_09"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_PX_FIN_DES_10",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "32",
+          "dimension": "1",
+          "description": "PX Finance Settlement Description",
+          "prompt": "Deposit Description",
+          "infoline": "Enter deposit text",
+          "odbcname": "FIN_DESC_10"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_PX_FIN_DESC",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "32",
+          "dimension": "10",
+          "description": "PX Finance Settlement Description",
+          "prompt": "Deposit Description",
+          "infoline": "Enter deposit text"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_DEP_INV_DATE",
+          "template": {
+            "name": "DATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "DATE",
+                "fieldtype": "DATE",
+                "size": "8",
+                "description": "Master d8 date template",
+                "prompt": "Date:",
+                "infoline": "Enter the Date",
+                "methods": {
+                  "Drill": "calendar_drill",
+                  "Display": "date_display"
+                }
+              }
+            }
+          },
+          "description": "Invoice Date for Finance Deposit",
+          "prompt": "Deposit Invoice Date:",
+          "odbcname": "DEP_INV_DATE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_DEP_INV_NO",
+          "template": {
+            "name": "ACCOUNT_REFERENCE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "ACCOUNT_REFERENCE",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "6",
+                "description": "Accounts reference",
+                "prompt": "Ref No.:",
+                "infoline": "Enter the Document Reference - <Enter> for Auto",
+                "odbcname": "DOCUMENT_REF",
+                "methods": {
+                  "Change": "auto_ref_change"
+                }
+              }
+            }
+          },
+          "description": "Deposit Invoice No:",
+          "prompt": "Deposit Invoice No.:",
+          "odbcname": "DEPOSIT_INV_NO"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_REQ_DATE",
+          "template": {
+            "name": "DATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "DATE",
+                "fieldtype": "DATE",
+                "size": "8",
+                "description": "Master d8 date template",
+                "prompt": "Date:",
+                "infoline": "Enter the Date",
+                "methods": {
+                  "Drill": "calendar_drill",
+                  "Display": "date_display"
+                }
+              }
+            }
+          },
+          "description": "Custonmer required date",
+          "prompt": "Customer Required Date:",
+          "odbcname": "CUST_REQD_DATE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_COMM_BUY_SPLIT",
+          "template": {
+            "name": "TBASE_ENUM",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASE_ENUM",
+                "fieldtype": "DECIMAL",
+                "size": "1",
+                "description": "Enumerated d1 Field",
+                "infoline": "Select the Option Required",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT",
+                "selectionlist": " 1 2 0  Entries \"Entry 1\""
+              }
+            }
+          },
+          "description": "Wg Comm buyer split 0=none,1=25,2=50 ETC",
+          "prompt": "Commission Buyer Split %age:",
+          "infoline": "Select the Option Required                                  mpany Control File",
+          "odbcname": "COMM_BUY_SPLIT",
+          "selectionlist": " 1 2 0  Entries \"No Buyer %age Split\",",
+          "longdescription": [
+            "25-75 Buyer/Seller Split",
+            "75-25 Buyer/Seller Split",
+            "Alternative %age from CF"
+          ]
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_PRV_TI_STK01",
+          "template": {
+            "name": "WHOLEGOOD_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "WHOLEGOOD_NO",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "8",
+                "description": "Wholegood Stock No.",
+                "prompt": "{WHOLEGD} No:",
+                "infoline": "Enter the {WHOLEGD} No. or <Enter> for Search",
+                "odbcname": "WHOLEGOOD_NO",
+                "methods": {
+                  "Drill": "vm_drill",
+                  "Change": "vm_change"
+                }
+              }
+            }
+          },
+          "dimension": "1",
+          "description": "Previous Trade in Deposit items",
+          "odbcname": "PREV_TRD_IN_1"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_PRV_TI_STK02",
+          "template": {
+            "name": "WHOLEGOOD_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "WHOLEGOOD_NO",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "8",
+                "description": "Wholegood Stock No.",
+                "prompt": "{WHOLEGD} No:",
+                "infoline": "Enter the {WHOLEGD} No. or <Enter> for Search",
+                "odbcname": "WHOLEGOOD_NO",
+                "methods": {
+                  "Drill": "vm_drill",
+                  "Change": "vm_change"
+                }
+              }
+            }
+          },
+          "dimension": "1",
+          "description": "Previous Trade in Deposit items",
+          "odbcname": "PREV_TRD_IN_2"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_PRV_TI_STK03",
+          "template": {
+            "name": "WHOLEGOOD_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "WHOLEGOOD_NO",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "8",
+                "description": "Wholegood Stock No.",
+                "prompt": "{WHOLEGD} No:",
+                "infoline": "Enter the {WHOLEGD} No. or <Enter> for Search",
+                "odbcname": "WHOLEGOOD_NO",
+                "methods": {
+                  "Drill": "vm_drill",
+                  "Change": "vm_change"
+                }
+              }
+            }
+          },
+          "dimension": "1",
+          "description": "Previous Trade in Deposit items",
+          "odbcname": "PREV_TRD_IN_3"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_PRV_TI_STK04",
+          "template": {
+            "name": "WHOLEGOOD_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "WHOLEGOOD_NO",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "8",
+                "description": "Wholegood Stock No.",
+                "prompt": "{WHOLEGD} No:",
+                "infoline": "Enter the {WHOLEGD} No. or <Enter> for Search",
+                "odbcname": "WHOLEGOOD_NO",
+                "methods": {
+                  "Drill": "vm_drill",
+                  "Change": "vm_change"
+                }
+              }
+            }
+          },
+          "dimension": "1",
+          "description": "Previous Trade in Deposit items",
+          "odbcname": "PREV_TRD_IN_4"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_PRV_TI_STK05",
+          "template": {
+            "name": "WHOLEGOOD_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "WHOLEGOOD_NO",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "8",
+                "description": "Wholegood Stock No.",
+                "prompt": "{WHOLEGD} No:",
+                "infoline": "Enter the {WHOLEGD} No. or <Enter> for Search",
+                "odbcname": "WHOLEGOOD_NO",
+                "methods": {
+                  "Drill": "vm_drill",
+                  "Change": "vm_change"
+                }
+              }
+            }
+          },
+          "dimension": "1",
+          "description": "Previous Trade in Deposit items",
+          "odbcname": "PREV_TRD_IN_5"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_PRV_TI_STK",
+          "template": {
+            "name": "WHOLEGOOD_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "WHOLEGOOD_NO",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "8",
+                "description": "Wholegood Stock No.",
+                "prompt": "{WHOLEGD} No:",
+                "infoline": "Enter the {WHOLEGD} No. or <Enter> for Search",
+                "odbcname": "WHOLEGOOD_NO",
+                "methods": {
+                  "Drill": "vm_drill",
+                  "Change": "vm_change"
+                }
+              }
+            }
+          },
+          "dimension": "5",
+          "description": "Previous Trade in Deposit items"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_PM_CONTRACT",
+          "template": {
+            "name": "PM_CONTRACT",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "PM_CONTRACT",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "8",
+                "description": "Planned Maintenance Contract Code",
+                "prompt": "Contract:",
+                "infoline": "Enter the Contract No.",
+                "odbcname": "CONTRACT_NO",
+                "methods": {
+                  "Drill": "pmh_drill",
+                  "Change": "pmh_change",
+                  "Display": "pmh_display"
+                }
+              }
+            }
+          },
+          "description": "Planned Maintenance Contract Number",
+          "odbcname": "PM_CONTRACT"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_PM_INC_YN",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Plan Maint Contract in inv batch run",
+          "odbcname": "PM_BATCH"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_CMF_VAT_NO",
+          "template": {
+            "name": "VAT_REG_CODE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "VAT_REG_CODE",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "16",
+                "description": "Vat registration code",
+                "prompt": "V.A.T. Number:",
+                "infoline": "Enter the V.A.T. Number",
+                "methods": {
+                  "Drill": "cou_drill",
+                  "Change": "vatno_change"
+                }
+              }
+            }
+          },
+          "description": "Vat registration code-FROM CMF_VAT_NO"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_CMF_VAT",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Apply VAT - from CMF_VAT at invoice"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_CMF_ADD_IN_DELA",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Stored cust address in delivery ad.0=no"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_ORIG_INVO",
+          "template": {
+            "name": "ACCOUNT_REFERENCE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "ACCOUNT_REFERENCE",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "6",
+                "description": "Accounts reference",
+                "prompt": "Ref No.:",
+                "infoline": "Enter the Document Reference - <Enter> for Auto",
+                "odbcname": "DOCUMENT_REF",
+                "methods": {
+                  "Change": "auto_ref_change"
+                }
+              }
+            }
+          },
+          "description": "Originating Invoice No if autocredit",
+          "odbcname": "ORIG_INV_NO"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_ORIG_IDAT",
+          "template": {
+            "name": "DATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "DATE",
+                "fieldtype": "DATE",
+                "size": "8",
+                "description": "Master d8 date template",
+                "prompt": "Date:",
+                "infoline": "Enter the Date",
+                "methods": {
+                  "Drill": "calendar_drill",
+                  "Display": "date_display"
+                }
+              }
+            }
+          },
+          "description": "Original Invoice Date if autocredit",
+          "odbcname": "ORIG_INV_DATE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_DEL_POSTCODE",
+          "template": {
+            "name": "TBASEPOSTCODE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEPOSTCODE",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "9",
+                "description": "Postcode template",
+                "prompt": "Postcode:",
+                "infoline": "Enter the Postcode"
+              }
+            }
+          },
+          "description": "Delivery Postcode"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_PPDSNAMT",
+          "template": {
+            "name": "CURRENCY",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "CURRENCY",
+                "parent": {
+                  "name": "CURRENCY_ARRAY",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "CURRENCY_ARRAY",
+                      "parent": {
+                        "name": "TBASECURRENCY",
+                        "structure": {
+                          "properties": {
+                            "type": "template",
+                            "name": "TBASECURRENCY",
+                            "fieldtype": "DECIMAL",
+                            "size": "10",
+                            "description": "Base currency template",
+                            "prompt": "Amount:",
+                            "infoline": "Enter a Currency Amount",
+                            "font": "CURRENCY_PROMPT",
+                            "promptfont": "PROMPT_FONT",
+                            "methods": {
+                              "Display": "CURRENCY_DISPLAY"
+                            }
+                          }
+                        }
+                      },
+                      "dimension": "2",
+                      "methods": {
+                        "Change": "currency_change",
+                        "Editfmt": "currency_edit"
+                      }
+                    }
+                  }
+                },
+                "dimension": "1"
+              }
+            }
+          },
+          "dimension": "2",
+          "description": "PPD Sales Net Amount",
+          "prompt": "PPD Net Amount:",
+          "odbcname": "PPDSN_AMT"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_PPDSNVAT",
+          "template": {
+            "name": "CURRENCY",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "CURRENCY",
+                "parent": {
+                  "name": "CURRENCY_ARRAY",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "CURRENCY_ARRAY",
+                      "parent": {
+                        "name": "TBASECURRENCY",
+                        "structure": {
+                          "properties": {
+                            "type": "template",
+                            "name": "TBASECURRENCY",
+                            "fieldtype": "DECIMAL",
+                            "size": "10",
+                            "description": "Base currency template",
+                            "prompt": "Amount:",
+                            "infoline": "Enter a Currency Amount",
+                            "font": "CURRENCY_PROMPT",
+                            "promptfont": "PROMPT_FONT",
+                            "methods": {
+                              "Display": "CURRENCY_DISPLAY"
+                            }
+                          }
+                        }
+                      },
+                      "dimension": "2",
+                      "methods": {
+                        "Change": "currency_change",
+                        "Editfmt": "currency_edit"
+                      }
+                    }
+                  }
+                },
+                "dimension": "1"
+              }
+            }
+          },
+          "dimension": "2",
+          "description": "PPD Sales Net VAT Amount",
+          "prompt": "PPD Net VAT:",
+          "odbcname": "PPDSN_VAT"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_PPDSFVAT",
+          "template": {
+            "name": "CURRENCY",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "CURRENCY",
+                "parent": {
+                  "name": "CURRENCY_ARRAY",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "CURRENCY_ARRAY",
+                      "parent": {
+                        "name": "TBASECURRENCY",
+                        "structure": {
+                          "properties": {
+                            "type": "template",
+                            "name": "TBASECURRENCY",
+                            "fieldtype": "DECIMAL",
+                            "size": "10",
+                            "description": "Base currency template",
+                            "prompt": "Amount:",
+                            "infoline": "Enter a Currency Amount",
+                            "font": "CURRENCY_PROMPT",
+                            "promptfont": "PROMPT_FONT",
+                            "methods": {
+                              "Display": "CURRENCY_DISPLAY"
+                            }
+                          }
+                        }
+                      },
+                      "dimension": "2",
+                      "methods": {
+                        "Change": "currency_change",
+                        "Editfmt": "currency_edit"
+                      }
+                    }
+                  }
+                },
+                "dimension": "1"
+              }
+            }
+          },
+          "dimension": "2",
+          "description": "PPD Sales Full VAT",
+          "prompt": "PPD Full VAT:",
+          "odbcname": "PPDSF_VAT"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_MVF_PPDSNAMT",
+          "template": {
+            "name": "CURRENCY",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "CURRENCY",
+                "parent": {
+                  "name": "CURRENCY_ARRAY",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "CURRENCY_ARRAY",
+                      "parent": {
+                        "name": "TBASECURRENCY",
+                        "structure": {
+                          "properties": {
+                            "type": "template",
+                            "name": "TBASECURRENCY",
+                            "fieldtype": "DECIMAL",
+                            "size": "10",
+                            "description": "Base currency template",
+                            "prompt": "Amount:",
+                            "infoline": "Enter a Currency Amount",
+                            "font": "CURRENCY_PROMPT",
+                            "promptfont": "PROMPT_FONT",
+                            "methods": {
+                              "Display": "CURRENCY_DISPLAY"
+                            }
+                          }
+                        }
+                      },
+                      "dimension": "2",
+                      "methods": {
+                        "Change": "currency_change",
+                        "Editfmt": "currency_edit"
+                      }
+                    }
+                  }
+                },
+                "dimension": "1"
+              }
+            }
+          },
+          "dimension": "5",
+          "description": "PPD Sales Net Amount for Multi VAT Code",
+          "prompt": "PPD Sales Net Amount for Multi VAT Code:",
+          "odbcname": "MVF_PPDSNAMT"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_MVF_PPDSFVAT",
+          "template": {
+            "name": "CURRENCY",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "CURRENCY",
+                "parent": {
+                  "name": "CURRENCY_ARRAY",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "CURRENCY_ARRAY",
+                      "parent": {
+                        "name": "TBASECURRENCY",
+                        "structure": {
+                          "properties": {
+                            "type": "template",
+                            "name": "TBASECURRENCY",
+                            "fieldtype": "DECIMAL",
+                            "size": "10",
+                            "description": "Base currency template",
+                            "prompt": "Amount:",
+                            "infoline": "Enter a Currency Amount",
+                            "font": "CURRENCY_PROMPT",
+                            "promptfont": "PROMPT_FONT",
+                            "methods": {
+                              "Display": "CURRENCY_DISPLAY"
+                            }
+                          }
+                        }
+                      },
+                      "dimension": "2",
+                      "methods": {
+                        "Change": "currency_change",
+                        "Editfmt": "currency_edit"
+                      }
+                    }
+                  }
+                },
+                "dimension": "1"
+              }
+            }
+          },
+          "dimension": "5",
+          "description": "PPD Sales Full VAT for Multi VAT Code",
+          "prompt": "PPD Sales Full VAT for Multi VAT Code:",
+          "odbcname": "MVF_PPDSFVAT"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "VI_SPARE",
+          "template": {
+            "name": "SPARE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "SPARE",
+                "fieldtype": "ALPHA",
+                "size": "1000",
+                "description": "Spare"
+              }
+            }
+          },
+          "size": "324"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "VI_ADV_DAT",
+          "description": "Advice Note Number / Date"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "VI_NCK_DAT",
+          "description": "Nickname / Date"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "VI_CUS_DAT",
+          "description": "Customer / Advice Date"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "VI_IVT_ADV",
+          "description": "Invoice Type / Advice No"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "VI_REP",
+          "description": "Rep Code"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "VI_INV_IDAT",
+          "description": "Invoice Number/Date"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "VI_CUR_CUS_ADV",
+          "description": "Currency / Customer / Advice No"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "VI_DAT_ADV",
+          "description": "Advice Date / Advice No"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "VI_CONTRACT_ADV",
+          "description": "Contract No / Advice No"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "VI_IDAT",
+          "description": "Invoice Date/Invoice No"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "F_VI_FINANCE",
+          "description": "Finance Customer"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "F_VI_QUOTE",
+          "description": "Quote Number"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "F_VI_COMMENT",
+          "description": "Comment"
+        }
+      }
+    ],
+    "name": "VIREC",
+    "dbl": "",
+    "isam": "",
+    "description": "WG Invoice Header Record"
+  }
+}

@@ -1,0 +1,31 @@
+﻿<Properties StartupConfiguration="{7F4BB4D5-5EE0-4BCB-9DB2-F563191DC786}|Default">
+  <MonoDevelop.Ide.ItemProperties.DblDebug PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="DblDebug/Views/App.cs">
+    <Files>
+      <File FileName="DblDebug/Program.cs" Line="10" Column="1" />
+      <File FileName="DblDebug/Views/App.cs" Line="10" Column="1" />
+      <File FileName="DblDebug/CoreDebug.cs" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="DblDebug" expanded="True">
+            <Node name="DblDebug" expanded="True">
+              <Node name="Views" expanded="True">
+                <Node name="App.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/stevelamb/Development/ibcos/investigations/DblDebug/DblDebug/Program.cs" relfile="DblDebug/Program.cs" line="10" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
