@@ -1,0 +1,25 @@
+{
+    "name": "dbl",
+    "displayName": "dbl",
+    "description": "",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.31.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "dbl",
+            "aliases": ["diabol", "dbl"],
+            "extensions": [".DBL",".dbl"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "dbl",
+            "scopeName": "source.dbl",
+            "path": "./syntaxes/dbl.tmLanguage.json"
+        }]
+    }
+}

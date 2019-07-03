@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="agco.css"/>
+    </head>
+    <body>
+        <h1>AGCO Tester</h1>
+        <div>
+            <h2>Customer</h2>
+            <label for="customer">Customer</label><input type="text" id="customer" name="customer" value="1200"/>
+        </div>
+
+        <div>
+            <h2>Credit Check</h2>
+            <label for="amount">Amount</label><input id="amount" name="amount" type="text"/>
+            <label for="currency">Currency</label><input id="currency" name="currency" value="GBP" type="text"/>
+            <button onclick="creditCheck();">Check</button>
+        </div>
+
+        <div>
+            <h2>Pricing / Ordering</h2>
+            <button onclick="addExtraPart();">Add Part</button>
+            <div id="parts">
+                
+            </div>
+            <div>
+                <button onclick="priceCheck();">Price Check</button>
+                <button onclick="makeOrder();">Make Order</button>
+            </div>
+        </div>
+
+        <div id="output">
+            
+        </div>
+
+        <script type="text/javascript" src="agco.js"> </script>
+        <script type="text/javascript">
+            setupParts();
+        </script>
+    </body>
+</html>

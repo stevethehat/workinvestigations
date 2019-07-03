@@ -1,0 +1,60 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "diabol",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+        },
+        {
+            "include": "#comments"
+        }
+	],
+	"repository": {
+        "comments": {
+            "patterns":[
+                {
+                    "name": "comment.line",
+                    "match": "^\\s*;.*"
+                }
+            ]
+        },
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.dbl",
+				"match": "\\b(if|while|for|return|begin|end|public|method|endmethon|\\.proc)\\b"
+			}]
+		},
+		"strings": {
+            "patterns":[
+                {
+                    "name": "string.quoted.double.dbl",
+                    "begin": "'",
+                    "end": "'",
+                    "patterns": [
+                        {
+                            "name": "constant.character.escape.dbl",
+                            "match": "\\\\."
+                        }
+                    ]
+                },
+                {
+                    "name": "string.quoted.double.dbl",
+                    "begin": "\"",
+                    "end": "\"",
+                    "patterns": [
+                        {
+                            "name": "constant.character.escape.dbl",
+                            "match": "\\\\."
+                        }
+                    ]
+                }
+
+            ]
+			
+		}
+	},
+	"scopeName": "source.dbl"
+}
