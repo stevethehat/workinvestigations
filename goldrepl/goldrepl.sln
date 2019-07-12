@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "goldrepl", "goldrepl\goldrepl.csproj", "{BD6D6039-E9C4-49C6-B952-58147CF52196}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadLine", "..\..\..\..\Downloads\readline-master\src\ReadLine\ReadLine.csproj", "{F55061F6-5F06-4F11-A967-ECBA36751ABB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -13,5 +15,9 @@ Global
 		{BD6D6039-E9C4-49C6-B952-58147CF52196}.Debug|x86.Build.0 = Debug|x86
 		{BD6D6039-E9C4-49C6-B952-58147CF52196}.Release|x86.ActiveCfg = Release|x86
 		{BD6D6039-E9C4-49C6-B952-58147CF52196}.Release|x86.Build.0 = Release|x86
+		{F55061F6-5F06-4F11-A967-ECBA36751ABB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F55061F6-5F06-4F11-A967-ECBA36751ABB}.Debug|x86.Build.0 = Debug|Any CPU
+		{F55061F6-5F06-4F11-A967-ECBA36751ABB}.Release|x86.ActiveCfg = Release|Any CPU
+		{F55061F6-5F06-4F11-A967-ECBA36751ABB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

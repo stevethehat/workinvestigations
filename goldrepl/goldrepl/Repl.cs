@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
-using Gold;
 
 namespace GoldRepl
 {
@@ -20,15 +20,18 @@ namespace GoldRepl
             _scope.ImportModule("clr");
             _python.Execute("import clr");
             _python.Execute("clr.AddReference(\"goldrepl\")", _scope);
-            _python.Execute("clr.AddReference(\"GoldApiServer.DataLayer\")", _scope);
-            _python.Execute("from Net.Ibcos.GoldAPIServer.DataLayer.Models import *", _scope);
+            ReadLine.HistoryEnabled = true;
+            ReadLine.AutoCompletionHandler = new AutoCompletionHandler(_scope);
+
+            //_python.Execute("clr.AddReference(\"GoldApiServer.DataLayer\")", _scope);
+            //_python.Execute("from Net.Ibcos.GoldAPIServer.DataLayer.Models import *", _scope);
         }
 
         public void InitData(string dataFolder = "~/gold/data")
         {
-            Gold.Gold gold = new Gold.Gold(dataFolder);
+            //Gold.Gold gold = new Gold.Gold(dataFolder);
 
-            _scope.SetVariable("gold", gold);
+            //_scope.SetVariable("gold", gold);
             _python.Execute("from GoldRepl import *", _scope);
 
             Isams isams = new Isams();
@@ -116,7 +119,7 @@ namespace GoldRepl
 
         protected string GetCodeLine()
         {
-            return Console.ReadLine();
+            return ReadLine.Read(">");
 
             string result = "";
             ConsoleKeyInfo key = new ConsoleKeyInfo();
@@ -196,6 +199,45 @@ namespace GoldRepl
             }
 
             return result;
+        }
+    }
+
+    class AutoCompletionHandler : IAutoCompleteHandler
+    {
+        public AutoCompletionHandler(ScriptScope scope)
+        {
+            _scope = scope;
+        }
+        // characters to start completion from
+        public char[] Separators { get; set; } = new char[] { ' ', '.', '/' };
+        public ScriptScope _scope { get; }
+        private readonly List<string> _keywords = new List<string>() { "print", "dir", "len", "def" };
+
+        // text - The current text entered in the console
+        // index - The index of the terminal cursor within {text}
+        public string[] GetSuggestions(string text, int index)
+        {
+            List<string> result = new List<string>();
+
+            var variables = _scope.GetVariableNames().ToList();
+            List<string> options = new List<string>();
+            options.AddRange(_keywords);
+            options.AddRange(variables);
+            foreach(string option in options)
+            {
+                if(true == option.StartsWith(text))
+                {
+                    result.Add(option);
+                }
+            }
+
+            return result.ToArray();
+
+
+            if (text.StartsWith("git "))
+                return new string[] { "init", "clone", "pull", "push" };
+            else
+                return null;
         }
     }
 }

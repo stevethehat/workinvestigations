@@ -108,13 +108,12 @@
     <Compile Include="Repl.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Gold\Gold.csproj">
-      <Project>{a064a8a9-7505-441c-b55b-807f92100195}</Project>
-      <Name>Gold</Name>
+    <ProjectReference Include="..\..\..\..\..\Downloads\readline-master\src\ReadLine\ReadLine.csproj">
+      <Project>{F55061F6-5F06-4F11-A967-ECBA36751ABB}</Project>
+      <Name>ReadLine</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
