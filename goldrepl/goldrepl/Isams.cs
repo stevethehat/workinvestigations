@@ -36,6 +36,10 @@ namespace GoldRepl
         /// Description string
         /// </summary>
         public string Description { get; set; }
+        public string AMethod()
+        {
+            return "";
+        }
         public static void Info()
         {
             Console.WriteLine("Arec Info");

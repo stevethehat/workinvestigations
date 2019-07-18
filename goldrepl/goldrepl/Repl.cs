@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
+using Microsoft.CSharp;
 
 namespace GoldRepl
 {
@@ -163,11 +165,6 @@ namespace GoldRepl
             };
         }
 
-        private List<string> GetParameters(Match m)
-        {
-            return new List<string>() { "test", "test2" };
-        }
-
         // characters to start completion from
         public char[] Separators { get; set; } = new char[] { ' ', '.', '/', '(', ',' };
         public ScriptScope _scope { get; }
@@ -179,6 +176,31 @@ namespace GoldRepl
         private List<string> GetVariables()
         {
             return _scope.GetVariableNames().ToList() ;
+        }
+
+        private List<string> GetParameters(Match m)
+        {
+            List<string> result = new List<string>();
+            string variableName = m.Groups[1].Value;
+            string param = m.Groups[2].Value;
+
+            var variable = _scope.GetVariable(variableName);
+            if(null != variable) {
+                Type variableType = (Type)variable.GetType();
+
+                MethodInfo[] methodInfo = variableType.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+
+                result.AddRange(methodInfo.Select(mi => mi.Name).ToList());
+
+                PropertyInfo[] propertyInfo = variableType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+
+                result.AddRange(propertyInfo.Select(mi => mi.Name).ToList());
+            }
+
+            return result;
+
+
+            return new List<string>() { "test", "test2" };
         }
 
         private List<string> GetPossibleOptions(List<string> possibleOptions, Match match, string fullText)
@@ -210,8 +232,11 @@ namespace GoldRepl
                 Match match = completion.Regex.Match(text);
                 if (default(Match) != match)
                 {
-                    result.AddRange(completion.GetOptions(match, text));
-                    break;
+                    if(true == match.Success)
+                    {
+                        result.AddRange(completion.GetOptions(match, text));
+                        break;
+                    }
                 }
             }
 
