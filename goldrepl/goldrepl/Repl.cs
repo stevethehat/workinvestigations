@@ -36,6 +36,7 @@ namespace GoldRepl
 
             Isams isams = new Isams();
             _scope.SetVariable("isams", isams);
+            _scope.SetVariable("scope", _scope);
 
         }
 
@@ -120,70 +121,6 @@ namespace GoldRepl
         protected string GetCodeLine()
         {
             return ReadLine.Read(">");
-
-            string result = "";
-            ConsoleKeyInfo key = new ConsoleKeyInfo();
-
-            while (ConsoleKey.Enter != key.Key)
-            {
-                bool echoChar = true;
-
-                switch (key.Key)
-                {
-                    case ConsoleKey.Tab:
-                        string completion = TabComplete(result);
-                        result += completion;
-                        Console.Write(completion);
-                        echoChar = false;
-                        break;
-
-                    case ConsoleKey.Backspace:
-                        Console.Write($"\r{"".PadLeft(result.Length, ' ')}");
-                        result = result.Substring(0, result.Length - 1);
-                        Console.Write($"\r{result}");
-                        echoChar = false;
-                        break;
-
-                    default:
-                        if ('\0' != key.KeyChar)
-                        {
-                            result = result + key.KeyChar;
-                        }
-                        break;
-
-                }
-                /*
-                if (ConsoleKey.Tab == key.Key)
-                {
-                    string completion = TabComplete(result);
-                    result += completion;
-                    Console.Write(completion);
-                    echoChar = false;
-                }
-                if(ConsoleKey.Backspace == key.Key)
-                {
-                    result = result.Substring(0, result.Length - 1);
-                    Console.Write($"\r{result}");
-                    echoChar = false;
-                }
-
-                if ('\0' != key.KeyChar)
-                {
-                    result = result + key.KeyChar;
-                }
-                */
-
-                if (echoChar)
-                {
-                    Console.Write(key.KeyChar);
-                }
-
-                key = Console.ReadKey(true);
-            }
-
-            Console.Write(key.KeyChar);
-
-            return result;
         }
 
         protected string TabComplete(string line)
@@ -202,16 +139,64 @@ namespace GoldRepl
         }
     }
 
+    class Completion
+    {
+        public Regex Regex { get; set; }
+        public Func<Match, string, List<string>> GetOptions { get; set; }
+
+        public Completion(Regex regex, Func<Match, string, List<string>> getOptions)
+        {
+            Regex = regex;
+            GetOptions = getOptions;
+        }
+    }
+
     class AutoCompletionHandler : IAutoCompleteHandler
     {
         public AutoCompletionHandler(ScriptScope scope)
         {
             _scope = scope;
+            _regexes = new List<Completion>()
+            {
+                new Completion(new Regex(@"([a-zA-Z0-9_]*)\.([a-zA-Z0-9_]*)$"), (m, t) => GetPossibleOptions(GetParameters(m), m, t)),
+                new Completion(new Regex(@"([a-zA-Z0-9_]*)$"), (m, t) => GetPossibleOptions(GetVariables(), m, t)),
+            };
         }
+
+        private List<string> GetParameters(Match m)
+        {
+            return new List<string>() { "test", "test2" };
+        }
+
         // characters to start completion from
-        public char[] Separators { get; set; } = new char[] { ' ', '.', '/' };
+        public char[] Separators { get; set; } = new char[] { ' ', '.', '/', '(', ',' };
         public ScriptScope _scope { get; }
         private readonly List<string> _keywords = new List<string>() { "print", "dir", "len", "def" };
+
+
+        private List<Completion> _regexes;
+
+        private List<string> GetVariables()
+        {
+            return _scope.GetVariableNames().ToList() ;
+        }
+
+        private List<string> GetPossibleOptions(List<string> possibleOptions, Match match, string fullText)
+        {
+            List<string> result = new List<string>();
+            string matchText = match.Groups[match.Groups.Count - 1].Value;
+            string previousText = fullText.Substring(0, fullText.Length - matchText.Length);
+            foreach (string possibleOption in possibleOptions)
+            {
+                if (true == possibleOption.StartsWith(matchText))
+                {
+                    //result.Add(previousText + possibleOption);
+                    result.Add(possibleOption);
+                }
+            }
+
+            return result;
+        }
 
         // text - The current text entered in the console
         // index - The index of the terminal cursor within {text}
@@ -219,10 +204,20 @@ namespace GoldRepl
         {
             List<string> result = new List<string>();
 
-            var variables = _scope.GetVariableNames().ToList();
             List<string> options = new List<string>();
-            options.AddRange(_keywords);
-            options.AddRange(variables);
+            foreach (Completion completion in _regexes)
+            {
+                Match match = completion.Regex.Match(text);
+                if (default(Match) != match)
+                {
+                    result.AddRange(completion.GetOptions(match, text));
+                    break;
+                }
+            }
+
+            //options.AddRange(_keywords);
+            //options.AddRange(variables);
+            /*
             foreach(string option in options)
             {
                 if(true == option.StartsWith(text))
@@ -230,7 +225,7 @@ namespace GoldRepl
                     result.Add(option);
                 }
             }
-
+            */
             return result.ToArray();
 
 
