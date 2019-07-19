@@ -45,7 +45,7 @@ namespace GoldRepl
         internal void Execute(string scriptFile)
         {
             ScriptSource source = _python.CreateScriptSourceFromFile(scriptFile);
-            RunCode(source);
+            RunCode(source, "");
         }
 
         public void RunInteractive()
@@ -56,7 +56,7 @@ namespace GoldRepl
                 if (false == string.IsNullOrEmpty(code))
                 {
                     ScriptSource source = _python.CreateScriptSourceFromString(code);
-                    RunCode(source);
+                    RunCode(source, code);
                 }
                 code = GetCode();
             }
@@ -65,15 +65,22 @@ namespace GoldRepl
         public void Init(string fullPath)
         {
             ScriptSource source = _python.CreateScriptSourceFromFile(fullPath);
-            RunCode(source);
+            RunCode(source, "");
         }
 
-        protected dynamic RunCode(ScriptSource source)
+        protected dynamic RunCode(ScriptSource source, string code)
         {
             dynamic result = new {};
             try
             {
                 result = source.Execute(_scope);
+
+                if(null != result)
+                {
+                    source = _python.CreateScriptSourceFromString("print " + code);
+                    source.Execute(_scope);
+
+                }
             }
             catch (IronPython.Runtime.UnboundNameException e)
             {
@@ -210,7 +217,7 @@ namespace GoldRepl
             string previousText = fullText.Substring(0, fullText.Length - matchText.Length);
             foreach (string possibleOption in possibleOptions)
             {
-                if (true == possibleOption.StartsWith(matchText))
+                if (true == possibleOption.StartsWith(matchText, StringComparison.CurrentCultureIgnoreCase))
                 {
                     //result.Add(previousText + possibleOption);
                     result.Add(possibleOption);
