@@ -13,7 +13,13 @@ export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
 
   private testPrivateProperty: string = 'init';
+  private _canvas: Canvas;
 
+  constructor(){
+    super();
+    this._canvas = new Canvas('displayCanvas');
+
+  }
   public mounted() {
     this.msg = 'this is the message';
   }

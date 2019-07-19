@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>app</name>
+    </assembly>
+    <members>
+        <member name="T:SwaggerTests.TestResponse">
+            <summary>
+            This is the test response item
+            </summary>
+            <remarks>
+            Extra remarks for more info on this object.
+            It is multi line
+            = Markup = 
+            ??
+            </remarks>
+        </member>
+        <member name="P:SwaggerTests.TestResponse.Value1">
+            <summary>
+            Value 1
+            </summary>
+            <value>a test string</value>
+        </member>
+        <member name="P:SwaggerTests.TestResponse.Value2">
+            <summary>
+            Value 2
+            </summary>
+            <value>this is an int</value>
+        </member>
+        <member name="P:SwaggerTests.TestResponse.DecimalTest">
+            <summary>
+            Decimal test
+            </summary>
+            <value>not sure what this will do</value>
+        </member>
+        <member name="T:SwaggerTests.ValuesController">
+            <summary>
+            A Controller for testing swagger stuff
+            </summary>
+            <remarks>where willl this show??</remarks>
+        </member>
+        <member name="M:SwaggerTests.ValuesController.Get(System.Int32)">
+            <summary>
+            Get a TestResponse
+            </summary>
+            <param name="id">The id of the item to return</param>
+            <returns></returns>
+        </member>
+        <member name="M:SwaggerTests.ValuesController.Post(System.String)">
+             <summary>
+             Update an item 
+            
+             </summary>
+             <param name="value"></param>
+        </member>
+    </members>
+</doc>

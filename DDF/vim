@@ -1,0 +1,1375 @@
+commit d34395fdc7a51186e2136168cd25adf78d4e3ff6
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Sep 10 09:04:42 2018 +0100
+
+    wiki update updates..
+
+commit be4ce5d11ed1ee38fe05cb0eaf9edcd3528510f3
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Sep 7 21:35:27 2018 +0100
+
+    added sections
+
+commit fa740a86094b0917c9f4606ed0836d2907232dc3
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Sep 7 20:51:43 2018 +0100
+
+    tidy up
+
+commit c236bcf11f7f447ee0d641ed2407075ccbcf0a30
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Sep 7 20:44:39 2018 +0100
+
+    converted main field list to use Table
+
+commit b8dc1565bca87a5599582a6de9fd117e3ec702a1
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Sep 7 20:36:43 2018 +0100
+
+    converted index to use Table
+
+commit e7679e134f9e2d7faf03f159789cf42d2049b58b
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Sep 7 20:32:04 2018 +0100
+
+    changed properties page to use Table object
+
+commit 1c525427b65ff5f80ec118f3e313ed75ccb77a02
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Sep 7 20:25:03 2018 +0100
+
+    removed autogeneration section & added to comments
+
+commit c3e09a5c581f0b2db7a08c2a1b8f96021369e961
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Sep 7 20:00:05 2018 +0100
+
+    put general section in..
+
+commit ad5a3944159970f154391612e5320ee83ceb7cca
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Sep 7 19:59:09 2018 +0100
+
+    fixed missing property
+
+commit 5561825f7ef73f6cf8e4a5e175a2fd36862514c1
+Merge: 34bbae0 abed0bf
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Sep 7 19:34:32 2018 +0100
+
+    Merge branch 'master' of https://github.com/stevethehat/workinvestigations
+    
+    # Conflicts:
+    #       DDF/wiki_writer.py
+
+commit 34bbae04a655b8ef009011e2f7c56385c0ec38a1
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Sep 7 19:33:35 2018 +0100
+
+    discarded work
+
+commit abed0bf076d9fbde9bd6dccc74a1276374e0502a
+Merge: 8500e74 fb804a7
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Sep 7 17:26:48 2018 +0100
+
+    Merge branch 'master' of https://github.com/stevethehat/workinvestigations
+    
+    # Conflicts:
+    #       DDF/Program.cs
+    #       DDF/update_wiki.py
+
+commit 8500e74ac299bd555ff77cc4063e9e98aff1b19a
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Sep 7 17:24:46 2018 +0100
+
+    just the latest change
+
+commit 78db633de4f7a1eb109dd80fd4b4ad09782fd7c7
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Sep 7 17:24:19 2018 +0100
+
+    added section comments so we can identify them
+
+commit 2ae85d028c61b01318ddb15e76ceed27f757d4e9
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Aug 24 21:56:13 2018 +0100
+
+    sort properties
+
+commit fb804a7cbdf957195c2b47550a358beb73b4167e
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Aug 24 20:51:47 2018 +0100
+
+    added sub tables for nested properites
+
+commit bd7e3d5c6d91ed30574bed68cdd3873b138a5368
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Aug 24 20:03:23 2018 +0100
+
+    wowking on lists/dict properties
+
+commit 73c72234a65b3318da87aa74d24fd6ee044c92aa
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Aug 24 19:13:43 2018 +0100
+
+    tidy up commented out code..
+
+commit b8f4d18384c045d05d9288c22490a35b4f0af81c
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Thu Aug 23 17:15:15 2018 +0100
+
+    updates for parsing & wiki update
+
+commit 3883d2f1c850e1dac3d593c41e66da631157b22d
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Wed Aug 22 16:28:43 2018 +0100
+
+    wiki update improvements
+
+commit ef46b3033b7bdbfe18036b226826c792fecbd4d1
+Merge: 9b86e20 8003762
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Wed Aug 22 10:47:15 2018 +0100
+
+    Merge branch 'master' of https://github.com/stevethehat/workinvestigations
+
+commit 800376281aa3e521a8c3198ef9db453487f97105
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Wed Aug 22 10:47:01 2018 +0100
+
+    scanner
+
+commit 9b86e20f1605076ce81d25f1ec8c7cfdd6709611
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Wed Aug 22 09:58:11 2018 +0100
+
+    python debug launch
+    & wiki updates
+
+commit 281852f904086c34e81f952c3c60dd89af44b622
+Merge: f11d756 00d1c36
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Wed Aug 22 09:10:02 2018 +0100
+
+    Merge branch 'master' of https://github.com/stevethehat/workinvestigations
+    
+    # Conflicts:
+    #       DDF/Program.cs
+    #       DDF/update_wiki.py
+
+commit 00d1c36e672765dde715539866d604f69ef5e8d4
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Wed Aug 22 09:07:36 2018 +0100
+
+    a bit of refactoring & colspan for tables
+
+commit f11d756255addb7c82406018778eca27a8e57942
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Wed Aug 22 08:46:32 2018 +0100
+
+    parsing and wiki updates
+
+commit c185bae7e9e8880176053e0fae4f8dac883209ad
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Tue Aug 21 22:36:45 2018 +0100
+
+    DDF wiki update
+
+commit 95115d54dccebeb554b227c0cbb7c3c60d0d541e
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Tue Aug 21 16:54:35 2018 +0100
+
+    save file to output
+
+commit 9887f86c0a67116743c9105dfe25802855a8960c
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Tue Aug 21 16:41:37 2018 +0100
+
+    fixed path so its relative
+
+commit 4e4cca19084b035f733480baa4701dd3789ae0a0
+Merge: 4fdf194 1a05383
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Tue Aug 21 14:25:50 2018 +0100
+
+    Merge branch 'master' of https://github.com/stevethehat/workinvestigations
+    
+    # Conflicts:
+    #       .gitignore
+    #       .vscode/launch.json
+    #       util/RetailChangeSummary.cs
+
+commit 4fdf19452e6e1047cf1929cfe5176c5bba7b0b05
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Tue Aug 21 14:21:51 2018 +0100
+
+    new debug launch configs
+
+commit 44f84567aec16ccf26b1a839df3ef1624e2d2b88
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Tue Aug 21 14:21:12 2018 +0100
+
+    test changes
+
+commit e7da5e431acb1ef487427914e6aa9321f1a121ea
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Tue Aug 21 14:20:53 2018 +0100
+
+    new ignores
+
+commit 58dd204b19ec0a6b420ad947b01f605604cdc34f
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Tue Aug 21 14:20:23 2018 +0100
+
+    tidy up
+
+commit 678300c16bc7590c86ee65b4483a5275da5013fb
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Tue Aug 21 14:20:05 2018 +0100
+
+    namespace change
+
+commit f07892275756232b1c2024e0eba5ee6d559a4a29
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Tue Aug 21 14:19:33 2018 +0100
+
+    tidy up so i can pull
+
+commit 58cd64412d8b7d17849c9ebff4935d5740793df4
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Tue Aug 21 14:16:05 2018 +0100
+
+    code generation test
+
+commit 1a05383fc1f237e798634f221b684e48e2e56ed7
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Tue Aug 21 14:04:54 2018 +0100
+
+    just changeing the ddf to parse
+
+commit 2a4233cc2a1ec03b30779cd661373ac4e91bc8d7
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Aug 17 22:41:29 2018 +0100
+
+    trying cmfrec
+
+commit 848a78003424995e9f21e3b8e8b2795a11d4ed8a
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Aug 17 19:59:18 2018 +0100
+
+    more matching including subitems
+
+commit fb3d59d030955ec4195372ef4c9b64d402818540
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Thu Aug 16 22:22:13 2018 +0100
+
+    added field values and key class
+
+commit 50bfb230938f9230890aaea186d917ea347bc5ae
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Thu Aug 16 20:23:32 2018 +0100
+
+    i created some JSON!!
+
+commit cca5938762aa439e9abb3681b1d09ab620aed039
+Merge: 474aaa7 1fb1d7c
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Wed Aug 15 22:30:55 2018 +0100
+
+    Merge branch 'master' of https://github.com/stevethehat/workinvestigations
+    
+    # Conflicts:
+    #       .gitignore
+    #       .vscode/launch.json
+    #       api/.vscode/tasks.json
+    #       api/Controllers/TestEndpoints.cs
+    #       api/Startup.cs
+    #       api/api.csproj
+    #       app/src/components/moneyflow.ts
+    #       app/src/util/canvas/box.ts
+    #       app/src/util/canvas/canvas.ts
+    #       app/src/util/canvas/dot.ts
+    #       app/src/util/canvas/grid.ts
+    #       app/src/util/canvas/line.ts
+    #       async/.vscode/tasks.json
+    #       filestest/.vscode/tasks.json
+    #       roslyn/Class.cs
+    #       roslyn/Program.cs
+    #       router-app/src/components/MoneyFlow.js
+    #       router-app/src/components/MoneyFlowVisualization.vue
+    #       router-app/src/util/box.js
+    #       tests/DBFixture.cs
+    #       tests/report/BandTests.cs
+    #       tests/report/ScannerTests.cs
+    #       util/AppDb.cs
+    #       util/RetailChangeSummary.cs
+    #       util/util.csproj
+
+commit 474aaa70b4b405a06308edb32de6e6df6de257f9
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Wed Aug 15 22:24:27 2018 +0100
+
+    updated gitignore
+
+commit d729cc219ea1a06087482216c9497c5735b42fd5
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Wed Aug 15 22:16:16 2018 +0100
+
+    general mass commit
+
+commit 70f55751562a766c0f3a8145e98eab4c6243c6a0
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Wed Aug 15 22:15:31 2018 +0100
+
+    general mass commit
+
+commit e87f52bafb3e2420d37814aac5dbfcf031f983c9
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Wed Aug 15 22:12:04 2018 +0100
+
+    ignores
+
+commit c2b4a1228edfecbf7ebe2bb91bbe17a321b58d8a
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Wed Aug 15 22:09:44 2018 +0100
+
+    new dff launch
+
+commit 12ca53de2b7cb35796708555e0f819e781261e57
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Aug 13 22:39:47 2018 +0100
+
+    this is quite a cool feature!!
+
+commit 223a91f3078002b25a99429f402045aecc99bd1e
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Aug 13 22:32:09 2018 +0100
+
+    refactoring by learning stuff..
+
+commit 1fb1d7c35b8b424d4cb171aac02d2ca32e3870fc
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Aug 13 21:33:29 2018 +0100
+
+    added cli 3 typescript app@
+
+commit a2ddd60c7f29cd647ea43e75b4c2b88b4d3d153f
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Aug 13 21:33:29 2018 +0100
+
+    added cli 3 typescript app@
+
+commit c04491663106ba0375d572af28fb1c98ecb0bac8
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Sun Aug 12 20:38:58 2018 +0100
+
+    gonna create a new test app
+
+commit ee66a1e5fb7022b12613ca1e5adbb9873e9cdead
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Sun Aug 12 20:38:58 2018 +0100
+
+    gonna create a new test app
+
+commit cc66cbedd73f331a65618d75d74cf4f7fb28653a
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Aug 3 21:35:49 2018 +0100
+
+    create vertical slots
+
+commit 0d531b9e6196a1d1ff8598d7652a9a7e5cc845b1
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Aug 3 21:35:49 2018 +0100
+
+    create vertical slots
+
+commit 301d6cbb0fba0a229a16d5589b48b0c4396fff9f
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Aug 3 21:23:07 2018 +0100
+
+    nicer if we can chain joins..
+
+commit 0e8ad7b59db7fc997d5b151ae25d72574b3bc261
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Aug 3 21:23:07 2018 +0100
+
+    nicer if we can chain joins..
+
+commit 481f1d55cb4b2cb693f1b86e5939816cb5e6dc10
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Aug 3 21:18:39 2018 +0100
+
+    more areas and connections..
+
+commit ca58d3643140b12646e9f702325792842067eca1
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Aug 3 21:18:39 2018 +0100
+
+    more areas and connections..
+
+commit 88504fa77d620a23972d9c7d740e3a2a645a6d9a
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Aug 3 21:17:50 2018 +0100
+
+    created dot class
+
+commit 6d7771400fc6f863fc08fb35dc1dc44efca783a3
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Aug 3 21:17:50 2018 +0100
+
+    created dot class
+
+commit 467c19da707406ba017bb2627553c3a06a6d32cf
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Aug 3 21:10:17 2018 +0100
+
+    new line class and a little renaming
+
+commit de03f8cd0295bd2edaa2e5fb37b12325c2850d49
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Aug 3 21:10:17 2018 +0100
+
+    new line class and a little renaming
+
+commit 72397bbd58d0e9402691ab2bf28d3d54e0b6a8ff
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Aug 3 20:52:15 2018 +0100
+
+    joining things..
+
+commit 709aaabd7e4af7a1e3b3f8884298fbcefe4fa04e
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Aug 3 20:52:15 2018 +0100
+
+    joining things..
+
+commit 0c6be14abfa728242061cf786098b9a5b97c6ba2
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Aug 3 20:18:57 2018 +0100
+
+    some drawing
+
+commit 2868a86743b44e780c520cef4d36bebcc1e762ec
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Aug 3 20:18:57 2018 +0100
+
+    some drawing
+
+commit d9c76be0564b0143b4659ba2d390e53b518cf706
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Thu Jul 19 17:22:36 2018 +0100
+
+    something to test..
+
+commit 708e8876f764da9f611def528b5eb14d94e22f61
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Thu Jul 19 17:22:36 2018 +0100
+
+    something to test..
+
+commit 22ea2a523eb6a27e410f8905411dd64c53ae3104
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Mon Jul 9 16:04:40 2018 +0100
+
+    renamed roslyn
+
+commit 6a4942e250b7a402b491e6bfd39f4aac3e693fb4
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Mon Jul 9 16:04:40 2018 +0100
+
+    renamed roslyn
+
+commit 89e6427883443ff5b22496bad253d37831938845
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Mon Jul 9 15:58:21 2018 +0100
+
+    fixed spelling mistake..
+
+commit 3385ba04c43792a3874473efaa0e8dc92d41576f
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Mon Jul 9 15:58:21 2018 +0100
+
+    fixed spelling mistake..
+
+commit 58dcc51fecaef33358e379b65bd803745d64ef79
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Mon Jul 9 11:06:43 2018 +0100
+
+    changed directory to check
+
+commit a1cde509aeeba6da2fa009013c873afd13639d37
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Mon Jul 9 11:06:43 2018 +0100
+
+    changed directory to check
+
+commit 0bcd7d8ef86417caa137246e038d1169ab20055c
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jul 9 10:42:43 2018 +0100
+
+    code analysis
+
+commit fd7af5c2ee80c49a3b78b3eb5f18f21105f56490
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jul 9 10:42:43 2018 +0100
+
+    code analysis
+
+commit 69875186adfdf162c1225f395ac921b915434836
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jul 9 09:21:55 2018 +0100
+
+    added rosyln tests
+
+commit 1c3613948084c1efef0223cc9d74831ddea82306
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jul 9 09:21:55 2018 +0100
+
+    added rosyln tests
+
+commit b8153fd34a68eed28322dac4a4da6c988583df87
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jul 6 17:19:15 2018 +0100
+
+    wiki updates
+
+commit af662e73fcc0d78489a5c65224c6ecd4db09393e
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jul 6 17:19:15 2018 +0100
+
+    wiki updates
+
+commit ac1c6987cd07d471fda9d01bdff89257c3afb333
+Merge: ddec9e7 502fc7e
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Jul 6 16:32:48 2018 +0100
+
+    Merge branch 'master' of https://github.com/stevethehat/workinvestigations
+    
+    # Conflicts:
+    #       tests/report/RetailChangeSummaryTests.cs
+    #       tests/report/ScannerTests.cs
+    #       util/RetailChangeSummary.cs
+
+commit 3ee08772fae295b98af8ab81a5797ba6a95deea9
+Merge: 89c444a 3dd96b7
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Jul 6 16:32:48 2018 +0100
+
+    Merge branch 'master' of https://github.com/stevethehat/workinvestigations
+    
+    # Conflicts:
+    #       tests/report/RetailChangeSummaryTests.cs
+    #       tests/report/ScannerTests.cs
+    #       util/RetailChangeSummary.cs
+
+commit ddec9e7e55dc376eef42a01619f4476ff3bf1f30
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Jul 6 16:30:22 2018 +0100
+
+    things
+
+commit 89c444aed974331b2816586564fc9278ab4e21bb
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Jul 6 16:30:22 2018 +0100
+
+    things
+
+commit d4d692ecacc9325d2d6fb905a071a7362dce7ccd
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Jul 6 16:29:05 2018 +0100
+
+    wiki tests
+
+commit 13e9f3652c3696455781740d2900351b0118d16e
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Jul 6 16:29:05 2018 +0100
+
+    wiki tests
+
+commit 502fc7ecc87b23d960f2243a8db6e55864cf0dbb
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Mon Jun 11 16:37:33 2018 +0100
+
+    more tests.
+
+commit 3dd96b7afd0059b32997659fd521dd4986bcf3e3
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Mon Jun 11 16:37:33 2018 +0100
+
+    more tests.
+
+commit 1bf998aabe8f4efda67a7aa15cc8631ff1ab3213
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Mon Jun 11 16:04:53 2018 +0100
+
+    more bands stuff
+
+commit 715cc36127088168639e27faec2ade595dacd499
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Mon Jun 11 16:04:53 2018 +0100
+
+    more bands stuff
+
+commit f70501d6ef060ee47c40ff8a7258160fef00fddf
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Mon Jun 11 14:23:04 2018 +0100
+
+    new bands report
+
+commit 7f8f5411969497bf01ab97952f44eec1e59922e4
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Mon Jun 11 14:23:04 2018 +0100
+
+    new bands report
+
+commit 21be4afa04209febb68fa1df9301350aa85fc7be
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 17:11:32 2018 +0100
+
+    ChangeSummary work
+
+commit 92ee67a61e8b5c6e9d8f78c99e59eec2471e8885
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 17:11:32 2018 +0100
+
+    ChangeSummary work
+
+commit afb3b518f22a282ed87867eef3b9aa0485bb818b
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 16:44:16 2018 +0100
+
+    added retail change summary
+
+commit 00e78b8af3e70d72591dff1f365621771838de4b
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 16:44:16 2018 +0100
+
+    added retail change summary
+
+commit daee96ad6b644ff165bd1bf409a58c26defd5fb9
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 16:43:23 2018 +0100
+
+    refactoring and first tests for RetalChangeSummary
+
+commit 46259e03a12eec90767354351becc3da37da8ab1
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 16:43:23 2018 +0100
+
+    refactoring and first tests for RetalChangeSummary
+
+commit eacbd1ec0205e266492d599bda036c2e1ddc3e0e
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 15:46:40 2018 +0100
+
+    renamed to more generic reposts
+
+commit b56369e6bd5f738e71ce9bf84a174a3615c14853
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 15:46:40 2018 +0100
+
+    renamed to more generic reposts
+
+commit e4ebc6151fa25c867e2416f148da0b2cede6f37f
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 15:18:51 2018 +0100
+
+    we dont need this any more..
+
+commit 7f7022f969e5dfeee99834984f7bb945cb23f52e
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 15:18:51 2018 +0100
+
+    we dont need this any more..
+
+commit 23e5c1d74651f8979efd250fb4d5a11dc49e42eb
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 15:17:04 2018 +0100
+
+    this is a LOT nicer... productive lunchtime!!
+
+commit bd7bd30a04de63e9ec2c9ed7b86d8810497c0c06
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 15:17:04 2018 +0100
+
+    this is a LOT nicer... productive lunchtime!!
+
+commit e262e1fe8f2f3fbbcb42c002e20a0dc5df029cd9
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 14:31:26 2018 +0100
+
+    reformatted..
+
+commit 50431c13ab92a7ea99e772e64c8c2f867594efe1
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 14:31:26 2018 +0100
+
+    reformatted..
+
+commit 57e1b6feebd47fac20385f0c3097a7509296a434
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 14:25:59 2018 +0100
+
+    before a refactor to use a queue
+
+commit f54e6b2ffc314c413950293631da773e14647503
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 14:25:59 2018 +0100
+
+    before a refactor to use a queue
+
+commit bcf536f24eb71bb609a4ca0f4519b28d79875982
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 12:21:44 2018 +0100
+
+    added more tests & utility functions
+
+commit a3a306666046ff285589c45c1146c725cb097736
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 12:21:44 2018 +0100
+
+    added more tests & utility functions
+
+commit bd09ddac0376c69be563ce94e98e6cec27e7391d
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 11:16:03 2018 +0100
+
+    moved api tests to sub folder
+
+commit 06e0cbb8e53991721b728ac7a8261d3a369ef339
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 11:16:03 2018 +0100
+
+    moved api tests to sub folder
+
+commit 54ef0fcd3917e989cc6a80543e4c77e55a240b1e
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 11:13:56 2018 +0100
+
+    moved sub dir
+
+commit 09b2bbc17964dd00e81d403fcffb491d750cfffd
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 11:13:56 2018 +0100
+
+    moved sub dir
+
+commit a7075663546ea4847c6ad9f554986b73d635383f
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 11:01:22 2018 +0100
+
+    renamed to scanner tests
+
+commit 00133127e1994aaf286ec336375022eb6f3c1cd0
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 11:01:22 2018 +0100
+
+    renamed to scanner tests
+
+commit f63d5412fcf5df8f2d648e0816d46803ff0e7fea
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 11:00:50 2018 +0100
+
+    renamed to scanner tests
+
+commit 872a6afe7acb2dd7eda8dbd849cddef64798cb50
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 11:00:50 2018 +0100
+
+    renamed to scanner tests
+
+commit 54925f4d5a97aa646cdfc831d1e17bdf044f31e2
+Merge: bf993c1 d986677
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 10:14:27 2018 +0100
+
+    Merge branch 'master' of https://github.com/stevethehat/workinvestigations
+
+commit dbfffa0bd6702581d3b63c85fd72cfdda6a09014
+Merge: 44f6947 1fbf2d3
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 10:14:27 2018 +0100
+
+    Merge branch 'master' of https://github.com/stevethehat/workinvestigations
+
+commit d986677bc54e616b26e10a8123bce540fd1ac6ad
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Jun 8 10:14:00 2018 +0100
+
+    database
+
+commit 1fbf2d3040ff34e2115806a21cb01830b421378b
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Jun 8 10:14:00 2018 +0100
+
+    database
+
+commit bf993c1a4424dbae3d3cb3eb2d8f793a907cc617
+Merge: 7ed1d91 771aa14
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 10:04:32 2018 +0100
+
+    Merge branch 'master' of https://github.com/stevethehat/workinvestigations
+    
+    # Conflicts:
+    #       tests/ApiTests.cs
+
+commit 44f69477124843371e77356823217e080f774c83
+Merge: af84e29 4fde778
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 10:04:32 2018 +0100
+
+    Merge branch 'master' of https://github.com/stevethehat/workinvestigations
+    
+    # Conflicts:
+    #       tests/ApiTests.cs
+
+commit 7ed1d91af460970d68dccc36d2192561cc63fbbd
+Merge: 6f7ed76 a93a759
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 10:01:29 2018 +0100
+
+    Merge branch 'master' of https://github.com/stevethehat/workinvestigations
+    
+    # Conflicts:
+    #       tests/ApiTests.cs
+
+commit af84e2966d1d464a9834b7c825fcbde87faf725a
+Merge: a57123f 8a80b03
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 10:01:29 2018 +0100
+
+    Merge branch 'master' of https://github.com/stevethehat/workinvestigations
+    
+    # Conflicts:
+    #       tests/ApiTests.cs
+
+commit 771aa1462bec1cc2e081066ce2193920105433e7
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Jun 8 09:59:29 2018 +0100
+
+    more scanner refactoring
+
+commit 4fde77829bcd94a2567c544a670afadbb36bb7d7
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Jun 8 09:59:29 2018 +0100
+
+    more scanner refactoring
+
+commit a93a759899deee9e0f1b9a0314da29c9c2eb2c46
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Jun 8 09:03:34 2018 +0100
+
+    it wouldn't find the last change if it was an add or delete..
+
+commit 8a80b031a8654f128c1e161d321db044ed662a4e
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Fri Jun 8 09:03:34 2018 +0100
+
+    it wouldn't find the last change if it was an add or delete..
+
+commit 6f7ed7614a224fd5e92312a65b46976ff3445ffb
+Merge: 22cbd58 fc5d12c
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 08:58:50 2018 +0100
+
+    Merge branch 'master' of https://github.com/stevethehat/workinvestigations
+    
+    # Conflicts:
+    #       tests/ApiTests.cs
+
+commit a57123fae8ffb55d277e640e3619dfcd42a9ba7f
+Merge: 5ce7fe3 13f4783
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Fri Jun 8 08:58:50 2018 +0100
+
+    Merge branch 'master' of https://github.com/stevethehat/workinvestigations
+    
+    # Conflicts:
+    #       tests/ApiTests.cs
+
+commit 9ca064b4e0676423633b21e2340504b96c6522e8
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Thu Jun 7 21:51:55 2018 +0100
+
+    added added & deleted handlers
+
+commit 89121af817a2bb2a753b4a8ea16067c485ae3f3a
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Thu Jun 7 21:51:55 2018 +0100
+
+    added added & deleted handlers
+
+commit 1ce183fecb907a5eda192fe5522459b42514064c
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Thu Jun 7 21:26:57 2018 +0100
+
+    scanner work & tests..
+
+commit 8c856800b26c80db2afa37e050106bcd70969f0b
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Thu Jun 7 21:26:57 2018 +0100
+
+    scanner work & tests..
+
+commit 0a1fa5d98da57d5f04a67e9c1f6cff5861229f86
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Thu Jun 7 21:26:17 2018 +0100
+
+    added actual db
+
+commit 9190707825abb14874085c55751689f30a86c3f9
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Thu Jun 7 21:26:17 2018 +0100
+
+    added actual db
+
+commit fc5d12c723d8ab4c516fbc092014310ebd1d28d9
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Thu Jun 7 19:12:15 2018 +0100
+
+    working out how to lambdas
+
+commit 13f478361c53ba4e44a5da6941a6b4af4593615f
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Thu Jun 7 19:12:15 2018 +0100
+
+    working out how to lambdas
+
+commit 66e06c8e055c727e4361aca5f6ce6fea9adae34a
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Thu Jun 7 19:11:42 2018 +0100
+
+    lets break the report processing up a bit..
+
+commit 7a93fc551d51fcfe35ec90cf9bd38159be49636a
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Thu Jun 7 19:11:42 2018 +0100
+
+    lets break the report processing up a bit..
+
+commit 22cbd5811a4312063b045a6de1d1fc1f567d0130
+Merge: 677b7a1 a759915
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Thu Jun 7 09:08:19 2018 +0100
+
+    Merge branch 'master' of https://github.com/stevethehat/workinvestigations
+    
+    # Conflicts:
+    #       api/api.csproj
+    #       tests/ApiTests.cs
+    #       tests/tests.csproj
+
+commit 5ce7fe3d32c8981fa2e14d19cd30030ce42e3b0f
+Merge: bed0bfa 4c034a1
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Thu Jun 7 09:08:19 2018 +0100
+
+    Merge branch 'master' of https://github.com/stevethehat/workinvestigations
+    
+    # Conflicts:
+    #       api/api.csproj
+    #       tests/ApiTests.cs
+    #       tests/tests.csproj
+
+commit 677b7a164f1d807b37b49f27023f8b58fef966d8
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Thu Jun 7 09:06:19 2018 +0100
+
+    probably just whitespace.. god knows..
+
+commit bed0bfafc8054314d1d89ada892d0728e6eb80fc
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Thu Jun 7 09:06:19 2018 +0100
+
+    probably just whitespace.. god knows..
+
+commit a759915aca5f5f8cce5b17246f73f9a1ba96f62a
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Wed Jun 6 20:12:12 2018 +0100
+
+    added actual database
+
+commit 4c034a144e2626dc94dc4ad6830c0fea7b45b350
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Wed Jun 6 20:12:12 2018 +0100
+
+    added actual database
+
+commit 214b70c9d99a6ac5a6156a83430cd41d3bd6e9d4
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Wed Jun 6 19:40:00 2018 +0100
+
+    testing out fixtures and added util project for db stuff
+
+commit 77db0e184c3ab7bdce7f19fb139667000b86258e
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Wed Jun 6 19:40:00 2018 +0100
+
+    testing out fixtures and added util project for db stuff
+
+commit 9196787582ff35597635352ff8354b6c25fb0d01
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Wed Jun 6 16:57:47 2018 +0100
+
+    got an in memory TestServer up and running
+
+commit 3a9ab4be7db3d3f6112b786ad50825989457fecc
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Wed Jun 6 16:57:47 2018 +0100
+
+    got an in memory TestServer up and running
+
+commit 81d82c970fc1b037ecc74f293099bb0a1e77c967
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Wed Jun 6 14:19:12 2018 +0100
+
+    added test project
+
+commit 1ab8e79a0635c65e9346a8cbb943526192785839
+Author: Steve Lamb <steve.lamb@ibcos.co.uk>
+Date:   Wed Jun 6 14:19:12 2018 +0100
+
+    added test project
+
+commit 519f74e8c60bae062b753cc9ec7dd0d7bc830ca3
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Wed Jun 6 13:57:49 2018 +0100
+
+    a file to share things
+
+commit 1f90b9e7a85731c40f16b325adc7e09145cc94d8
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Wed Jun 6 13:57:49 2018 +0100
+
+    a file to share things
+
+commit d92c139bcdfe95500413f73f4094578d651e2aaa
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Tue Jun 5 10:02:44 2018 +0100
+
+    add link to app README
+
+commit 4d2f5a0ddcc8e8d6671c4bc2d5f575306a5987d2
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Tue Jun 5 10:02:44 2018 +0100
+
+    add link to app README
+
+commit 6f2e00a33a4ee6fd72c7fb83b8394030e676e5ce
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Tue Jun 5 10:01:26 2018 +0100
+
+    app project README
+
+commit d445e266b9c1886ef114e314b70df6a90a981e5c
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Tue Jun 5 10:01:26 2018 +0100
+
+    app project README
+
+commit 1b42b7261cb20940fb2abc756fcbe4136ae0ceb6
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Tue Jun 5 10:01:10 2018 +0100
+
+    added axios
+
+commit 9df299a6097c8d466aef95cd552a674fd241a88a
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Tue Jun 5 10:01:10 2018 +0100
+
+    added axios
+
+commit f7e8be9fe72f7c051526e7bf6fa7aff2ed0f0e0e
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Tue Jun 5 09:20:56 2018 +0100
+
+    extension for encodings
+
+commit 9c93bf98ba9d1f6680340b01e1298b9def13b9c6
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Tue Jun 5 09:20:56 2018 +0100
+
+    extension for encodings
+
+commit 8d1a56e6d75ce5df55d84a4a247ebcf4fcdf68a4
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Tue Jun 5 09:20:15 2018 +0100
+
+    initial commit of app
+
+commit 0855897480e0f3bdf24065aa55f1d5f947f36820
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Tue Jun 5 09:20:15 2018 +0100
+
+    initial commit of app
+
+commit 057ffc26f957af90ba2df968524128162d247877
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Tue Jun 5 09:13:09 2018 +0100
+
+    split README into projects
+
+commit 0074e9f29195f75e4099e5279f3765f4b87a5214
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Tue Jun 5 09:13:09 2018 +0100
+
+    split README into projects
+
+commit 54a569b9de22ba5cd29ab61a75111a55982fd793
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 22:13:22 2018 +0100
+
+    added a sub README for the api project
+
+commit 6ec19d8fef5f13c87a11516e222bff0e6ac279e9
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 22:13:22 2018 +0100
+
+    added a sub README for the api project
+
+commit 19c0e50d381dd9ba92154afbbd8d35ea3186aa7a
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 22:04:42 2018 +0100
+
+    added .net core extensions needed
+
+commit 7bcc779ce4e916dcbcbfbf660c778ad4cc77c98d
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 22:04:42 2018 +0100
+
+    added .net core extensions needed
+
+commit 856103f066703df48a624992d30240fff02a3453
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 21:58:21 2018 +0100
+
+    trying logging.. still cant work out where it is going tho..
+
+commit 16efa0fbc00f47cdb8ee5a7b55e0124e39816b81
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 21:58:21 2018 +0100
+
+    trying logging.. still cant work out where it is going tho..
+
+commit b37d1b9cdbf5074aa8a92e9c1a603389471f155a
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 21:50:53 2018 +0100
+
+    launching the browser gets annoying..
+
+commit b1fc563bb916ad842090772dc3a2610e33d78786
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 21:50:53 2018 +0100
+
+    launching the browser gets annoying..
+
+commit a4b6684cdedf129a778aaae9a64ede863011ee97
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 21:12:46 2018 +0100
+
+    vscode config files
+
+commit 2c813598f9407522b10ec48b7e6d8e6e262e003e
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 21:12:46 2018 +0100
+
+    vscode config files
+
+commit 68b816a2fbd6ad6e2e059149f1abb1b62bbe9e0c
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 21:10:45 2018 +0100
+
+    renamed to be more generic to test all sorts of WebAPI bits.
+
+commit 96fe9b8f24f7a71c60925d65af368c9a10d7b612
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 21:10:45 2018 +0100
+
+    renamed to be more generic to test all sorts of WebAPI bits.
+
+commit 33dc739a91c88878421241935b62e611ad8bf779
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 21:09:03 2018 +0100
+
+    renamed file..
+
+commit 129315f9aafa21c8dabbe5aa232d09712ed5b417
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 21:09:03 2018 +0100
+
+    renamed file..
+
+commit 330af34748e18ecc8c636b9ad512edbe5e9d2775
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 21:08:40 2018 +0100
+
+    added Dapper
+
+commit a62bf7578e902dc468f7d78eafdc59f3d20c8a4e
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 21:08:40 2018 +0100
+
+    added Dapper
+
+commit b7a68021e8e95bb83cd79866aed66922852b3f94
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 21:08:15 2018 +0100
+
+    just a comment
+
+commit 6da9bc2b5907a8f88903129b0f52daac362a2956
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 21:08:15 2018 +0100
+
+    just a comment
+
+commit b6b8ccf9593b3b9feef016d5c5f0e8ea1b3ca8ca
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 21:07:46 2018 +0100
+
+    same as last commit.. no idea what happened there!!
+
+commit 8c77bc13871da83a77fb151f1bcc9796480c3b46
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 21:07:46 2018 +0100
+
+    same as last commit.. no idea what happened there!!
+
+commit e6ca80a06715c83c585bee287709762ce3f9b2ce
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 21:07:23 2018 +0100
+
+    added packages
+
+commit dfde2744863fc0887e8e65b0c55e6108feac849b
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 21:07:23 2018 +0100
+
+    added packages
+
+commit daf69bc72c8bc0bf74353bdd4c83981db60c67ce
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 21:05:33 2018 +0100
+
+    added packages
+
+commit e08f58696f903a3946f09d9e33848dfc7d9c80ae
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 21:05:33 2018 +0100
+
+    added packages
+
+commit 666d1430a4d9ff2f980077b840218f6868d4f14a
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 21:01:58 2018 +0100
+
+    wording change
+
+commit abf58b8b93628b2a8de832c4d5e5ce7fee2227d5
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 21:01:58 2018 +0100
+
+    wording change
+
+commit 7d1a9e147be01e36fcb48eabe62075c6410d4f9b
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 21:00:16 2018 +0100
+
+    setup & installation notes
+
+commit 28a300483988c285d3eaf6791a8b055111bfa38e
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 21:00:16 2018 +0100
+
+    setup & installation notes
+
+commit 98c10a3be3442cd7b5189346949e6e0e62a203c3
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 20:23:11 2018 +0100
+
+    created an async get
+
+commit 4efdddef6b61e28f1bf8420ba793e14e5eb10a67
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 20:23:11 2018 +0100
+
+    created an async get
+
+commit 5565565d50a968cdbe7ccdf4ab31d09d6e0a8504
+Merge: 5a390fd 8bba9c0
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 20:03:48 2018 +0100
+
+    Merge branch 'master' of https://github.com/stevethehat/workinvestigations
+
+commit 652a257166b84987e1ea7b0fc1870edfd64f300d
+Merge: 5a390fd ad8bc71
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 20:03:48 2018 +0100
+
+    Merge branch 'master' of https://github.com/stevethehat/workinvestigations
+
+commit 5a390fd63ae2b96b7cf3ca6a52ca4282afbca595
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 20:03:05 2018 +0100
+
+    gave class more sensible name
+
+commit 8bba9c051479d35ef631a13dea90bc4e45dbd5ed
+Author: stevethehat <stevethehat@gmail.com>
+Date:   Mon Jun 4 19:59:44 2018 +0100
+
+    Delete launch.json
+    
+    dont need these files
+
+commit ad8bc7100d0e417148ea93c6b318669655186efa
+Author: stevethehat <stevethehat@gmail.com>
+Date:   Mon Jun 4 19:59:44 2018 +0100
+
+    Delete launch.json
+    
+    dont need these files
+
+commit f5b723f18fe5340a24a7e419bf09a21dfdc95a64
+Author: stevethehat <stevethehat@gmail.com>
+Date:   Mon Jun 4 19:59:24 2018 +0100
+
+    Delete tasks.json
+    
+    dont need these files
+
+commit 2ec8b743edff092e8f9495089ad932c0a7f03823
+Author: stevethehat <stevethehat@gmail.com>
+Date:   Mon Jun 4 19:59:24 2018 +0100
+
+    Delete tasks.json
+    
+    dont need these files
+
+commit b23c4eef78d6ee85ef30304f03343908ec1285d2
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 19:58:12 2018 +0100
+
+    added codes config
+
+commit 777921abb36bb6251dd77b18ba3af5d0522aa2f0
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 19:56:29 2018 +0100
+
+    testing creating a async webapi
+
+commit 40b18b6c91738df7789266fdb6bc84a6fdf3ebfa
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 19:55:20 2018 +0100
+
+    testing character encodings
+
+commit ed2d1e02cff8b6ceffbd7ab1b2324b4de0301aa7
+Author: Steve Lamb <steve@zenlogic.co.uk>
+Date:   Mon Jun 4 19:51:18 2018 +0100
+
+    first commit

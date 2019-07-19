@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+        
+            "cwd": "${workspaceFolder}",
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "externalTerminal": true,
+            "program": "${file}",
+            "console": "integratedTerminal"
+        }
+    ]
+}

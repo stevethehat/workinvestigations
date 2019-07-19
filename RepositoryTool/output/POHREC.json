@@ -1,0 +1,1623 @@
+{
+  "properties": {
+    "type": "structure",
+    "fields": [
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_ORD_NO",
+          "template": {
+            "name": "PURCHASE_ORDER",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "PURCHASE_ORDER",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "8",
+                "description": "Purchase Order Number",
+                "prompt": "Order No.:",
+                "infoline": "Enter the Purchase Order Number",
+                "odbcname": "PO_NUMBER",
+                "methods": {
+                  "Drill": "poh_drill",
+                  "Change": "poh_change"
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_PREFIX",
+          "template": {
+            "name": "SUPPLIER_PREFIX",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "SUPPLIER_PREFIX",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "2",
+                "description": "Supplier Prefix Code",
+                "prompt": "Prefix Code:",
+                "infoline": "Enter the Supplier Prefix Code",
+                "odbcname": "PREFIX",
+                "methods": {
+                  "Drill": "pre_drill",
+                  "Change": "pre_change",
+                  "Display": "pre_display"
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_ORD_DAT",
+          "template": {
+            "name": "TBASEDATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEDATE",
+                "fieldtype": "DATE",
+                "size": "8",
+                "description": "Base d8 date template",
+                "prompt": "Date:",
+                "infoline": "Enter the Date",
+                "methods": {
+                  "Drill": "calendar_drill",
+                  "Display": "date_display"
+                }
+              }
+            }
+          },
+          "description": "Order Date",
+          "odbcname": "ORDER_DATE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_REF_NO",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "10",
+          "description": "Account Reference",
+          "prompt": "Account Ref:",
+          "infoline": "Enter the Account Reference",
+          "odbcname": "ACCOUNT_REF"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_ADV_NO",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "10",
+          "description": "Advice/Invoice Number",
+          "prompt": "Advice/Invoice No.:",
+          "infoline": "Enter the Advice/Invoice Number",
+          "odbcname": "ADVICE_INV_NO"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_DESC",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "20",
+          "description": "Goods description",
+          "prompt": "Goods Desc:",
+          "infoline": "Enter the Goods Description",
+          "odbcname": "GOODS_DESCRIPTION"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_MAIN_DEP",
+          "template": {
+            "name": "DEPOT_CODE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "DEPOT_CODE",
+                "parent": {
+                  "name": "TBASE_CHAR",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_CHAR",
+                      "parent": {
+                        "name": "TBASEALPHA",
+                        "structure": {
+                          "properties": {
+                            "type": "template",
+                            "name": "TBASEALPHA",
+                            "fieldtype": "ALPHA",
+                            "size": "1",
+                            "description": "Base alphanumeric template",
+                            "prompt": "Value:",
+                            "infoline": "Enter an Alphanumeric Value",
+                            "font": "ALPHA_FONT",
+                            "promptfont": "PROMPT_FONT"
+                          }
+                        }
+                      },
+                      "font": "CHAR_FONT"
+                    }
+                  }
+                },
+                "description": "Depot code",
+                "prompt": "Depot Code:",
+                "infoline": "Enter the Depot Code",
+                "methods": {
+                  "Drill": "dep_drill",
+                  "Change": "dep_change",
+                  "Display": "dep_display"
+                }
+              }
+            }
+          },
+          "description": "Order raised on Depot",
+          "odbcname": "ORD_RAISED_DEPOT"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_STATUS",
+          "template": {
+            "name": "TBASE_ENUM",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASE_ENUM",
+                "fieldtype": "DECIMAL",
+                "size": "1",
+                "description": "Enumerated d1 Field",
+                "infoline": "Select the Option Required",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT",
+                "selectionlist": " 1 2 0  Entries \"Entry 1\""
+              }
+            }
+          },
+          "description": "Order Status",
+          "prompt": "Order Status:",
+          "infoline": "Select the Order Status",
+          "odbcname": "ORDER_STATUS",
+          "selectionlist": " 1 2 0  Entries \"New Order\", \"Order Printed\",",
+          "longdescription": [
+            "Export order extracted"
+          ]
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_STATUS_ALW",
+          "template": {
+            "name": "TBASE_ENUM",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASE_ENUM",
+                "fieldtype": "DECIMAL",
+                "size": "1",
+                "description": "Enumerated d1 Field",
+                "infoline": "Select the Option Required",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT",
+                "selectionlist": " 1 2 0  Entries \"Entry 1\""
+              }
+            }
+          },
+          "description": "Order Status"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_LAST_LINE",
+          "template": {
+            "name": "PURCHASE_ORDER_LINE_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "PURCHASE_ORDER_LINE_NO",
+                "parent": {
+                  "name": "LINE_NO",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "LINE_NO",
+                      "parent": {
+                        "name": "TBASENUMERIC",
+                        "structure": {
+                          "properties": {
+                            "type": "template",
+                            "name": "TBASENUMERIC",
+                            "fieldtype": "DECIMAL",
+                            "size": "10",
+                            "description": "Base numeric template",
+                            "prompt": "Value:",
+                            "infoline": "Enter a Numeric Value",
+                            "font": "NUMBER_FONT",
+                            "promptfont": "PROMPT_FONT"
+                          }
+                        }
+                      },
+                      "size": "4",
+                      "description": "Line Number",
+                      "prompt": "Line:",
+                      "odbcname": "LINE_NUMBER"
+                    }
+                  }
+                },
+                "size": "4",
+                "prompt": "Line No.:",
+                "infoline": "Enter the Purchase Order Line Number",
+                "odbcname": "PO_LINE_NUMBER"
+              }
+            }
+          },
+          "description": "Last line number used",
+          "odbcname": "PO_LAST_LINE_NO"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_DESP_BY",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "15",
+          "description": "Despatched by",
+          "prompt": "Despatched by:",
+          "infoline": "Enter the Name of the Despatcher",
+          "odbcname": "DESPATCHED_BY"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_EMERG",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Emergency Order:",
+          "prompt": "Emergency Order:",
+          "odbcname": "EMERG_ORDER"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_EMERG_ALW",
+          "template": {
+            "name": "YES_NO_ALW",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO_ALW",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No"
+              }
+            }
+          },
+          "description": "Emergency Order:",
+          "prompt": "Emergency Order:"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_REQ_DAT",
+          "template": {
+            "name": "TBASEDATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEDATE",
+                "fieldtype": "DATE",
+                "size": "8",
+                "description": "Base d8 date template",
+                "prompt": "Date:",
+                "infoline": "Enter the Date",
+                "methods": {
+                  "Drill": "calendar_drill",
+                  "Display": "date_display"
+                }
+              }
+            }
+          },
+          "description": "Required date",
+          "prompt": "Required Date:",
+          "infoline": "Enter the Required Date",
+          "odbcname": "REQUIRED_DATE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_EXP_COD",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "2",
+          "description": "Supplier Export Code",
+          "prompt": "Supplier Export Code:",
+          "infoline": "Enter the Supplier Export Code",
+          "odbcname": "SUPP_EXPORT_CODE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_SUPP_COD",
+          "template": {
+            "name": "SUPPLIER_ACCOUNT",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "SUPPLIER_ACCOUNT",
+                "parent": {
+                  "name": "TBASENUMERIC",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASENUMERIC",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base numeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter a Numeric Value",
+                      "font": "NUMBER_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "4",
+                "description": "Supplier Account",
+                "prompt": "Supplier A/c.:",
+                "infoline": "Enter the Supplier Account Number",
+                "odbcname": "SUPP_ACCOUNT_NO"
+              }
+            }
+          },
+          "description": "Supplier account number",
+          "odbcname": "SUPP_ACCOUNT"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_IDT_ACC",
+          "fieldtype": "ALPHA",
+          "size": "4",
+          "description": "For inter depot transfers, this is"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_IDT_TODP",
+          "fieldtype": "ALPHA",
+          "size": "1",
+          "description": "90 = 0  91 = TO depot 1 through Z"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_IDT_FRDP",
+          "fieldtype": "ALPHA",
+          "size": "1",
+          "description": "92 = 0  93 = FROM depot 1 through Z"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_SUP_NAM",
+          "template": {
+            "name": "TBASENAME",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENAME",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "32",
+                "description": "Alphanumeric name type",
+                "prompt": "Name:",
+                "infoline": "Enter the Name",
+                "methods": {
+                  "Change": "capitalise_change"
+                }
+              }
+            }
+          },
+          "description": "Supplier Name",
+          "prompt": "Supplier Name:",
+          "infoline": "Enter the Supplier Name",
+          "odbcname": "SUPPLIER_NAME"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_I_C_D",
+          "template": {
+            "name": "TBASE_ENUM",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASE_ENUM",
+                "fieldtype": "DECIMAL",
+                "size": "1",
+                "description": "Enumerated d1 Field",
+                "infoline": "Select the Option Required",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT",
+                "selectionlist": " 1 2 0  Entries \"Entry 1\""
+              }
+            }
+          },
+          "description": "Trans Type",
+          "prompt": "Transaction Type:",
+          "infoline": "Select the Transaction Type",
+          "odbcname": "TRANS_TYPE",
+          "selectionlist": " 0 0 0  Entries \"Invoice\", \"Credit Note\", \"IDT not allocated\",",
+          "longdescription": [
+            "IDT allocated to POS"
+          ]
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_I_C_D_ALW",
+          "template": {
+            "name": "TBASE_ENUM",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASE_ENUM",
+                "fieldtype": "DECIMAL",
+                "size": "1",
+                "description": "Enumerated d1 Field",
+                "infoline": "Select the Option Required",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT",
+                "selectionlist": " 1 2 0  Entries \"Entry 1\""
+              }
+            }
+          },
+          "description": "Trans Type",
+          "prompt": "Transaction Type:",
+          "infoline": "Select the Transaction Type"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_FD_SF",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "description": "Ford order type",
+          "odbcname": "FORD_ORDER_TYPE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_FD_TR",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "description": "Ford Transport type",
+          "odbcname": "FORD_TRANS_CODE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_ORD_TYP",
+          "template": {
+            "name": "PUR_ORD_TYPE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "PUR_ORD_TYPE",
+                "parent": {
+                  "name": "TBASE_CHAR",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_CHAR",
+                      "parent": {
+                        "name": "TBASEALPHA",
+                        "structure": {
+                          "properties": {
+                            "type": "template",
+                            "name": "TBASEALPHA",
+                            "fieldtype": "ALPHA",
+                            "size": "1",
+                            "description": "Base alphanumeric template",
+                            "prompt": "Value:",
+                            "infoline": "Enter an Alphanumeric Value",
+                            "font": "ALPHA_FONT",
+                            "promptfont": "PROMPT_FONT"
+                          }
+                        }
+                      },
+                      "font": "CHAR_FONT"
+                    }
+                  }
+                },
+                "description": "Purchase Order Type",
+                "prompt": "Order Type:",
+                "infoline": "Enter A-Z or @ for Default",
+                "methods": {
+                  "Drill": "pot_drill",
+                  "Change": "pot_change",
+                  "Display": "pot_display"
+                }
+              }
+            }
+          },
+          "prompt": "Purchase Order Type:",
+          "infoline": "Enter the Purchase Order Type"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_MAN_CODE",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "2",
+          "description": "Manufacturers Order Type Code(Powercomm)",
+          "odbcname": "MANUFACT_ORD_TYPE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_BACK_ORDER",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Back Orders Acceptable From Supplier",
+          "prompt": "Back Orders Acceptable:",
+          "odbcname": "BACK_ORDERS_FLAG"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_CREATE_USER",
+          "template": {
+            "name": "OPERATOR_INITIALS",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "OPERATOR_INITIALS",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "3",
+                "description": "Operator initials",
+                "prompt": "Operator:",
+                "infoline": "Enter the Operator Initials",
+                "methods": {
+                  "Drill": "acc_drill",
+                  "Change": "acc_change",
+                  "Display": "acc_display"
+                }
+              }
+            }
+          },
+          "description": "User who created order",
+          "infoline": "User Initials",
+          "odbcname": "CREATE_USER"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_DEL_POINT",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "4",
+          "description": "Powercomm delivery point - ransomes",
+          "odbcname": "POWERCOMM_DEL_POINT"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_CUR_COD",
+          "template": {
+            "name": "CURRENCY_CODE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "CURRENCY_CODE",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "3",
+                "description": "Currency code",
+                "prompt": "Currency Code:",
+                "infoline": "Enter the Currency Code or <Enter> for Lookup",
+                "methods": {
+                  "Drill": "fcf_drill",
+                  "Change": "fcf_change",
+                  "Display": "fcf_display"
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_CUR_CNV",
+          "template": {
+            "name": "CONVERSION_RATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "CONVERSION_RATE",
+                "parent": {
+                  "name": "TBASENUMERIC",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASENUMERIC",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base numeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter a Numeric Value",
+                      "font": "NUMBER_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "11",
+                "precision": "6",
+                "description": "Conversion Rate",
+                "prompt": "Conversion Rate:",
+                "infoline": "Enter the Conversion Rate",
+                "odbcname": "CONVERSION_RATE"
+              }
+            }
+          },
+          "description": "Conversion rate at GRN"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_GRN",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "GRN Posted",
+          "odbcname": "GRN_POSTED_FLAG"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_COST_BASE",
+          "template": {
+            "name": "ORDER_COST_BASE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "ORDER_COST_BASE",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Cost Base, 0-Cost, 1-Retail",
+                "odbcname": "ORDER_COST_BASE",
+                "selectionlist": " 1 2 0  Entries \"Cost\", \"Retail\""
+              }
+            }
+          },
+          "description": "Cost Base"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_DISC_PERC",
+          "template": {
+            "name": "TBASEPERCENTAGE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEPERCENTAGE",
+                "parent": {
+                  "name": "TBASENUMERIC",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASENUMERIC",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base numeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter a Numeric Value",
+                      "font": "NUMBER_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "4",
+                "description": "Percentage base template",
+                "prompt": "Percentage%:",
+                "infoline": "Enter a Percentage Amount",
+                "methods": {
+                  "Change": "percent_change",
+                  "Display": "percent_display",
+                  "Editfmt": "percent_edit"
+                }
+              }
+            }
+          },
+          "description": "Discount % on Retail",
+          "odbcname": "DISC_PERC"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_DISC_PERC_DD",
+          "template": {
+            "name": "TBASENUMERIC",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENUMERIC",
+                "fieldtype": "DECIMAL",
+                "size": "10",
+                "description": "Base numeric template",
+                "prompt": "Value:",
+                "infoline": "Enter a Numeric Value",
+                "font": "NUMBER_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "2"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_DISC_PERC_NN",
+          "template": {
+            "name": "TBASENUMERIC",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENUMERIC",
+                "fieldtype": "DECIMAL",
+                "size": "10",
+                "description": "Base numeric template",
+                "prompt": "Value:",
+                "infoline": "Enter a Numeric Value",
+                "font": "NUMBER_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "2"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_TEMPLATE",
+          "template": {
+            "name": "IMP_TEMPLATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "IMP_TEMPLATE",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "6",
+                "description": "Import Code Template",
+                "prompt": "Import Template:",
+                "infoline": "Enter the Import Template Code",
+                "odbcname": "IMPORT_CODE",
+                "methods": {
+                  "Drill": "ith_drill",
+                  "Change": "ith_change",
+                  "Display": "ith_display"
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_SHIP_DIRECT",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Ship Direct to Dealer",
+          "prompt": "Ship Direct to Dealer?:",
+          "odbcname": "SHIP_TO_DEALER"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_INV_IN_PROGRESS",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Invoice Confirmation In Progress",
+          "odbcname": "INV_CONF_IN_PROGRESS"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_SKI_REF",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "10",
+          "description": "Stored Reference",
+          "odbcname": "STORED_REF"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_SOURCE",
+          "template": {
+            "name": "TBASE_ENUM",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASE_ENUM",
+                "fieldtype": "DECIMAL",
+                "size": "1",
+                "description": "Enumerated d1 Field",
+                "infoline": "Select the Option Required",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT",
+                "selectionlist": " 1 2 0  Entries \"Entry 1\""
+              }
+            }
+          },
+          "description": "Order Source",
+          "selectionlist": " 1 2 0  Entries \"' '\", \"WSJ\", \"POS\""
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_CARRIER",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "10",
+          "description": "CNH ASAP Carrier",
+          "prompt": "CNH ASAP Carrier:"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_SHIP_TO",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "10",
+          "description": "CNH ASAP Ship to Code",
+          "prompt": "CNH ASAP  Ship-To:"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_PRO_SUP_DATE",
+          "template": {
+            "name": "TBASEDATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEDATE",
+                "fieldtype": "DATE",
+                "size": "8",
+                "description": "Base d8 date template",
+                "prompt": "Date:",
+                "infoline": "Enter the Date",
+                "methods": {
+                  "Drill": "calendar_drill",
+                  "Display": "date_display"
+                }
+              }
+            }
+          },
+          "description": "Required date",
+          "prompt": "Promised Date:",
+          "infoline": "Enter the Promised Date",
+          "odbcname": "PROMISED_DATE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_INTER_CMP",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Inter Company Order"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_LST_GRN_DATE",
+          "template": {
+            "name": "TBASEDATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEDATE",
+                "fieldtype": "DATE",
+                "size": "8",
+                "description": "Base d8 date template",
+                "prompt": "Date:",
+                "infoline": "Enter the Date",
+                "methods": {
+                  "Drill": "calendar_drill",
+                  "Display": "date_display"
+                }
+              }
+            }
+          },
+          "description": "Date of Last Receipt (any line)"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_SUPP_PROMO",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "10",
+          "description": "Supplier promotion Code"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_PART_EMERGENCY_WAIT",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Wait for Supplier's Invoice"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_SUPP_ORDER",
+          "template": {
+            "name": "TBASEALPHA",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEALPHA",
+                "fieldtype": "ALPHA",
+                "size": "1",
+                "description": "Base alphanumeric template",
+                "prompt": "Value:",
+                "infoline": "Enter an Alphanumeric Value",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "20",
+          "description": "Supplier Order Number",
+          "prompt": "Supp.Order:",
+          "infoline": "Enter the Supplier's Order Number",
+          "odbcname": "SUPP_ORD_NO"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_SUPP_SOURCE",
+          "template": {
+            "name": "TBASE_ENUM",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASE_ENUM",
+                "fieldtype": "DECIMAL",
+                "size": "1",
+                "description": "Enumerated d1 Field",
+                "infoline": "Select the Option Required",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT",
+                "selectionlist": " 1 2 0  Entries \"Entry 1\""
+              }
+            }
+          },
+          "size": "2",
+          "description": "Supplier Order Source",
+          "prompt": "Supp. Source:",
+          "odbcname": "SUPP_ORD_SOURCE",
+          "selectionlist": " 1 2 0  Entries \"Gold\", \"JD Prism\", \"JD Other\""
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "POH_SPARE",
+          "template": {
+            "name": "SPARE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "SPARE",
+                "fieldtype": "ALPHA",
+                "size": "1000",
+                "description": "Spare"
+              }
+            }
+          },
+          "size": "263"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "POH_ORD",
+          "description": "Order No"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "POH_PFX_ORD",
+          "description": "Prefix / Order No"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "POH_SUPP_ORD",
+          "description": "Supplier Account / Order No"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "POH_ORD_SUPP"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "F_POH_CURRENCY",
+          "description": "Foreign Currency"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "F_POH_INT_COMM",
+          "description": "POrder Internal Comment"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "F_POH_EXT_COMM",
+          "description": "POrder External Comment"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "F_POH_USER",
+          "description": "User Initials"
+        }
+      }
+    ],
+    "name": "POHREC",
+    "dbl": "",
+    "isam": "",
+    "description": "Purchase Order Header Record"
+  }
+}

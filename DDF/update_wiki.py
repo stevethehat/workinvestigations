@@ -8,18 +8,8 @@ from mwclient import Site
 
 # this requires 'wikimarkup' library, install it from the terminal using this command:
 # pip install py-wikimarkup
-#from wikimarkup import parse
 
-print "Logging in..."
-
-#wiki_site = Site("kb.ibcos.co.uk", path="/w/")
-#wiki_site.login("stevelamb", "bh49bb")
-
-#
-
-# log in
-wiki_site = Site(("http", "localhost"), path="/mediawiki/")
-wiki_site.login("steve", "V4l3n+!n4")
+print("Logging in...")
 
 # prerec, pmfrec, pcdrec, pcgrec, ctfrec, cmfrec
 definitions = {
@@ -30,7 +20,6 @@ definitions = {
     "ctfrec": { },
     #"cmfrec": { }
 }
-
 
 def get_property(properties, key, default = "NOT SET"):
     if properties.has_key(key):
@@ -134,7 +123,7 @@ def properties_list(properties):
     return result
 
 def write_template_definition(name, output_type, properties, back_link = None):
-    print "Updating Template/Field %s - %s" % (output_type, name)
+    print("Updating Template/Field {} - {}".format(output_type, name))
     (properties, hierarchy_path) = merge_properties(properties)
     wiki.start_page()
 
@@ -193,11 +182,10 @@ def write_template_definition(name, output_type, properties, back_link = None):
 
     wiki.update_wiki_page("DDFReference_%s_%s" % (output_type, name))
 
-wiki = wiki_writer.WikiWriter(wiki_site)
+wiki = wiki_writer.WikiWriter("http", "localhost", "/mediawiki/", "stevelamb", "V4l3n+!n4")
 
 for definition_name in definitions:
     writer_record_type_definition(definition_name)
-
 
 wiki.start_page()
 section = wiki.add_section(2, "DDR Reference")
@@ -216,6 +204,6 @@ for template in templates:
 
 
 
-print ""
-print "DONE"
+print("")
+print("DONE")
 #pprint.pprint(extensionLinks)

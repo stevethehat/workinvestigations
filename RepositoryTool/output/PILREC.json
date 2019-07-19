@@ -1,0 +1,2146 @@
+{
+  "properties": {
+    "type": "structure",
+    "fields": [
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_ADVICE_NO",
+          "template": {
+            "name": "ACCOUNT_REFERENCE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "ACCOUNT_REFERENCE",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "6",
+                "description": "Accounts reference",
+                "prompt": "Ref No.:",
+                "infoline": "Enter the Document Reference - <Enter> for Auto",
+                "odbcname": "DOCUMENT_REF",
+                "methods": {
+                  "Change": "auto_ref_change"
+                }
+              }
+            }
+          },
+          "description": "Advice note number",
+          "odbcname": "ADVICE_NO"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_LIN_NO",
+          "template": {
+            "name": "LINE_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "LINE_NO",
+                "parent": {
+                  "name": "TBASENUMERIC",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASENUMERIC",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base numeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter a Numeric Value",
+                      "font": "NUMBER_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "4",
+                "description": "Line Number",
+                "prompt": "Line:",
+                "odbcname": "LINE_NUMBER"
+              }
+            }
+          },
+          "description": "Line number",
+          "odbcname": "LINE_NO"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_KEY",
+          "fieldtype": "ALPHA",
+          "size": "10",
+          "description": "primary key",
+          "prompt": "Value:",
+          "infoline": "Enter an Alphanumeric Value",
+          "font": "ALPHA_FONT",
+          "promptfont": "PROMPT_FONT"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_PART_NO",
+          "template": {
+            "name": "PART_NUMBER",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "PART_NUMBER",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "22",
+                "description": "Part Number",
+                "prompt": "Part No.:",
+                "infoline": "Enter the Part Number",
+                "odbcname": "PART_NUMBER",
+                "methods": {
+                  "Arrive": "pmf_arrive",
+                  "Leave": "pmf_leave",
+                  "Drill": "pmf_popdrill",
+                  "Hyperlink": "pmf_hyper",
+                  "Change": "pmf_change",
+                  "Display": "pmf_display"
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_PART_DESC",
+          "template": {
+            "name": "PART_DESCRIPTION",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "PART_DESCRIPTION",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "22",
+                "description": "Part Description",
+                "prompt": "Description:",
+                "infoline": "Enter the Part Description",
+                "odbcname": "PART_DESCRIPTION"
+              }
+            }
+          },
+          "description": "Part description",
+          "odbcname": "PART_DESC"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_Q_QTY_SOLD",
+          "template": {
+            "name": "PART_QTY",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "PART_QTY",
+                "parent": {
+                  "name": "TBASENUMERIC",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASENUMERIC",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base numeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter a Numeric Value",
+                      "font": "NUMBER_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "9",
+                "precision": "3",
+                "description": "Part Quantity",
+                "prompt": "Quantity:",
+                "infoline": "Enter the Quantity",
+                "odbcname": "QUANTITY",
+                "methods": {
+                  "Change": "qty_change",
+                  "Display": "qty_display",
+                  "Editfmt": "qty_edit"
+                }
+              }
+            }
+          },
+          "description": "quantity sold",
+          "odbcname": "QTY_SOLD"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_F_SAL_PRICE",
+          "template": {
+            "name": "PRICE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "PRICE",
+                "parent": {
+                  "name": "CURRENCY_NON_ARRAYED",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "CURRENCY_NON_ARRAYED",
+                      "parent": {
+                        "name": "TBASECURRENCY",
+                        "structure": {
+                          "properties": {
+                            "type": "template",
+                            "name": "TBASECURRENCY",
+                            "fieldtype": "DECIMAL",
+                            "size": "10",
+                            "description": "Base currency template",
+                            "prompt": "Amount:",
+                            "infoline": "Enter a Currency Amount",
+                            "font": "CURRENCY_PROMPT",
+                            "promptfont": "PROMPT_FONT",
+                            "methods": {
+                              "Display": "CURRENCY_DISPLAY"
+                            }
+                          }
+                        }
+                      },
+                      "description": "10 digit non arrayed currency template",
+                      "methods": {
+                        "Change": "CURRENCY_NA_CHANGE",
+                        "Display": "CURRENCY_NA_DISPLAY",
+                        "Editfmt": "CURRENCY_NA_EDIT"
+                      }
+                    }
+                  }
+                },
+                "description": "Price",
+                "prompt": "Price:",
+                "infoline": "Enter a Price",
+                "odbcname": "PRICE"
+              }
+            }
+          },
+          "description": "sales value (FC)",
+          "odbcname": "FC_SALES_VALUE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_3_COST_PRICE",
+          "template": {
+            "name": "AVG_PRICE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "AVG_PRICE",
+                "parent": {
+                  "name": "PRICE",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "PRICE",
+                      "parent": {
+                        "name": "CURRENCY_NON_ARRAYED",
+                        "structure": {
+                          "properties": {
+                            "type": "template",
+                            "name": "CURRENCY_NON_ARRAYED",
+                            "parent": {
+                              "name": "TBASECURRENCY",
+                              "structure": {
+                                "properties": {
+                                  "type": "template",
+                                  "name": "TBASECURRENCY",
+                                  "fieldtype": "DECIMAL",
+                                  "size": "10",
+                                  "description": "Base currency template",
+                                  "prompt": "Amount:",
+                                  "infoline": "Enter a Currency Amount",
+                                  "font": "CURRENCY_PROMPT",
+                                  "promptfont": "PROMPT_FONT",
+                                  "methods": {
+                                    "Display": "CURRENCY_DISPLAY"
+                                  }
+                                }
+                              }
+                            },
+                            "description": "10 digit non arrayed currency template",
+                            "methods": {
+                              "Change": "CURRENCY_NA_CHANGE",
+                              "Display": "CURRENCY_NA_DISPLAY",
+                              "Editfmt": "CURRENCY_NA_EDIT"
+                            }
+                          }
+                        }
+                      },
+                      "description": "Price",
+                      "prompt": "Price:",
+                      "infoline": "Enter a Price",
+                      "odbcname": "PRICE"
+                    }
+                  }
+                },
+                "size": "11",
+                "description": "Average Price - to become 3dp??",
+                "prompt": "Average Price:",
+                "infoline": "Enter the Average Cost Price",
+                "odbcname": "AVERAGE_PRICE"
+              }
+            }
+          },
+          "description": "cost price/total cost if hort part",
+          "odbcname": "COST_PRICE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_VAT_CODE",
+          "template": {
+            "name": "VAT_CODE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "VAT_CODE",
+                "parent": {
+                  "name": "TBASENUMERIC",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASENUMERIC",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base numeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter a Numeric Value",
+                      "font": "NUMBER_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "2",
+                "description": "VAT Code",
+                "prompt": "VAT Code:",
+                "infoline": "Enter the V.A.T. Code",
+                "methods": {
+                  "Drill": "vat_drill",
+                  "Change": "vat_change",
+                  "Display": "vat_display"
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_STATUS",
+          "template": {
+            "name": "TBASE_ENUM",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASE_ENUM",
+                "fieldtype": "DECIMAL",
+                "size": "1",
+                "description": "Enumerated d1 Field",
+                "infoline": "Select the Option Required",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT",
+                "selectionlist": " 1 2 0  Entries \"Entry 1\""
+              }
+            }
+          },
+          "description": "Status",
+          "odbcname": "ADVICE_STATUS",
+          "selectionlist": " 1 2 0  Entries \"Entered\", \"Advice Printed\",",
+          "longdescription": [
+            "Invoice Printed"
+          ]
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_LDISC",
+          "template": {
+            "name": "TBASEPERCENTAGE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASEPERCENTAGE",
+                "parent": {
+                  "name": "TBASENUMERIC",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASENUMERIC",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base numeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter a Numeric Value",
+                      "font": "NUMBER_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "4",
+                "description": "Percentage base template",
+                "prompt": "Percentage%:",
+                "infoline": "Enter a Percentage Amount",
+                "methods": {
+                  "Change": "percent_change",
+                  "Display": "percent_display",
+                  "Editfmt": "percent_edit"
+                }
+              }
+            }
+          },
+          "description": "discount percentage",
+          "odbcname": "LINE_DISC_PER"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_SET_DISC",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Settlement Discount",
+          "odbcname": "SETT_DISC_FLAG"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_KIT_PART",
+          "template": {
+            "name": "TBASE_ENUM",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASE_ENUM",
+                "fieldtype": "DECIMAL",
+                "size": "1",
+                "description": "Enumerated d1 Field",
+                "infoline": "Select the Option Required",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT",
+                "selectionlist": " 1 2 0  Entries \"Entry 1\""
+              }
+            }
+          },
+          "description": "kit part flg 1=part,2=kit line,3=kit hdr",
+          "odbcname": "KIT_PART_FLAG",
+          "selectionlist": " 1 2 0  Entries \"Part line\", \"kit line\", \"kit header\""
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_Q_ORD_QTY",
+          "template": {
+            "name": "PART_QTY",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "PART_QTY",
+                "parent": {
+                  "name": "TBASENUMERIC",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASENUMERIC",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base numeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter a Numeric Value",
+                      "font": "NUMBER_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "9",
+                "precision": "3",
+                "description": "Part Quantity",
+                "prompt": "Quantity:",
+                "infoline": "Enter the Quantity",
+                "odbcname": "QUANTITY",
+                "methods": {
+                  "Change": "qty_change",
+                  "Display": "qty_display",
+                  "Editfmt": "qty_edit"
+                }
+              }
+            }
+          },
+          "description": "quantity ordered",
+          "odbcname": "QTY_ORDERED"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_Q_ORD_QTY_NDP",
+          "template": {
+            "name": "TBASENUMERIC",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENUMERIC",
+                "fieldtype": "DECIMAL",
+                "size": "10",
+                "description": "Base numeric template",
+                "prompt": "Value:",
+                "infoline": "Enter a Numeric Value",
+                "font": "NUMBER_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "6"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_ORD_MTH",
+          "template": {
+            "name": "TBASE_ENUM",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASE_ENUM",
+                "fieldtype": "DECIMAL",
+                "size": "1",
+                "description": "Enumerated d1 Field",
+                "infoline": "Select the Option Required",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT",
+                "selectionlist": " 1 2 0  Entries \"Entry 1\""
+              }
+            }
+          },
+          "description": "Order Method",
+          "odbcname": "ORDER_METHOD",
+          "selectionlist": " 1 2 0  Entries \"Supplier\", \"I.D.T\""
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_IDT_CUST",
+          "template": {
+            "name": "CUSTOMER_ACCOUNT",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "CUSTOMER_ACCOUNT",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "6",
+                "description": "Customer Account",
+                "prompt": "Customer:",
+                "infoline": "Enter the Customer Account Number or Search Option",
+                "odbcname": "CUST_ACCOUNT_NO",
+                "methods": {
+                  "Arrive": "cmf_arrive",
+                  "Leave": "cmf_leave",
+                  "Drill": "cmf_popdrill",
+                  "Change": "cmf_change",
+                  "Display": "cmf_display"
+                }
+              }
+            }
+          },
+          "description": "idt customer a/c. blank if not IDT",
+          "odbcname": "IDT_CUST_ACC"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_ORD_STATUS",
+          "template": {
+            "name": "TBASE_ENUM",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASE_ENUM",
+                "fieldtype": "DECIMAL",
+                "size": "1",
+                "description": "Enumerated d1 Field",
+                "infoline": "Select the Option Required",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT",
+                "selectionlist": " 1 2 0  Entries \"Entry 1\""
+              }
+            }
+          },
+          "description": "Order Status",
+          "odbcname": "ORDER_STATUS",
+          "selectionlist": " 1 2 0  Entries \"no order\", \"unallocated\", \"order raised\",",
+          "longdescription": [
+            "alloc & recvd"
+          ]
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_Q_DESP_NOTE",
+          "template": {
+            "name": "PART_QTY",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "PART_QTY",
+                "parent": {
+                  "name": "TBASENUMERIC",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASENUMERIC",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base numeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter a Numeric Value",
+                      "font": "NUMBER_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "9",
+                "precision": "3",
+                "description": "Part Quantity",
+                "prompt": "Quantity:",
+                "infoline": "Enter the Quantity",
+                "odbcname": "QUANTITY",
+                "methods": {
+                  "Change": "qty_change",
+                  "Display": "qty_display",
+                  "Editfmt": "qty_edit"
+                }
+              }
+            }
+          },
+          "description": "despatch note qty to print",
+          "odbcname": "DESP_NOTE_QTY"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_DAT_LIN",
+          "template": {
+            "name": "DATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "DATE",
+                "fieldtype": "DATE",
+                "size": "8",
+                "description": "Master d8 date template",
+                "prompt": "Date:",
+                "infoline": "Enter the Date",
+                "methods": {
+                  "Drill": "calendar_drill",
+                  "Display": "date_display"
+                }
+              }
+            }
+          },
+          "description": "date lines ordered / issued",
+          "odbcname": "DATE_LINE_ISSUED"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_LOCATION",
+          "template": {
+            "name": "PART_BIN",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "PART_BIN",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "6",
+                "description": "Parts Bin Location",
+                "prompt": "Location:",
+                "infoline": "Enter the Bin Location",
+                "odbcname": "BIN_LOCATION"
+              }
+            }
+          },
+          "odbcname": "BIN_LOCATION"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_POW_LINE",
+          "template": {
+            "name": "LINE_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "LINE_NO",
+                "parent": {
+                  "name": "TBASENUMERIC",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASENUMERIC",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base numeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter a Numeric Value",
+                      "font": "NUMBER_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "4",
+                "description": "Line Number",
+                "prompt": "Line:",
+                "odbcname": "LINE_NUMBER"
+              }
+            }
+          },
+          "description": "pos line number ( on POW )",
+          "odbcname": "POS_LINE_NO"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_ORD_TYP",
+          "template": {
+            "name": "PUR_ORD_TYPE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "PUR_ORD_TYPE",
+                "parent": {
+                  "name": "TBASE_CHAR",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_CHAR",
+                      "parent": {
+                        "name": "TBASEALPHA",
+                        "structure": {
+                          "properties": {
+                            "type": "template",
+                            "name": "TBASEALPHA",
+                            "fieldtype": "ALPHA",
+                            "size": "1",
+                            "description": "Base alphanumeric template",
+                            "prompt": "Value:",
+                            "infoline": "Enter an Alphanumeric Value",
+                            "font": "ALPHA_FONT",
+                            "promptfont": "PROMPT_FONT"
+                          }
+                        }
+                      },
+                      "font": "CHAR_FONT"
+                    }
+                  }
+                },
+                "description": "Purchase Order Type",
+                "prompt": "Order Type:",
+                "infoline": "Enter A-Z or @ for Default",
+                "methods": {
+                  "Drill": "pot_drill",
+                  "Change": "pot_change",
+                  "Display": "pot_display"
+                }
+              }
+            }
+          },
+          "description": "purchase order type",
+          "odbcname": "PORDER_TYPE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_ORD_NO",
+          "template": {
+            "name": "PURCHASE_ORDER",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "PURCHASE_ORDER",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "8",
+                "description": "Purchase Order Number",
+                "prompt": "Order No.:",
+                "infoline": "Enter the Purchase Order Number",
+                "odbcname": "PO_NUMBER",
+                "methods": {
+                  "Drill": "poh_drill",
+                  "Change": "poh_change"
+                }
+              }
+            }
+          },
+          "description": "Order Number",
+          "odbcname": "PORDER_NO"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_ORD_LINE",
+          "template": {
+            "name": "PURCHASE_ORDER_LINE_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "PURCHASE_ORDER_LINE_NO",
+                "parent": {
+                  "name": "LINE_NO",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "LINE_NO",
+                      "parent": {
+                        "name": "TBASENUMERIC",
+                        "structure": {
+                          "properties": {
+                            "type": "template",
+                            "name": "TBASENUMERIC",
+                            "fieldtype": "DECIMAL",
+                            "size": "10",
+                            "description": "Base numeric template",
+                            "prompt": "Value:",
+                            "infoline": "Enter a Numeric Value",
+                            "font": "NUMBER_FONT",
+                            "promptfont": "PROMPT_FONT"
+                          }
+                        }
+                      },
+                      "size": "4",
+                      "description": "Line Number",
+                      "prompt": "Line:",
+                      "odbcname": "LINE_NUMBER"
+                    }
+                  }
+                },
+                "size": "4",
+                "prompt": "Line No.:",
+                "infoline": "Enter the Purchase Order Line Number",
+                "odbcname": "PO_LINE_NUMBER"
+              }
+            }
+          },
+          "description": "Order Line Number",
+          "odbcname": "PORDER_LINE_NO"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_UNIT_DESC",
+          "template": {
+            "name": "UNIT_DESCRIPTION",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "UNIT_DESCRIPTION",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "5",
+                "description": "Unit description",
+                "odbcname": "UNIT_DESC"
+              }
+            }
+          },
+          "odbcname": "UNIT_DESC"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_FOC",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Free of Charge?",
+          "odbcname": "FOC_FLAG"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_WIP_UPD",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "WIP Cost Updated (0=No, 1=Yes)",
+          "odbcname": "WIP_COST_UPDATE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_F_ORIG_PRI",
+          "template": {
+            "name": "PRICE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "PRICE",
+                "parent": {
+                  "name": "CURRENCY_NON_ARRAYED",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "CURRENCY_NON_ARRAYED",
+                      "parent": {
+                        "name": "TBASECURRENCY",
+                        "structure": {
+                          "properties": {
+                            "type": "template",
+                            "name": "TBASECURRENCY",
+                            "fieldtype": "DECIMAL",
+                            "size": "10",
+                            "description": "Base currency template",
+                            "prompt": "Amount:",
+                            "infoline": "Enter a Currency Amount",
+                            "font": "CURRENCY_PROMPT",
+                            "promptfont": "PROMPT_FONT",
+                            "methods": {
+                              "Display": "CURRENCY_DISPLAY"
+                            }
+                          }
+                        }
+                      },
+                      "description": "10 digit non arrayed currency template",
+                      "methods": {
+                        "Change": "CURRENCY_NA_CHANGE",
+                        "Display": "CURRENCY_NA_DISPLAY",
+                        "Editfmt": "CURRENCY_NA_EDIT"
+                      }
+                    }
+                  }
+                },
+                "description": "Price",
+                "prompt": "Price:",
+                "infoline": "Enter a Price",
+                "odbcname": "PRICE"
+              }
+            }
+          },
+          "description": "Original price (non_stkd part only)(FC)",
+          "odbcname": "ORIGINAL_PRICE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_HORT_PART",
+          "template": {
+            "name": "TBASE_ENUM",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASE_ENUM",
+                "fieldtype": "DECIMAL",
+                "size": "1",
+                "description": "Enumerated d1 Field",
+                "infoline": "Select the Option Required",
+                "font": "ALPHA_FONT",
+                "promptfont": "PROMPT_FONT",
+                "selectionlist": " 1 2 0  Entries \"Entry 1\""
+              }
+            }
+          },
+          "description": "Part Type if Hort",
+          "odbcname": "SERIAL_NO_REQD",
+          "selectionlist": " 1 2 0  Entries \"Serial\", \"batch\""
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_TRADE_IN",
+          "template": {
+            "name": "CURRENCY",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "CURRENCY",
+                "parent": {
+                  "name": "CURRENCY_ARRAY",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "CURRENCY_ARRAY",
+                      "parent": {
+                        "name": "TBASECURRENCY",
+                        "structure": {
+                          "properties": {
+                            "type": "template",
+                            "name": "TBASECURRENCY",
+                            "fieldtype": "DECIMAL",
+                            "size": "10",
+                            "description": "Base currency template",
+                            "prompt": "Amount:",
+                            "infoline": "Enter a Currency Amount",
+                            "font": "CURRENCY_PROMPT",
+                            "promptfont": "PROMPT_FONT",
+                            "methods": {
+                              "Display": "CURRENCY_DISPLAY"
+                            }
+                          }
+                        }
+                      },
+                      "dimension": "2",
+                      "methods": {
+                        "Change": "currency_change",
+                        "Editfmt": "currency_edit"
+                      }
+                    }
+                  }
+                },
+                "dimension": "1"
+              }
+            }
+          },
+          "description": "Trade in value",
+          "odbcname": "TRADE_IN_VALUE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_HORT_STATUS",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Hort Serial No Required",
+          "odbcname": "SERIAL_PART_TYPE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_F_VAT_VALUE",
+          "template": {
+            "name": "CURRENCY",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "CURRENCY",
+                "parent": {
+                  "name": "CURRENCY_ARRAY",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "CURRENCY_ARRAY",
+                      "parent": {
+                        "name": "TBASECURRENCY",
+                        "structure": {
+                          "properties": {
+                            "type": "template",
+                            "name": "TBASECURRENCY",
+                            "fieldtype": "DECIMAL",
+                            "size": "10",
+                            "description": "Base currency template",
+                            "prompt": "Amount:",
+                            "infoline": "Enter a Currency Amount",
+                            "font": "CURRENCY_PROMPT",
+                            "promptfont": "PROMPT_FONT",
+                            "methods": {
+                              "Display": "CURRENCY_DISPLAY"
+                            }
+                          }
+                        }
+                      },
+                      "dimension": "2",
+                      "methods": {
+                        "Change": "currency_change",
+                        "Editfmt": "currency_edit"
+                      }
+                    }
+                  }
+                },
+                "dimension": "1"
+              }
+            }
+          },
+          "description": "VAT Value (FC)",
+          "odbcname": "FC_VAT_VALUE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_F_TRADE_IN",
+          "template": {
+            "name": "CURRENCY",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "CURRENCY",
+                "parent": {
+                  "name": "CURRENCY_ARRAY",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "CURRENCY_ARRAY",
+                      "parent": {
+                        "name": "TBASECURRENCY",
+                        "structure": {
+                          "properties": {
+                            "type": "template",
+                            "name": "TBASECURRENCY",
+                            "fieldtype": "DECIMAL",
+                            "size": "10",
+                            "description": "Base currency template",
+                            "prompt": "Amount:",
+                            "infoline": "Enter a Currency Amount",
+                            "font": "CURRENCY_PROMPT",
+                            "promptfont": "PROMPT_FONT",
+                            "methods": {
+                              "Display": "CURRENCY_DISPLAY"
+                            }
+                          }
+                        }
+                      },
+                      "dimension": "2",
+                      "methods": {
+                        "Change": "currency_change",
+                        "Editfmt": "currency_edit"
+                      }
+                    }
+                  }
+                },
+                "dimension": "1"
+              }
+            }
+          },
+          "description": "Trade in Value (FC)",
+          "odbcname": "FC_TRADE_IN_VAL"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_PICK_PRN",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Picking Note Printed?",
+          "odbcname": "PICK_NOTE_PRINT"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_PICKED",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Advice Line Picked?",
+          "odbcname": "ADVICE_LINE_PICKED"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_WEIGHT",
+          "template": {
+            "name": "WEIGHT",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "WEIGHT",
+                "parent": {
+                  "name": "TBASENUMERIC",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASENUMERIC",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base numeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter a Numeric Value",
+                      "font": "NUMBER_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "9",
+                "precision": "3",
+                "description": "Weight",
+                "infoline": "Enter the Weight in Kgs",
+                "odbcname": "WEIGHT"
+              }
+            }
+          },
+          "description": "Weight of Unit",
+          "odbcname": "WEIGHT_OF_UNIT"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_ADV_SEQ",
+          "template": {
+            "name": "LINE_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "LINE_NO",
+                "parent": {
+                  "name": "TBASENUMERIC",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASENUMERIC",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base numeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter a Numeric Value",
+                      "font": "NUMBER_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "4",
+                "description": "Line Number",
+                "prompt": "Line:",
+                "odbcname": "LINE_NUMBER"
+              }
+            }
+          },
+          "size": "2",
+          "description": "Advice Sequence No",
+          "odbcname": "ADVICE_SEQ_NO"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_Q_QTY_HELD",
+          "template": {
+            "name": "PART_QTY",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "PART_QTY",
+                "parent": {
+                  "name": "TBASENUMERIC",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASENUMERIC",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base numeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter a Numeric Value",
+                      "font": "NUMBER_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "9",
+                "precision": "3",
+                "description": "Part Quantity",
+                "prompt": "Quantity:",
+                "infoline": "Enter the Quantity",
+                "odbcname": "QUANTITY",
+                "methods": {
+                  "Change": "qty_change",
+                  "Display": "qty_display",
+                  "Editfmt": "qty_edit"
+                }
+              }
+            }
+          },
+          "description": "Quantity Held",
+          "odbcname": "QTY_HELD"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_Q_QTY_HELD_NDP",
+          "template": {
+            "name": "TBASENUMERIC",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENUMERIC",
+                "fieldtype": "DECIMAL",
+                "size": "10",
+                "description": "Base numeric template",
+                "prompt": "Value:",
+                "infoline": "Enter a Numeric Value",
+                "font": "NUMBER_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "6"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_MEMO_HELD",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Memo line held for Invoice",
+          "odbcname": "MEMO_LINE_HELD"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_INV_ANUM",
+          "template": {
+            "name": "ACCOUNT_REFERENCE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "ACCOUNT_REFERENCE",
+                "parent": {
+                  "name": "TBASEALPHA",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASEALPHA",
+                      "fieldtype": "ALPHA",
+                      "size": "1",
+                      "description": "Base alphanumeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter an Alphanumeric Value",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "6",
+                "description": "Accounts reference",
+                "prompt": "Ref No.:",
+                "infoline": "Enter the Document Reference - <Enter> for Auto",
+                "odbcname": "DOCUMENT_REF",
+                "methods": {
+                  "Change": "auto_ref_change"
+                }
+              }
+            }
+          },
+          "description": "Invoice Number",
+          "odbcname": "INVOICE_NO"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_INV_DATE",
+          "template": {
+            "name": "DATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "DATE",
+                "fieldtype": "DATE",
+                "size": "8",
+                "description": "Master d8 date template",
+                "prompt": "Date:",
+                "infoline": "Enter the Date",
+                "methods": {
+                  "Drill": "calendar_drill",
+                  "Display": "date_display"
+                }
+              }
+            }
+          },
+          "description": "Invoice date",
+          "odbcname": "INVOICE_DATE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_SUP_PART",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Superceded Part?",
+          "odbcname": "SUPERCEDED_PART"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_HIST_PER",
+          "template": {
+            "name": "TBASENUMERIC",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENUMERIC",
+                "fieldtype": "DECIMAL",
+                "size": "10",
+                "description": "Base numeric template",
+                "prompt": "Value:",
+                "infoline": "Enter a Numeric Value",
+                "font": "NUMBER_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "2",
+          "description": "Period history allocated on PDF",
+          "odbcname": "PERIOD_HIST_PDF"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_MEMO_PART",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Is this a memo part?",
+          "odbcname": "MEMO_PART_FLAG"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_QTY_DP",
+          "template": {
+            "name": "QTY_DP",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "QTY_DP",
+                "parent": {
+                  "name": "TBASENUMERIC",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASENUMERIC",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base numeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter a Numeric Value",
+                      "font": "NUMBER_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "1",
+                "description": "Part Qty Decimal places"
+              }
+            }
+          }
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_DSP_CONF",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Despatch confirmed?"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_ICO_TFR",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Inter_Company Transfer?"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_TNT_EXPORTED",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "TNT label done for this line"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_SDC_CALC",
+          "template": {
+            "name": "TBASENUMERIC",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "TBASENUMERIC",
+                "fieldtype": "DECIMAL",
+                "size": "10",
+                "description": "Base numeric template",
+                "prompt": "Value:",
+                "infoline": "Enter a Numeric Value",
+                "font": "NUMBER_FONT",
+                "promptfont": "PROMPT_FONT"
+              }
+            }
+          },
+          "size": "1",
+          "description": "SDC calc done indr (1=amend,2=insert)"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_EMERGENCY_WAIT",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Wait for Emergency Order invoice?"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_OWRITE",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Price overwritten - excluse from sdccalc"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_CREATED_DATE",
+          "template": {
+            "name": "DATE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "DATE",
+                "fieldtype": "DATE",
+                "size": "8",
+                "description": "Master d8 date template",
+                "prompt": "Date:",
+                "infoline": "Enter the Date",
+                "methods": {
+                  "Drill": "calendar_drill",
+                  "Display": "date_display"
+                }
+              }
+            }
+          },
+          "description": "Date line created",
+          "odbcname": "CREATED_DATE"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_CUST_DEMAND",
+          "template": {
+            "name": "PART_QTY",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "PART_QTY",
+                "parent": {
+                  "name": "TBASENUMERIC",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASENUMERIC",
+                      "fieldtype": "DECIMAL",
+                      "size": "10",
+                      "description": "Base numeric template",
+                      "prompt": "Value:",
+                      "infoline": "Enter a Numeric Value",
+                      "font": "NUMBER_FONT",
+                      "promptfont": "PROMPT_FONT"
+                    }
+                  }
+                },
+                "size": "9",
+                "precision": "3",
+                "description": "Part Quantity",
+                "prompt": "Quantity:",
+                "infoline": "Enter the Quantity",
+                "odbcname": "QUANTITY",
+                "methods": {
+                  "Change": "qty_change",
+                  "Display": "qty_display",
+                  "Editfmt": "qty_edit"
+                }
+              }
+            }
+          },
+          "description": "Customer Demand Qty",
+          "prompt": "Demand:",
+          "infoline": "Enter the Quantity requested by the Customer",
+          "odbcname": "DEMAND_QUANTITY"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_EXCLUDE_FILL_REP",
+          "template": {
+            "name": "YES_NO",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "YES_NO",
+                "parent": {
+                  "name": "TBASE_ENUM",
+                  "structure": {
+                    "properties": {
+                      "type": "template",
+                      "name": "TBASE_ENUM",
+                      "fieldtype": "DECIMAL",
+                      "size": "1",
+                      "description": "Enumerated d1 Field",
+                      "infoline": "Select the Option Required",
+                      "font": "ALPHA_FONT",
+                      "promptfont": "PROMPT_FONT",
+                      "selectionlist": " 1 2 0  Entries \"Entry 1\""
+                    }
+                  }
+                },
+                "description": "Yes No enumerate",
+                "infoline": "Select Yes or No",
+                "selectionlist": " 1 2 0  Entries \"No\", \"Yes\""
+              }
+            }
+          },
+          "description": "Exclude from Fill report?",
+          "odbcname": "EXCLUDE_FILL_REP"
+        }
+      },
+      {
+        "properties": {
+          "type": "field",
+          "name": "PIL_SPARE",
+          "template": {
+            "name": "SPARE",
+            "structure": {
+              "properties": {
+                "type": "template",
+                "name": "SPARE",
+                "fieldtype": "ALPHA",
+                "size": "1000",
+                "description": "Spare"
+              }
+            }
+          },
+          "size": "193"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "PIL_ADV_LINE",
+          "description": "Advice No / Line No"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "PIL_PRT_ADV_LNE",
+          "description": "Part No / Advice No / Line No"
+        }
+      },
+      {
+        "properties": {
+          "type": "key",
+          "name": "PIL_ADV_LOC_LNE",
+          "description": "Advice No / Location / Line No"
+        }
+      }
+    ],
+    "name": "PILREC",
+    "dbl": "",
+    "isam": "",
+    "description": "POS Advice Line"
+  }
+}
