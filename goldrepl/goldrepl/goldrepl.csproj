@@ -112,8 +112,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\Downloads\readline-master\src\ReadLine\ReadLine.csproj">
-      <Project>{F55061F6-5F06-4F11-A967-ECBA36751ABB}</Project>
+    <ProjectReference Include="..\ReadLine\ReadLine.csproj">
+      <Project>{5D307D42-8021-4B5B-8623-57F2528D4219}</Project>
       <Name>ReadLine</Name>
     </ProjectReference>
   </ItemGroup>
