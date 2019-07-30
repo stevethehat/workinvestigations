@@ -1,5 +1,6 @@
 ﻿using System;
-using DblDebug.Views;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DblDebug
 {
@@ -7,17 +8,39 @@ namespace DblDebug
     {
         public static void Main(string[] args)
         {
-            App app = new App();
-            CoreDebug debug = new CoreDebug("172.16.128.21", 1024);
+            
 
-            string input = null;
-            while (debug.Command(input))
+            try
             {
-                //Console.Write("DBG>");
-                input = Console.ReadLine();
+                var result = GoAsync().GetAwaiter().GetResult();
+
             }
+            catch (ArgumentException aex)
+            {
+
+            }
+
             Console.WriteLine("Done");
             Console.ReadKey();  
+        }
+
+        private static async Task<bool> GoAsync()
+        {
+            CoreDebug debug = new CoreDebug("172.16.128.21", 1024);
+
+            bool startResponse = await debug.Start();
+            string input = null;
+            List<string> response = new List<string>();
+            while (default(List<string>) != response)
+            {
+                input = Console.ReadLine();
+
+                response = await debug.Command(input);
+
+                Console.Write(string.Join("\n", response));
+            }
+
+            return startResponse;
         }
     }
 }

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
+using System.Threading;
 using System.Threading.Tasks;
-//using PrimS.Telnet;
+using PrimS.Telnet;
 
 namespace DblDebug
 {
@@ -12,77 +13,72 @@ namespace DblDebug
         private readonly Func<bool, string> _input;
         private readonly string _host;
         private readonly int _port;
-        private TcpClient _client;
-        private NetworkStream _clientStream;
-        //private Client _client;
+        private readonly PrimS.Telnet.Client _client;
 
         public CoreDebug(string host, int port)
         {
             _host = host;
             _port = port;
             _response = new List<string>();
-            Connect();
+            _client = new Client(_host, _port, new CancellationToken());
 
-            GetResponse();
-            SendCommand("se st ov");
-            SendCommand("s");
+            Connect();
         }
 
-        public bool Command(string command)
+        public async Task<bool> Start()
         {
-            bool result = true;
+            bool result = false;
+            string response = default(string);
+            response = await GetResponse();
+            response = await SendCommand("se st ov");
+            response = await SendCommand("s");
+
+            return result;
+        }
+
+        public async Task<List<string>> Command(string command)
+        {
+            List<string> result = new List<string>();
             if("q" == command)
             {
-                result = false;
+                result = default(List<string>);
             }
             else
             {
                 if(false == string.IsNullOrEmpty(command))
                 {
-                    SendCommand(command);
-                    Console.WriteLine(string.Join("\n", _response));
+                    string commandResult = await SendCommand(command);
+                    result.AddRange(commandResult.Split('\n').ToList());
                 }
             }
             return result;
         }
 
-        protected bool GetResponse()
+        protected async Task<string> GetResponse()
         {
-            Byte[] recData = new Byte[4096];
+            string result = await _client.TerminatedReadAsync("DBG>");
 
-            int bytes = _clientStream.Read(recData, 0, recData.Length);
-
-            string rec = System.Text.Encoding.ASCII.GetString(recData, 0, bytes).Replace("\r", "");
-            _response.AddRange(rec.Split('\n').ToList());
-            if (rec.EndsWith("DBG> "))
-            {
-                //_response.Remove(_response.Count - 1);
-                return false;
-            }
-
-            return true;
+            return result;
         }
 
-        protected void SendCommand(string command)
+        protected async Task<string> SendCommand(string command)
         {
             string result;
-            _response = new List<string>();
 
+            await _client.Write($"{command}\n");
+            string response = await GetResponse();
 
-            Byte[] sendData = System.Text.Encoding.ASCII.GetBytes($"{command}\n");
-            _clientStream.Write(sendData, 0, sendData.Length);
-
-            while (GetResponse())
-            {
-
-            }
+            return response;
         }
 
         protected void Connect()
         {
-            _client = new TcpClient();
+            
+            /*
+            _client = new Client();
             _client.Connect(_host, _port);
             _clientStream = _client.GetStream();
+            */
         }
 
         #region IDisposable Support
@@ -96,7 +92,6 @@ namespace DblDebug
                 if (disposing)
                 {
                     // TODO: dispose managed state (managed objects).
-                    _clientStream.Close();
                     _client.Dispose();
                 }
 
