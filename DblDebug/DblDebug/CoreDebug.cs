@@ -21,8 +21,6 @@ namespace DblDebug
             _port = port;
             _response = new List<string>();
             _client = new Client(_host, _port, new CancellationToken());
-
-            Connect();
         }
 
         public async Task<bool> Start()
@@ -56,30 +54,15 @@ namespace DblDebug
 
         protected async Task<string> GetResponse()
         {
-            string result = await _client.TerminatedReadAsync("DBG>");
-
-            return result;
+            return await _client.TerminatedReadAsync("DBG>");
         }
 
         protected async Task<string> SendCommand(string command)
         {
-            string result;
-
             await _client.Write($"{command}\n");
-            string response = await GetResponse();
-
-            return response;
+            return await GetResponse();
         }
 
-        protected void Connect()
-        {
-            
-            /*
-            _client = new Client();
-            _client.Connect(_host, _port);
-            _clientStream = _client.GetStream();
-            */
-        }
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
