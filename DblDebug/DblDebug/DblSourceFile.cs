@@ -9,7 +9,7 @@ namespace DblDebug
 {
     public class DblSourceFile
     {
-        private readonly string _fileName;
+        public readonly string FileName;
         private readonly string _fullFileName;
         private readonly string _sourceDirectory = "/Users/stevelamb/Development/ibcos/investigations/source/";
         private readonly List<Scope> _functions = new List<Scope>();
@@ -18,8 +18,8 @@ namespace DblDebug
 
         public DblSourceFile(string fileName)
         {
-            _fileName = fileName;
-            _fullFileName = GetFullFileName(_fileName);
+            FileName = fileName;
+            _fullFileName = GetFullFileName(FileName);
             Parse(_fullFileName);
         }
 

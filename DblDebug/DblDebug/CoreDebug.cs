@@ -18,19 +18,20 @@ namespace DblDebug
         private List<string> _response;
 
         public Outputs Outputs { get; set; } = new Outputs();
-        public State State { get; private set; }
+        public State State { get; private set; } = new State();
 
         private List<LineProcessor> _lineProcessors = new List<LineProcessor>();
 
-        private bool CheckLine(string line)
+        private bool ProcessLine(string line)
         {
             foreach(LineProcessor lineProcessor in _lineProcessors)
             {
                 Match match = lineProcessor.MatchRegex.Match(line);
                 if(default(Match) != match && true == match.Success)
                 {
+                    State.CurrentLine = line;
                     State = lineProcessor.Processor(State, line, match);
-                    Outputs.General.Lines.Add(lineProcessor.Formatter(line, match));
+                    Outputs.General.Lines.Add(lineProcessor.Formatter(State.CurrentLine, match));
                     break;
                 }
             }
@@ -111,7 +112,7 @@ namespace DblDebug
             string trimmedCommandResult = Trim(resposne);
             foreach(string line in trimmedCommandResult.Split('\n'))
             {
-                CheckLine(line);
+                ProcessLine(line);
             }
 
             return result;
