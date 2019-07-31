@@ -8,8 +8,7 @@ namespace DblDebug
     {
         public static void Main(string[] args)
         {
-            
-
+            ReadLine.HistoryEnabled = true;
             try
             {
                 var result = GoAsync().GetAwaiter().GetResult();
@@ -33,7 +32,7 @@ namespace DblDebug
             List<string> response = new List<string>();
             while (default(List<string>) != response)
             {
-                input = Console.ReadLine();
+                input = ReadLine.Read();
 
                 response = await debug.Command(input);
 

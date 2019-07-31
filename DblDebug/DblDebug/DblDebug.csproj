@@ -64,5 +64,11 @@
   <ItemGroup>
     <Folder Include="Views\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ReadLine\ReadLine.csproj">
+      <Project>{962c0393-7383-46ec-b899-5750d8d611e5}</Project>
+      <Name>ReadLine</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

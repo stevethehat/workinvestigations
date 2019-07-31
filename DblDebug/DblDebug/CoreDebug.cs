@@ -2,18 +2,65 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using PrimS.Telnet;
 
 namespace DblDebug
 {
+    public class LineProcessor
+    {
+        public Regex MatchRegex { get; set; }
+        public Func<string, Match, bool> Processor { get; set; }
+        public Func<string, Match, string> Formatter { get; set; }
+
+        public LineProcessor(Regex matchRegex, Func<string, Match, bool> processor, Func<string, Match, string> formatter)
+        {
+            MatchRegex = matchRegex;
+            Processor = processor;
+            Formatter = formatter;
+        }
+
+        public LineProcessor()
+        {
+                
+        }
+    }
     public class CoreDebug: IDisposable
     {
         private readonly Func<bool, string> _input;
         private readonly string _host;
         private readonly int _port;
         private readonly PrimS.Telnet.Client _client;
+        private string _currentFile = "";
+        private int _currentLine = 0;
+        private List<string> _response;
+
+        private List<LineProcessor> _lineProcessors = new List<LineProcessor>();
+
+        private bool ProcessLine(string line, Match match)
+        {
+            return true;
+        }
+        private string FormatLine(string line, Match match)
+        {
+            return "";
+        }
+
+        private bool CheckLine(string line)
+        {
+            foreach(LineProcessor lineProcessor in _lineProcessors)
+            {
+                Match match = lineProcessor.MatchRegex.Match(line);
+                if(default(Match) != match && true == match.Success)
+                {
+                    lineProcessor.Processor(line, match);
+                    lineProcessor.Formatter(line, match);
+                }
+            }
+            return true;
+        }
 
         public CoreDebug(string host, int port)
         {
@@ -21,15 +68,29 @@ namespace DblDebug
             _port = port;
             _response = new List<string>();
             _client = new Client(_host, _port, new CancellationToken());
-        }
 
+            _lineProcessors = new List<LineProcessor>()
+            {
+                new LineProcessor(new Regex(@"Break at (\d*) in ([A-Z]*) \(([A-Z]*\.[A-Z]*)\)"),
+                   (l, m) => ProcessLine(l, m),
+                   (l, m) => FormatLine(l, m)
+                ),
+                new LineProcessor(new Regex(@"Step to (\d*) in ([A-Z]*) \(([A-Z]*\.[A-Z]*)\)"),
+                   (l, m) => ProcessLine(l, m),
+                   (l, m) => FormatLine(l, m)
+                )
+            };
+        }
+        
         public async Task<bool> Start()
         {
             bool result = false;
             string response = default(string);
             response = await GetResponse();
+            Console.WriteLine(response);
             response = await SendCommand("se st ov");
             response = await SendCommand("s");
+            Console.WriteLine(response);
 
             return result;
         }
@@ -54,7 +115,7 @@ namespace DblDebug
 
         protected async Task<string> GetResponse()
         {
-            return await _client.TerminatedReadAsync("DBG>");
+            return await _client.TerminatedReadAsync("DBG>", TimeSpan.FromHours(1));
         }
 
         protected async Task<string> SendCommand(string command)
@@ -66,7 +127,7 @@ namespace DblDebug
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
-        private List<string> _response;
+        
 
         protected virtual void Dispose(bool disposing)
         {
