@@ -16,6 +16,8 @@ namespace DblDebug
         private readonly List<Scope> _subRoutines = new List<Scope>();
         private List<string> _lines;
 
+        private const int CONTEXT = 10;
+
         public DblSourceFile(string fileName)
         {
             FileName = fileName;
@@ -61,6 +63,35 @@ namespace DblDebug
 
             Console.WriteLine($"{_functions.Count} functions");
             Console.WriteLine($"{_subRoutines.Count} subroutines");
+        }
+
+        internal void SetCode(ConsoleOutput code, int lineNumber)
+        {
+            code.Lines.Clear();
+
+            for(int i = lineNumber - CONTEXT; i < lineNumber + CONTEXT; i++){
+                if(lineNumber == i)
+                {
+                    code.Lines.Add(new OutputLine($"{i, 10:d} > {_lines[i]}" , ConsoleColor.White, ConsoleColor.Red));
+                }
+                else
+                {
+                    code.Lines.Add(new OutputLine($"{i, 10:d} > {_lines[i]}"));
+                }
+            }
+            /*
+            foreach(string line in _lines.GetRange(lineNumber - 20, 19))
+            {
+                code.Lines.Add(new OutputLine(line));
+            }
+
+            code.Lines.Add(new OutputLine(_lines[lineNumber], ConsoleColor.White, ConsoleColor.Red));
+
+            foreach (string line in _lines.GetRange(lineNumber + 1, 19))
+            {
+                code.Lines.Add(new OutputLine(line));
+            }
+            */
         }
     }
 

@@ -32,6 +32,7 @@ namespace DblDebug
                     State.CurrentLine = line;
                     State = lineProcessor.Processor(State, line, match);
                     Outputs.General.Lines.Add(lineProcessor.Formatter(State.CurrentLine, match));
+
                     break;
                 }
             }
@@ -103,6 +104,7 @@ namespace DblDebug
             bool result = true;
 
             Outputs.General.Lines.Clear();
+            Outputs.Code.Lines.Clear();
 
             string Trim(string line)
             {
@@ -112,7 +114,15 @@ namespace DblDebug
             string trimmedCommandResult = Trim(resposne);
             foreach(string line in trimmedCommandResult.Split('\n'))
             {
-                ProcessLine(line);
+                if(false == line.StartsWith("DBG>"))
+                {
+                    ProcessLine(line);
+                }
+            }
+
+            if(default(DblSourceFile) != State.DblSourceFile)
+            {
+                State.DblSourceFile.SetCode(Outputs.Code, State.CurrentLineNo);
             }
 
             return result;

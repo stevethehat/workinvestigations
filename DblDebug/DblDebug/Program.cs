@@ -36,14 +36,17 @@ namespace DblDebug
 (@"Break at 462 in WHGINE (WHGINE.DBL) on entry
 
     462 >       a = 4
+DBG> 
 ");
             debug.Outputs.General.Write();
 
             debug.ProcessResponse("Break at 462 in WHGINE (WHGINE.DBL)\r\n");
             debug.Outputs.General.Write();
 
-            debug.ProcessResponse("Step to 462 in WHGINE (WHGINE.DBL)\r\n");
+            debug.ProcessResponse("Step to 9999 in WHGINE (WHGINE.DBL)\r\n");
             debug.Outputs.General.Write();
+
+            debug.Outputs.Code.Write();
 
         }
 
@@ -56,7 +59,7 @@ namespace DblDebug
             bool response = true;
             while (false != response)
             {
-                input = ReadLine.Read();
+                input = ReadLine.Read("DBG> ");
 
                 response = await debug.Command(input);
 
