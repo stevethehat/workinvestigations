@@ -53,14 +53,14 @@ namespace DblDebug
 
             bool startResponse = await debug.Start();
             string input = null;
-            ConsoleOutput response = new ConsoleOutput();
-            while (default(ConsoleOutput) != response)
+            bool response = true;
+            while (false != response)
             {
                 input = ReadLine.Read();
 
                 response = await debug.Command(input);
 
-                response.Write();
+                debug.Outputs.General.Write();
             }
 
             return startResponse;

@@ -5,14 +5,14 @@ namespace DblDebug
 {
     public class Processors
     {
-        public static bool LineNumber(string line, Match match)
+        public static State LineNumber(State currentState, string line, Match match)
         {
-            return true;
+            return currentState;
         }
 
-        internal static bool Default(string l, Match m)
+        internal static State Default(State currentState, string line, Match match)
         {
-            return true;
+            return currentState;
         }
     }
 }

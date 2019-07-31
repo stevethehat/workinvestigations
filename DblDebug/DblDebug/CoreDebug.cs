@@ -9,48 +9,18 @@ using PrimS.Telnet;
 
 namespace DblDebug
 {
-    public class LineProcessor
-    {
-        public Regex MatchRegex { get; set; }
-        public Func<string, Match, bool> Processor { get; set; }
-        public Func<string, Match, OutputLine> Formatter { get; set; }
-
-        public LineProcessor(Regex matchRegex, Func<string, Match, bool> processor, Func<string, Match, OutputLine> formatter)
-        {
-            MatchRegex = matchRegex;
-            Processor = processor;
-            Formatter = formatter;
-        }
-
-        public LineProcessor()
-        {
-                
-        }
-    }
-
-    public class Outputs
-    {
-        public ConsoleOutput General { get; set; } = new ConsoleOutput();
-
-    }
     public class CoreDebug: IDisposable
     {
         private readonly Func<bool, string> _input;
         private readonly string _host;
         private readonly int _port;
         private PrimS.Telnet.Client _client;
-        private string _currentFile = "";
-        private int _currentLine = 0;
         private List<string> _response;
 
         public Outputs Outputs { get; set; } = new Outputs();
+        public State State { get; private set; }
 
         private List<LineProcessor> _lineProcessors = new List<LineProcessor>();
-
-        private bool ProcessLine(string line, Match match)
-        {
-            return true;
-        }
 
         private bool CheckLine(string line)
         {
@@ -59,7 +29,7 @@ namespace DblDebug
                 Match match = lineProcessor.MatchRegex.Match(line);
                 if(default(Match) != match && true == match.Success)
                 {
-                    lineProcessor.Processor(line, match);
+                    State = lineProcessor.Processor(State, line, match);
                     Outputs.General.Lines.Add(lineProcessor.Formatter(line, match));
                     break;
                 }
@@ -76,19 +46,19 @@ namespace DblDebug
             _lineProcessors = new List<LineProcessor>()
             {
                 new LineProcessor(new Regex(@"(Break at) (\d*) in ([A-Z]*) \(([A-Z]*\.[A-Z]*)\)(.*)"),
-                   (l, m) => Processors.LineNumber(l, m),
+                   (s, l, m) => Processors.LineNumber(s, l, m),
                    (l, m) => Formatters.LineNumber(l, m)
                 ),
                 new LineProcessor(new Regex(@"(Step to) (\d*) in ([A-Z]*) \(([A-Z]*\.[A-Z]*)\)"),
-                   (l, m) => Processors.LineNumber(l, m),
+                   (s, l, m) => Processors.LineNumber(s, l, m),
                    (l, m) => Formatters.LineNumber(l, m)
                 ),
                 new LineProcessor(new Regex(@"(\d*) > (.*)"),
-                   (l, m) => Processors.Default(l, m),
+                   (s, l, m) => Processors.Default(s, l, m),
                    (l, m) => Formatters.CodeLine(l, m)
                 ),
                 new LineProcessor(new Regex(@".*"),
-                   (l, m) => Processors.Default(l, m),
+                   (s, l, m) => Processors.Default(s, l, m),
                    (l, m) => new OutputLine(l)
                 )
             };
@@ -109,12 +79,12 @@ namespace DblDebug
             return result;
         }
 
-        public async Task<ConsoleOutput> Command(string command)
+        public async Task<bool> Command(string command)
         {
-            ConsoleOutput result = new ConsoleOutput();
+            bool result = true;
             if ("q" == command)
             {
-                result = default(ConsoleOutput);
+                result = false;
             }
             else
             {
@@ -127,9 +97,9 @@ namespace DblDebug
             return result;
         }
 
-        internal ConsoleOutput ProcessResponse(string resposne)
+        internal bool ProcessResponse(string resposne)
         {
-            ConsoleOutput result = new ConsoleOutput();
+            bool result = true;
 
             Outputs.General.Lines.Clear();
 
