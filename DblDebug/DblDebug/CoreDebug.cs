@@ -13,9 +13,9 @@ namespace DblDebug
     {
         public Regex MatchRegex { get; set; }
         public Func<string, Match, bool> Processor { get; set; }
-        public Func<string, Match, string> Formatter { get; set; }
+        public Func<string, Match, OutputLine> Formatter { get; set; }
 
-        public LineProcessor(Regex matchRegex, Func<string, Match, bool> processor, Func<string, Match, string> formatter)
+        public LineProcessor(Regex matchRegex, Func<string, Match, bool> processor, Func<string, Match, OutputLine> formatter)
         {
             MatchRegex = matchRegex;
             Processor = processor;
@@ -27,25 +27,29 @@ namespace DblDebug
                 
         }
     }
+
+    public class Outputs
+    {
+        public ConsoleOutput General { get; set; } = new ConsoleOutput();
+
+    }
     public class CoreDebug: IDisposable
     {
         private readonly Func<bool, string> _input;
         private readonly string _host;
         private readonly int _port;
-        private readonly PrimS.Telnet.Client _client;
+        private PrimS.Telnet.Client _client;
         private string _currentFile = "";
         private int _currentLine = 0;
         private List<string> _response;
+
+        public Outputs Outputs { get; set; } = new Outputs();
 
         private List<LineProcessor> _lineProcessors = new List<LineProcessor>();
 
         private bool ProcessLine(string line, Match match)
         {
             return true;
-        }
-        private string FormatLine(string line, Match match)
-        {
-            return "";
         }
 
         private bool CheckLine(string line)
@@ -56,7 +60,8 @@ namespace DblDebug
                 if(default(Match) != match && true == match.Success)
                 {
                     lineProcessor.Processor(line, match);
-                    lineProcessor.Formatter(line, match);
+                    Outputs.General.Lines.Add(lineProcessor.Formatter(line, match));
+                    break;
                 }
             }
             return true;
@@ -67,17 +72,24 @@ namespace DblDebug
             _host = host;
             _port = port;
             _response = new List<string>();
-            _client = new Client(_host, _port, new CancellationToken());
 
             _lineProcessors = new List<LineProcessor>()
             {
-                new LineProcessor(new Regex(@"Break at (\d*) in ([A-Z]*) \(([A-Z]*\.[A-Z]*)\)"),
-                   (l, m) => ProcessLine(l, m),
-                   (l, m) => FormatLine(l, m)
+                new LineProcessor(new Regex(@"(Break at) (\d*) in ([A-Z]*) \(([A-Z]*\.[A-Z]*)\)(.*)"),
+                   (l, m) => Processors.LineNumber(l, m),
+                   (l, m) => Formatters.LineNumber(l, m)
                 ),
-                new LineProcessor(new Regex(@"Step to (\d*) in ([A-Z]*) \(([A-Z]*\.[A-Z]*)\)"),
-                   (l, m) => ProcessLine(l, m),
-                   (l, m) => FormatLine(l, m)
+                new LineProcessor(new Regex(@"(Step to) (\d*) in ([A-Z]*) \(([A-Z]*\.[A-Z]*)\)"),
+                   (l, m) => Processors.LineNumber(l, m),
+                   (l, m) => Formatters.LineNumber(l, m)
+                ),
+                new LineProcessor(new Regex(@"(\d*) > (.*)"),
+                   (l, m) => Processors.Default(l, m),
+                   (l, m) => Formatters.CodeLine(l, m)
+                ),
+                new LineProcessor(new Regex(@".*"),
+                   (l, m) => Processors.Default(l, m),
+                   (l, m) => new OutputLine(l)
                 )
             };
         }
@@ -85,6 +97,8 @@ namespace DblDebug
         public async Task<bool> Start()
         {
             bool result = false;
+            _client = new Client(_host, _port, new CancellationToken());
+
             string response = default(string);
             response = await GetResponse();
             Console.WriteLine(response);
@@ -97,12 +111,8 @@ namespace DblDebug
 
         public async Task<ConsoleOutput> Command(string command)
         {
-            string Trim(string line){
-                return line.TrimEnd(new char[] { '\r', '\n' });
-            }
-
             ConsoleOutput result = new ConsoleOutput();
-            if("q" == command)
+            if ("q" == command)
             {
                 result = default(ConsoleOutput);
             }
@@ -111,12 +121,29 @@ namespace DblDebug
                 if(false == string.IsNullOrEmpty(command))
                 {
                     string commandResult = await SendCommand(command);
-                    string trimmedCommandResult = Trim(commandResult);
-                    //foreach(string line in )
-                    result.Lines = trimmedCommandResult.Split('\n')
-                        .Select(l => new OutputLine(l));
+                    result = ProcessResponse(commandResult);
                 }
             }
+            return result;
+        }
+
+        internal ConsoleOutput ProcessResponse(string resposne)
+        {
+            ConsoleOutput result = new ConsoleOutput();
+
+            Outputs.General.Lines.Clear();
+
+            string Trim(string line)
+            {
+                return line.TrimEnd(new char[] { '\r', '\n' });
+            }
+
+            string trimmedCommandResult = Trim(resposne);
+            foreach(string line in trimmedCommandResult.Split('\n'))
+            {
+                CheckLine(line);
+            }
+
             return result;
         }
 

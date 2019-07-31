@@ -53,6 +53,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CoreDebug.cs" />
+    <Compile Include="Formatters.cs" />
+    <Compile Include="Processors.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

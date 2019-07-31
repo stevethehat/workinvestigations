@@ -10,6 +10,8 @@ namespace DblDebug
         {
             OutputLine.WriteLine("DblDebugger", foregroundColor: ConsoleColor.Yellow);
 
+            Test();
+            /*
             ReadLine.HistoryEnabled = true;
             try
             {
@@ -20,9 +22,29 @@ namespace DblDebug
             {
                 OutputLine.WriteLine(e.Message, foregroundColor: ConsoleColor.Red);
             }
+            */
 
             OutputLine.WriteLine("Done..");
             Console.ReadKey();  
+        }
+
+        private static void Test()
+        {
+            CoreDebug debug = new CoreDebug("172.16.128.21", 1024);
+
+            debug.ProcessResponse
+(@"Break at 462 in WHGINE (WHGINE.DBL) on entry
+
+    462 >       a = 4
+");
+            debug.Outputs.General.Write();
+
+            debug.ProcessResponse("Break at 462 in WHGINE (WHGINE.DBL)\r\n");
+            debug.Outputs.General.Write();
+
+            debug.ProcessResponse("Step to 462 in WHGINE (WHGINE.DBL)\r\n");
+            debug.Outputs.General.Write();
+
         }
 
         private static async Task<bool> GoAsync()
