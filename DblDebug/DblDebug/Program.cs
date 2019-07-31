@@ -8,18 +8,20 @@ namespace DblDebug
     {
         public static void Main(string[] args)
         {
+            OutputLine.WriteLine("DblDebugger", foregroundColor: ConsoleColor.Yellow);
+
             ReadLine.HistoryEnabled = true;
             try
             {
                 var result = GoAsync().GetAwaiter().GetResult();
 
             }
-            catch (ArgumentException aex)
+            catch (Exception e)
             {
-
+                OutputLine.WriteLine(e.Message, foregroundColor: ConsoleColor.Red);
             }
 
-            Console.WriteLine("Done");
+            OutputLine.WriteLine("Done..");
             Console.ReadKey();  
         }
 
