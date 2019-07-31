@@ -29,14 +29,14 @@ namespace DblDebug
 
             bool startResponse = await debug.Start();
             string input = null;
-            List<string> response = new List<string>();
-            while (default(List<string>) != response)
+            ConsoleOutput response = new ConsoleOutput();
+            while (default(ConsoleOutput) != response)
             {
                 input = ReadLine.Read();
 
                 response = await debug.Command(input);
 
-                Console.Write(string.Join("\n", response));
+                response.Write();
             }
 
             return startResponse;

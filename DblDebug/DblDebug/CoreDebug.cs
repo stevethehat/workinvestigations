@@ -95,19 +95,26 @@ namespace DblDebug
             return result;
         }
 
-        public async Task<List<string>> Command(string command)
+        public async Task<ConsoleOutput> Command(string command)
         {
-            List<string> result = new List<string>();
+            string Trim(string line){
+                return line.TrimEnd(new char[] { '\r', '\n' });
+            }
+
+            ConsoleOutput result = new ConsoleOutput();
             if("q" == command)
             {
-                result = default(List<string>);
+                result = default(ConsoleOutput);
             }
             else
             {
                 if(false == string.IsNullOrEmpty(command))
                 {
                     string commandResult = await SendCommand(command);
-                    result.AddRange(commandResult.Split('\n').ToList());
+                    string trimmedCommandResult = Trim(commandResult);
+                    //foreach(string line in )
+                    result.Lines = trimmedCommandResult.Split('\n')
+                        .Select(l => new OutputLine(l));
                 }
             }
             return result;

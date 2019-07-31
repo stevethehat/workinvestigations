@@ -10,9 +10,43 @@ namespace DblDebug
     {
         public void Write()
         {
-            Console.Write(string.Join("\n", Lines));
+            foreach(OutputLine line in Lines)
+            {
+                line.Write();
+            }
         }
 
-        public List<string> Lines { get; set; } = new List<string>();
+        public IEnumerable<OutputLine> Lines { get; set; } = new List<OutputLine>();
+    }
+
+    public class OutputLine
+    {
+        public List<OutputChunk> Line { get; set; } = new List<OutputChunk>();
+
+        public OutputLine(string line)
+        {
+            Line.Add(new OutputChunk()
+            {
+                Text = line
+            });
+        }
+        public void Write()
+        {
+            foreach(OutputChunk chunk in Line)
+            {
+                Console.BackgroundColor = chunk.BackgroundColor;
+                Console.ForegroundColor = chunk.ForgrioundColor;
+                Console.Write(chunk.Text);
+            }
+
+            Console.Write("\n");
+        }
+    }
+
+    public class OutputChunk
+    {
+        public string Text { get; set; }
+        public ConsoleColor BackgroundColor { get; set; } = ConsoleColor.Black;
+        public ConsoleColor ForgrioundColor { get; set; } = ConsoleColor.White;
     }
 }
