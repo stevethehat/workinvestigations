@@ -21,6 +21,13 @@ namespace DblDebug
 
     public class Commands
     {
+        public Commands()
+        {
+            MainCommandNames = MainCommands.Select(s => s.Name);
+            MainCommandNamesByLength = MainCommandNames.OrderByDescending(n => n.Length);
+        }
+        public readonly IEnumerable<string> MainCommandNamesByLength;
+        public readonly IEnumerable<string> MainCommandNames;
         public readonly List<Command> MainCommands = new List<Command>()
             {
                 new Command() { Name = "break" },

@@ -74,19 +74,27 @@ namespace DblDebug
         {
             List<string> result = new List<string>();
 
-            List<string> options = new List<string>();
-            foreach (Completion completion in _completions)
+            try
             {
-                Match match = completion.Regex.Match(text);
-                if (default(Match) != match)
+                List<string> options = new List<string>();
+                foreach (Completion completion in _completions)
                 {
-                    if (true == match.Success)
+                    Match match = completion.Regex.Match(text);
+                    if (default(Match) != match)
                     {
-                        result.AddRange(completion.GetOptions(match, text));
-                        break;
+                        if (true == match.Success)
+                        {
+                            result.AddRange(completion.GetOptions(match, text));
+                            break;
+                        }
                     }
                 }
             }
+            catch (Exception e)
+            {
+
+            }
+
 
             return result.ToArray();
         }

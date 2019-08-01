@@ -21,6 +21,7 @@ namespace DblDebug
 
     public class OutputLine
     {
+        public static OutputLine Blank = new OutputLine("");
         public List<OutputChunk> Line { get; set; } = new List<OutputChunk>();
 
         public OutputLine(

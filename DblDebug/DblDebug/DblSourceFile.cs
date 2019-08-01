@@ -74,6 +74,7 @@ namespace DblDebug
         internal void SetCode(ConsoleOutput code, int lineNumber)
         {
             code.Lines.Clear();
+            code.Lines.Add(OutputLine.Blank);
             code.Lines.Add(new OutputLine($"File: {_fullFileName}", ConsoleColor.Yellow));
 
             int codeLineNo = lineNumber - 1;
@@ -83,17 +84,19 @@ namespace DblDebug
                 {
                     if (codeLineNo == i)
                     {
-                        code.Lines.Add(new OutputLine($"{i + 1,10:d}> {_lines[i].Trim(new[] { '\n', '\r' })}", ConsoleColor.White, ConsoleColor.Red));
+                        code.Lines.Add(new OutputLine($"{i + 1,6:d}> {_lines[i].Trim(new[] { '\n', '\r' })}", ConsoleColor.White, ConsoleColor.Red));
                     }
                     else
                     {
-                        code.Lines.Add(new OutputLine($"{i + 1,10:d}> {_lines[i].Trim(new[] { '\n', '\r' })}"));
+                        code.Lines.Add(new OutputLine($"{i + 1,6:d}> {_lines[i].Trim(new[] { '\n', '\r' })}"));
                     }
                 } catch (Exception e)
                 {
 
                 }
             }
+
+            code.Lines.Add(OutputLine.Blank);
         }
     }
 

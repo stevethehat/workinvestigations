@@ -9,6 +9,8 @@ namespace DblDebug
         public static void Main(string[] args)
         {
             OutputLine.WriteLine("DblDebugger");
+            OutputLine.WriteLine("");
+
             CoreDebug debug = new CoreDebug("172.16.128.21", 1024);
 
             //Test(debug);
