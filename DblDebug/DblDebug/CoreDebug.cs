@@ -88,9 +88,12 @@ namespace DblDebug
             string response = default(string);
             response = await GetResponse();
             Console.WriteLine(response);
-            response = await SendCommand("se st ov");
-            response = await SendCommand("s");
-            Console.WriteLine(response);
+
+            ConsoleOutput consoleOutput = await Command("se st ov");
+            consoleOutput.Write();
+
+            consoleOutput = await Command("s");
+            consoleOutput.Write();
 
             return result;
         }
