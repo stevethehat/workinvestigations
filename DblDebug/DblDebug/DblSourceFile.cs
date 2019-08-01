@@ -27,6 +27,11 @@ namespace DblDebug
             Parse(_fullFileName);
         }
 
+        internal Scope GetScope(string name)
+        {
+            return Scopes.Find(s => s.Name.ToLower() == name);
+        }
+
         private string GetFullFileName(string fileName)
         {
             string result = default(string);
@@ -65,6 +70,10 @@ namespace DblDebug
 
                     if(default(Match) != match && match.Success)
                     {
+                        if(default(Scope) != currentScope)
+                        {
+                            currentScope.Finish();
+                        }
                         currentScope = new Scope(match, line, lineNumber);
                         Scopes.Add(currentScope);
                     }
@@ -79,8 +88,10 @@ namespace DblDebug
                 }
                 lineNumber++;
             }
-
-            Console.Write("parsed");
+            if (default(Scope) != currentScope)
+            {
+                currentScope.Finish();
+            }
         }
 
         internal void SetCode(ConsoleOutput code, int lineNumber)
@@ -135,6 +146,21 @@ namespace DblDebug
             LineNumber = lineNumber;
         }
 
+        public Scope()
+        {
+            Name = "unknown";
+        }
+
+        public void Info(ConsoleOutput output)
+        {
+            output.Lines.Add(OutputLine.Blank);
+            output.Lines.Add(new OutputLine("Variables"));
+            output.Lines.Add(new OutputLine(string.Join(", ", Variables)));
+            output.Lines.Add(OutputLine.Blank);
+            output.Lines.Add(new OutputLine("Labels"));
+            output.Lines.Add(new OutputLine(string.Join(", ", Labels)));
+        }
+
         public ScopeType Type           { get; }
         public string Name              { get; }
         public int LineNumber           { get; }
@@ -174,6 +200,12 @@ namespace DblDebug
                     Labels.Add(match.Groups[1].Value);
                 }
             }
+        }
+
+        internal void Finish()
+        {
+            Variables = Variables.OrderBy(v => v).ToList();
+            Labels = Labels.OrderBy(l => l).ToList();
         }
     }
 }

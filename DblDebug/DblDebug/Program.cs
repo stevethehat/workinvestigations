@@ -67,7 +67,9 @@ DBG>
             debug.ProcessResponse("g", "Break at 462 in WHGINE (WHGINE.DBL)\r\n");
             debug.Outputs.General.Write();
 
-            debug.ProcessResponse("s", "Step to 10002 in WHGINE (WHGINE.DBL)\r\n");
+            debug.ProcessResponse("s", "Step to 4207 in WHGINE_PROC_HDR (WHGINE.DBL)\r\n");
+            Scope scope = debug.State.CurrentScope;
+            scope.Info(debug.Outputs.General);
             debug.Outputs.General.Write();
 
             debug.Outputs.Code.Write();
