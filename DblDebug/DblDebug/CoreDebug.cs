@@ -19,8 +19,11 @@ namespace DblDebug
 
         public Outputs Outputs { get; set; } = new Outputs();
         public State State { get; private set; } = new State();
+        public Commands Commands { get; set; } = new Commands();
+        public string LastCommand { get; internal set; }
 
         private List<LineProcessor> _lineProcessors = new List<LineProcessor>();
+
 
         private bool ProcessLine(string line)
         {
@@ -47,11 +50,11 @@ namespace DblDebug
 
             _lineProcessors = new List<LineProcessor>()
             {
-                new LineProcessor(new Regex(@"(Break at) (\d*) in ([A-Z]*) \(([A-Z]*\.[A-Z]*)\)(.*)"),
+                new LineProcessor(new Regex(@"(Break at) (\d*) in ([A-Z_]*) \(([A-Z_]*\.[A-Z_]*)\)(.*)"),
                    (s, l, m) => Processors.LineNumber(s, l, m),
                    (l, m) => Formatters.LineNumber(l, m)
                 ),
-                new LineProcessor(new Regex(@"(Step to) (\d*) in ([A-Z]*) \(([A-Z]*\.[A-Z]*)\)"),
+                new LineProcessor(new Regex(@"(Step to) (\d*) in ([A-Z_]*) \(([A-Z_]*\.[A-Z_]*)\)"),
                    (s, l, m) => Processors.LineNumber(s, l, m),
                    (l, m) => Formatters.LineNumber(l, m)
                 ),
@@ -96,6 +99,12 @@ namespace DblDebug
                 if(false == string.IsNullOrEmpty(command))
                 {
                     string commandResult = await SendCommand(command);
+
+                    if (command != LastCommand)
+                    {
+                        LastCommand = command;
+                    }
+
                     result = ProcessResponse(commandResult);
                 }
             }
@@ -123,8 +132,12 @@ namespace DblDebug
                 }
             }
 
-            if(default(DblSourceFile) != State.DblSourceFile)
+            if(
+                default(DblSourceFile) != State.DblSourceFile && 
+                LastCommand.StartsWith("s") || LastCommand.StartsWith("g")
+            )
             {
+
                 State.DblSourceFile.SetCode(Outputs.Code, State.CurrentLineNo);
             }
 

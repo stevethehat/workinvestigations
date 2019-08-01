@@ -48,6 +48,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoComplete.cs" />
+    <Compile Include="Commands.cs" />
     <Compile Include="DblSourceFile.cs" />
     <Compile Include="Output.cs" />
     <Compile Include="Program.cs" />

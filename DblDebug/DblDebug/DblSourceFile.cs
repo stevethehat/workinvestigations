@@ -45,6 +45,8 @@ namespace DblDebug
             return result;
         }
 
+        //private 
+
         private void Parse(string fileName)
         {
             _lines = File.ReadAllLines(fileName).ToList();
@@ -67,14 +69,12 @@ namespace DblDebug
 
                 }
             }
-
-            Console.WriteLine($"{_functions.Count} functions");
-            Console.WriteLine($"{_subRoutines.Count} subroutines");
         }
 
         internal void SetCode(ConsoleOutput code, int lineNumber)
         {
             code.Lines.Clear();
+            code.Lines.Add(new OutputLine($"File: {_fullFileName}", ConsoleColor.Yellow));
 
             int codeLineNo = lineNumber - 1;
 
@@ -83,30 +83,17 @@ namespace DblDebug
                 {
                     if (codeLineNo == i)
                     {
-                        code.Lines.Add(new OutputLine($"{i,10:d} > {_lines[i +1].Trim(new[] { '\n', '\r' })}", ConsoleColor.White, ConsoleColor.Red));
+                        code.Lines.Add(new OutputLine($"{i + 1,10:d}> {_lines[i].Trim(new[] { '\n', '\r' })}", ConsoleColor.White, ConsoleColor.Red));
                     }
                     else
                     {
-                        code.Lines.Add(new OutputLine($"{i,10:d} > {_lines[i +1].Trim(new[] { '\n', '\r' })}"));
+                        code.Lines.Add(new OutputLine($"{i + 1,10:d}> {_lines[i].Trim(new[] { '\n', '\r' })}"));
                     }
                 } catch (Exception e)
                 {
 
                 }
             }
-            /*
-            foreach(string line in _lines.GetRange(lineNumber - 20, 19))
-            {
-                code.Lines.Add(new OutputLine(line));
-            }
-
-            code.Lines.Add(new OutputLine(_lines[lineNumber], ConsoleColor.White, ConsoleColor.Red));
-
-            foreach (string line in _lines.GetRange(lineNumber + 1, 19))
-            {
-                code.Lines.Add(new OutputLine(line));
-            }
-            */
         }
     }
 

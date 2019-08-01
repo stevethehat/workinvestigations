@@ -8,14 +8,16 @@ namespace DblDebug
     {
         public static void Main(string[] args)
         {
-            OutputLine.WriteLine("DblDebugger", foregroundColor: ConsoleColor.Yellow);
+            OutputLine.WriteLine("DblDebugger");
+            CoreDebug debug = new CoreDebug("172.16.128.21", 1024);
 
-            //Test();
+            //Test(debug);
             ReadLine.HistoryEnabled = true;
+            ReadLine.AutoCompletionHandler = new AutoCompleteHandler(debug);
+
             try
             {
-                var result = GoAsync().GetAwaiter().GetResult();
-
+                var result = GoAsync(debug).GetAwaiter().GetResult();
             }
             catch (Exception e)
             {
@@ -26,10 +28,31 @@ namespace DblDebug
             Console.ReadKey();  
         }
 
-        private static void Test()
+        private static async Task<bool> GoAsync(CoreDebug debug)
         {
-            CoreDebug debug = new CoreDebug("172.16.128.21", 1024);
+            bool startResponse = await debug.Start();
+            string input = null;
+            bool response = true;
+            while (false != response)
+            {
+                input = ReadLine.Read("DBG> ");
 
+                if(true == string.IsNullOrEmpty(input))
+                {
+                    input = debug.LastCommand;
+                }
+
+                response = await debug.Command(input);
+
+                debug.Outputs.Code.Write();
+                debug.Outputs.General.Write();
+            }
+
+            return startResponse;
+        }
+
+        private static void Test(CoreDebug debug)
+        {
             debug.ProcessResponse
 (@"Break at 462 in WHGINE (WHGINE.DBL) on entry
 
@@ -45,27 +68,7 @@ DBG>
             debug.Outputs.General.Write();
 
             debug.Outputs.Code.Write();
-
         }
 
-        private static async Task<bool> GoAsync()
-        {
-            CoreDebug debug = new CoreDebug("172.16.128.21", 1024);
-
-            bool startResponse = await debug.Start();
-            string input = null;
-            bool response = true;
-            while (false != response)
-            {
-                input = ReadLine.Read("DBG> ");
-
-                response = await debug.Command(input);
-
-                debug.Outputs.Code.Write();
-                debug.Outputs.General.Write();
-            }
-
-            return startResponse;
-        }
     }
 }
