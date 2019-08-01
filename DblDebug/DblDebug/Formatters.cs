@@ -10,16 +10,16 @@ namespace DblDebug
             OutputLine result = new OutputLine();
             result.Line.Add(new OutputChunk()
             {
-                Text = $"  "
+                Text = match.Groups[1].Value
             });
             result.Line.Add(new OutputChunk()
             {
-                Text = $"{match.Groups[1].Value}",
+                Text = $"{match.Groups[2].Value}",
                 ForegroundColor = ConsoleColor.Yellow
             });
             result.Line.Add(new OutputChunk()
             {
-                Text = $"> {match.Groups[2].Value}"
+                Text = $"> {match.Groups[3].Value}"
             });
 
             return result;

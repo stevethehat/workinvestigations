@@ -14,6 +14,7 @@ namespace DblDebug
         private readonly Func<bool, string> _input;
         private readonly string _host;
         private readonly int _port;
+        private readonly string _terminator = "";
         private PrimS.Telnet.Client _client;
         private List<string> _response;
 
@@ -23,24 +24,6 @@ namespace DblDebug
         public string LastCommand { get; internal set; }
 
         private List<LineProcessor> _lineProcessors = new List<LineProcessor>();
-
-
-        private bool ProcessLine(string line)
-        {
-            foreach(LineProcessor lineProcessor in _lineProcessors)
-            {
-                Match match = lineProcessor.MatchRegex.Match(line);
-                if(default(Match) != match && true == match.Success)
-                {
-                    State.CurrentLine = line;
-                    State = lineProcessor.Processor(State, line, match);
-                    Outputs.General.Lines.Add(lineProcessor.Formatter(State.CurrentLine, match));
-
-                    break;
-                }
-            }
-            return true;
-        }
 
         public CoreDebug(string host, int port)
         {
@@ -58,7 +41,7 @@ namespace DblDebug
                    (s, l, m) => Processors.LineNumber(s, l, m),
                    (l, m) => Formatters.LineNumber(l, m)
                 ),
-                new LineProcessor(new Regex(@"(\d*)> (.*)"),
+                new LineProcessor(new Regex(@"(\s+)(\d*)> (.*)"),
                    (s, l, m) => Processors.Default(s, l, m),
                    (l, m) => Formatters.CodeLine(l, m)
                 ),
@@ -75,8 +58,7 @@ namespace DblDebug
             _client = new Client(_host, _port, new CancellationToken());
 
             string response = default(string);
-            response = await GetResponse();
-            Console.WriteLine(response);
+            response = await _client.TerminatedReadAsync(_terminator, TimeSpan.FromSeconds(10));
 
             bool test = await Command("se st ov");
             Outputs.General.Write();
@@ -126,7 +108,10 @@ namespace DblDebug
             string trimmedCommandResult = Trim(resposne);
             foreach(string line in trimmedCommandResult.Split('\n'))
             {
-                if(false == line.StartsWith("DBG>"))
+                if(
+                    false == line.StartsWith("DBG>") &&
+                    false == string.IsNullOrEmpty(Trim(line))
+                )
                 {
                     ProcessLine(line);
                 }
@@ -134,7 +119,13 @@ namespace DblDebug
 
             if(
                 default(DblSourceFile) != State.DblSourceFile && 
-                LastCommand.StartsWith("s") || LastCommand.StartsWith("g")
+                (
+                    "s"     == LastCommand  ||
+                    "st"    == LastCommand  ||
+                    "step"  == LastCommand  ||
+                    "g"     == LastCommand  ||
+                    "go"    == LastCommand
+                )
             )
             {
 
@@ -144,15 +135,28 @@ namespace DblDebug
             return result;
         }
 
-        protected async Task<string> GetResponse()
+        private bool ProcessLine(string line)
         {
-            return await _client.TerminatedReadAsync("DBG>", TimeSpan.FromHours(1));
+            foreach (LineProcessor lineProcessor in _lineProcessors)
+            {
+                Match match = lineProcessor.MatchRegex.Match(line);
+                if (default(Match) != match && true == match.Success)
+                {
+                    State.CurrentLine = line;
+                    State = lineProcessor.Processor(State, line, match);
+
+                    Outputs.General.Lines.Add(lineProcessor.Formatter(State.CurrentLine, match));
+
+                    break;
+                }
+            }
+            return true;
         }
 
         protected async Task<string> SendCommand(string command)
         {
             await _client.Write($"{command}\n");
-            return await GetResponse();
+            return await _client.TerminatedReadAsync("DBG>", TimeSpan.FromHours(1));
         }
 
 
