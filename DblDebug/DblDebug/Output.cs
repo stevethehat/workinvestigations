@@ -16,7 +16,7 @@ namespace DblDebug
             }
         }
 
-        public IEnumerable<OutputLine> Lines { get; set; } = new List<OutputLine>();
+        public List<OutputLine> Lines { get; set; } = new List<OutputLine>();
     }
 
     public class OutputLine

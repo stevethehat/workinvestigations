@@ -9,54 +9,31 @@ using PrimS.Telnet;
 
 namespace DblDebug
 {
-    public class LineProcessor
-    {
-        public Regex MatchRegex { get; set; }
-        public Func<string, Match, bool> Processor { get; set; }
-        public Func<string, Match, string> Formatter { get; set; }
-
-        public LineProcessor(Regex matchRegex, Func<string, Match, bool> processor, Func<string, Match, string> formatter)
-        {
-            MatchRegex = matchRegex;
-            Processor = processor;
-            Formatter = formatter;
-        }
-
-        public LineProcessor()
-        {
-                
-        }
-    }
     public class CoreDebug: IDisposable
     {
         private readonly Func<bool, string> _input;
         private readonly string _host;
         private readonly int _port;
-        private readonly PrimS.Telnet.Client _client;
-        private string _currentFile = "";
-        private int _currentLine = 0;
+        private PrimS.Telnet.Client _client;
         private List<string> _response;
+
+        public Outputs Outputs { get; set; } = new Outputs();
+        public State State { get; private set; } = new State();
 
         private List<LineProcessor> _lineProcessors = new List<LineProcessor>();
 
-        private bool ProcessLine(string line, Match match)
-        {
-            return true;
-        }
-        private string FormatLine(string line, Match match)
-        {
-            return "";
-        }
-
-        private bool CheckLine(string line)
+        private bool ProcessLine(string line)
         {
             foreach(LineProcessor lineProcessor in _lineProcessors)
             {
                 Match match = lineProcessor.MatchRegex.Match(line);
                 if(default(Match) != match && true == match.Success)
                 {
-                    lineProcessor.Processor(line, match);
-                    lineProcessor.Formatter(line, match);
+                    State.CurrentLine = line;
+                    State = lineProcessor.Processor(State, line, match);
+                    Outputs.General.Lines.Add(lineProcessor.Formatter(State.CurrentLine, match));
+
+                    break;
                 }
             }
             return true;
@@ -67,17 +44,24 @@ namespace DblDebug
             _host = host;
             _port = port;
             _response = new List<string>();
-            _client = new Client(_host, _port, new CancellationToken());
 
             _lineProcessors = new List<LineProcessor>()
             {
-                new LineProcessor(new Regex(@"Break at (\d*) in ([A-Z]*) \(([A-Z]*\.[A-Z]*)\)"),
-                   (l, m) => ProcessLine(l, m),
-                   (l, m) => FormatLine(l, m)
+                new LineProcessor(new Regex(@"(Break at) (\d*) in ([A-Z]*) \(([A-Z]*\.[A-Z]*)\)(.*)"),
+                   (s, l, m) => Processors.LineNumber(s, l, m),
+                   (l, m) => Formatters.LineNumber(l, m)
                 ),
-                new LineProcessor(new Regex(@"Step to (\d*) in ([A-Z]*) \(([A-Z]*\.[A-Z]*)\)"),
-                   (l, m) => ProcessLine(l, m),
-                   (l, m) => FormatLine(l, m)
+                new LineProcessor(new Regex(@"(Step to) (\d*) in ([A-Z]*) \(([A-Z]*\.[A-Z]*)\)"),
+                   (s, l, m) => Processors.LineNumber(s, l, m),
+                   (l, m) => Formatters.LineNumber(l, m)
+                ),
+                new LineProcessor(new Regex(@"(\d*) > (.*)"),
+                   (s, l, m) => Processors.Default(s, l, m),
+                   (l, m) => Formatters.CodeLine(l, m)
+                ),
+                new LineProcessor(new Regex(@".*"),
+                   (s, l, m) => Processors.Default(s, l, m),
+                   (l, m) => new OutputLine(l)
                 )
             };
         }
@@ -85,6 +69,8 @@ namespace DblDebug
         public async Task<bool> Start()
         {
             bool result = false;
+            _client = new Client(_host, _port, new CancellationToken());
+
             string response = default(string);
             response = await GetResponse();
             Console.WriteLine(response);
@@ -98,28 +84,50 @@ namespace DblDebug
             return result;
         }
 
-        public async Task<ConsoleOutput> Command(string command)
+        public async Task<bool> Command(string command)
         {
-            string Trim(string line){
-                return line.TrimEnd(new char[] { '\r', '\n' });
-            }
-
-            ConsoleOutput result = new ConsoleOutput();
-            if("q" == command)
+            bool result = true;
+            if ("q" == command)
             {
-                result = default(ConsoleOutput);
+                result = false;
             }
             else
             {
                 if(false == string.IsNullOrEmpty(command))
                 {
                     string commandResult = await SendCommand(command);
-                    string trimmedCommandResult = Trim(commandResult);
-                    //foreach(string line in )
-                    result.Lines = trimmedCommandResult.Split('\n')
-                        .Select(l => new OutputLine(l));
+                    result = ProcessResponse(commandResult);
                 }
             }
+            return result;
+        }
+
+        internal bool ProcessResponse(string resposne)
+        {
+            bool result = true;
+
+            Outputs.General.Lines.Clear();
+            Outputs.Code.Lines.Clear();
+
+            string Trim(string line)
+            {
+                return line.TrimEnd(new char[] { '\r', '\n' });
+            }
+
+            string trimmedCommandResult = Trim(resposne);
+            foreach(string line in trimmedCommandResult.Split('\n'))
+            {
+                if(false == line.StartsWith("DBG>"))
+                {
+                    ProcessLine(line);
+                }
+            }
+
+            if(default(DblSourceFile) != State.DblSourceFile)
+            {
+                State.DblSourceFile.SetCode(Outputs.Code, State.CurrentLineNo);
+            }
+
             return result;
         }
 
