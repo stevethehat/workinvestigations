@@ -27,14 +27,27 @@ namespace DblDebug
             _completions = new List<Completion>()
             {
                 new Completion(new Regex(@"^([a-z]*) ([a-z]*)"), (m, t) => GetPossibleOptions(GetSubCommands(m, t), m, t)),
-                new Completion(new Regex(@"^([a-z]*)"), (m, t) => GetPossibleOptions(GetCommands(), m, t)),
+                new Completion(new Regex(@"^(:?[a-z]*)"), (m, t) => GetPossibleOptions(GetCommands(), m, t)),
             };
         }
 
         private IEnumerable<string> GetSubCommands(Match match, string text)
         {
-            string command = match.Groups[1].Value;
-            return _debug.Commands.MainCommands.Find(c => c.Name == command).SubCommands;
+            List<string> result = new List<string>();
+
+            Command mainCommand = _debug.Commands.MainCommands.Find(c => c.Name == match.Groups[1].Value);
+
+            if (true == mainCommand.SubCommands.Any())
+            {
+                result.AddRange(mainCommand.SubCommands);
+            }
+
+            if(default(Func<State, List<string>>) != mainCommand.SubOptions)
+            {
+                result.AddRange(mainCommand.SubOptions(_debug.State));
+            }
+
+            return result;
         }
 
         // characters to start completion from

@@ -11,6 +11,7 @@ namespace DblDebug
         public string Name { get; set; }
         public List<string> SubCommands { get; set; }
         public CommandType CommandType { get; set; }
+        public Func<State, List<string>> SubOptions { get; set; }
     }
 
     public enum CommandType
@@ -30,11 +31,17 @@ namespace DblDebug
         public readonly IEnumerable<string> MainCommandNames;
         public readonly List<Command> MainCommands = new List<Command>()
             {
-                new Command() { Name = "break" },
+                new Command() {
+                    Name = "break",
+                    SubOptions = (s) => s.CurrentScope.Labels
+                },
                 new Command() { Name = "cancel" },
                 new Command() { Name = "delete" },
                 new Command() { Name = "deposit" },
-                new Command() { Name = "examine" },
+                new Command() {
+                    Name = "examine",
+                    SubOptions = (s) => s.CurrentScope.Variables
+                },
                 new Command() { Name = "exit" },
                 new Command() {
                     Name = "go",
@@ -62,9 +69,18 @@ namespace DblDebug
                     CommandType = CommandType.Navigation
                 },
                 new Command() { Name = "trace" },
-                new Command() { Name = "traceiew" },
+                //new Command() { Name = "traceiew" },
                 new Command() { Name = "watch" },
-            };
+                new Command() {
+                    Name = ":peek",
+                    SubOptions = (s)
+                        => s.CurrentScope.Labels
+                            //.AddRange(s.DblSourceFile.Scopes.Select(sc => sc.Name))
+                },
+                new Command() { Name = ":save" },
+                new Command() { Name = ":load" },
+
+        };
 
     }
 }

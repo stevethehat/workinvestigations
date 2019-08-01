@@ -72,7 +72,7 @@ namespace DblDebug
                     {
                         if(default(Scope) != currentScope)
                         {
-                            currentScope.Finish();
+                            currentScope.Finish(lineNumber);
                         }
                         currentScope = new Scope(match, line, lineNumber);
                         Scopes.Add(currentScope);
@@ -80,7 +80,7 @@ namespace DblDebug
 
                     if(default(Scope) != currentScope)
                     {
-                        currentScope.ProcessLine(line);
+                        currentScope.ProcessLine(line, lineNumber);
                     }
                 } catch (Exception e)
                 {
@@ -90,7 +90,7 @@ namespace DblDebug
             }
             if (default(Scope) != currentScope)
             {
-                currentScope.Finish();
+                currentScope.Finish(lineNumber);
             }
         }
 
@@ -143,7 +143,7 @@ namespace DblDebug
                 ? ScopeType.Function
                 : ScopeType.Subroutine;
             Name = match.Groups[2].Value;
-            LineNumber = lineNumber;
+            DefinitionLineNumber = lineNumber;
         }
 
         public Scope()
@@ -154,6 +154,8 @@ namespace DblDebug
         public void Info(ConsoleOutput output)
         {
             output.Lines.Add(OutputLine.Blank);
+            output.Lines.Add(new OutputLine($"Name: {Name} Definition: {DefinitionLineNumber} Body: {BodyLineNumber} End: {EndLineNumber}"));
+            output.Lines.Add(OutputLine.Blank);
             output.Lines.Add(new OutputLine("Variables"));
             output.Lines.Add(new OutputLine(string.Join(", ", Variables)));
             output.Lines.Add(OutputLine.Blank);
@@ -163,7 +165,9 @@ namespace DblDebug
 
         public ScopeType Type           { get; }
         public string Name              { get; }
-        public int LineNumber           { get; }
+        public int DefinitionLineNumber           { get; }
+        public int EndLineNumber { get; private set; }
+
         public List<string>     Variables  = new List<string>();
         public List<string>     Labels     = new List<string>();
 
@@ -172,9 +176,9 @@ namespace DblDebug
         private static Regex    _variable  = new Regex(@"^\s*([a-zA-Z0-9_]+)\s*,");
         private ScopeState      _state;
 
+        public int BodyLineNumber { get; private set; }
 
-
-        internal void ProcessLine(string line)
+        internal void ProcessLine(string line, int lineNumber)
         {
             Match match = default(Match);
 
@@ -184,6 +188,7 @@ namespace DblDebug
                 if(default(Match) != match && true == match.Success)
                 {
                     _state = ScopeState.Body;
+                    BodyLineNumber = lineNumber;
                 }
                 match = _variable.Match(line);
                 if (default(Match) != match && true == match.Success)
@@ -202,8 +207,9 @@ namespace DblDebug
             }
         }
 
-        internal void Finish()
+        internal void Finish(int lineNumber)
         {
+            EndLineNumber = lineNumber;
             Variables = Variables.OrderBy(v => v).ToList();
             Labels = Labels.OrderBy(l => l).ToList();
         }
