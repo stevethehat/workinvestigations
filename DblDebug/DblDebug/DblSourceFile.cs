@@ -72,11 +72,11 @@ namespace DblDebug
             for(int i = lineNumber - CONTEXT; i < lineNumber + CONTEXT; i++){
                 if(lineNumber == i)
                 {
-                    code.Lines.Add(new OutputLine($"{i, 10:d} > {_lines[i]}" , ConsoleColor.White, ConsoleColor.Red));
+                    code.Lines.Add(new OutputLine($"{i, 10:d} > {_lines[i].Trim(new[] { '\n', '\r' })}" , ConsoleColor.White, ConsoleColor.Red));
                 }
                 else
                 {
-                    code.Lines.Add(new OutputLine($"{i, 10:d} > {_lines[i]}"));
+                    code.Lines.Add(new OutputLine($"{i, 10:d} > {_lines[i].Trim(new[] { '\n', '\r' })}"));
                 }
             }
             /*

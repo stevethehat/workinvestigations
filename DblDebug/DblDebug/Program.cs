@@ -43,7 +43,7 @@ DBG>
             debug.ProcessResponse("Break at 462 in WHGINE (WHGINE.DBL)\r\n");
             debug.Outputs.General.Write();
 
-            debug.ProcessResponse("Step to 9999 in WHGINE (WHGINE.DBL)\r\n");
+            debug.ProcessResponse("Step to 10001 in WHGINE (WHGINE.DBL)\r\n");
             debug.Outputs.General.Write();
 
             debug.Outputs.Code.Write();
