@@ -55,7 +55,7 @@ namespace DblDebug
                    (s, l, m) => Processors.LineNumber(s, l, m),
                    (l, m) => Formatters.LineNumber(l, m)
                 ),
-                new LineProcessor(new Regex(@"(\d*) > (.*)"),
+                new LineProcessor(new Regex(@"(\d*)> (.*)"),
                    (s, l, m) => Processors.Default(s, l, m),
                    (l, m) => Formatters.CodeLine(l, m)
                 ),
@@ -75,11 +75,11 @@ namespace DblDebug
             response = await GetResponse();
             Console.WriteLine(response);
 
-            ConsoleOutput consoleOutput = await Command("se st ov");
-            consoleOutput.Write();
+            bool test = await Command("se st ov");
+            Outputs.General.Write();
 
-            consoleOutput = await Command("s");
-            consoleOutput.Write();
+            test = await Command("s");
+            Outputs.General.Write();
 
             return result;
         }

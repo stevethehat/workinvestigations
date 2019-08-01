@@ -10,8 +10,7 @@ namespace DblDebug
         {
             OutputLine.WriteLine("DblDebugger", foregroundColor: ConsoleColor.Yellow);
 
-            Test();
-            /*
+            //Test();
             ReadLine.HistoryEnabled = true;
             try
             {
@@ -22,7 +21,6 @@ namespace DblDebug
             {
                 OutputLine.WriteLine(e.Message, foregroundColor: ConsoleColor.Red);
             }
-            */
 
             OutputLine.WriteLine("Done..");
             Console.ReadKey();  
@@ -63,6 +61,7 @@ DBG>
 
                 response = await debug.Command(input);
 
+                debug.Outputs.Code.Write();
                 debug.Outputs.General.Write();
             }
 

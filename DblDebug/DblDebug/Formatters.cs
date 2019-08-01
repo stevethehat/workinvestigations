@@ -19,7 +19,7 @@ namespace DblDebug
             });
             result.Line.Add(new OutputChunk()
             {
-                Text = $" > {match.Groups[2].Value}"
+                Text = $"> {match.Groups[2].Value}"
             });
 
             return result;
