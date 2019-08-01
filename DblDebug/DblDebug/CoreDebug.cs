@@ -100,20 +100,20 @@ namespace DblDebug
                 {
                     string commandResult = await SendCommand(command);
 
-                    if (command != LastCommand)
-                    {
-                        LastCommand = command;
-                    }
-
-                    result = ProcessResponse(commandResult);
+                    result = ProcessResponse(command, commandResult);
                 }
             }
             return result;
         }
 
-        internal bool ProcessResponse(string resposne)
+        internal bool ProcessResponse(string command, string resposne)
         {
             bool result = true;
+
+            if (command != LastCommand)
+            {
+                LastCommand = command;
+            }
 
             Outputs.General.Lines.Clear();
             Outputs.Code.Lines.Clear();

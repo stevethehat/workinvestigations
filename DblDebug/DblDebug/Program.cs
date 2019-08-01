@@ -11,7 +11,8 @@ namespace DblDebug
             OutputLine.WriteLine("DblDebugger");
             CoreDebug debug = new CoreDebug("172.16.128.21", 1024);
 
-            //Test(debug);
+            Test(debug);
+            return;
             ReadLine.HistoryEnabled = true;
             ReadLine.AutoCompletionHandler = new AutoCompleteHandler(debug);
 
@@ -54,20 +55,22 @@ namespace DblDebug
         private static void Test(CoreDebug debug)
         {
             debug.ProcessResponse
-(@"Break at 462 in WHGINE (WHGINE.DBL) on entry
+("g", @"Break at 462 in WHGINE (WHGINE.DBL) on entry
 
     462 >       a = 4
 DBG> 
 ");
             debug.Outputs.General.Write();
 
-            debug.ProcessResponse("Break at 462 in WHGINE (WHGINE.DBL)\r\n");
+            debug.ProcessResponse("g", "Break at 462 in WHGINE (WHGINE.DBL)\r\n");
             debug.Outputs.General.Write();
 
-            debug.ProcessResponse("Step to 10001 in WHGINE (WHGINE.DBL)\r\n");
+            debug.ProcessResponse("s", "Step to 10002 in WHGINE (WHGINE.DBL)\r\n");
             debug.Outputs.General.Write();
 
             debug.Outputs.Code.Write();
+
+            Console.ReadKey();
         }
 
     }

@@ -11,8 +11,8 @@ namespace DblDebug
     {
         public readonly string FileName;
         private readonly string _fullFileName;
-        //private readonly string _sourceDirectory = "/Users/stevelamb/Development/ibcos/investigations/source/";
-        private readonly string _sourceDirectory = "c:\\ibcos\\Repositorys\\gold\\source\\";
+        private readonly string _sourceDirectory = "/Users/stevelamb/Development/ibcos/investigations/source/";
+        //private readonly string _sourceDirectory = "c:\\ibcos\\Repositorys\\gold\\source\\";
         private readonly List<Scope> _functions = new List<Scope>();
         private readonly List<Scope> _subRoutines = new List<Scope>();
         private List<string> _lines;
