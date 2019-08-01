@@ -1,0 +1,30 @@
+e jjj
+%DBG-E-Undefined variable - {JJJ}
+
+DBG> b postit
+
+DBG> show break
+
+
+SKINV on entry
+SKINV:1.7235
+
+
+%DBR-I-ATLINE, At line 676 in routine SKINV (SKINV.DBL)
+%DBR-I-ATLINE, At line 2167 in routine GOLD (GOLD.DBL)
+%DBR-I-CALFRM, Called from line 358
+%DBR-I-ATLINE, At line 74 in routine GOLD (GOLD.DBL)
+
+
+Break at (670) in SKINV (SKINV.DBL) on entry
+  670 >         &       nom_opt, nom_max, nom_mh, ord_data, moded_flg
+DBG> e nom_opt
+
+nom_ch, I4, 0
+nom_mh, I4, 0
+nom_max, I4, 0
+nom_bal, D12, 0
+bal_id, I4, 0
+bal_fld, A30, "                              "
+grp_value_in, D12, 0
+nom_store, D12, 0
