@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace DblDebug
@@ -46,29 +47,40 @@ namespace DblDebug
         }
 
         //private 
+        private static Regex _functionSubroutine = new Regex(@"^\s*\.?(function|subroutine)\s+([a-zA-Z0-9_]+)");
+
+        public List<Scope> Scopes { get; private set; } = new List<Scope>();
 
         private void Parse(string fileName)
         {
             _lines = File.ReadAllLines(fileName).ToList();
-
+            Scope currentScope = default(Scope);
+            int lineNumber = 1;
             foreach(string line in _lines)
             {
                 try
                 {
                     string trimmedLine = line.Trim();
-                    if (true == line.StartsWith("function"))
+                    Match match = _functionSubroutine.Match(line);
+
+                    if(default(Match) != match && match.Success)
                     {
-                        _functions.Add(new Scope());
+                        currentScope = new Scope(match, line, lineNumber);
+                        Scopes.Add(currentScope);
                     }
-                    if (true == line.StartsWith("subroutine"))
+
+                    if(default(Scope) != currentScope)
                     {
-                        _subRoutines.Add(new Scope());
+                        currentScope.ProcessLine(line);
                     }
                 } catch (Exception e)
                 {
 
                 }
+                lineNumber++;
             }
+
+            Console.Write("parsed");
         }
 
         internal void SetCode(ConsoleOutput code, int lineNumber)
@@ -100,11 +112,68 @@ namespace DblDebug
         }
     }
 
+    public enum ScopeType
+    {
+        Function,
+        Subroutine
+    }
+
+    enum ScopeState
+    {
+        Variables,
+        Body
+    }
+
     public class Scope
     {
-        public Scope()
+        public Scope(Match match, string line, int lineNumber)
         {
+            Type = ("function" == match.Groups[1].Value) 
+                ? ScopeType.Function
+                : ScopeType.Subroutine;
+            Name = match.Groups[2].Value;
+            LineNumber = lineNumber;
+        }
 
+        public ScopeType Type           { get; }
+        public string Name              { get; }
+        public int LineNumber           { get; }
+        public List<string>     Variables  = new List<string>();
+        public List<string>     Labels     = new List<string>();
+
+        private static Regex    _procStart = new Regex(@"^\s*\.?proc");
+        private static Regex    _label     = new Regex(@"^\s*([a-zA-Z0-9_]+)\s*,");
+        private static Regex    _variable  = new Regex(@"^\s*([a-zA-Z0-9_]+)\s*,");
+        private ScopeState      _state;
+
+
+
+        internal void ProcessLine(string line)
+        {
+            Match match = default(Match);
+
+            if (ScopeState.Variables == _state)
+            {
+                match = _procStart.Match(line);
+                if(default(Match) != match && true == match.Success)
+                {
+                    _state = ScopeState.Body;
+                }
+                match = _variable.Match(line);
+                if (default(Match) != match && true == match.Success)
+                {
+                    Variables.Add(match.Groups[1].Value);
+                }
+            }
+
+            if(ScopeState.Body == _state)
+            {
+                match = _label.Match(line);
+                if (default(Match) != match && true == match.Success)
+                {
+                    Labels.Add(match.Groups[1].Value);
+                }
+            }
         }
     }
 }
