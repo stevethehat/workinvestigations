@@ -21,7 +21,7 @@ namespace DblDebug
         public Outputs Outputs { get; set; } = new Outputs();
         public State State { get; private set; } = new State();
         public Commands Commands { get; set; } = new Commands();
-        public string LastCommand { get; internal set; }
+        public Command LastCommand { get; internal set; } = new Command();
 
         private List<LineProcessor> _lineProcessors = new List<LineProcessor>();
 
@@ -69,36 +69,42 @@ namespace DblDebug
             return result;
         }
 
-        public async Task<bool> Command(string command)
+        public async Task<bool> Command(string enteredCommand)
         {
             bool result = true;
 
-            if(true == string.IsNullOrEmpty(command))
+            if(true == string.IsNullOrEmpty(enteredCommand))
             {
                 return true;
             }
 
-            if (true == command.StartsWith(":"))
+            Command command = Commands.GetCommand(enteredCommand);
+            if (default(Command) != command)
             {
-                result = ProcessInternalCommand(command);
-            }
-            else
-            {
-                string commandResult = await SendCommand(command);
+                State.LastEnteredCommand = enteredCommand;
 
-                result = ProcessResponse(command, commandResult);
+                if (true == command.IsInternal)
+                {
+                    result = ProcessInternalCommand(command);
+                }
+                else
+                {
+                    string commandResult = await SendCommand(enteredCommand);
+
+                    result = ProcessResponse(command, commandResult);
+                }
             }
+
             return result;
         }
 
-        internal bool ProcessInternalCommand(string commandName)
+        internal bool ProcessInternalCommand(Command command)
         {
             bool result = true;
 
             Outputs.General.Lines.Clear();
             Outputs.Code.Lines.Clear();
 
-            Command command = Commands.GetCommand(commandName);
             if(default(Command) != command)
             {
                 result = command.Execute(this);
@@ -106,13 +112,13 @@ namespace DblDebug
             return result;
         }
 
-        internal bool ProcessResponse(string command, string resposne)
+        internal bool ProcessResponse(Command command, string resposne)
         {
             bool result = true;
 
-            if (command != LastCommand)
+            if (command.Name != LastCommand.Name)
             {
-                LastCommand = command;
+                LastCommand.Name = command.Name;
             }
 
             Outputs.General.Lines.Clear();
@@ -124,6 +130,9 @@ namespace DblDebug
             }
 
             string trimmedCommandResult = Trim(resposne);
+
+
+
             foreach(string line in trimmedCommandResult.Split('\n'))
             {
                 if(
@@ -137,7 +146,7 @@ namespace DblDebug
 
             if(
                 default(DblSourceFile) != State.DblSourceFile && 
-                CommandType.Navigation == Commands.GetCommand(command).CommandType
+                CommandType.Navigation == command.CommandType
             )
             {
 

@@ -6,6 +6,7 @@ namespace DblDebug
         public string CurrentFile { get; set; } = "";
         public string CurrentFunction { get; set; } = "";
         public int CurrentLineNo { get; set; } = 0;
+        public string LastEnteredCommand { get; set; } = "";
         public string CurrentLine { get; set; }
         public Scope CurrentScope { get; set; }
         public DblSourceFile DblSourceFile { get; set; }

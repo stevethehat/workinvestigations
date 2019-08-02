@@ -9,12 +9,15 @@ namespace DblDebug
 {
     public class Command
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = "unknown";
         public List<string> AlternateNames { get; set; } = new List<string>();
         public List<string> SubCommands { get; set; } = new List<string>();
         public CommandType CommandType { get; set; }
         public Func<State, IEnumerable<string>> SubOptions { get; set; }
         public Func<CoreDebug, bool> Action { get; set; }
+        public Func<string, string> ResponsePreProcess { get; set; } = (r) => r;
+
+        public bool IsInternal { get => Name.StartsWith(":"); }
 
         internal bool Execute(CoreDebug debug)
         {
@@ -98,7 +101,10 @@ namespace DblDebug
                 new Command() { Name = "save" },
                 new Command() { Name = "screen" },
                 new Command() { Name = "search" },
-                new Command() { Name = "set" },
+                new Command() {
+                    Name = "set",
+                    AlternateNames = new List<string>(){ "se" }
+                },
                 new Command() {
                     Name = "show",
                     SubCommands = new List<string>()
@@ -129,7 +135,10 @@ namespace DblDebug
                 new Command() {
                     Name = ":scope",
                     Action = (d) => {
-                        d.State.CurrentScope.Info(d.Outputs.General);
+                        if(default(Scope) != d.State.CurrentScope)
+                        {
+                            d.State.CurrentScope.Info(d.Outputs.General);
+                        }
                         return true;
                     }
                 },

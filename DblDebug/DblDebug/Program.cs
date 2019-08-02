@@ -39,17 +39,24 @@ namespace DblDebug
             bool response = true;
             while (false != response)
             {
-                input = ReadLine.Read("DBG> ");
-
-                if(true == string.IsNullOrEmpty(input))
+                try
                 {
-                    input = debug.LastCommand;
+                    input = ReadLine.Read("DBG> ");
+
+                    if (true == string.IsNullOrEmpty(input))
+                    {
+                        input = debug.State.LastEnteredCommand;
+                    }
+
+                    response = await debug.Command(input);
+
+                    debug.Outputs.Code.Write();
+                    debug.Outputs.General.Write();
                 }
-
-                response = await debug.Command(input);
-
-                debug.Outputs.Code.Write();
-                debug.Outputs.General.Write();
+                catch (Exception e)
+                {
+                    OutputLine.WriteLine(e.Message, foregroundColor: ConsoleColor.Red);
+                }
             }
 
             return startResponse;
@@ -57,18 +64,23 @@ namespace DblDebug
 
         private static void Test(CoreDebug debug)
         {
+            Command go = new Command()
+            {
+                Name = "g",
+                CommandType = CommandType.Navigation
+            };
             debug.ProcessResponse
-("g", @"Break at 462 in WHGINE (WHGINE.DBL) on entry
+(go, @"Break at 462 in WHGINE (WHGINE.DBL) on entry
 
     462 >       a = 4
 DBG> 
 ");
             debug.Outputs.General.Write();
 
-            debug.ProcessResponse("g", "Break at 462 in WHGINE (WHGINE.DBL)\r\n");
+            debug.ProcessResponse(go, "Break at 462 in WHGINE (WHGINE.DBL)\r\n");
             debug.Outputs.General.Write();
 
-            debug.ProcessResponse("s", "Step to 4207 in WHGINE_PROC_HDR (WHGINE.DBL)\r\n");
+            debug.ProcessResponse(go, "Step to 4207 in WHGINE_PROC_HDR (WHGINE.DBL)\r\n");
             Scope scope = debug.State.CurrentScope;
             scope.Info(debug.Outputs.General);
             debug.Outputs.General.Write();
