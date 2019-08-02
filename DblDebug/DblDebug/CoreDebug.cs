@@ -34,24 +34,24 @@ namespace DblDebug
             _lineProcessors = new List<LineProcessor>()
             {
                 new LineProcessor(new Regex(@"(Break at) (\d*) in ([A-Z_]*) \(([A-Z_]*\.[A-Z_]*)\)(.*)"),
-                   (s, l, m) => Processors.LineNumber(s, l, m),
-                   (l, m) => Formatters.LineNumber(l, m)
+                   (s, l, m)    => Processors.LineNumber(s, l, m),
+                   (l, m)       => Formatters.LineNumber(l, m)
                 ),
                 new LineProcessor(new Regex(@"(Step to) (\d*) in ([A-Z_]*) \(([A-Z_]*\.[A-Z_]*)\)"),
-                   (s, l, m) => Processors.LineNumber(s, l, m),
-                   (l, m) => Formatters.LineNumber(l, m)
+                   (s, l, m)    => Processors.LineNumber(s, l, m),
+                   (l, m)       => Formatters.LineNumber(l, m)
                 ),
-                new LineProcessor(new Regex(@"^%DBG-E-"),
-                   (s, l, m) => Processors.Default(s, l, m),
-                   (l, m) => Formatters.Error(l, m)
+                new LineProcessor(new Regex(@"^%DBG-E-.*"),
+                   (s, l, m)    => Processors.Default(s, l, m),
+                   (l, m)       => Formatters.Error(l, m)
                 ),
                 new LineProcessor(new Regex(@"(\s+)(\d*)> (.*)"),
-                   (s, l, m) => Processors.Default(s, l, m),
-                   (l, m) => Formatters.CodeLine(l, m)
+                   (s, l, m)    => Processors.Default(s, l, m),
+                   (l, m)       => Formatters.CodeLine(l, m)
                 ),
                 new LineProcessor(new Regex(@".*"),
-                   (s, l, m) => Processors.Default(s, l, m),
-                   (l, m) => new OutputLine(l)
+                   (s, l, m)    => Processors.Default(s, l, m),
+                   (l, m)       => new OutputLine(l)
                 )
             };
         }
@@ -64,10 +64,10 @@ namespace DblDebug
             string response = default(string);
             response = await _client.TerminatedReadAsync(_terminator, TimeSpan.FromSeconds(10));
 
-            bool test = await Command("se st ov");
+            bool commandResult = await Command("se st ov");
             Outputs.General.Write();
 
-            test = await Command("s");
+            commandResult = await Command("s");
             Outputs.General.Write();
 
             return result;

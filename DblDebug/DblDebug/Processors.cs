@@ -28,5 +28,10 @@ namespace DblDebug
         {
             return currentState;
         }
+
+        public static string PreProcessExamine(string response)
+        {
+            return response;
+        }
     }
 }

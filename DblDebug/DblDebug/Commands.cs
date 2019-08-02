@@ -88,7 +88,8 @@ namespace DblDebug
                 new Command() {
                     Name = "examine",
                     AlternateNames = new List<string>(){ "e" },
-                    SubOptions = (s) => s.CurrentScope.Variables
+                    SubOptions = (s) => s.CurrentScope.Variables,
+                    ResponsePreProcess = (r) => Processors.PreProcessExamine(r)
                 },
                 new Command() { Name = "exit" },
                 new Command() {
@@ -125,8 +126,14 @@ namespace DblDebug
                     Name = "trace",
                     AlternateNames = new List<string>() { "b" }
                 },
-                new Command() { Name = "view" },
-                new Command() { Name = "watch" },
+                new Command() {
+                    Name = "view",
+                    AlternateNames = new List<string>() { "v" }
+                },
+                new Command() {
+                    Name = "watch",
+                    AlternateNames = new List<string>() { "w" }
+                },
                 new Command() {
                     Name = ":peek",
                     SubOptions = (s)
