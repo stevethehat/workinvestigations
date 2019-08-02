@@ -15,6 +15,7 @@ namespace DblDebug
 
             Test(debug);
             return;
+
             ReadLine.HistoryEnabled = true;
             ReadLine.AutoCompletionHandler = new AutoCompleteHandler(debug);
 
@@ -73,6 +74,9 @@ DBG>
             debug.Outputs.General.Write();
 
             debug.Outputs.Code.Write();
+
+            Command test = debug.Commands.GetCommand("s");
+            Console.Write($"command name = '{test.Name}'");
 
             Console.ReadKey();
         }

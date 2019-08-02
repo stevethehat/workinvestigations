@@ -72,18 +72,33 @@ namespace DblDebug
         public async Task<bool> Command(string command)
         {
             bool result = true;
-            if ("q" == command)
+
+            if(true == string.IsNullOrEmpty(command))
             {
-                result = false;
+                return true;
+            }
+
+            if (true == command.StartsWith(":"))
+            {
+                result = ProcessInternalCommand(command);
             }
             else
             {
-                if(false == string.IsNullOrEmpty(command))
-                {
-                    string commandResult = await SendCommand(command);
+                string commandResult = await SendCommand(command);
 
-                    result = ProcessResponse(command, commandResult);
-                }
+                result = ProcessResponse(command, commandResult);
+            }
+            return result;
+        }
+
+        internal bool ProcessInternalCommand(string commandName)
+        {
+            bool result = true;
+
+            Command command = Commands.GetCommand(commandName);
+            if(default(Command) != command)
+            {
+                result = command.Execute(this);
             }
             return result;
         }
@@ -119,13 +134,7 @@ namespace DblDebug
 
             if(
                 default(DblSourceFile) != State.DblSourceFile && 
-                (
-                    "s"     == LastCommand  ||
-                    "st"    == LastCommand  ||
-                    "step"  == LastCommand  ||
-                    "g"     == LastCommand  ||
-                    "go"    == LastCommand
-                )
+                CommandType.Navigation == Commands.GetCommand(command).CommandType
             )
             {
 

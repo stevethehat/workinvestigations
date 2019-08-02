@@ -11,12 +11,24 @@ namespace DblDebug
     public class DblSourceFile
     {
         public readonly string FileName;
+        public IEnumerable<string> BreakLocations
+        {
+            get => GetBreakLocations();
+        }
+
+        private IEnumerable<string> GetBreakLocations()
+        {
+            return Scopes.Select(s => s.Name);
+        }
+
         private readonly string _fullFileName;
-        private readonly string _sourceDirectory = "/Users/stevelamb/Development/ibcos/investigations/source/";
-        //private readonly string _sourceDirectory = "c:\\ibcos\\Repositorys\\gold\\source\\";
+        //private readonly string _sourceDirectory = "/Users/stevelamb/Development/ibcos/investigations/source/";
+        private readonly string _sourceDirectory = "c:\\ibcos\\Repositorys\\gold\\source\\";
         private readonly List<Scope> _functions = new List<Scope>();
         private readonly List<Scope> _subRoutines = new List<Scope>();
         private List<string> _lines;
+
+
 
         private const int CONTEXT = 10;
 
@@ -74,7 +86,7 @@ namespace DblDebug
                         {
                             currentScope.Finish(lineNumber);
                         }
-                        currentScope = new Scope(match, line, lineNumber);
+                        currentScope = new Scope(this, match, line, lineNumber);
                         Scopes.Add(currentScope);
                     }
 
@@ -137,8 +149,9 @@ namespace DblDebug
 
     public class Scope
     {
-        public Scope(Match match, string line, int lineNumber)
+        public Scope(DblSourceFile parent, Match match, string line, int lineNumber)
         {
+            Parent = parent;
             Type = ("function" == match.Groups[1].Value) 
                 ? ScopeType.Function
                 : ScopeType.Subroutine;
@@ -163,6 +176,7 @@ namespace DblDebug
             output.Lines.Add(new OutputLine(string.Join(", ", Labels)));
         }
 
+        public DblSourceFile Parent { get; }
         public ScopeType Type           { get; }
         public string Name              { get; }
         public int DefinitionLineNumber           { get; }
@@ -174,6 +188,8 @@ namespace DblDebug
         private static Regex    _procStart = new Regex(@"^\s*\.?proc");
         private static Regex    _label     = new Regex(@"^\s*([a-zA-Z0-9_]+)\s*,");
         private static Regex    _variable  = new Regex(@"^\s*([a-zA-Z0-9_]+)\s*,");
+        // .include 'skdp_passed' repository, group='skdp_passed'
+        private static Regex    _groups    = new Regex(@"^\s*\.include\s'[a-zA-Z0-9_]+'\s+repository\s*,\s*group\s*=\s*'([a-zA-Z0-9_]+)'");
         private ScopeState      _state;
 
         public int BodyLineNumber { get; private set; }
@@ -195,9 +211,14 @@ namespace DblDebug
                 {
                     Variables.Add(match.Groups[1].Value);
                 }
+                match = _groups.Match(line);
+                if (default(Match) != match && true == match.Success)
+                {
+                    Variables.Add(match.Groups[1].Value);
+                }
             }
 
-            if(ScopeState.Body == _state)
+            if (ScopeState.Body == _state)
             {
                 match = _label.Match(line);
                 if (default(Match) != match && true == match.Success)

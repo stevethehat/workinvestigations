@@ -5,6 +5,9 @@ DBG> b postit
 
 DBG> show break
 
+Watchpoint #1 (REJ):
+NEW: 25
+OLD: 0
 
 SKINV on entry
 SKINV:1.7235
@@ -28,3 +31,89 @@ bal_id, I4, 0
 bal_fld, A30, "                              "
 grp_value_in, D12, 0
 nom_store, D12, 0
+
+
+pos_rtn, I4, 11
+posval_grp, A1269, "....................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................."
+opp_chn, I4, 38
+val_id, I4, 0
+scn_opp_init, A3, "JW "
+scn_cusacc, A6, " 42588"
+scn_cusnam, A32, "Gabriela Cokeley                "
+scn_type, D1, 1
+scn_adv_no, A8, "**0102  "
+scn_sts, D1, 1
+sts_data, A51, "JW  42588Gabriela Cokeley                1**0102  1"
+pos_cus_id, I4, 0
+ord_data_grp, A85, "0                                            0000000000000000000000000000000000000000"
+none_sold, I4, 0
+first_adv_print, I4, 1
+due, D8, 0
+hort_ser, I4, 0
+err, D3, 25
+search, D1, 0
+done, D1, 1
+reject, D1, 0
+quitting, D1, 0
+prnt_all_lines, D1, 0
+adv_trade_pfx, A2, "  "
+adv_disc_type, D1, 0
+new_lines, D1, 0
+old_lines, D1, 0
+new_pick_lines, D1, 0
+old_pick_lines, D1, 0
+poslin_hdr_id, I4, 73
+poslin_lst_id, I4, 0
+poslin_first, D1, 0
+store_part, A22, "                      "
+poslin_inp_id, I4, 0
+poshdr_id, I4, 0
+cust_disp_id, I4, 0
+gold_link, D1, 0
+pos_curr_grp, A7, "      0"
+items_moded, D1, 0
+part_pfix, A2, "  "
+del_item, D1, 0
+quo_print_needed, D1, 0
+quote_to_inv, D1, 0
+cntrl, A44, "                                            "
+del_chn, I4, 0
+store_value, [2]D10,           0,           0
+store_vat_value, [2]D10,           0,           0
+store_vat_code, D2, 0
+store_nett, D1, 0
+store_order, [2]D10,           0,           0
+store_sett, [2]D10,           0,           0
+store_ord_cst, [2]D10,           0,           0
+store_sld_cst, [2]D10,           0,           0
+adv_no, A6, "**0102"
+dep_ordval, D10, 0
+dep_sldval, D10, 0
+dep_totval, D10, 0
+nickname_chng, D1, 0
+bal_grp, A144, "000000000000000000000000                                                                        000000000000000000000000                        "
+upd_uninv_flag, D1, 0
+entry_type, D1, 0
+pos_catdet_id, I4, 0
+invoice_no, A6, "      "
+auto_part, D1, 0
+mem_id, I4, 0
+cre_ord_qty, D5, 0
+orig_price, D10, 0
+orig_disc, D10, 0
+pmv_ctrl, A44, "                                            "
+pos_sel_fld, D1, 0
+pih_upd_req, D1, 0
+inter_cmp_wrng, D1, 0
+no_hort_ser_req, D1, 0
+inv_prev_prnt, D1, 0
+dept_code, [5]A1, " ", " ", " ", " ", " "
+till_rcpt_printer, D3, 0
+default_depot, A1, "1"
+promo_lst_id, I4, 0
+promo_lstinp_id, I4, 0
+promo_inp_id, I4, 0
+poshdr_deal_view, D1, 0
+memo_lines_held, D1, 0
+lzerosell, I4, 0
+lhortserreq, I4, 0
