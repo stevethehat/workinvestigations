@@ -255,6 +255,24 @@ namespace Internal.ReadLine
             _text = new StringBuilder();
             _keyActions = new Dictionary<string, Action>();
 
+            void Test(string key)
+            {
+
+            }
+
+            _keyActions["F1"] = () => autoCompleteHandler.FunctionKey("F1");
+            _keyActions["F2"] = () => autoCompleteHandler.FunctionKey("F2");
+            _keyActions["F3"] = () => autoCompleteHandler.FunctionKey("F3");
+            _keyActions["F4"] = () => autoCompleteHandler.FunctionKey("F4");
+            _keyActions["F5"] = () => autoCompleteHandler.FunctionKey("F5");
+            _keyActions["F6"] = () => autoCompleteHandler.FunctionKey("F6");
+            _keyActions["F7"] = () => autoCompleteHandler.FunctionKey("F7");
+            _keyActions["F8"] = () => autoCompleteHandler.FunctionKey("F8");
+            _keyActions["F9"] = () => autoCompleteHandler.FunctionKey("F9");
+            _keyActions["F10"] = () => autoCompleteHandler.FunctionKey("F10");
+            _keyActions["F11"] = () => autoCompleteHandler.FunctionKey("F11");
+            _keyActions["F12"] = () => autoCompleteHandler.FunctionKey("F12");
+
             _keyActions["LeftArrow"] = MoveCursorLeft;
             _keyActions["Home"] = MoveCursorHome;
             _keyActions["End"] = MoveCursorEnd;
@@ -336,7 +354,8 @@ namespace Internal.ReadLine
                 ResetAutoComplete();
 
             Action action;
-            _keyActions.TryGetValue(BuildKeyInput(), out action);
+            string keyValue = BuildKeyInput();
+            _keyActions.TryGetValue(keyValue, out action);
             action = action ?? WriteChar;
             action.Invoke();
         }
