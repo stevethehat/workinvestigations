@@ -41,6 +41,10 @@ namespace DblDebug
                    (s, l, m) => Processors.LineNumber(s, l, m),
                    (l, m) => Formatters.LineNumber(l, m)
                 ),
+                new LineProcessor(new Regex(@"^%DBG-E-"),
+                   (s, l, m) => Processors.Default(s, l, m),
+                   (l, m) => Formatters.Error(l, m)
+                ),
                 new LineProcessor(new Regex(@"(\s+)(\d*)> (.*)"),
                    (s, l, m) => Processors.Default(s, l, m),
                    (l, m) => Formatters.CodeLine(l, m)
@@ -82,6 +86,13 @@ namespace DblDebug
             if (default(Command) != command)
             {
                 State.LastEnteredCommand = enteredCommand;
+                if (command.Name != LastCommand.Name)
+                {
+                    LastCommand.Name = command.Name;
+                }
+
+                Outputs.General.Lines.Clear();
+                Outputs.Code.Lines.Clear();
 
                 if (true == command.IsInternal)
                 {
@@ -102,9 +113,6 @@ namespace DblDebug
         {
             bool result = true;
 
-            Outputs.General.Lines.Clear();
-            Outputs.Code.Lines.Clear();
-
             if(default(Command) != command)
             {
                 result = command.Execute(this);
@@ -116,22 +124,12 @@ namespace DblDebug
         {
             bool result = true;
 
-            if (command.Name != LastCommand.Name)
-            {
-                LastCommand.Name = command.Name;
-            }
-
-            Outputs.General.Lines.Clear();
-            Outputs.Code.Lines.Clear();
-
             string Trim(string line)
             {
                 return line.TrimEnd(new char[] { '\r', '\n' });
             }
 
-            string trimmedCommandResult = Trim(resposne);
-
-
+            string trimmedCommandResult = command.ResponsePreProcess(Trim(resposne));
 
             foreach(string line in trimmedCommandResult.Split('\n'))
             {

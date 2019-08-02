@@ -9,12 +9,15 @@ namespace DblDebug
 {
     public class Command
     {
-        public string Name { get; set; } = "unknown";
+        public string Name { get; set; } = ":unknown";
         public List<string> AlternateNames { get; set; } = new List<string>();
         public List<string> SubCommands { get; set; } = new List<string>();
         public CommandType CommandType { get; set; }
         public Func<State, IEnumerable<string>> SubOptions { get; set; }
-        public Func<CoreDebug, bool> Action { get; set; }
+        public Func<CoreDebug, bool> Action { get; set; } = (d) => {
+            d.Outputs.General.Lines.Add(new OutputLine("Unknown command type", ConsoleColor.Red));
+            return true;
+        };
         public Func<string, string> ResponsePreProcess { get; set; } = (r) => r;
 
         public bool IsInternal { get => Name.StartsWith(":"); }

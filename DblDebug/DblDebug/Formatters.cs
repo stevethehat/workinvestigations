@@ -70,5 +70,10 @@ namespace DblDebug
 
             return result;
         }
+
+        internal static OutputLine Error(string line, Match match)
+        {
+            return new OutputLine(line, ConsoleColor.Red);
+        }
     }
 }
