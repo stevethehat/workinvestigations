@@ -129,6 +129,19 @@ namespace DblDebug
                 return line.TrimEnd(new char[] { '\r', '\n' });
             }
 
+            string trimmedCommandResult = Trim(resposne);
+            List<string> lines = trimmedCommandResult.Split('\n')
+                .Where(l => (false == l.StartsWith("DBG>") && false == string.IsNullOrEmpty(Trim(l))))
+                .Select(l => l)
+                .ToList();
+
+            lines = command.ResponsePreProcess(lines);
+
+            foreach (string line in lines)
+            {
+                ProcessLine(line);
+            }
+            /*
             string trimmedCommandResult = command.ResponsePreProcess(Trim(resposne));
 
             foreach(string line in trimmedCommandResult.Split('\n'))
@@ -141,8 +154,9 @@ namespace DblDebug
                     ProcessLine(line);
                 }
             }
+            */
 
-            if(
+            if (
                 default(DblSourceFile) != State.DblSourceFile && 
                 CommandType.Navigation == command.CommandType
             )

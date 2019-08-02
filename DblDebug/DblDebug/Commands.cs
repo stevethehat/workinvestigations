@@ -18,7 +18,7 @@ namespace DblDebug
             d.Outputs.General.Lines.Add(new OutputLine("Unknown command type", ConsoleColor.Red));
             return true;
         };
-        public Func<string, string> ResponsePreProcess { get; set; } = (r) => r;
+        public Func<List<string>, List<string>> ResponsePreProcess { get; set; } = (r) => r;
 
         public bool IsInternal { get => Name.StartsWith(":"); }
 
