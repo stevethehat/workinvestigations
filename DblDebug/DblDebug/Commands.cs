@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace DblDebug
@@ -9,6 +10,7 @@ namespace DblDebug
     public class Command
     {
         public string Name { get; set; }
+        public List<string> AlternateNames { get; set; } = new List<string>();
         public List<string> SubCommands { get; set; } = new List<string>();
         public CommandType CommandType { get; set; }
         public Func<State, IEnumerable<string>> SubOptions { get; set; }
@@ -35,16 +37,28 @@ namespace DblDebug
     {
         public Commands()
         {
+            IEnumerable<char> alphabet = Enumerable.Range('a', 26).Select(x => (char)x);
+
             MainCommandNames = MainCommands.Select(s => s.Name);
             MainCommandNamesByLength = MainCommandNames.OrderByDescending(n => n.Length);
         }
-        public Command GetCommand(string name)
+        public Command GetCommand(string command)
         {
             Command result = new Command();
-            Command command = MainCommands.Find(c => name == c.Name);
-            if(default(Command) != command)
+
+            Match match = Regex.Match(command, @"^([a-zA-Z0-9_]+)\s*");
+            if(default(Match) != match && match.Success)
             {
-                result = command;
+                command = match.Groups[1].Value;
+            }
+
+            Command foundCommand = MainCommands.Find(c => 
+                (command == c.Name) || c.AlternateNames.Contains(command)
+            );
+
+            if(default(Command) != foundCommand)
+            {
+                result = foundCommand;
             }
             return result;
         }
@@ -55,6 +69,7 @@ namespace DblDebug
             {
                 new Command() {
                     Name = "break",
+                    AlternateNames = new List<string>(){ "b" },
                     SubOptions = (s) => s.DblSourceFile.BreakLocations
                                         .Concat(s.CurrentScope.Labels)
                 },
@@ -66,11 +81,13 @@ namespace DblDebug
                 },
                 new Command() {
                     Name = "examine",
+                    AlternateNames = new List<string>(){ "e" },
                     SubOptions = (s) => s.CurrentScope.Variables
                 },
                 new Command() { Name = "exit" },
                 new Command() {
                     Name = "go",
+                    AlternateNames = new List<string>() { "g" },
                     CommandType = CommandType.Navigation
                 },
                 new Command() { Name = "help" },
@@ -92,9 +109,13 @@ namespace DblDebug
                 },
                 new Command() {
                     Name = "step",
+                    AlternateNames = new List<string>() { "s" },
                     CommandType = CommandType.Navigation
                 },
-                new Command() { Name = "trace" },
+                new Command() {
+                    Name = "trace",
+                    AlternateNames = new List<string>() { "b" }
+                },
                 new Command() { Name = "view" },
                 new Command() { Name = "watch" },
                 new Command() {

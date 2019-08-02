@@ -35,7 +35,7 @@ namespace DblDebug
         {
             List<string> result = new List<string>();
 
-            Command mainCommand = _debug.Commands.MainCommands.Find(c => c.Name == match.Groups[1].Value);
+            Command mainCommand = _debug.Commands.GetCommand(text);
 
             if (true == mainCommand.SubCommands.Any())
             {
@@ -51,7 +51,7 @@ namespace DblDebug
         }
 
         // characters to start completion from
-        public char[] Separators { get; set; } = new char[] { ' ', '.', '/', '(', ',' };
+        public char[] Separators { get; set; } = new char[] { ' ', '.'  };
         private readonly CoreDebug _debug;
         private List<Completion> _completions;
 
@@ -110,6 +110,11 @@ namespace DblDebug
 
 
             return result.ToArray();
+        }
+
+        public string FunctionKey(string key)
+        {
+            throw new NotImplementedException();
         }
     }
 }

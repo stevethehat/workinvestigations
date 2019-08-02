@@ -95,6 +95,9 @@ namespace DblDebug
         {
             bool result = true;
 
+            Outputs.General.Lines.Clear();
+            Outputs.Code.Lines.Clear();
+
             Command command = Commands.GetCommand(commandName);
             if(default(Command) != command)
             {

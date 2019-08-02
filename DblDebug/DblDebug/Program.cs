@@ -13,8 +13,8 @@ namespace DblDebug
 
             CoreDebug debug = new CoreDebug("172.16.128.21", 1024);
 
-            Test(debug);
-            return;
+            //Test(debug);
+            //return;
 
             ReadLine.HistoryEnabled = true;
             ReadLine.AutoCompletionHandler = new AutoCompleteHandler(debug);
@@ -75,7 +75,7 @@ DBG>
 
             debug.Outputs.Code.Write();
 
-            Command test = debug.Commands.GetCommand("s");
+            Command test = debug.Commands.GetCommand("e test");
             Console.Write($"command name = '{test.Name}'");
 
             Console.ReadKey();
