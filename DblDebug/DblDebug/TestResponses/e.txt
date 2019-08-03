@@ -1,0 +1,9 @@
+nom_ch, I4, 0
+nom_mh, I4, 0
+nom_max, I4, 0
+nom_bal, D12, 0
+bal_id, I4, 0
+bal_fld, A30, "                              "
+grp_value_in, D12, 0
+nom_store, D12, 0
+DBG>
