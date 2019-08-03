@@ -45,9 +45,9 @@ namespace DblDebug
 
     public class TestClient : IClient
     {
-        private string _lastCommandEntered;
+        private string _lastCommandEntered = "";
+        private string _lastCommand = "";
         private string _responseFolder = "/Users/stevelamb/Development/ibcos/investigations/DblDebug/DblDebug/TestResponses";
-        private object _lastCommand;
 
         public TestClient(string host, int port)
         {
@@ -61,7 +61,7 @@ namespace DblDebug
             {
                 response = File.ReadAllText(responseFileName);
             }
-            responseFileName = Path.Combine(_responseFolder, $"{_lastCommandEntered.Replace(" ", "")}.txt");
+            responseFileName = Path.Combine(_responseFolder, $"{_lastCommandEntered.Replace(" ", "").Replace("\n", "")}.txt");
             if (File.Exists(responseFileName))
             {
                 response = File.ReadAllText(responseFileName);

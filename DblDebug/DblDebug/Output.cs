@@ -63,6 +63,8 @@ namespace DblDebug
                 Console.Write(chunk.Text);
             }
 
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
             Console.Write("\n");
         }
     }

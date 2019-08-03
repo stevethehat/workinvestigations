@@ -166,11 +166,13 @@ namespace DblDebug
 
         private bool ProcessLine(string line)
         {
+            bool matched = false;
             foreach (LineProcessor lineProcessor in _lineProcessors)
             {
                 Match match = lineProcessor.MatchRegex.Match(line);
                 if (default(Match) != match && true == match.Success)
                 {
+                    matched = true;
                     State.CurrentLine = line;
                     State = lineProcessor.Processor(State, line, match);
 
@@ -178,6 +180,10 @@ namespace DblDebug
 
                     break;
                 }
+            }
+            if(false == matched)
+            {
+                Outputs.General.Lines.Add(new OutputLine(line, ConsoleColor.Cyan));
             }
             return true;
         }
