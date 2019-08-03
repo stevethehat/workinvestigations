@@ -42,7 +42,7 @@ namespace DblDebug
             {
                 try
                 {
-                    input = ReadLine.Read("DBG> ");
+                    input = ReadLine.Read("DBG>");
 
                     if (true == string.IsNullOrEmpty(input))
                     {
@@ -57,6 +57,8 @@ namespace DblDebug
                 catch (Exception e)
                 {
                     OutputLine.WriteLine(e.Message, foregroundColor: ConsoleColor.Red);
+                    OutputLine.WriteLine(e.StackTrace, foregroundColor: ConsoleColor.Red);
+
                 }
             }
 

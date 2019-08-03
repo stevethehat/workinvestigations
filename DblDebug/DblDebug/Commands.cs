@@ -83,12 +83,12 @@ namespace DblDebug
                 new Command() { Name = "delete" },
                 new Command() {
                     Name = "deposit",
-                    SubOptions = (s) => s.CurrentScope.Variables
+                    SubOptions = (s) => s.CurrentScope.Variables.Select(v => v.Name)
                 },
                 new Command() {
                     Name = "examine",
                     AlternateNames = new List<string>(){ "e" },
-                    SubOptions = (s) => s.CurrentScope.Variables,
+                    SubOptions = (s) => s.CurrentScope.Variables.Select(v => v.Name),
                     ResponsePreProcess = (r) => Processors.PreProcessExamine(r)
                 },
                 new Command() { Name = "exit" },

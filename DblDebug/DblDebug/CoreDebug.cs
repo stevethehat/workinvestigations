@@ -137,20 +137,6 @@ namespace DblDebug
             {
                 ProcessLine(line);
             }
-            /*
-            string trimmedCommandResult = command.ResponsePreProcess(Trim(resposne));
-
-            foreach(string line in trimmedCommandResult.Split('\n'))
-            {
-                if(
-                    false == line.StartsWith("DBG>") &&
-                    false == string.IsNullOrEmpty(Trim(line))
-                )
-                {
-                    ProcessLine(line);
-                }
-            }
-            */
 
             if (
                 default(DblSourceFile) != State.DblSourceFile && 
@@ -166,13 +152,12 @@ namespace DblDebug
 
         private bool ProcessLine(string line)
         {
-            bool matched = false;
             foreach (LineProcessor lineProcessor in _lineProcessors)
             {
                 Match match = lineProcessor.MatchRegex.Match(line);
                 if (default(Match) != match && true == match.Success)
                 {
-                    matched = true;
+                    // this seems wrong..
                     State.CurrentLine = line;
                     State = lineProcessor.Processor(State, line, match);
 
@@ -180,10 +165,6 @@ namespace DblDebug
 
                     break;
                 }
-            }
-            if(false == matched)
-            {
-                Outputs.General.Lines.Add(new OutputLine(line, ConsoleColor.Cyan));
             }
             return true;
         }

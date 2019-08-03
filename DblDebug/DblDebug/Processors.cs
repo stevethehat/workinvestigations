@@ -42,6 +42,7 @@ namespace DblDebug
             int maxTypeLength = fieldInfo.Max(f => f.Type.Length);
             int maxValueLength = fieldInfo.Max(f => f.Value.Length);
 
+            // this doesn't seem right but it grinds to a halt if i don't
             if(maxValueLength > 80)
             {
                 maxValueLength = 80;
@@ -49,7 +50,7 @@ namespace DblDebug
 
             List<string> result = fieldInfo
                 .OrderBy(f => f.Name)
-                .Select(f => $"{f.Name.PadRight(maxNameLength, ' ')} {f.Type.PadRight(maxTypeLength, ' ')} {f.Value.PadRight(maxValueLength, ' ')}").ToList();
+                .Select(f => $"{f.Name.PadRight(maxNameLength, ' ')} {f.Type.PadRight(maxTypeLength, ' ')} {f.Value}").ToList();
 
             return result;
         }

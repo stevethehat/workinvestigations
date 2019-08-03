@@ -147,6 +147,18 @@ namespace DblDebug
         Body
     }
 
+    public class Variable
+    {
+        public string Name { get; private set; }
+        public string Type { get; private set; }
+
+        public Variable(string name, string type)
+        {
+            Name = name;
+            Type = type;
+        }
+    }
+
     public class Scope
     {
         public Scope(DblSourceFile parent, Match match, string line, int lineNumber)
@@ -170,7 +182,7 @@ namespace DblDebug
             output.Lines.Add(new OutputLine($"Name: {Name} Definition: {DefinitionLineNumber} Body: {BodyLineNumber} End: {EndLineNumber}"));
             output.Lines.Add(OutputLine.Blank);
             output.Lines.Add(new OutputLine("Variables"));
-            output.Lines.Add(new OutputLine(string.Join(", ", Variables)));
+            output.Lines.Add(new OutputLine(string.Join(", ", Variables.Select(v => v.Name))));
             output.Lines.Add(OutputLine.Blank);
             output.Lines.Add(new OutputLine("Labels"));
             output.Lines.Add(new OutputLine(string.Join(", ", Labels)));
@@ -182,14 +194,14 @@ namespace DblDebug
         public int DefinitionLineNumber           { get; }
         public int EndLineNumber { get; private set; }
 
-        public List<string>     Variables  = new List<string>();
+        public List<Variable>   Variables  = new List<Variable>();
         public List<string>     Labels     = new List<string>();
 
         private static Regex    _procStart = new Regex(@"^\s*\.?proc");
         private static Regex    _label     = new Regex(@"^\s*([a-zA-Z0-9_]+)\s*,");
-        private static Regex    _variable  = new Regex(@"^\s*([a-zA-Z0-9_]+)\s*,");
+        private static Regex    _variable  = new Regex(@"^\s*([a-zA-Z0-9_]+)\s*,\s*([a-zA-Z0-9_]+)");
         // .include 'skdp_passed' repository, group='skdp_passed'
-        private static Regex    _groups    = new Regex(@"^\s*\.include\s'[a-zA-Z0-9_]+'\s+repository\s*,\s*group\s*=\s*'([a-zA-Z0-9_]+)'");
+        private static Regex    _groups    = new Regex(@"^\s*\.include\s'([a-zA-Z0-9_]+)'\s+repository\s*,\s*group\s*=\s*'([a-zA-Z0-9_]+)'");
         private ScopeState      _state;
 
         public int BodyLineNumber { get; private set; }
@@ -209,12 +221,12 @@ namespace DblDebug
                 match = _variable.Match(line);
                 if (default(Match) != match && true == match.Success)
                 {
-                    Variables.Add(match.Groups[1].Value);
+                    Variables.Add(new Variable(match.Groups[1].Value, ""));
                 }
                 match = _groups.Match(line);
                 if (default(Match) != match && true == match.Success)
                 {
-                    Variables.Add(match.Groups[1].Value);
+                    Variables.Add(new Variable(match.Groups[2].Value, ""));
                 }
             }
 
@@ -231,7 +243,7 @@ namespace DblDebug
         internal void Finish(int lineNumber)
         {
             EndLineNumber = lineNumber;
-            Variables = Variables.OrderBy(v => v).ToList();
+            Variables = Variables.OrderBy(v => v.Name).ToList();
             Labels = Labels.OrderBy(l => l).ToList();
         }
     }
