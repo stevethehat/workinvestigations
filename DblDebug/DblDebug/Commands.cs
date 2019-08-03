@@ -14,20 +14,20 @@ namespace DblDebug
         public List<string> SubCommands { get; set; } = new List<string>();
         public CommandType CommandType { get; set; }
         public Func<State, IEnumerable<string>> SubOptions { get; set; }
-        public Func<CoreDebug, bool> Action { get; set; } = (d) => {
-            d.Outputs.General.Lines.Add(new OutputLine("Unknown command type", ConsoleColor.Red));
+        public Func<CoreDebug,string,  bool> Action { get; set; } = (d, c) => {
+            d.Outputs.General.Lines.Add(new OutputLine($"Unknown command type {c}", ConsoleColor.Red));
             return true;
         };
         public Func<List<string>, List<string>> ResponsePreProcess { get; set; } = (r) => r;
 
         public bool IsInternal { get => Name.StartsWith(":"); }
 
-        internal bool Execute(CoreDebug debug)
+        internal bool Execute(CoreDebug debug, string fullCommand)
         {
             bool result = true;
-            if(default(Func<CoreDebug, bool>) != Action)
+            if(default(Func<CoreDebug, string, bool>) != Action)
             {
-                result = Action(debug);
+                result = Action(debug, fullCommand);
             }
             return result;
         }
@@ -140,11 +140,17 @@ namespace DblDebug
                         => s.DblSourceFile.BreakLocations
                             .Concat(s.CurrentScope.Labels)
                 },
-                new Command() { Name = ":save" },
-                new Command() { Name = ":load" },
+                new Command() {
+                    Name = ":save",
+                    Action = (d, c) => d.State.Save(d)
+                },
+                new Command() {
+                    Name = ":load",
+                    Action = (d, c) => d.State.Load(d)
+                },
                 new Command() {
                     Name = ":scope",
-                    Action = (d) => {
+                    Action = (d, c) => {
                         if(default(Scope) != d.State.CurrentScope)
                         {
                             d.State.CurrentScope.Info(d.Outputs.General);
@@ -154,7 +160,7 @@ namespace DblDebug
                 },
                 new Command() {
                     Name = ":quit",
-                    Action = (d) => false
+                    Action = (d, c) => false
                 },
         };
 

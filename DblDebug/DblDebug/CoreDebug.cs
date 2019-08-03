@@ -111,7 +111,7 @@ namespace DblDebug
 
             if(default(Command) != command)
             {
-                result = command.Execute(this);
+                result = command.Execute(this, State.LastEnteredCommand);
             }
             return result;
         }
