@@ -12,10 +12,8 @@ namespace DblDebug
     public class CoreDebug: IDisposable
     {
         private readonly Func<bool, string> _input;
-        private readonly string _host;
-        private readonly int _port;
         private readonly string _terminator = "";
-        private PrimS.Telnet.Client _client;
+        private IClient _client;
         private List<string> _response;
 
         public Outputs Outputs { get; set; } = new Outputs();
@@ -25,10 +23,8 @@ namespace DblDebug
 
         private List<LineProcessor> _lineProcessors = new List<LineProcessor>();
 
-        public CoreDebug(string host, int port)
+        public CoreDebug()
         {
-            _host = host;
-            _port = port;
             _response = new List<string>();
 
             _lineProcessors = new List<LineProcessor>()
@@ -56,10 +52,10 @@ namespace DblDebug
             };
         }
         
-        public async Task<bool> Start()
+        public async Task<bool> Start(IClient client)
         {
             bool result = false;
-            _client = new Client(_host, _port, new CancellationToken());
+            _client = client;
 
             string response = default(string);
             response = await _client.TerminatedReadAsync(_terminator, TimeSpan.FromSeconds(10));

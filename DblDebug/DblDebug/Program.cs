@@ -11,7 +11,8 @@ namespace DblDebug
             OutputLine.WriteLine("DblDebugger");
             OutputLine.WriteLine("");
 
-            CoreDebug debug = new CoreDebug("172.16.128.21", 1024);
+            IClient client = new TestClient("172.16.128.21", 1024);
+            CoreDebug debug = new CoreDebug();
 
             //Test(debug);
             //return;
@@ -21,7 +22,7 @@ namespace DblDebug
 
             try
             {
-                var result = GoAsync(debug).GetAwaiter().GetResult();
+                var result = GoAsync(client, debug).GetAwaiter().GetResult();
             }
             catch (Exception e)
             {
@@ -32,9 +33,9 @@ namespace DblDebug
             Console.ReadKey();  
         }
 
-        private static async Task<bool> GoAsync(CoreDebug debug)
+        private static async Task<bool> GoAsync(IClient client, CoreDebug debug)
         {
-            bool startResponse = await debug.Start();
+            bool startResponse = await debug.Start(client);
             string input = null;
             bool response = true;
             while (false != response)
@@ -89,6 +90,8 @@ DBG>
 
             Command test = debug.Commands.GetCommand("e test");
             Console.Write($"command name = '{test.Name}'");
+
+            
 
             Console.ReadKey();
         }
