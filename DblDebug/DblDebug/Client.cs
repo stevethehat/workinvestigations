@@ -25,7 +25,6 @@ namespace DblDebug
             _host = host;
             _port = port;
             _client = new Client(_host, _port, new CancellationToken());
-
         }
 
         public async Task<string> TerminatedReadAsync(string terminator, TimeSpan timeout)

@@ -69,9 +69,6 @@ namespace DblDebug
                 
                 CoreDebug debug = new CoreDebug(sourceDirectory);
 
-                //Test(debug);
-                //return;
-
                 ReadLine.HistoryEnabled = true;
                 ReadLine.AutoCompletionHandler = new AutoCompleteHandler(debug);
 
@@ -95,13 +92,16 @@ namespace DblDebug
 
         private static async Task<bool> GoAsync(IClient client, CoreDebug debug)
         {
-            bool startResponse = await debug.Start(client);
+            bool startResponse = false;
             string input = null;
             bool response = true;
             while (false != response)
             {
                 try
                 {
+                    if(false == debug.Connected){
+                        startResponse = await debug.Start(client);
+                    }
                     input = ReadLine.Read("DBG>");
 
                     if (true == string.IsNullOrEmpty(input))
@@ -114,12 +114,17 @@ namespace DblDebug
                     debug.Outputs.Code.Write();
                     debug.Outputs.General.Write();
                 }
+                catch(System.Net.Sockets.SocketException se)
+                {
+                    OutputLine.WriteLine("Connection error. Start GOLD and try again.", foregroundColor: ConsoleColor.Red);
+                    Console.ReadKey();
+                }
                 catch (Exception e)
                 {
                     OutputLine.WriteLine(e.Message, foregroundColor: ConsoleColor.Red);
                     OutputLine.WriteLine(e.StackTrace, foregroundColor: ConsoleColor.Red);
+                } 
 
-                }
             }
 
             return startResponse;

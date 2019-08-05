@@ -20,11 +20,13 @@ namespace DblDebug
         public State State { get; private set; }
         public Commands Commands { get; set; } = new Commands();
         public Command LastCommand { get; internal set; } = new Command();
+        public bool Connected { get; private set; }
 
         private List<LineProcessor> _lineProcessors = new List<LineProcessor>();
 
         public CoreDebug(string sourceDirectory)
         {
+            Connected = false;
             State = new State(sourceDirectory);
             _response = new List<string>();
 
@@ -56,6 +58,7 @@ namespace DblDebug
         public async Task<bool> Start(IClient client)
         {
             bool result = false;
+            Connected = false;
             _client = client;
 
             string response = default(string);
@@ -67,6 +70,7 @@ namespace DblDebug
             commandResult = await Command("s");
             Outputs.General.Write();
 
+            Connected = true;
             return result;
         }
 
