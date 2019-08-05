@@ -32,9 +32,14 @@ namespace DblDebug
 
         private const int CONTEXT = 10;
 
-        public DblSourceFile(string fileName)
+        public DblSourceFile(string sourceDirectory, string fileName)
         {
             FileName = fileName;
+            if(default(string) != sourceDirectory)
+            {
+                _sourceDirectory = sourceDirectory;
+            }
+
             _fullFileName = GetFullFileName(FileName);
             Parse(_fullFileName);
         }

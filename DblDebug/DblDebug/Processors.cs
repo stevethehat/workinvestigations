@@ -16,7 +16,7 @@ namespace DblDebug
             if(default(DblSourceFile) == currentState.DblSourceFile ||
                 currentState?.DblSourceFile?.FileName != fileName)
             {
-                currentState.DblSourceFile = new DblSourceFile(fileName);
+                currentState.DblSourceFile = new DblSourceFile(currentState.SourceDirectory, fileName);
             }
 
             currentState.CurrentLineNo      = Convert.ToInt32(lineNumber);

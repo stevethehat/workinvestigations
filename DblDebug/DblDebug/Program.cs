@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.CommandLineUtils;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,24 +12,82 @@ namespace DblDebug
             OutputLine.WriteLine("DblDebugger");
             OutputLine.WriteLine("");
 
-            //IClient client = new TestClient("172.16.128.21", 1024);
-            IClient client = new SocketClient("172.16.128.21", 1024);
-            CoreDebug debug = new CoreDebug();
+            var app = new CommandLineApplication(false);
+            app.Name = "DblDebug";
+            app.ExtendedHelpText = ":q to quit.";
 
-            //Test(debug);
-            //return;
+            CommandOption hostOption = app.Option(
+                "-h | --host <host>",
+                "Host",
+                CommandOptionType.SingleValue);
 
-            ReadLine.HistoryEnabled = true;
-            ReadLine.AutoCompletionHandler = new AutoCompleteHandler(debug);
+            CommandOption portOption = app.Option(
+                "-p | --port <Port>",
+                "Port",
+                CommandOptionType.SingleValue);
 
-            try
+            CommandOption sourceDirectoryOption = app.Option(
+                "-s | --source <source>",
+                "Source code directory",
+                CommandOptionType.SingleValue);
+
+            CommandOption modeOption = app.Option(
+                "-m | --mode <mode>",
+                "Mode test/live (default)",
+                CommandOptionType.SingleValue);
+
+            app.OnExecute(() =>
             {
-                var result = GoAsync(client, debug).GetAwaiter().GetResult();
-            }
-            catch (Exception e)
-            {
-                OutputLine.WriteLine(e.Message, foregroundColor: ConsoleColor.Red);
-            }
+                string host = "172.16.128.21";
+                int port = 1024;
+                string sourceDirectory = default(string);
+
+                if (hostOption.HasValue())
+                {
+                    host = hostOption.Value();
+                }
+
+                if (portOption.HasValue())
+                {
+                    port = Convert.ToInt32(portOption.Value());
+                }
+
+                if (sourceDirectoryOption.HasValue())
+                {
+                    sourceDirectory = sourceDirectoryOption.Value();
+                }
+
+                IClient client = default(SocketClient);
+                if (modeOption.HasValue() && "test" == modeOption.Value())
+                {
+                    client = new TestClient(host, 1024);
+                }
+                else
+                {
+                    client = new SocketClient(host, 1024); 
+                }
+                
+                CoreDebug debug = new CoreDebug(sourceDirectory);
+
+                //Test(debug);
+                //return;
+
+                ReadLine.HistoryEnabled = true;
+                ReadLine.AutoCompletionHandler = new AutoCompleteHandler(debug);
+
+                try
+                {
+                    var result = GoAsync(client, debug).GetAwaiter().GetResult();
+                }
+                catch (Exception e)
+                {
+                    OutputLine.WriteLine(e.Message, foregroundColor: ConsoleColor.Red);
+                }
+
+                return 0;
+            });
+
+            app.Execute(args);
 
             OutputLine.WriteLine("Done..");
             Console.ReadKey();  

@@ -45,7 +45,9 @@ namespace DblDebug
 
         private static Regex _procStart = new Regex(@"^\s*\.?proc");
         private static Regex _label = new Regex(@"^\s*([a-zA-Z0-9_]+)\s*,");
-        private static Regex _variable = new Regex(@"^\s*([a-zA-Z0-9_]+)\s*,\s*([a-zA-Z0-9_]+)");
+        // ^\s*(opt|req)?\s*(in|out|inout)?\s*([a-zA-Z0-9_]+)\s*,\s*([a-zA-Z0-9_]+)
+        //private static Regex _variable = new Regex(@"^\s*([a-zA-Z0-9_]+)\s*,\s*([a-zA-Z0-9_]+)");
+        private static Regex _variable = new Regex(@"^\s*(opt|req)?\s*(in|out|inout)?\s*([a-zA-Z0-9_]+)\s*,\s*([a-zA-Z0-9_]+)");
         // .include 'skdp_passed' repository, group='skdp_passed'
         private static Regex _groups = new Regex(@"^\s*\.include\s'([a-zA-Z0-9_]+)'\s+repository\s*,\s*group\s*=\s*'([a-zA-Z0-9_]+)'");
         private ScopeState _state;
@@ -67,7 +69,7 @@ namespace DblDebug
                 match = _variable.Match(line);
                 if (default(Match) != match && true == match.Success)
                 {
-                    Variables.Add(new Variable(match.Groups[1].Value, match.Groups[2].Value));
+                    Variables.Add(new Variable(match.Groups[3].Value, match.Groups[4].Value));
                 }
                 match = _groups.Match(line);
                 if (default(Match) != match && true == match.Success)

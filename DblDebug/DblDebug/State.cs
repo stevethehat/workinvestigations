@@ -14,6 +14,12 @@ namespace DblDebug
         public DblSourceFile DblSourceFile { get; set; }
 
         public string SaveFolder { get; set; } = Path.Combine("~/", ".dbldebug");
+        public string SourceDirectory { get; internal set; }
+
+        public State(string sourceDirectory)
+        {
+            SourceDirectory = sourceDirectory;
+        }
 
         public bool Save(CoreDebug debug)
         {

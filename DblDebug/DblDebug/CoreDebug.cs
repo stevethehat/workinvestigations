@@ -17,14 +17,15 @@ namespace DblDebug
         private List<string> _response;
 
         public Outputs Outputs { get; set; } = new Outputs();
-        public State State { get; private set; } = new State();
+        public State State { get; private set; }
         public Commands Commands { get; set; } = new Commands();
         public Command LastCommand { get; internal set; } = new Command();
 
         private List<LineProcessor> _lineProcessors = new List<LineProcessor>();
 
-        public CoreDebug()
+        public CoreDebug(string sourceDirectory)
         {
+            State = new State(sourceDirectory);
             _response = new List<string>();
 
             _lineProcessors = new List<LineProcessor>()
