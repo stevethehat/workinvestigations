@@ -61,6 +61,8 @@
     <Compile Include="State.cs" />
     <Compile Include="LineProcessor.cs" />
     <Compile Include="Client.cs" />
+    <Compile Include="Structures.cs" />
+    <Compile Include="Scope.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
