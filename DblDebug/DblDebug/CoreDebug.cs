@@ -58,8 +58,9 @@ namespace DblDebug
         public async Task<bool> Start(IClient client)
         {
             bool result = false;
-            Connected = false;
             _client = client;
+
+            Connected = _client.Connect();
 
             string response = default(string);
             response = await _client.TerminatedReadAsync(_terminator, TimeSpan.FromSeconds(10));

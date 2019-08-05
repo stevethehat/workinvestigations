@@ -28,10 +28,16 @@ namespace DblDebug
             output.Lines.Add(new OutputLine($"Name: {Name} Definition: {DefinitionLineNumber} Body: {BodyLineNumber} End: {EndLineNumber}"));
             output.Lines.Add(OutputLine.Blank);
             output.Lines.Add(new OutputLine("Variables"));
+            //output.Lines.Add(new OutputLine(string.Join(", ", Variables.Select(v => $"{{:c}}{v.Name}{{:w}} '{v.Type}'"))));
             output.Lines.Add(new OutputLine(string.Join(", ", Variables.Select(v => $"{v.Name} '{v.Type}'"))));
+
             output.Lines.Add(OutputLine.Blank);
             output.Lines.Add(new OutputLine("Labels"));
             output.Lines.Add(new OutputLine(string.Join(", ", Labels)));
+            output.Lines.Add(OutputLine.Blank);
+            output.Lines.Add(new OutputLine("Functions"));
+            output.Lines.Add(new OutputLine(string.Join(", ", Parent.Functions.Select(f => f.Name))));
+            output.Lines.Add(OutputLine.Blank);
         }
 
         public DblSourceFile Parent { get; }

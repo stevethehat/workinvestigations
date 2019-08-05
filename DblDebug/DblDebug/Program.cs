@@ -14,25 +14,26 @@ namespace DblDebug
 
             var app = new CommandLineApplication(false);
             app.Name = "DblDebug";
+            app.HelpOption("-?|--help");
             app.ExtendedHelpText = ":q to quit.";
 
             CommandOption hostOption = app.Option(
-                "-h | --host <host>",
+                "-h|--host <host>",
                 "Host",
                 CommandOptionType.SingleValue);
 
             CommandOption portOption = app.Option(
-                "-p | --port <Port>",
+                "-p|--port <port>",
                 "Port",
                 CommandOptionType.SingleValue);
 
             CommandOption sourceDirectoryOption = app.Option(
-                "-s | --source <source>",
+                "-s|--source <source>",
                 "Source code directory",
                 CommandOptionType.SingleValue);
 
             CommandOption modeOption = app.Option(
-                "-m | --mode <mode>",
+                "-m|--mode <mode>",
                 "Mode test/live (default)",
                 CommandOptionType.SingleValue);
 
@@ -85,9 +86,6 @@ namespace DblDebug
             });
 
             app.Execute(args);
-
-            OutputLine.WriteLine("Done..");
-            Console.ReadKey();  
         }
 
         private static async Task<bool> GoAsync(IClient client, CoreDebug debug)

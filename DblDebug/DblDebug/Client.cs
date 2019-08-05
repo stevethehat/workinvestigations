@@ -9,6 +9,7 @@ namespace DblDebug
 {
     public interface IClient
     {
+        bool Connect();
         Task<string> TerminatedReadAsync(string terminator, TimeSpan timeout);
         Task Write(string command);
         void Dispose();
@@ -16,7 +17,7 @@ namespace DblDebug
 
     public class SocketClient : IClient
     {
-        private readonly Client _client;
+        private Client _client;
         private readonly string _host;
         private readonly int _port;
 
@@ -24,7 +25,6 @@ namespace DblDebug
         {
             _host = host;
             _port = port;
-            _client = new Client(_host, _port, new CancellationToken());
         }
 
         public async Task<string> TerminatedReadAsync(string terminator, TimeSpan timeout)
@@ -39,6 +39,12 @@ namespace DblDebug
 
         public void Dispose() {
             _client.Dispose();
+        }
+
+        public bool Connect()
+        {
+            _client = new Client(_host, _port, new CancellationToken());
+            return true;
         }
     }
 
@@ -79,5 +85,9 @@ namespace DblDebug
             _lastCommandEntered = command;
         }
         public void Dispose() { }
+
+        public bool Connect() {
+            return true;
+        }
     }
 }
