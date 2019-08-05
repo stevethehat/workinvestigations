@@ -18,7 +18,7 @@ namespace DblDebug
             d.Outputs.General.Lines.Add(new OutputLine($"Unknown command type {c}", ConsoleColor.Red));
             return true;
         };
-        public Func<List<string>, List<string>> ResponsePreProcess { get; set; } = (r) => r;
+        public Func<CoreDebug, List<string>, List<string>> ResponsePreProcess { get; set; } = (d, r) => r;
 
         public bool IsInternal { get => Name.StartsWith(":"); }
 
@@ -89,7 +89,7 @@ namespace DblDebug
                     Name = "examine",
                     AlternateNames = new List<string>(){ "e" },
                     SubOptions = (s) => s.CurrentScope.Variables.Select(v => v.Name),
-                    ResponsePreProcess = (r) => Processors.PreProcessExamine(r)
+                    ResponsePreProcess = (d, r) => Processors.PreProcessExamine(d, r)
                 },
                 new Command() { Name = "exit" },
                 new Command() {

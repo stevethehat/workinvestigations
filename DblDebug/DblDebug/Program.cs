@@ -11,7 +11,8 @@ namespace DblDebug
             OutputLine.WriteLine("DblDebugger");
             OutputLine.WriteLine("");
 
-            IClient client = new TestClient("172.16.128.21", 1024);
+            //IClient client = new TestClient("172.16.128.21", 1024);
+            IClient client = new SocketClient("172.16.128.21", 1024);
             CoreDebug debug = new CoreDebug();
 
             //Test(debug);

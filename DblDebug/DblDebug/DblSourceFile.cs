@@ -22,10 +22,10 @@ namespace DblDebug
         }
 
         private readonly string _fullFileName;
-        private readonly string _sourceDirectory = "/Users/stevelamb/Development/ibcos/investigations/source/";
-        //private readonly string _sourceDirectory = "c:\\ibcos\\Repositorys\\gold\\source\\";
-        private readonly List<Scope> _functions = new List<Scope>();
-        private readonly List<Scope> _subRoutines = new List<Scope>();
+        //private readonly string _sourceDirectory = "/Users/stevelamb/Development/ibcos/investigations/source/";
+        private readonly string _sourceDirectory = "c:\\ibcos\\Repositorys\\gold\\source\\";
+        public readonly List<Scope> Functions = new List<Scope>();
+        public readonly List<Scope> SubRoutines = new List<Scope>();
         private List<string> _lines;
 
 
@@ -88,6 +88,7 @@ namespace DblDebug
                         }
                         currentScope = new Scope(this, match, line, lineNumber);
                         Scopes.Add(currentScope);
+                        Functions.Add(currentScope);
                     }
 
                     if(default(Scope) != currentScope)
@@ -186,6 +187,8 @@ namespace DblDebug
             output.Lines.Add(OutputLine.Blank);
             output.Lines.Add(new OutputLine("Labels"));
             output.Lines.Add(new OutputLine(string.Join(", ", Labels)));
+            output.Lines.Add(new OutputLine("Functions"));
+            output.Lines.Add(new OutputLine(string.Join(", ", Parent.Functions.Concat(Parent.SubRoutines).OrderBy(n => n))));
         }
 
         public DblSourceFile Parent { get; }
@@ -199,7 +202,10 @@ namespace DblDebug
 
         private static Regex    _procStart = new Regex(@"^\s*\.?proc");
         private static Regex    _label     = new Regex(@"^\s*([a-zA-Z0-9_]+)\s*,");
-        private static Regex    _variable  = new Regex(@"^\s*([a-zA-Z0-9_]+)\s*,\s*([a-zA-Z0-9_]+)");
+        //(opt|req)?\s*(in|out|inout)?
+        //private static Regex    _variable  = new Regex(@"^\s*([a-zA-Z0-9_]+)\s*,\s*([a-zA-Z0-9_]+)");
+        private static Regex _variable = new Regex(@"^\s*(opt|req)?\s*(in|out|inout)?\s*([a-zA-Z0-9_]+)\s*,\s*([a-zA-Z0-9_]+)");
+
         // .include 'skdp_passed' repository, group='skdp_passed'
         private static Regex    _groups    = new Regex(@"^\s*\.include\s'([a-zA-Z0-9_]+)'\s+repository\s*,\s*group\s*=\s*'([a-zA-Z0-9_]+)'");
         private ScopeState      _state;
@@ -221,12 +227,12 @@ namespace DblDebug
                 match = _variable.Match(line);
                 if (default(Match) != match && true == match.Success)
                 {
-                    Variables.Add(new Variable(match.Groups[1].Value, ""));
+                    Variables.Add(new Variable(match.Groups[3].Value, match.Groups[4].Value));
                 }
                 match = _groups.Match(line);
                 if (default(Match) != match && true == match.Success)
                 {
-                    Variables.Add(new Variable(match.Groups[2].Value, ""));
+                    Variables.Add(new Variable(match.Groups[2].Value, match.Groups[1].Value));
                 }
             }
 

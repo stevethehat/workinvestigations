@@ -31,7 +31,7 @@ namespace DblDebug
             return currentState;
         }
 
-        public static List<string> PreProcessExamine(List<string> response)
+        public static List<string> PreProcessExamine(CoreDebug debug, List<string> response)
         {
             if(1 == response.Count)
             {
@@ -47,6 +47,8 @@ namespace DblDebug
             {
                 maxValueLength = 80;
             }
+
+            debug.State.CurrentScope.Variables.AddRange(fieldInfo.Select(fi => new Variable(fi.Name, fi.Type)));
 
             List<string> result = fieldInfo
                 .OrderBy(f => f.Name)

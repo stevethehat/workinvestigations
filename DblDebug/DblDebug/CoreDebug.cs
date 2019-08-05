@@ -131,7 +131,7 @@ namespace DblDebug
                 .Select(l => l)
                 .ToList();
 
-            lines = command.ResponsePreProcess(lines);
+            lines = command.ResponsePreProcess(this, lines);
 
             foreach (string line in lines)
             {
