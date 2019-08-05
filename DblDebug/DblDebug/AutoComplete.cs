@@ -26,12 +26,19 @@ namespace DblDebug
             _debug = debug;
             _completions = new List<Completion>()
             {
-                new Completion(new Regex(@"^([a-z]*) ([a-z]*)"), (m, t) => GetPossibleOptions(GetSubCommands(m, t), m, t)),
+                new Completion(new Regex(@"^([a-z]*) ([a-z]*) ([a-z]*)"), (m, t) => GetPossibleOptions(GetSubOptions(m, t), m, t)),
+                new Completion(new Regex(@"^([a-z]*) ([a-z]*)"), (m, t) => GetPossibleOptions(GetSubOptions(m, t), m, t)),
+                //new Completion(new Regex(@"^(:?[a-z]*) ([a-z]*)"), (m, t) => GetPossibleOptions(GetInternalSubCommands(), m, t)),
                 new Completion(new Regex(@"^(:?[a-z]*)"), (m, t) => GetPossibleOptions(GetCommands(), m, t)),
             };
         }
 
-        private IEnumerable<string> GetSubCommands(Match match, string text)
+        private IEnumerable<string> GetInternalSubCommands()
+        {
+            return new List<string>() { "test" };
+        }
+
+        private IEnumerable<string> GetSubOptions(Match match, string text)
         {
             List<string> result = new List<string>();
 
@@ -97,7 +104,7 @@ namespace DblDebug
                     {
                         if (true == match.Success)
                         {
-                            result.AddRange(completion.GetOptions(match, text));
+                                result.AddRange(completion.GetOptions(match, text));
                             break;
                         }
                     }
@@ -109,7 +116,7 @@ namespace DblDebug
             }
 
 
-            return result.ToArray();
+            return result.OrderBy(s => s).ToArray();
         }
 
         public string FunctionKey(string key)
