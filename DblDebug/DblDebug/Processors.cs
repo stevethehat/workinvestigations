@@ -60,7 +60,7 @@ namespace DblDebug
 
     class FieldInfo
     {
-        private static Regex _match = new Regex(@"^([a-zA-Z0-9_]+),\s+([a-zA-Z0-9_\[\]]+),\s+(.+)");
+        private static Regex _match = new Regex(@"^([a-zA-Z0-9_]+),\s+([a-zA-Z0-9_.\[\]]+),\s+(.+)");
         public FieldInfo(string line)
         {
             Match match = _match.Match(line);

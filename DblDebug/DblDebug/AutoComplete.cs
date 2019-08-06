@@ -26,10 +26,10 @@ namespace DblDebug
             _debug = debug;
             _completions = new List<Completion>()
             {
-                new Completion(new Regex(@"^([a-z]*) ([a-z]*) ([a-z]*)"), (m, t) => GetPossibleOptions(GetSubOptions(m, t), m, t)),
-                new Completion(new Regex(@"^([a-z]*) ([a-z]*)"), (m, t) => GetPossibleOptions(GetSubOptions(m, t), m, t)),
+                new Completion(new Regex(@"^([a-z]*) ([a-z]*) ([a-z]*)"), (m, t) => FilterOptions(GetSubOptions(m, t), m, t)),
+                new Completion(new Regex(@"^([a-z]*) ([a-z]*)"), (m, t) => FilterOptions(GetSubOptions(m, t), m, t)),
                 //new Completion(new Regex(@"^(:?[a-z]*) ([a-z]*)"), (m, t) => GetPossibleOptions(GetInternalSubCommands(), m, t)),
-                new Completion(new Regex(@"^(:?[a-z]*)"), (m, t) => GetPossibleOptions(GetCommands(), m, t)),
+                new Completion(new Regex(@"^(:?[a-z]*)"), (m, t) => FilterOptions(GetCommands(), m, t)),
             };
         }
 
@@ -72,7 +72,7 @@ namespace DblDebug
             return new List<string>();
         }
 
-        private IEnumerable<string> GetPossibleOptions(IEnumerable<string> possibleOptions, Match match, string fullText)
+        private IEnumerable<string> FilterOptions(IEnumerable<string> possibleOptions, Match match, string fullText)
         {
             List<string> result = new List<string>();
             string matchText = match.Groups[match.Groups.Count - 1].Value;

@@ -12,10 +12,13 @@ namespace DblDebug
     public class CoreDebug: IDisposable
     {
         private readonly Func<bool, string> _input;
-        private readonly string _terminator = "";
         private IClient _client;
         private List<string> _response;
 
+        public IClient Client
+        {
+            get => _client;
+        }
         public Outputs Outputs { get; set; } = new Outputs();
         public State State { get; private set; }
         public Commands Commands { get; set; } = new Commands();
@@ -63,7 +66,7 @@ namespace DblDebug
             Connected = _client.Connect();
 
             string response = default(string);
-            response = await _client.TerminatedReadAsync(_terminator, TimeSpan.FromSeconds(10));
+            response = await _client.TerminatedReadAsync(TimeSpan.FromSeconds(10));
 
             bool commandResult = await Command("se st ov");
             Outputs.General.Write();
@@ -98,7 +101,7 @@ namespace DblDebug
 
                 if (true == command.IsInternal)
                 {
-                    result = ProcessInternalCommand(command);
+                    result = await ProcessInternalCommand(command);
                 }
                 else
                 {
@@ -111,13 +114,13 @@ namespace DblDebug
             return result;
         }
 
-        internal bool ProcessInternalCommand(Command command)
+        internal async Task<bool> ProcessInternalCommand(Command command)
         {
             bool result = true;
 
             if(default(Command) != command)
             {
-                result = command.Execute(this, State.LastEnteredCommand);
+                result = await command.Execute(this, State.LastEnteredCommand);
             }
             return result;
         }
@@ -175,13 +178,32 @@ namespace DblDebug
             return true;
         }
 
-        protected async Task<string> SendCommand(string command)
+        /*
+        public async Task<string> SendCommand(string command)
         {
             await _client.Write($"{command}\n");
-            return await _client.TerminatedReadAsync("DBG>", TimeSpan.FromHours(1));
+            return await _client.TerminatedReadAsync(TimeSpan.FromHours(1));
         }
+        */
 
+        public async Task<string[]> GetResponseFromCommand(string command)
+        {
+            string Trim(string line)
+            {
+                return line.TrimEnd(new char[] { '\r', '\n' });
+            }
 
+            await _client.Write($"{command}\n");
+            string response = await _client.TerminatedReadAsync(TimeSpan.FromHours(1));
+
+            string trimmedCommandResult = Trim(response);
+            string[] lines = trimmedCommandResult.Split('\n')
+                .Where(l => (false == l.StartsWith("DBG>") && false == string.IsNullOrEmpty(Trim(l))))
+                .Select(l => l)
+                .ToArray();
+
+            return lines;
+        }
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
         

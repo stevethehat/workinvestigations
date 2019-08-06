@@ -10,7 +10,7 @@ namespace DblDebug
     public interface IClient
     {
         bool Connect();
-        Task<string> TerminatedReadAsync(string terminator, TimeSpan timeout);
+        Task<string> TerminatedReadAsync(TimeSpan timeout);
         Task Write(string command);
         void Dispose();
     }
@@ -27,9 +27,9 @@ namespace DblDebug
             _port = port;
         }
 
-        public async Task<string> TerminatedReadAsync(string terminator, TimeSpan timeout)
+        public async Task<string> TerminatedReadAsync(TimeSpan timeout)
         {
-            return await _client.TerminatedReadAsync(terminator, timeout);
+            return await _client.TerminatedReadAsync("DBG>", timeout);
         }
 
         public async Task Write(string command)
@@ -58,7 +58,7 @@ namespace DblDebug
         {
         }
 
-        public async Task<string> TerminatedReadAsync(string terminator, TimeSpan timeout)
+        public async Task<string> TerminatedReadAsync(TimeSpan timeout)
         {
             string response = "";
             string responseFileName = Path.Combine(_responseFolder, $"{_lastCommand}.txt");
