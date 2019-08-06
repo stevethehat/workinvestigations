@@ -122,7 +122,6 @@ namespace DblDebug
                     OutputLine.WriteLine(e.Message, foregroundColor: ConsoleColor.Red);
                     OutputLine.WriteLine(e.StackTrace, foregroundColor: ConsoleColor.Red);
                 } 
-
             }
 
             return startResponse;

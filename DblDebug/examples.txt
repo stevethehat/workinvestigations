@@ -1,3 +1,6 @@
+b avg_add
+%DBG-E-Undefined routine name {AVG_ADD}
+
 e jjj
 %DBG-E-Undefined variable - {JJJ}
 

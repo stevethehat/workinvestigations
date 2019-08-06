@@ -19,6 +19,7 @@ namespace DblDebug
             return Task.FromResult<bool>(true);
         };
         public Func<CoreDebug, List<string>, List<string>> ResponsePreProcess { get; set; } = (d, r) => r;
+        public Func<CoreDebug, string, string> PreProcess { get; set; } = (d, c) => c;
 
         public bool IsInternal { get => Name.StartsWith(":"); }
 
@@ -77,7 +78,8 @@ namespace DblDebug
                     Name = "break",
                     AlternateNames = new List<string>(){ "b" },
                     SubOptions = (s) => s.DblSourceFile.BreakLocations
-                                        .Concat(s.CurrentScope.Labels)
+                                        .Concat(s.CurrentScope.Labels),
+                    PreProcess = (d, c) => d.State.SetBreak(d, c)
                 },
                 new Command() { Name = "cancel" },
                 new Command() { Name = "delete" },
@@ -124,7 +126,7 @@ namespace DblDebug
                 },
                 new Command() {
                     Name = "trace",
-                    AlternateNames = new List<string>() { "b" }
+                    AlternateNames = new List<string>() { "tr" }
                 },
                 new Command() {
                     Name = "view",

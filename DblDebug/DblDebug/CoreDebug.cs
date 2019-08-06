@@ -99,6 +99,11 @@ namespace DblDebug
                 Outputs.General.Lines.Clear();
                 Outputs.Code.Lines.Clear();
 
+                if(default(Func<CoreDebug, string, string>) != command.PreProcess)
+                {
+                    enteredCommand = command.PreProcess(this, enteredCommand);
+                }
+
                 if (true == command.IsInternal)
                 {
                     result = await ProcessInternalCommand(command);
@@ -178,13 +183,11 @@ namespace DblDebug
             return true;
         }
 
-        /*
         public async Task<string> SendCommand(string command)
         {
             await _client.Write($"{command}\n");
             return await _client.TerminatedReadAsync(TimeSpan.FromHours(1));
         }
-        */
 
         public async Task<string[]> GetResponseFromCommand(string command)
         {
