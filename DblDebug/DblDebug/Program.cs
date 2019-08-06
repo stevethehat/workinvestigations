@@ -61,11 +61,11 @@ namespace DblDebug
                 IClient client = default(SocketClient);
                 if (modeOption.HasValue() && "test" == modeOption.Value())
                 {
-                    client = new TestClient(host, 1024);
+                    client = new TestClient(host, port);
                 }
                 else
                 {
-                    client = new SocketClient(host, 1024); 
+                    client = new SocketClient(host, port); 
                 }
                 
                 CoreDebug debug = new CoreDebug(sourceDirectory);

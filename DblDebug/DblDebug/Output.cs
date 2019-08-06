@@ -30,12 +30,7 @@ namespace DblDebug
             ConsoleColor    backgroundColor = ConsoleColor.Black
         )
         {
-            Line.Add(new OutputChunk()
-            {
-                Text                = line,
-                BackgroundColor     = backgroundColor,
-                ForegroundColor     = foregroundColor
-            });
+            Line.Add(new OutputChunk(line, backgroundColor, foregroundColor));
         }
 
         public OutputLine()
@@ -71,8 +66,18 @@ namespace DblDebug
 
     public class OutputChunk
     {
-        public string Text { get; set; }
-        public ConsoleColor BackgroundColor { get; set; } = ConsoleColor.Black;
-        public ConsoleColor ForegroundColor { get; set; } = ConsoleColor.White;
+        public OutputChunk(
+            object text,
+            ConsoleColor foregroundColor = ConsoleColor.White,
+            ConsoleColor backgroundColor = ConsoleColor.Black
+        )
+        {
+            Text = text.ToString();
+            ForegroundColor = foregroundColor;
+            BackgroundColor = backgroundColor;
+        }
+        public readonly string Text;
+        public readonly ConsoleColor BackgroundColor = ConsoleColor.Black;
+        public readonly ConsoleColor ForegroundColor = ConsoleColor.White;
     }
 }
