@@ -126,39 +126,5 @@ namespace DblDebug
 
             return startResponse;
         }
-
-        private static void Test(CoreDebug debug)
-        {
-            Command go = new Command()
-            {
-                Name = "g",
-                CommandType = CommandType.Navigation
-            };
-            debug.ProcessResponse
-(go, @"Break at 462 in WHGINE (WHGINE.DBL) on entry
-
-    462 >       a = 4
-DBG> 
-");
-            debug.Outputs.General.Write();
-
-            debug.ProcessResponse(go, "Break at 462 in WHGINE (WHGINE.DBL)\r\n");
-            debug.Outputs.General.Write();
-
-            debug.ProcessResponse(go, "Step to 4207 in WHGINE_PROC_HDR (WHGINE.DBL)\r\n");
-            Scope scope = debug.State.CurrentScope;
-            scope.Info(debug.Outputs.General);
-            debug.Outputs.General.Write();
-
-            debug.Outputs.Code.Write();
-
-            Command test = debug.Commands.GetCommand("e test");
-            Console.Write($"command name = '{test.Name}'");
-
-            
-
-            Console.ReadKey();
-        }
-
     }
 }
