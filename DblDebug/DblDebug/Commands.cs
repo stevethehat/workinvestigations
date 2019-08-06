@@ -14,20 +14,20 @@ namespace DblDebug
         public List<string> SubCommands { get; set; } = new List<string>();
         public CommandType CommandType { get; set; }
         public Func<State, IEnumerable<string>> SubOptions { get; set; }
-        public Func<CoreDebug,string,  bool> Action { get; set; } = (d, c) => {
+        public Func<CoreDebug, string,  Task<bool>> Action { get; set; } = (d, c) => {
             d.Outputs.General.Lines.Add(new OutputLine($"Unknown command type {c}", ConsoleColor.Red));
-            return true;
+            return Task.FromResult<bool>(true);
         };
         public Func<CoreDebug, List<string>, List<string>> ResponsePreProcess { get; set; } = (d, r) => r;
 
         public bool IsInternal { get => Name.StartsWith(":"); }
 
-        internal bool Execute(CoreDebug debug, string fullCommand)
+        internal async Task<bool> Execute(CoreDebug debug, string fullCommand)
         {
             bool result = true;
-            if(default(Func<CoreDebug, string, bool>) != Action)
+            if(default(Func<CoreDebug, string, Task<bool>>) != Action)
             {
-                result = Action(debug, fullCommand);
+                result = await Action(debug, fullCommand);
             }
             return result;
         }
@@ -52,7 +52,7 @@ namespace DblDebug
         {
             Command result = new Command();
 
-            Match match = Regex.Match(command, @"^([a-zA-Z0-9_]+)\s*");
+            Match match = Regex.Match(command, @"^([a-zA-Z0-9_:]+)\s*");
             if(default(Match) != match && match.Success)
             {
                 command = match.Groups[1].Value;
@@ -142,11 +142,11 @@ namespace DblDebug
                 },
                 new Command() {
                     Name = ":save",
-                    Action = (d, c) => d.State.Save(d)
+                    Action = (d, c) => d.State.Save(d, c)
                 },
                 new Command() {
                     Name = ":load",
-                    Action = (d, c) => d.State.Load(d)
+                    Action = (d, c) => d.State.Load(d, c)
                 },
                 new Command() {
                     Name = ":scope",
@@ -155,13 +155,12 @@ namespace DblDebug
                         {
                             d.State.CurrentScope.Info(d.Outputs.General);
                         }
-                        return true;
+                        return Task.FromResult<bool>(true);
                     }
                 },
                 new Command() {
                     Name = ":quit",
-                    Action = (d, c) => false
-                },
+                    Action = (d, c) => Task.FromResult<bool>(false)                },
         };
 
     }
