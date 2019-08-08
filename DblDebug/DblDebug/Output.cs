@@ -30,7 +30,7 @@ namespace DblDebug
             ConsoleColor    backgroundColor = ConsoleColor.Black
         )
         {
-            Line.Add(new OutputChunk(line, backgroundColor, foregroundColor));
+            Line.Add(new OutputChunk(line, foregroundColor, backgroundColor));
         }
 
         public OutputLine()

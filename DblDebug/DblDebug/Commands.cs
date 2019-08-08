@@ -45,9 +45,6 @@ namespace DblDebug
         public Commands()
         {
             IEnumerable<char> alphabet = Enumerable.Range('a', 26).Select(x => (char)x);
-
-            MainCommandNames = MainCommands.Select(s => s.Name);
-            MainCommandNamesByLength = MainCommandNames.OrderByDescending(n => n.Length);
         }
         public Command GetCommand(string command)
         {
@@ -70,15 +67,13 @@ namespace DblDebug
             return result;
         }
 
-        public readonly IEnumerable<string> MainCommandNamesByLength;
-        public readonly IEnumerable<string> MainCommandNames;
         public readonly List<Command> MainCommands = new List<Command>()
             {
                 new Command() {
                     Name = "break",
                     AlternateNames = new List<string>(){ "b" },
                     SubOptions = (s) => s.DblSourceFile.BreakLocations
-                                        .Concat(s.CurrentScope.Labels),
+                                        .Concat(s.CurrentScope.Labels.Select(l => l.Name)),
                     PreProcess = (d, c) => d.State.SetBreak(d, c)
                 },
                 new Command() { Name = "cancel" },
@@ -140,7 +135,11 @@ namespace DblDebug
                     Name = ":peek",
                     SubOptions = (s)
                         => s.DblSourceFile.BreakLocations
-                            .Concat(s.CurrentScope.Labels)
+                            .Concat(s.CurrentScope.Labels.Select(l => l.Name)),
+                    Action = (d, c) => {
+                        d.State.DblSourceFile.Peek(d, c);
+                        return Task.FromResult<bool>(true);
+                    }
                 },
                 new Command() {
                     Name = ":save",
@@ -153,7 +152,7 @@ namespace DblDebug
                 new Command() {
                     Name = ":scope",
                     Action = (d, c) => {
-                        if(default(Scope) != d.State.CurrentScope)
+                        if(default(RoutineScope) != d.State.CurrentScope)
                         {
                             d.State.CurrentScope.Info(d.Outputs.General);
                         }

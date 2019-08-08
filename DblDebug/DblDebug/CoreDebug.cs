@@ -37,11 +37,11 @@ namespace DblDebug
             {
                 new LineProcessor(new Regex(@"(Break at) (\d*) in ([A-Z_]*) \(([A-Z_]*\.[A-Z_]*)\)(.*)"),
                    (s, l, m)    => Processors.LineNumber(s, l, m),
-                   (l, m)       => Formatters.LineNumber(l, m)
+                   (l, m)       => Formatters.LineNumber(this, l, m)
                 ),
                 new LineProcessor(new Regex(@"(Step to) (\d*) in ([A-Z_]*) \(([A-Z_]*\.[A-Z_]*)\)"),
                    (s, l, m)    => Processors.LineNumber(s, l, m),
-                   (l, m)       => Formatters.LineNumber(l, m)
+                   (l, m)       => Formatters.LineNumber(this, l, m)
                 ),
                 new LineProcessor(new Regex(@"^%DBG-E-.*"),
                    (s, l, m)    => Processors.Default(s, l, m),

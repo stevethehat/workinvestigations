@@ -26,8 +26,8 @@ namespace DblDebug
             _debug = debug;
             _completions = new List<Completion>()
             {
-                new Completion(new Regex(@"^([a-z]*) ([a-z]*) ([a-z]*)"), (m, t) => FilterOptions(GetSubOptions(m, t), m, t)),
-                new Completion(new Regex(@"^([a-z]*) ([a-z]*)"), (m, t) => FilterOptions(GetSubOptions(m, t), m, t)),
+                new Completion(new Regex(@"^(:?[a-z]*) ([a-z]*) ([a-z]*)"), (m, t) => FilterOptions(GetSubOptions(m, t), m, t)),
+                new Completion(new Regex(@"^(:?[a-z]*) ([a-z]*)"), (m, t) => FilterOptions(GetSubOptions(m, t), m, t)),
                 //new Completion(new Regex(@"^(:?[a-z]*) ([a-z]*)"), (m, t) => GetPossibleOptions(GetInternalSubCommands(), m, t)),
                 new Completion(new Regex(@"^(:?[a-z]*)"), (m, t) => FilterOptions(GetCommands(), m, t)),
             };

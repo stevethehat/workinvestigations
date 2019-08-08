@@ -7,19 +7,41 @@ namespace DblDebug
 {
     public class Scope
     {
+        public int DefinitionLineNumber { get; }
+        public int EndLineNumber { get; protected set; }
+        public ScopeType Type { get; protected set; }
+        public DblSourceFile Parent { get; }
+        public string Name { get; protected set; }
+
+
         public Scope(DblSourceFile parent, Match match, string line, int lineNumber)
         {
             Parent = parent;
-            Type = ("function" == match.Groups[1].Value)
-                ? ScopeType.Function
-                : ScopeType.Subroutine;
-            Name = match.Groups[2].Value;
             DefinitionLineNumber = lineNumber;
         }
 
-        public Scope()
+    }
+    public class RoutineScope: Scope
+    {
+        public RoutineScope(DblSourceFile parent, Match match, string line, int lineNumber)
+            : base(parent, match, line, lineNumber)
         {
-            Name = "unknown";
+            base.Name = match.Groups[2].Value;
+
+            base.Type = ("function" == match.Groups[1].Value)
+                ? ScopeType.Function
+                : ScopeType.Subroutine;
+        }
+
+        public RoutineScope()
+            : base(default(DblSourceFile), default(Match), "", (int) 1)
+        {
+            base.Name = "unknown";
+        }
+
+        public LabelScope GetLabelScopeFromLine(int lineNumber)
+        {
+            return Labels.Where(l => l.DefinitionLineNumber <= lineNumber && l.EndLineNumber >= lineNumber).FirstOrDefault();
         }
 
         public void Info(ConsoleOutput output)
@@ -33,12 +55,11 @@ namespace DblDebug
             header.Line.Add(new OutputChunk(DefinitionLineNumber, ConsoleColor.Yellow));
             header.Line.Add(new OutputChunk(" Body: "));
             header.Line.Add(new OutputChunk(BodyLineNumber, ConsoleColor.Yellow));
-            header.Line.Add(new OutputChunk("End: "));
+            header.Line.Add(new OutputChunk(" End: "));
             header.Line.Add(new OutputChunk(EndLineNumber, ConsoleColor.Yellow));
 
             output.Lines.Add(header);
 
-            output.Lines.Add(new OutputLine($"Name: {Name} Definition: {DefinitionLineNumber} Body: {BodyLineNumber} End: {EndLineNumber}"));
             output.Lines.Add(OutputLine.Blank);
             output.Lines.Add(new OutputLine("Variables", ConsoleColor.Yellow));
             //output.Lines.Add(new OutputLine(string.Join(", ", Variables.Select(v => $"{{:c}}{v.Name}{{:w}} '{v.Type}'"))));
@@ -46,21 +67,15 @@ namespace DblDebug
 
             output.Lines.Add(OutputLine.Blank);
             output.Lines.Add(new OutputLine("Labels", ConsoleColor.Yellow));
-            output.Lines.Add(new OutputLine(string.Join(", ", Labels)));
+            output.Lines.Add(new OutputLine(string.Join(", ", Labels.Select(l => l.Name).OrderBy(n => n))));
             output.Lines.Add(OutputLine.Blank);
             output.Lines.Add(new OutputLine("Functions", ConsoleColor.Yellow));
-            output.Lines.Add(new OutputLine(string.Join(", ", Parent.Functions.Select(f => f.Name))));
+            output.Lines.Add(new OutputLine(string.Join(", ", Parent.Functions.Select(f => f.Name).OrderBy(n => n))));
             output.Lines.Add(OutputLine.Blank);
         }
 
-        public DblSourceFile Parent { get; }
-        public ScopeType Type { get; }
-        public string Name { get; }
-        public int DefinitionLineNumber { get; }
-        public int EndLineNumber { get; private set; }
-
         public List<Variable> Variables = new List<Variable>();
-        public List<string> Labels = new List<string>();
+        public List<LabelScope> Labels = new List<LabelScope>();
 
         private static Regex _procStart = new Regex(@"^\s*\.?proc");
         private static Regex _label = new Regex(@"^\s*([a-zA-Z0-9_]+)\s*,");
@@ -70,6 +85,7 @@ namespace DblDebug
         // .include 'skdp_passed' repository, group='skdp_passed'
         private static Regex _groups = new Regex(@"^\s*\.include\s'([a-zA-Z0-9_]+)'\s+repository\s*,\s*group\s*=\s*'([a-zA-Z0-9_]+)'");
         private ScopeState _state;
+        private LabelScope _currentLabel = default(LabelScope);
 
         public int BodyLineNumber { get; private set; }
 
@@ -102,7 +118,12 @@ namespace DblDebug
                 match = _label.Match(line);
                 if (default(Match) != match && true == match.Success)
                 {
-                    Labels.Add(match.Groups[1].Value);
+                    if(default(LabelScope) != _currentLabel)
+                    {
+                        _currentLabel.Finish(lineNumber);
+                    }
+                    _currentLabel = new LabelScope(Parent, match, line, lineNumber);
+                    Labels.Add(_currentLabel);
                 }
             }
         }
@@ -111,7 +132,40 @@ namespace DblDebug
         {
             EndLineNumber = lineNumber;
             Variables = Variables.OrderBy(v => v.Name).ToList();
-            Labels = Labels.OrderBy(l => l).ToList();
+            Labels = Labels.OrderBy(l => l.Name).ToList();
+            if(default(LabelScope) != _currentLabel)
+            {
+                _currentLabel.Finish(lineNumber);
+            }
         }
     }
+
+    public class LabelScope : Scope
+    {
+        public LabelScope(DblSourceFile parent, Match match, string line, int lineNumber)
+            : base(parent, match, line, lineNumber)
+        {
+            base.Name = match.Groups[1].Value;
+            base.Type = ScopeType.Label;
+        }
+
+        internal void Finish(int lineNumber)
+        {
+            EndLineNumber = lineNumber;
+        }
+    }
+
+    public enum ScopeType
+    {
+        Function,
+        Subroutine,
+        Label
+    }
+
+    enum ScopeState
+    {
+        Variables,
+        Body
+    }
+
 }

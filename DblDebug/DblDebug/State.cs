@@ -15,7 +15,7 @@ namespace DblDebug
         public int CurrentLineNo { get; set; } = 0;
         public string LastEnteredCommand { get; set; } = "";
         public string CurrentLine { get; set; }
-        public Scope CurrentScope { get; set; }
+        public RoutineScope CurrentScope { get; set; }
         public DblSourceFile DblSourceFile { get; set; }
 
         private List<string> _breaks = new List<string>();

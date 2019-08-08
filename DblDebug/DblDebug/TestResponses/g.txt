@@ -1,2 +1,3 @@
-Step to 4207 in WHGINE_PROC_HDR (WHGINE.DBL)
+Step to 2567 in WHGINE_PROC_HDR (WHGINE.DBL)
+2567 > tabmnu_ctrl=tabmnu_ctrl_cop
 DBG>

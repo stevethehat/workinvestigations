@@ -15,13 +15,16 @@ namespace DblDebug
             return result;
         }
 
-        public static OutputLine LineNumber(string line, Match match)
+        public static OutputLine LineNumber(CoreDebug debug, string line, Match match)
         {
-            OutputLine result = new OutputLine();
+            int lineNumber      = Convert.ToInt32(match.Groups[2].Value);
+            string function     = match.Groups[3].Value;
+            OutputLine result   = new OutputLine();
+
             result.Line.Add(new OutputChunk($"{match.Groups[1].Value} ("));
-            result.Line.Add(new OutputChunk(match.Groups[2].Value, ConsoleColor.Yellow));
+            result.Line.Add(new OutputChunk(lineNumber, ConsoleColor.Yellow));
             result.Line.Add(new OutputChunk(") in "));
-            result.Line.Add(new OutputChunk(match.Groups[3].Value, ConsoleColor.Yellow));
+            result.Line.Add(new OutputChunk(function, ConsoleColor.Yellow));
             result.Line.Add(new OutputChunk(" ("));
             result.Line.Add(new OutputChunk(match.Groups[4].Value, ConsoleColor.Yellow));
             result.Line.Add(new OutputChunk(")"));
@@ -30,6 +33,19 @@ namespace DblDebug
             {
                 result.Line.Add(new OutputChunk(match.Groups[5].Value));
             }
+
+            RoutineScope scope = debug.State.DblSourceFile.GetScopeFromLine(lineNumber);
+
+            if(default(RoutineScope) != scope && scope.Name.ToLower() != function.ToLower())
+            {
+                Scope label = scope.GetLabelScopeFromLine(lineNumber);
+                if(default(LabelScope) != label)
+                {
+                    result.Line.Add(new OutputChunk(" "));
+                    result.Line.Add(new OutputChunk(label.Name, ConsoleColor.Yellow));
+                }
+            }
+
 
             return result;
         }

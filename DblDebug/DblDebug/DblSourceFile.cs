@@ -22,10 +22,10 @@ namespace DblDebug
         }
 
         private readonly string _fullFileName;
-        //private readonly string _sourceDirectory = "/Users/stevelamb/Development/ibcos/investigations/source/";
-        private readonly string _sourceDirectory = "c:\\ibcos\\Repositorys\\gold\\source\\";
-        public readonly List<Scope> Functions = new List<Scope>();
-        public readonly List<Scope> SubRoutines = new List<Scope>();
+        private readonly string _sourceDirectory = "/Users/stevelamb/Development/ibcos/investigations/source/";
+        //private readonly string _sourceDirectory = "c:\\ibcos\\Repositorys\\gold\\source\\";
+        public readonly List<RoutineScope> Functions = new List<RoutineScope>();
+        public readonly List<RoutineScope> SubRoutines = new List<RoutineScope>();
         private List<string> _lines;
 
 
@@ -44,7 +44,47 @@ namespace DblDebug
             Parse(_fullFileName);
         }
 
-        internal Scope GetScope(string name)
+        internal async Task<bool> Peek(CoreDebug debug, string commandText)
+        {
+            Regex check = new Regex(@":peek\s+([a-zA-z0-9_]+)");
+            Match match = check.Match(commandText);
+
+            if(default(Match) != match && true == match.Success)
+            {
+                RoutineScope routine = GetScope(match.Groups[1].Value);
+
+                if(default(RoutineScope) != routine)
+                {
+                    SetCode(debug.Outputs.Code, routine.DefinitionLineNumber);
+                }
+                else
+                {
+                    // get current routine from line number then check its labels
+                    routine = GetScopeFromLine(debug.State.CurrentLineNo);
+
+                    if (default(RoutineScope) != routine)
+                    {
+                        LabelScope label = routine.Labels.Where(l => l.Name == match.Groups[1].Value).FirstOrDefault();
+                        if(default(LabelScope) != label){
+                            SetCode(debug.Outputs.Code, label.DefinitionLineNumber);
+                        }
+
+                    }
+                }
+
+            }
+
+            return await Task.FromResult<bool>(true);
+        }
+
+        public RoutineScope GetScopeFromLine(int lineNumber)
+        {
+            return Scopes
+                .Where(s => s.BodyLineNumber <= lineNumber && s.EndLineNumber >= lineNumber)
+                .FirstOrDefault();
+        }
+
+        internal RoutineScope GetScope(string name)
         {
             return Scopes.Find(s => s.Name.ToLower() == name);
         }
@@ -71,12 +111,12 @@ namespace DblDebug
         //private 
         private static Regex _functionSubroutine = new Regex(@"^\s*\.?(function|subroutine)\s+([a-zA-Z0-9_]+)");
 
-        public List<Scope> Scopes { get; private set; } = new List<Scope>();
+        public List<RoutineScope> Scopes { get; private set; } = new List<RoutineScope>();
 
         private void Parse(string fileName)
         {
             _lines = File.ReadAllLines(fileName).ToList();
-            Scope currentScope = default(Scope);
+            RoutineScope currentScope = default(RoutineScope);
             int lineNumber = 1;
             foreach(string line in _lines)
             {
@@ -87,16 +127,16 @@ namespace DblDebug
 
                     if(default(Match) != match && match.Success)
                     {
-                        if(default(Scope) != currentScope)
+                        if(default(RoutineScope) != currentScope)
                         {
                             currentScope.Finish(lineNumber);
                         }
-                        currentScope = new Scope(this, match, line, lineNumber);
+                        currentScope = new RoutineScope(this, match, line, lineNumber);
                         Scopes.Add(currentScope);
                         Functions.Add(currentScope);
                     }
 
-                    if(default(Scope) != currentScope)
+                    if(default(RoutineScope) != currentScope)
                     {
                         currentScope.ProcessLine(line, lineNumber);
                     }
@@ -106,7 +146,7 @@ namespace DblDebug
                 }
                 lineNumber++;
             }
-            if (default(Scope) != currentScope)
+            if (default(RoutineScope) != currentScope)
             {
                 currentScope.Finish(lineNumber);
             }
@@ -141,17 +181,6 @@ namespace DblDebug
         }
     }
 
-    public enum ScopeType
-    {
-        Function,
-        Subroutine
-    }
-
-    enum ScopeState
-    {
-        Variables,
-        Body
-    }
 
     public class Variable
     {
