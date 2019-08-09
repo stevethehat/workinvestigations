@@ -21,6 +21,7 @@ namespace DblDebug
         }
         public Outputs Outputs { get; set; } = new Outputs();
         public State State { get; private set; }
+        public Settings Settings { get; } = new Settings();
         public Commands Commands { get; set; } = new Commands();
         public Command LastCommand { get; internal set; } = new Command();
         public bool Connected { get; private set; }
@@ -158,7 +159,7 @@ namespace DblDebug
             )
             {
 
-                State.DblSourceFile.SetCode(Outputs.Code, State.CurrentLineNo);
+                State.DblSourceFile.SetCode(Outputs.Code, State.CurrentLineNo, Settings.Get("autoviewlines"));
             }
 
             return result;

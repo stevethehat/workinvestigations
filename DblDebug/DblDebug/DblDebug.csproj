@@ -66,6 +66,7 @@
     <Compile Include="Client.cs" />
     <Compile Include="Structures.cs" />
     <Compile Include="Scope.cs" />
+    <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

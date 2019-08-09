@@ -146,6 +146,10 @@ namespace DblDebug
                     Action = (d, c) => d.State.Save(d, c)
                 },
                 new Command() {
+                    Name = ":set",
+                    Action = (d, c) => d.Settings.Set(c)
+                },
+                new Command() {
                     Name = ":load",
                     Action = (d, c) => d.State.Load(d, c)
                 },

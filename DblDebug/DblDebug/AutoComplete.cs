@@ -75,8 +75,7 @@ namespace DblDebug
         private IEnumerable<string> FilterOptions(IEnumerable<string> possibleOptions, Match match, string fullText)
         {
             List<string> result = new List<string>();
-            string matchText = match.Groups[match.Groups.Count - 1].Value;
-            string previousText = fullText.Substring(0, fullText.Length - matchText.Length);
+            string matchText = match.Groups[match.Groups.Count - 1].Value.ToLower();
             foreach (string possibleOption in possibleOptions)
             {
                 if (true == possibleOption.StartsWith(matchText, StringComparison.CurrentCultureIgnoreCase))

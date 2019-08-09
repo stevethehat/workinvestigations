@@ -55,7 +55,7 @@ namespace DblDebug
 
                 if(default(RoutineScope) != routine)
                 {
-                    SetCode(debug.Outputs.Code, routine.DefinitionLineNumber);
+                    SetCode(debug.Outputs.Code, routine.DefinitionLineNumber, debug.Settings.Get("autoviewlines"));
                 }
                 else
                 {
@@ -66,7 +66,7 @@ namespace DblDebug
                     {
                         LabelScope label = routine.Labels.Where(l => l.Name == match.Groups[1].Value).FirstOrDefault();
                         if(default(LabelScope) != label){
-                            SetCode(debug.Outputs.Code, label.DefinitionLineNumber);
+                            SetCode(debug.Outputs.Code, label.DefinitionLineNumber, debug.Settings.Get("autoviewlines"));
                         }
 
                     }
@@ -152,32 +152,43 @@ namespace DblDebug
             }
         }
 
-        internal void SetCode(ConsoleOutput code, int lineNumber)
+        internal void SetCode(ConsoleOutput code, int lineNumber, string numLines)
         {
-            code.Lines.Clear();
-            code.Lines.Add(OutputLine.Blank);
-            code.Lines.Add(new OutputLine($"File: {_fullFileName}", ConsoleColor.Yellow));
-
-            int codeLineNo = lineNumber - 1;
-
-            for(int i = lineNumber - CONTEXT; i < lineNumber + CONTEXT; i++){
-                try
-                {
-                    if (codeLineNo == i)
-                    {
-                        code.Lines.Add(new OutputLine($"{i + 1,6:d}> {_lines[i].Trim(new[] { '\n', '\r' })}", ConsoleColor.White, ConsoleColor.Red));
-                    }
-                    else
-                    {
-                        code.Lines.Add(new OutputLine($"{i + 1,6:d}> {_lines[i].Trim(new[] { '\n', '\r' })}"));
-                    }
-                } catch (Exception e)
-                {
-
-                }
+            int showLines = 20;
+            if(Int32.TryParse(numLines, out int parsedLines))
+            {
+                showLines = parsedLines;
             }
 
-            code.Lines.Add(OutputLine.Blank);
+            code.Lines.Clear();
+            if (0 != showLines)
+            {
+                code.Lines.Add(OutputLine.Blank);
+                code.Lines.Add(new OutputLine($"File: {_fullFileName}", ConsoleColor.Yellow));
+
+                int codeLineNo = lineNumber - 1;
+
+                for (int i = lineNumber - showLines; i < lineNumber + showLines; i++)
+                {
+                    try
+                    {
+                        if (codeLineNo == i)
+                        {
+                            code.Lines.Add(new OutputLine($"{i + 1,6:d}> {_lines[i].Trim(new[] { '\n', '\r' })}", ConsoleColor.White, ConsoleColor.Red));
+                        }
+                        else
+                        {
+                            code.Lines.Add(new OutputLine($"{i + 1,6:d}> {_lines[i].Trim(new[] { '\n', '\r' })}"));
+                        }
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
+                }
+
+                code.Lines.Add(OutputLine.Blank);
+            }
         }
     }
 
