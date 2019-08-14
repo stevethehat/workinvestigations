@@ -67,6 +67,7 @@
     <Compile Include="Structures.cs" />
     <Compile Include="Scope.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="Process.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

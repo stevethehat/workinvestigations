@@ -9,4 +9,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <StartArguments>-s=C:\ibcos\Repositorys\gold\source</StartArguments>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Mac' ">
+    <StartAction>Project</StartAction>
+    <StartArguments>-s=/Users/stevelamb/Development/ibcos/investigations/source -m=test</StartArguments>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
 </Project>

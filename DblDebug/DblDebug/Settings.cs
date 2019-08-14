@@ -6,10 +6,15 @@ namespace DblDebug
 {
     public class Settings
     {
-        private readonly Dictionary<string, string> _values = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> _values = new Dictionary<string, string>(){
+            { "autocompletelines", "10" }
+        };
+
         public Settings()
         {
         }
+
+        public IEnumerable<string> Keys { get => _values.Keys; }
 
         internal string Get(string setting)
         {

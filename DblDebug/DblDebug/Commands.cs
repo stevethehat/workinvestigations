@@ -131,11 +131,41 @@ namespace DblDebug
                     Name = "watch",
                     AlternateNames = new List<string>() { "w" }
                 },
+                new Command()
+                {
+                    Name = ":grep",
+                    AlternateNames = new List<string>() { ":g" },
+                    Action = async (d, c) =>
+                    {
+                        ShellProcess process = new ShellProcess();
+                        var result = await process.Run("rg", @"""(function|subroutine)\s+whgine_vat_calc"" .");
+                        foreach(string line in result)
+                        {
+                            d.Outputs.General.Lines.Add(new OutputLine(line));
+                        }
+                        return true;
+                    }
+                },
+                new Command()
+                {
+                    Name = ":define",
+                    AlternateNames = new List<string>() { ":d" },
+                    Action = async (d, c) =>
+                    {
+                        ShellProcess process = new ShellProcess();
+                        var result = await process.Run("rg", @"""define\s+VJ_FILE"" .");
+                        foreach(string line in result)
+                        {
+                            d.Outputs.General.Lines.Add(new OutputLine(line));
+                        }
+                        return true;
+                    }
+                },
                 new Command() {
                     Name = ":peek",
-                    SubOptions = (s)
-                        => s.DblSourceFile.BreakLocations
-                            .Concat(s.CurrentScope.Labels.Select(l => l.Name)),
+                    SubOptions = (d)
+                        => d.State.DblSourceFile.BreakLocations
+                            .Concat(d.State.CurrentScope.Labels.Select(l => l.Name)),
                     Action = (d, c) => {
                         d.State.DblSourceFile.Peek(d, c);
                         return Task.FromResult<bool>(true);
@@ -147,7 +177,8 @@ namespace DblDebug
                 },
                 new Command() {
                     Name = ":set",
-                    Action = (d, c) => d.Settings.Set(c)
+                    Action = (d, c) => d.Settings.Set(c),
+                    SubOptions = (d) => d.Settings.Keys
                 },
                 new Command() {
                     Name = ":load",
@@ -165,6 +196,7 @@ namespace DblDebug
                 },
                 new Command() {
                     Name = ":quit",
+                    AlternateNames = new List<string>() { ":q"},
                     Action = (d, c) => Task.FromResult<bool>(false)                },
         };
 
