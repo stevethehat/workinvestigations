@@ -13,7 +13,7 @@ namespace DblDebug
         public List<string> AlternateNames { get; set; } = new List<string>();
         public List<string> SubCommands { get; set; } = new List<string>();
         public CommandType CommandType { get; set; }
-        public Func<State, IEnumerable<string>> SubOptions { get; set; }
+        public Func<CoreDebug, IEnumerable<string>> SubOptions { get; set; }
         public Func<CoreDebug, string,  Task<bool>> Action { get; set; } = (d, c) => {
             d.Outputs.General.Lines.Add(new OutputLine($"Unknown command type {c}", ConsoleColor.Red));
             return Task.FromResult<bool>(true);
@@ -72,20 +72,20 @@ namespace DblDebug
                 new Command() {
                     Name = "break",
                     AlternateNames = new List<string>(){ "b" },
-                    SubOptions = (s) => s.DblSourceFile.BreakLocations
-                                        .Concat(s.CurrentScope.Labels.Select(l => l.Name)),
+                    SubOptions = (d) => d.State.DblSourceFile.BreakLocations
+                                        .Concat(d.State.CurrentScope.Labels.Select(l => l.Name)),
                     PreProcess = (d, c) => d.State.SetBreak(d, c)
                 },
                 new Command() { Name = "cancel" },
                 new Command() { Name = "delete" },
                 new Command() {
                     Name = "deposit",
-                    SubOptions = (s) => s.CurrentScope.Variables.Select(v => v.Name)
+                    SubOptions = (d) => d.State.CurrentScope.Variables.Select(v => v.Name)
                 },
                 new Command() {
                     Name = "examine",
                     AlternateNames = new List<string>(){ "e" },
-                    SubOptions = (s) => s.CurrentScope.Variables.Select(v => v.Name),
+                    SubOptions = (d) => d.State.CurrentScope.Variables.Select(v => v.Name),
                     ResponsePreProcess = (d, r) => Processors.PreProcessExamine(d, r)
                 },
                 new Command() { Name = "exit" },

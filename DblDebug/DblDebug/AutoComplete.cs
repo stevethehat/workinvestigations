@@ -49,9 +49,9 @@ namespace DblDebug
                 result.AddRange(mainCommand.SubCommands);
             }
 
-            if(default(Func<State, List<string>>) != mainCommand.SubOptions)
+            if(default(Func<CoreDebug, List<string>>) != mainCommand.SubOptions)
             {
-                result.AddRange(mainCommand.SubOptions(_debug.State));
+                result.AddRange(mainCommand.SubOptions(_debug));
             }
 
             return result;
