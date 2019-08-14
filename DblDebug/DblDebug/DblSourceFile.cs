@@ -65,6 +65,7 @@ namespace DblDebug
                     if (default(RoutineScope) != routine)
                     {
                         LabelScope label = routine.Labels.Where(l => l.Name == match.Groups[1].Value).FirstOrDefault();
+                        string labels = string.Join(", ", routine.Labels.Select(l => l.Name).OrderBy(l => l));
                         if(default(LabelScope) != label){
                             SetCode(debug.Outputs.Code, label.DefinitionLineNumber, debug.Settings.Get("autoviewlines"));
                         }
