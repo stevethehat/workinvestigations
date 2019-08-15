@@ -52,3 +52,4 @@ extensions/dbl/.vscode/
 goldrepl/Gold/bin/
 goldrepl/Gold/obj/
 goldrepl/packages/
+DblDebug/ReadLine/obj/
