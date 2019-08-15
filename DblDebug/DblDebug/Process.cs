@@ -12,12 +12,12 @@ namespace DblDebug
         {
         }
 
-        public async Task<List<string>>Run(string command, string arguments)
+        public async Task<List<string>>Run(string command, string arguments, string workingDirectory)
         {
             Process process = new Process();
             process.StartInfo.FileName = command;
             process.StartInfo.Arguments = arguments;
-            process.StartInfo.WorkingDirectory = "/Users/stevelamb/Development/ibcos/investigations/source";
+            process.StartInfo.WorkingDirectory = workingDirectory;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.RedirectStandardError = true;

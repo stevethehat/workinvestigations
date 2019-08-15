@@ -140,7 +140,7 @@ namespace DblDebug
                         string[] command = c.Split(' ');
 
                         ShellProcess process = new ShellProcess();
-                        List<string> lines = await process.Run("rg", $@"""(function|subroutine)\s+(?i){command[1]}"" .");
+                        List<string> lines = await process.Run("rg", $@"""(function|subroutine)\s+(?i){command[1]}"" .", d.State.SourceDirectory);
 
                         d.Outputs.General.Lines.AddRange(lines.Select(l => new OutputLine(l)));
 
@@ -156,7 +156,7 @@ namespace DblDebug
                         string[] command = c.Split(' ');
 
                         ShellProcess process = new ShellProcess();
-                        List<string> lines = await process.Run("rg", $@"""define\s+(?i){command[1]}"" .");
+                        List<string> lines = await process.Run("C:\\Program Files\\RipGrep\\rg.exe", $@"""define\s+(?i){command[1]}"" .", d.State.SourceDirectory);
 
                         d.Outputs.General.Lines.AddRange(lines.Select(l => new OutputLine(l)));
 
