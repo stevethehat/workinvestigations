@@ -82,6 +82,8 @@ namespace DblDebug
                     OutputLine.WriteLine(e.Message, foregroundColor: ConsoleColor.Red);
                 }
 
+                debug.Settings.Save();
+
                 return 0;
             });
 
