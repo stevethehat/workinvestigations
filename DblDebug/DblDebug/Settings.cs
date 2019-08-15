@@ -7,7 +7,7 @@ namespace DblDebug
     public class Settings
     {
         private readonly Dictionary<string, string> _values = new Dictionary<string, string>(){
-            { "autocompletelines", "10" }
+            { "autoviewlines", "10" }
         };
 
         public Settings()

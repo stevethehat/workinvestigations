@@ -137,12 +137,13 @@ namespace DblDebug
                     AlternateNames = new List<string>() { ":g" },
                     Action = async (d, c) =>
                     {
+                        string[] command = c.Split(' ');
+
                         ShellProcess process = new ShellProcess();
-                        var result = await process.Run("rg", @"""(function|subroutine)\s+whgine_vat_calc"" .");
-                        foreach(string line in result)
-                        {
-                            d.Outputs.General.Lines.Add(new OutputLine(line));
-                        }
+                        List<string> lines = await process.Run("rg", $@"""(function|subroutine)\s+(?i){command[1]}"" .");
+
+                        d.Outputs.General.Lines.AddRange(lines.Select(l => new OutputLine(l)));
+
                         return true;
                     }
                 },
@@ -152,12 +153,13 @@ namespace DblDebug
                     AlternateNames = new List<string>() { ":d" },
                     Action = async (d, c) =>
                     {
+                        string[] command = c.Split(' ');
+
                         ShellProcess process = new ShellProcess();
-                        var result = await process.Run("rg", @"""define\s+VJ_FILE"" .");
-                        foreach(string line in result)
-                        {
-                            d.Outputs.General.Lines.Add(new OutputLine(line));
-                        }
+                        List<string> lines = await process.Run("rg", $@"""define\s+(?i){command[1]}"" .");
+
+                        d.Outputs.General.Lines.AddRange(lines.Select(l => new OutputLine(l)));
+
                         return true;
                     }
                 },
