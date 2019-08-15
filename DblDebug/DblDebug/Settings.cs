@@ -53,7 +53,7 @@ namespace DblDebug
             return result;
         }
 
-        internal Task<bool> Set(string enteredCommand)
+        internal Task<bool> Set(CoreDebug debug, string enteredCommand)
         {
             string[] command = enteredCommand.Split(' ');
             if(3 == command.Length)
@@ -61,13 +61,23 @@ namespace DblDebug
                 string setting = command[1];
                 string value = command[2];
 
-                if (_values.ContainsKey(setting))
+                if("?" == setting)
                 {
-                    _values[setting] = value;
+                    foreach(KeyValuePair<string, string> savedSetting in _values)
+                    {
+                        debug.Outputs.General.Lines.Add(new OutputLine($"{savedSetting.Key} = {savedSetting.Value}"));
+                    }
                 }
                 else
                 {
-                    _values.Add(setting, value);
+                    if (_values.ContainsKey(setting))
+                    {
+                        _values[setting] = value;
+                    }
+                    else
+                    {
+                        _values.Add(setting, value);
+                    }
                 }
             }
 
