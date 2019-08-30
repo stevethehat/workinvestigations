@@ -83,7 +83,7 @@ namespace DblDebug
                 }
 
                 debug.Settings.Save();
-
+               
                 return 0;
             });
 

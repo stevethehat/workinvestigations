@@ -12,22 +12,28 @@ namespace DblDebug
         {
         }
 
-        public async Task<List<string>>Run(string command, string arguments, string workingDirectory)
+        public async Task<List<string>>Run(string command, string arguments, string workingDirectory, bool capture = true)
         {
             Process process = new Process();
             process.StartInfo.FileName = command;
             process.StartInfo.Arguments = arguments;
             process.StartInfo.WorkingDirectory = workingDirectory;
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.RedirectStandardError = true;
-            //* Set your output and error (asynchronous) handlers
-            process.OutputDataReceived += new DataReceivedEventHandler(OutputHandler);
-            process.ErrorDataReceived += new DataReceivedEventHandler(OutputHandler);
+
+            if (capture)
+            {
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.RedirectStandardError = true;
+                //* Set your output and error (asynchronous) handlers
+
+                process.OutputDataReceived += new DataReceivedEventHandler(OutputHandler);
+                process.ErrorDataReceived += new DataReceivedEventHandler(OutputHandler);
+
+            }
             //* Start process and handlers
             process.Start();
-            process.BeginOutputReadLine();
-            process.BeginErrorReadLine();
+            //process.BeginOutputReadLine();
+            //process.BeginErrorReadLine();
             process.WaitForExit();
 
             return Output;

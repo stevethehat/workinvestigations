@@ -200,6 +200,22 @@ namespace DblDebug
                     Name = ":quit",
                     AlternateNames = new List<string>() { ":q"},
                     Action = (d, c) => Task.FromResult<bool>(false)                },
+                new Command()
+                {
+                    Name = ":vim",
+                    AlternateNames = new List<string>() { ":v" },
+                    Action = async (d, c) =>
+                    {
+                        string[] command = c.Split(' ');
+
+                        ShellProcess process = new ShellProcess();
+                        List<string> lines = await process.Run("vi", $@" +{d.State.CurrentLineNo} {d.State.DblSourceFile.FullFileName}", d.State.SourceDirectory, false);
+
+                        d.Outputs.General.Lines.AddRange(lines.Select(l => new OutputLine(l)));
+
+                        return true;
+                    }
+                },
         };
 
     }

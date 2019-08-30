@@ -158,8 +158,9 @@ namespace DblDebug
                 CommandType.Navigation == command.CommandType
             )
             {
-
+                Console.Clear();
                 State.DblSourceFile.SetCode(Outputs.Code, State.CurrentLineNo, Settings.Get("autoviewlines"));
+                State.CurrentFile = State.DblSourceFile.FileName;
             }
 
             return result;

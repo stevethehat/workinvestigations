@@ -11,6 +11,7 @@ namespace DblDebug
     public class DblSourceFile
     {
         public readonly string FileName;
+        public readonly string FullFileName;
         public IEnumerable<string> BreakLocations
         {
             get => GetBreakLocations();
@@ -21,7 +22,7 @@ namespace DblDebug
             return Scopes.Select(s => s.Name);
         }
 
-        private readonly string _fullFileName;
+        //private readonly string _fullFileName;
         private readonly string _sourceDirectory = "/Users/stevelamb/Development/ibcos/investigations/source/";
         //private readonly string _sourceDirectory = "c:\\ibcos\\Repositorys\\gold\\source\\";
         public readonly List<RoutineScope> Functions = new List<RoutineScope>();
@@ -40,8 +41,8 @@ namespace DblDebug
                 _sourceDirectory = sourceDirectory;
             }
 
-            _fullFileName = GetFullFileName(FileName);
-            Parse(_fullFileName);
+            FullFileName = GetFullFileName(FileName);
+            Parse(FullFileName);
         }
 
         internal async Task<bool> Peek(CoreDebug debug, string commandText)
@@ -165,7 +166,7 @@ namespace DblDebug
             if (0 != showLines)
             {
                 code.Lines.Add(OutputLine.Blank);
-                code.Lines.Add(new OutputLine($"File: {_fullFileName}", ConsoleColor.Yellow));
+                code.Lines.Add(new OutputLine($"File: {FullFileName}", ConsoleColor.Yellow));
 
                 int codeLineNo = lineNumber - 1;
 

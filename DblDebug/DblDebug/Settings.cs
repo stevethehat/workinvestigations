@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
@@ -56,28 +57,33 @@ namespace DblDebug
         internal Task<bool> Set(CoreDebug debug, string enteredCommand)
         {
             string[] command = enteredCommand.Split(' ');
-            if(3 == command.Length)
+
+            if (2 == command.Length && "?" == command[1])
+            {
+                var settings = _values.OrderBy(kv => kv.Key)
+                                      .Select(kv => new OutputLine($"{kv.Key} = {kv.Value}"));
+
+                debug.Outputs.General.Lines.AddRange(settings);
+                /*
+                foreach (KeyValuePair<string, string> savedSetting in _values)
+                {
+                    debug.Outputs.General.Lines.Add(new OutputLine($"{savedSetting.Key} = {savedSetting.Value}"));
+                }
+                */
+            }
+
+            if (3 == command.Length)
             {
                 string setting = command[1];
                 string value = command[2];
 
-                if("?" == setting)
+                if (_values.ContainsKey(setting))
                 {
-                    foreach(KeyValuePair<string, string> savedSetting in _values)
-                    {
-                        debug.Outputs.General.Lines.Add(new OutputLine($"{savedSetting.Key} = {savedSetting.Value}"));
-                    }
+                    _values[setting] = value;
                 }
                 else
                 {
-                    if (_values.ContainsKey(setting))
-                    {
-                        _values[setting] = value;
-                    }
-                    else
-                    {
-                        _values.Add(setting, value);
-                    }
+                    _values.Add(setting, value);
                 }
             }
 
