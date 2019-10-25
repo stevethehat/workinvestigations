@@ -25,15 +25,15 @@ namespace GoldRepl
             ReadLine.HistoryEnabled = true;
             ReadLine.AutoCompletionHandler = new AutoCompletionHandler(_scope);
 
-            //_python.Execute("clr.AddReference(\"GoldApiServer.DataLayer\")", _scope);
-            //_python.Execute("from Net.Ibcos.GoldAPIServer.DataLayer.Models import *", _scope);
+            _python.Execute("clr.AddReference(\"GoldApiServer.DataLayer\")", _scope);
+            _python.Execute("from Net.Ibcos.GoldAPIServer.DataLayer.Models import *", _scope);
         }
 
         public void InitData(string dataFolder = "~/gold/data")
         {
-            //Gold.Gold gold = new Gold.Gold(dataFolder);
+            Gold.Gold gold = new Gold.Gold(dataFolder);
 
-            //_scope.SetVariable("gold", gold);
+            _scope.SetVariable("gold", gold);
             _python.Execute("from GoldRepl import *", _scope);
 
             Isams isams = new Isams();
@@ -191,17 +191,26 @@ namespace GoldRepl
             string variableName = m.Groups[1].Value;
             string param = m.Groups[2].Value;
 
-            var variable = _scope.GetVariable(variableName);
-            if(null != variable) {
-                Type variableType = (Type)variable.GetType();
 
-                MethodInfo[] methodInfo = variableType.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+            try
+            {
+                var variable = _scope.GetVariable(variableName);
 
-                result.AddRange(methodInfo.Select(mi => mi.Name).ToList());
+                if (null != variable)
+                {
+                    Type variableType = (Type)variable.GetType();
 
-                PropertyInfo[] propertyInfo = variableType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+                    MethodInfo[] methodInfo = variableType.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
 
-                result.AddRange(propertyInfo.Select(mi => mi.Name).ToList());
+                    result.AddRange(methodInfo.Select(mi => mi.Name).ToList());
+
+                    PropertyInfo[] propertyInfo = variableType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+
+                    result.AddRange(propertyInfo.Select(mi => mi.Name).ToList());
+                }
+            } catch (Exception e)
+            {
+
             }
 
             return result;
