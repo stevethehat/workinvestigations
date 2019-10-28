@@ -129,7 +129,7 @@ namespace GoldRepl
 
         protected string GetCodeLine()
         {
-            return ReadLine.Read(">");
+            return ReadLine.Read("");
         }
 
         protected string TabComplete(string line)
@@ -151,9 +151,9 @@ namespace GoldRepl
     class Completion
     {
         public Regex Regex { get; set; }
-        public Func<Match, string, List<string>> GetOptions { get; set; }
+        public Func<Match, string, IEnumerable<string>> GetOptions { get; set; }
 
-        public Completion(Regex regex, Func<Match, string, List<string>> getOptions)
+        public Completion(Regex regex, Func<Match, string, IEnumerable<string>> getOptions)
         {
             Regex = regex;
             GetOptions = getOptions;
@@ -167,8 +167,19 @@ namespace GoldRepl
             _scope = scope;
             _regexes = new List<Completion>()
             {
-                new Completion(new Regex(@"([a-zA-Z0-9_]*)\.([a-zA-Z0-9_]*)$"), (m, t) => GetPossibleOptions(GetParameters(m), m, t)),
-                new Completion(new Regex(@"([a-zA-Z0-9_]*)$"), (m, t) => GetPossibleOptions(GetVariables(), m, t)),
+                new Completion(new Regex(@"([a-zA-Z0-9_]*)\.([a-zA-Z0-9_]*)$"),
+                    (m, t) => FilterOptions(GetParameters(m), m)),
+
+                new Completion(new Regex(@"([a-zA-Z0-9_]*)\.([a-zA-Z0-9_]*)\s=\s([a-zA-Z0-9_]*)$"),
+                    (m, t) => FilterOptions(GetVariablesOfType(ParameterType(m)), m)),
+
+                /*
+                new Completion(new Regex(@"([a-zA-Z0-9_]*)\s=\s([a-zA-Z0-9_]*)$"),
+                    (m, t) => FilterOptions(GetVariablesOfType(m), m)),
+                */
+
+                new Completion(new Regex(@"([a-zA-Z0-9_]*)$"),
+                    (m, t) => FilterOptions(GetVariables(), m)),
             };
         }
 
@@ -183,6 +194,55 @@ namespace GoldRepl
         private List<string> GetVariables()
         {
             return _scope.GetVariableNames().ToList() ;
+        }
+
+        private List<string> GetVariablesOfType(Match m)
+        {
+            string variableName = m.Groups[1].Value;
+            object variable = _scope.GetVariable(variableName);
+
+
+
+            return _scope.GetVariableNames().ToList();
+        }
+
+        private IEnumerable<string> GetVariablesOfType(Type type)
+        {
+            IEnumerable<string> result = _scope.GetVariableNames().Where(v => {
+                bool correctType = true;
+                var variable = _scope.GetVariable(v);
+                if (null != variable) {
+                    var variableType = variable.GetType();
+                }
+
+                //if (_scope)
+                //_scope.GetVariable(v).GetType == type
+                return correctType;
+            });
+            //object variable = _scope.GetVariable(variableName);
+
+
+
+            return result;
+        }
+
+
+        private Type ParameterType(Match m)
+        {
+            Type result = default(Type);
+            string variableName = m.Groups[1].Value;
+            string parameterName = m.Groups[2].Value;
+
+            var variable = _scope.GetVariable(variableName);
+            if (null != variable)
+            {
+                Type variableType = (Type)variable.GetType();
+
+                PropertyInfo propertyInfo = variableType.GetProperty(parameterName);
+
+                result = propertyInfo.PropertyType;
+            }
+            return result;
         }
 
         private List<string> GetParameters(Match m)
@@ -205,26 +265,37 @@ namespace GoldRepl
             }
 
             return result;
-
-
-            return new List<string>() { "test", "test2" };
         }
 
-        private List<string> GetPossibleOptions(List<string> possibleOptions, Match match, string fullText)
+        private List<string> GetParametersOfType(Match m)
         {
             List<string> result = new List<string>();
-            string matchText = match.Groups[match.Groups.Count - 1].Value;
-            string previousText = fullText.Substring(0, fullText.Length - matchText.Length);
-            foreach (string possibleOption in possibleOptions)
+            string variableName = m.Groups[1].Value;
+            string param = m.Groups[2].Value;
+
+            var variable = _scope.GetVariable(variableName);
+            if (null != variable)
             {
-                if (true == possibleOption.StartsWith(matchText, StringComparison.CurrentCultureIgnoreCase))
-                {
-                    //result.Add(previousText + possibleOption);
-                    result.Add(possibleOption);
-                }
+                Type variableType = (Type)variable.GetType();
+
+                MethodInfo[] methodInfo = variableType.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+
+                result.AddRange(methodInfo.Select(mi => mi.Name).ToList());
+
+                PropertyInfo[] propertyInfo = variableType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+
+                result.AddRange(propertyInfo.Select(mi => mi.Name).ToList());
             }
 
             return result;
+        }
+
+        private IEnumerable<string> FilterOptions(IEnumerable<string> possibleOptions, Match match)
+        {
+            List<string> result = new List<string>();
+            string matchText = match.Groups[match.Groups.Count - 1].Value;
+
+            return possibleOptions.Where(po => po.StartsWith(matchText, StringComparison.CurrentCultureIgnoreCase));
         }
 
         // text - The current text entered in the console
