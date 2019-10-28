@@ -19,27 +19,49 @@ namespace GoldRepl
             _python = Python.CreateEngine();
             _scope = _python.CreateScope();
 
+
+
             _scope.ImportModule("clr");
             _python.Execute("import clr");
+            //_python.Execute("import System");
             _python.Execute("clr.AddReference(\"goldrepl\")", _scope);
             ReadLine.HistoryEnabled = true;
             ReadLine.AutoCompletionHandler = new AutoCompletionHandler(_scope);
 
+            _python.Execute("clr.AddReference(\"System\")", _scope);
+            _python.Execute("clr.AddReference(\"System.Linq\")", _scope);
             _python.Execute("clr.AddReference(\"GoldApiServer.DataLayer\")", _scope);
+            //_python.Execute("clr.ImportExtensions(System.Linq)", _scope);
             _python.Execute("from Net.Ibcos.GoldAPIServer.DataLayer.Models import *", _scope);
+
+            _python.Execute("import System", _scope);
+            //_python.Execute("from System import Linq", _scope);
+            //_python.Execute("clr.ImportExtensions(System.Linq)", _scope);
         }
 
         public void InitData(string dataFolder = "~/gold/data")
         {
-            Gold.Gold gold = new Gold.Gold(dataFolder);
+            Console.WriteLine($"Data= {dataFolder}");
+            try
+            {
+                Gold.Gold gold = new Gold.Gold(dataFolder);
+                Console.WriteLine("Gold Initialized");
 
-            _scope.SetVariable("gold", gold);
+                _scope.SetVariable("gold", gold);
+            } catch(Exception e)
+            {
+                Console.Write(e.Message);
+                Console.Write(e.StackTrace);
+            }
+                        
             _python.Execute("from GoldRepl import *", _scope);
+            Console.WriteLine("imported *");
 
             Isams isams = new Isams();
             _scope.SetVariable("isams", isams);
             _scope.SetVariable("scope", _scope);
 
+            Console.WriteLine("isams initialized");
         }
 
         internal void Execute(string scriptFile)

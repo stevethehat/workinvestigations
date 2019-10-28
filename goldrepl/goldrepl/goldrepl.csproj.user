@@ -4,6 +4,6 @@
     <ProjectView>ShowAllFiles</ProjectView>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <StartArguments>--notinit=../../init.py -d="C:\ibcos\Repositorys\golddata\gold\data"</StartArguments>
+    <StartArguments>--init=../../init.py -d="C:\ibcos\Repositorys\golddata\gold\data"</StartArguments>
   </PropertyGroup>
 </Project>

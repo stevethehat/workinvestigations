@@ -7,11 +7,16 @@ using System;
 using Microsoft.Extensions.Options;
 using Net.Ibcos.GoldAPIServer.DataLayer.Isam.Repositories;
 using Moq;
+using System.Reflection;
+using IronPython.Hosting;
+using Microsoft.Scripting.Hosting;
+using IronPython.Runtime;
 
 namespace Gold
 {
     public class Gold
     {
+        private const string PythonDictionary = "IronPython.Runtime.PythonDictionary";
         public readonly IsamConnection Connection;
         public readonly IOptions<IsamConfig> IsamConfig ;
         public readonly GlobalUserContext UserContext;
@@ -46,6 +51,36 @@ namespace Gold
             );
 
             return result;
+        }
+
+        public void Output(object obj)
+        {
+            
+            Type variableType = (Type)obj.GetType();
+
+            if(variableType.FullName == PythonDictionary)
+            {
+                PythonDictionary dictionary = obj as PythonDictionary;
+                foreach(object key in dictionary.Keys)
+                {
+                    Console.WriteLine($"{key} = {dictionary[key]}");
+                }
+
+                return;
+            }
+
+            PropertyInfo[] propertyInfo = variableType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+
+            foreach(PropertyInfo property in propertyInfo)
+            {
+                try
+                {
+                    Console.WriteLine($"{property.Name} = {property.GetValue(obj)}");
+                } catch (Exception e)
+                {
+
+                }
+            }
         }
     }
 }
