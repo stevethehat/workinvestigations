@@ -8,6 +8,6 @@ clr.AddReference("Gold")
 from Gold import Gold
 from Net.Ibcos.GoldAPIServer.DataLayer.Models import *
 
-gold = Gold("/home/steve/winc/ibcos/Repositorys/golddata/gold/data")
+#gold = Gold("/home/steve/winc/ibcos/Repositorys/golddata/gold/data")
 
 

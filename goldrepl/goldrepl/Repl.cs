@@ -19,27 +19,49 @@ namespace GoldRepl
             _python = Python.CreateEngine();
             _scope = _python.CreateScope();
 
+
+
             _scope.ImportModule("clr");
             _python.Execute("import clr");
+            //_python.Execute("import System");
             _python.Execute("clr.AddReference(\"goldrepl\")", _scope);
             ReadLine.HistoryEnabled = true;
             ReadLine.AutoCompletionHandler = new AutoCompletionHandler(_scope);
 
-            //_python.Execute("clr.AddReference(\"GoldApiServer.DataLayer\")", _scope);
-            //_python.Execute("from Net.Ibcos.GoldAPIServer.DataLayer.Models import *", _scope);
+            _python.Execute("clr.AddReference(\"System\")", _scope);
+            _python.Execute("clr.AddReference(\"System.Linq\")", _scope);
+            _python.Execute("clr.AddReference(\"GoldApiServer.DataLayer\")", _scope);
+            //_python.Execute("clr.ImportExtensions(System.Linq)", _scope);
+            _python.Execute("from Net.Ibcos.GoldAPIServer.DataLayer.Models import *", _scope);
+
+            _python.Execute("import System", _scope);
+            //_python.Execute("from System import Linq", _scope);
+            //_python.Execute("clr.ImportExtensions(System.Linq)", _scope);
         }
 
         public void InitData(string dataFolder = "~/gold/data")
         {
-            //Gold.Gold gold = new Gold.Gold(dataFolder);
+            Console.WriteLine($"Data= {dataFolder}");
+            try
+            {
+                Gold.Gold gold = new Gold.Gold(dataFolder);
+                Console.WriteLine("Gold Initialized");
 
-            //_scope.SetVariable("gold", gold);
+                _scope.SetVariable("gold", gold);
+            } catch(Exception e)
+            {
+                Console.Write(e.Message);
+                Console.Write(e.StackTrace);
+            }
+                        
             _python.Execute("from GoldRepl import *", _scope);
+            Console.WriteLine("imported *");
 
             Isams isams = new Isams();
             _scope.SetVariable("isams", isams);
             _scope.SetVariable("scope", _scope);
 
+            Console.WriteLine("isams initialized");
         }
 
         internal void Execute(string scriptFile)
@@ -251,17 +273,26 @@ namespace GoldRepl
             string variableName = m.Groups[1].Value;
             string param = m.Groups[2].Value;
 
-            var variable = _scope.GetVariable(variableName);
-            if(null != variable) {
-                Type variableType = (Type)variable.GetType();
 
-                MethodInfo[] methodInfo = variableType.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+            try
+            {
+                var variable = _scope.GetVariable(variableName);
 
-                result.AddRange(methodInfo.Select(mi => mi.Name).ToList());
+                if (null != variable)
+                {
+                    Type variableType = (Type)variable.GetType();
 
-                PropertyInfo[] propertyInfo = variableType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+                    MethodInfo[] methodInfo = variableType.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
 
-                result.AddRange(propertyInfo.Select(mi => mi.Name).ToList());
+                    result.AddRange(methodInfo.Select(mi => mi.Name).ToList());
+
+                    PropertyInfo[] propertyInfo = variableType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+
+                    result.AddRange(propertyInfo.Select(mi => mi.Name).ToList());
+                }
+            } catch (Exception e)
+            {
+
             }
 
             return result;

@@ -1,3 +1,9 @@
+import clr
+import System
+#from System import Linq
+
+clr.ImportExtensions(System.DateTime)
+#clr.ImportExtensions(System.Linq)
 vat_repo = gold.GetRepo[Vatrec]()
 vat = Vatrec()
 vat.Id = 1
@@ -7,7 +13,7 @@ new_vat = Vatrec()
 new_vat.Id = 99
 new_vat.Description = "steves vat"
 
-vat_repo.Add(new_vat)
+#vat_repo.Add(new_vat)
 
 print "found"
 print found_vat
@@ -16,8 +22,9 @@ all_vat_rates = vat_repo.GetAll()
 
 for vat in all_vat_rates:
     print "%s - %s" % (vat.Id, vat.Description)
+    gold.Output({"test": vat.Description})
 
-filtered = all_vat_rates.Select(lambda rate : rate.Description)
+filtered = map(lambda rate : { "description": rate.Description, "rate": rate.Rate }, all_vat_rates)
 
 print filtered
 

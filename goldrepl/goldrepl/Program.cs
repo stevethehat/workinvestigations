@@ -6,6 +6,11 @@ namespace GoldRepl
 {
     class MainClass
     {
+        // ../../test.py --notinit=../../init.py -d="C:\ibcos\Repositorys\golddata\gold\data"
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="args"></param>
         public static void Main(string[] args)
         {
             Repl repl = new Repl();
