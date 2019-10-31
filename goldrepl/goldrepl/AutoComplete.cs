@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -34,7 +35,7 @@ namespace GoldRepl
         }
 
         // characters to start completion from
-        public char[] Separators { get; set; } = new char[] { ' ', '.', '/', '(', ',' };
+        public char[] Separators { get; set; } = new char[] { ' ', '.', '/', '(', ',', '[' };
         public ScriptScope _scope { get; }
         private readonly List<string> _keywords = new List<string>() { "print", "dir", "len", "def" };
 
@@ -46,13 +47,35 @@ namespace GoldRepl
             return _scope.GetVariableNames().ToList();
         }
 
+        static IEnumerable<MethodInfo> GetExtensionMethods(Assembly assembly, Type extendedType)
+        {
+            List<MethodInfo> extension_methods = new List<MethodInfo>();
+
+            Type t = typeof(Enumerable);
+
+            //foreach (Type t in assembly.GetTypes())
+            //{
+                if (t.IsDefined(typeof(ExtensionAttribute), false))
+                {
+                    foreach (MethodInfo mi in t.GetMethods())
+                    {
+                        if (mi.IsDefined(typeof(ExtensionAttribute), false))
+                        {
+                            if (mi.GetParameters()[0].ParameterType == extendedType)
+                                extension_methods.Add(mi);
+                        }
+                    }
+                }
+            //}
+            return extension_methods;
+        }
+
         private List<string> GetParameters(Match match)
         {
             List<string> result = new List<string>();
             string variableName = match.Groups[1].Value;
             string param = match.Groups[2].Value;
-
-
+            
             try
             {
                 var variable = _scope.GetVariable(variableName);
@@ -67,6 +90,8 @@ namespace GoldRepl
                                             .Select(mi => mi.Name)
                                             .ToList();
                     result.AddRange(methods);
+
+                    var test = GetExtensionMethods(null, variableType);
 
                     PropertyInfo[] propertyInfo = variableType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
 

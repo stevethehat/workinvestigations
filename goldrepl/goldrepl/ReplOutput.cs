@@ -1,4 +1,5 @@
 ﻿using IronPython.Runtime;
+using Net.Ibcos.GoldAPIServer.DataLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,14 +17,56 @@ namespace GoldRepl
 
             if (variableType.Name == "PythonDictionary")
             {
-                PythonDictionary dictionary = obj as PythonDictionary;
-                foreach (object key in dictionary.Keys)
-                {
-                    Console.WriteLine($"{key} = {dictionary[key]}");
-                }
+                OutputDict(obj as PythonDictionary);
 
                 return;
             }
+
+            if (typeof(IEnumerable<GoldModel>).IsAssignableFrom(variableType))
+            {
+                OutputList(obj as IEnumerable<GoldModel>);
+
+                return;
+            }
+
+            if (typeof(IEnumerable<object>).IsAssignableFrom(variableType))
+            {
+                OutputList(obj as IEnumerable<object>);
+
+                return;
+            }
+
+            OutputObject(obj);
+        }
+
+        public void OutputList(IEnumerable<GoldModel> list)
+        {
+            foreach(GoldModel item in list)
+            {
+                Output(item);
+            }
+        }
+
+        public void OutputList(IEnumerable<object> list)
+        {
+            foreach (object item in list)
+            {
+                Output(item);
+            }
+        }
+
+        public void OutputDict(PythonDictionary dictionary)
+        {
+            foreach (object key in dictionary.Keys)
+            {
+                Console.WriteLine($"{key} = {dictionary[key]}");
+            }
+            Console.WriteLine("");
+        }
+
+        public void OutputObject(object obj)
+        {
+            Type variableType = (Type)obj.GetType();
 
             PropertyInfo[] propertyInfo = variableType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
 
@@ -38,6 +81,7 @@ namespace GoldRepl
 
                 }
             }
+            Console.WriteLine("");
         }
     }
 }
