@@ -52,7 +52,7 @@ namespace GoldRepl
 
                     Console.WriteLine($"Init {fullPath}");
 
-                    repl.Init(fullPath);
+                    repl.ExecuteFile(fullPath);
                 }
 
                 if (false == string.IsNullOrEmpty(script.Value))

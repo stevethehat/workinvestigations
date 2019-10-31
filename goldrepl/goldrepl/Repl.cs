@@ -10,10 +10,10 @@ using IronPython.Runtime;
 
 namespace GoldRepl
 {
-    public class Repl
+    public partial class Repl
     {
-        private readonly ScriptEngine _python;
-        private readonly ScriptScope _scope;
+        protected readonly ScriptEngine _python;
+        protected readonly ScriptScope _scope;
 
         public Repl()
         {
@@ -71,36 +71,6 @@ def output(value):
             Console.WriteLine("isams initialized");
         }
 
-        public void Output(object obj)
-        {
-            Type variableType = (Type)obj.GetType();
-
-            if (variableType.Name == "PythonDictionary")
-            {
-                PythonDictionary dictionary = obj as PythonDictionary;
-                foreach (object key in dictionary.Keys)
-                {
-                    Console.WriteLine($"{key} = {dictionary[key]}");
-                }
-
-                return;
-            }
-
-            PropertyInfo[] propertyInfo = variableType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-
-            foreach (PropertyInfo property in propertyInfo)
-            {
-                try
-                {
-                    Console.WriteLine($"{property.Name} = {property.GetValue(obj)}");
-                }
-                catch (Exception e)
-                {
-
-                }
-            }
-        }
-
         internal void Execute(string scriptFile)
         {
             ScriptSource source = _python.CreateScriptSourceFromFile(scriptFile);
@@ -119,43 +89,6 @@ def output(value):
                 }
                 code = GetCode();
             }
-        }
-
-        public void Init(string fullPath)
-        {
-            ScriptSource source = _python.CreateScriptSourceFromFile(fullPath);
-            RunCode(source, "");
-        }
-
-        protected dynamic RunCode(string code)
-        {
-            ScriptSource source = _python.CreateScriptSourceFromString(code);
-            return RunCode(source, code);
-        }
-
-        protected dynamic RunCode(ScriptSource source, string code)
-        {
-            dynamic result = new {};
-            try
-            {
-                result = source.Execute(_scope);
-
-                if(null != result)
-                {
-                    source = _python.CreateScriptSourceFromString("print " + code);
-                    source.Execute(_scope);
-
-                }
-            }
-            catch (IronPython.Runtime.UnboundNameException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            return result;
         }
 
         protected string GetCode()
@@ -195,21 +128,6 @@ def output(value):
         protected string GetCodeLine()
         {
             return ReadLine.Read(">");
-        }
-
-        protected string TabComplete(string line)
-        {
-            string result = string.Empty;
-            Regex regex = new Regex(@"([a-zA-Z0-9_]*)\.([a-zA-Z0-9_]*)$");
-            Match match = regex.Match(line);
-
-            if(default(Match) != match)
-            {
-                string variable = match.Groups[1].Value;
-                string soFar = match.Groups[2].Value;
-            }
-
-            return result;
         }
     }
 }
