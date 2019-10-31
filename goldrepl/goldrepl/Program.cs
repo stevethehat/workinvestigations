@@ -70,7 +70,7 @@ namespace GoldRepl
                 {
                     Console.WriteLine("Gold Interactive Repl");
                     Console.WriteLine("=====================");
-                    Console.WriteLine("q to quit.");
+                    Console.WriteLine(":q to quit.");
                     Console.WriteLine("");
 
 

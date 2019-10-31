@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
 using Microsoft.CSharp;
+using IronPython.Runtime;
 
 namespace GoldRepl
 {
@@ -19,29 +20,27 @@ namespace GoldRepl
             _python = Python.CreateEngine();
             _scope = _python.CreateScope();
 
-
-
             _scope.ImportModule("clr");
             _python.Execute("import clr");
-            //_python.Execute("import System");
             _python.Execute("clr.AddReference(\"goldrepl\")", _scope);
             ReadLine.HistoryEnabled = true;
             ReadLine.AutoCompletionHandler = new AutoCompletionHandler(_scope);
 
             _python.Execute("clr.AddReference(\"System\")", _scope);
-            _python.Execute("clr.AddReference(\"System.Linq\")", _scope);
+            _python.Execute("clr.AddReference(\"Gold\")", _scope);
+            _python.Execute("clr.AddReference(\"System.Core\")", _scope);
             _python.Execute("clr.AddReference(\"GoldApiServer.DataLayer\")", _scope);
-            //_python.Execute("clr.ImportExtensions(System.Linq)", _scope);
             _python.Execute("from Net.Ibcos.GoldAPIServer.DataLayer.Models import *", _scope);
 
             _python.Execute("import System", _scope);
-            //_python.Execute("from System import Linq", _scope);
-            //_python.Execute("clr.ImportExtensions(System.Linq)", _scope);
+            _python.Execute("from System import Linq", _scope);
+            _python.Execute("clr.ImportExtensions(System.Linq)", _scope);
         }
 
         public void InitData(string dataFolder = "~/gold/data")
         {
             Console.WriteLine($"Data= {dataFolder}");
+            //Assembly assembly = 
             try
             {
                 Gold.Gold gold = new Gold.Gold(dataFolder);
@@ -52,6 +51,8 @@ namespace GoldRepl
             {
                 Console.Write(e.Message);
                 Console.Write(e.StackTrace);
+
+                //throw e;
             }
                         
             _python.Execute("from GoldRepl import *", _scope);
@@ -60,8 +61,44 @@ namespace GoldRepl
             Isams isams = new Isams();
             _scope.SetVariable("isams", isams);
             _scope.SetVariable("scope", _scope);
+            _scope.SetVariable("repl", this);
+
+            RunCode(@"
+def output(value):
+    repl.Output(value)
+            ");
 
             Console.WriteLine("isams initialized");
+        }
+
+        public void Output(object obj)
+        {
+            Type variableType = (Type)obj.GetType();
+
+            if (variableType.Name == "PythonDictionary")
+            {
+                PythonDictionary dictionary = obj as PythonDictionary;
+                foreach (object key in dictionary.Keys)
+                {
+                    Console.WriteLine($"{key} = {dictionary[key]}");
+                }
+
+                return;
+            }
+
+            PropertyInfo[] propertyInfo = variableType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+
+            foreach (PropertyInfo property in propertyInfo)
+            {
+                try
+                {
+                    Console.WriteLine($"{property.Name} = {property.GetValue(obj)}");
+                }
+                catch (Exception e)
+                {
+
+                }
+            }
         }
 
         internal void Execute(string scriptFile)
@@ -73,7 +110,7 @@ namespace GoldRepl
         public void RunInteractive()
         {
             string code = "";
-            while (code != "q\n")
+            while (false == code.StartsWith(":q\n"))
             {
                 if (false == string.IsNullOrEmpty(code))
                 {
@@ -88,6 +125,12 @@ namespace GoldRepl
         {
             ScriptSource source = _python.CreateScriptSourceFromFile(fullPath);
             RunCode(source, "");
+        }
+
+        protected dynamic RunCode(string code)
+        {
+            ScriptSource source = _python.CreateScriptSourceFromString(code);
+            return RunCode(source, code);
         }
 
         protected dynamic RunCode(ScriptSource source, string code)
@@ -167,135 +210,6 @@ namespace GoldRepl
             }
 
             return result;
-        }
-    }
-
-    class Completion
-    {
-        public Regex Regex { get; set; }
-        public Func<Match, string, List<string>> GetOptions { get; set; }
-
-        public Completion(Regex regex, Func<Match, string, List<string>> getOptions)
-        {
-            Regex = regex;
-            GetOptions = getOptions;
-        }
-    }
-
-    class AutoCompletionHandler : IAutoCompleteHandler
-    {
-        public AutoCompletionHandler(ScriptScope scope)
-        {
-            _scope = scope;
-            _regexes = new List<Completion>()
-            {
-                new Completion(new Regex(@"([a-zA-Z0-9_]*)\.([a-zA-Z0-9_]*)$"), (m, t) => GetPossibleOptions(GetParameters(m), m, t)),
-                new Completion(new Regex(@"([a-zA-Z0-9_]*)$"), (m, t) => GetPossibleOptions(GetVariables(), m, t)),
-            };
-        }
-
-        // characters to start completion from
-        public char[] Separators { get; set; } = new char[] { ' ', '.', '/', '(', ',' };
-        public ScriptScope _scope { get; }
-        private readonly List<string> _keywords = new List<string>() { "print", "dir", "len", "def" };
-
-
-        private List<Completion> _regexes;
-
-        private List<string> GetVariables()
-        {
-            return _scope.GetVariableNames().ToList() ;
-        }
-
-        private List<string> GetParameters(Match m)
-        {
-            List<string> result = new List<string>();
-            string variableName = m.Groups[1].Value;
-            string param = m.Groups[2].Value;
-
-
-            try
-            {
-                var variable = _scope.GetVariable(variableName);
-
-                if (null != variable)
-                {
-                    Type variableType = (Type)variable.GetType();
-
-                    MethodInfo[] methodInfo = variableType.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-
-                    result.AddRange(methodInfo.Select(mi => mi.Name).ToList());
-
-                    PropertyInfo[] propertyInfo = variableType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-
-                    result.AddRange(propertyInfo.Select(mi => mi.Name).ToList());
-                }
-            } catch (Exception e)
-            {
-
-            }
-
-            return result;
-
-
-            return new List<string>() { "test", "test2" };
-        }
-
-        private List<string> GetPossibleOptions(List<string> possibleOptions, Match match, string fullText)
-        {
-            List<string> result = new List<string>();
-            string matchText = match.Groups[match.Groups.Count - 1].Value;
-            string previousText = fullText.Substring(0, fullText.Length - matchText.Length);
-            foreach (string possibleOption in possibleOptions)
-            {
-                if (true == possibleOption.StartsWith(matchText, StringComparison.CurrentCultureIgnoreCase))
-                {
-                    //result.Add(previousText + possibleOption);
-                    result.Add(possibleOption);
-                }
-            }
-
-            return result;
-        }
-
-        // text - The current text entered in the console
-        // index - The index of the terminal cursor within {text}
-        public string[] GetSuggestions(string text, int index)
-        {
-            List<string> result = new List<string>();
-
-            List<string> options = new List<string>();
-            foreach (Completion completion in _regexes)
-            {
-                Match match = completion.Regex.Match(text);
-                if (default(Match) != match)
-                {
-                    if(true == match.Success)
-                    {
-                        result.AddRange(completion.GetOptions(match, text));
-                        break;
-                    }
-                }
-            }
-
-            //options.AddRange(_keywords);
-            //options.AddRange(variables);
-            /*
-            foreach(string option in options)
-            {
-                if(true == option.StartsWith(text))
-                {
-                    result.Add(option);
-                }
-            }
-            */
-            return result.ToArray();
-
-
-            if (text.StartsWith("git "))
-                return new string[] { "init", "clone", "pull", "push" };
-            else
-                return null;
         }
     }
 }
