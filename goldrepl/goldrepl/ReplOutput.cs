@@ -1,5 +1,5 @@
 ﻿using IronPython.Runtime;
-using Net.Ibcos.GoldAPIServer.DataLayer.Models;
+//using Net.Ibcos.GoldAPIServer.DataLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,14 +21,14 @@ namespace GoldRepl
 
                 return;
             }
-
+            /*
             if (typeof(IEnumerable<GoldModel>).IsAssignableFrom(variableType))
             {
                 OutputList(obj as IEnumerable<GoldModel>);
 
                 return;
             }
-
+            */
             if (typeof(IEnumerable<object>).IsAssignableFrom(variableType))
             {
                 OutputList(obj as IEnumerable<object>);
@@ -38,7 +38,7 @@ namespace GoldRepl
 
             OutputObject(obj);
         }
-
+        /*
         public void OutputList(IEnumerable<GoldModel> list)
         {
             foreach(GoldModel item in list)
@@ -46,7 +46,7 @@ namespace GoldRepl
                 Output(item);
             }
         }
-
+        */
         public void OutputList(IEnumerable<object> list)
         {
             foreach (object item in list)

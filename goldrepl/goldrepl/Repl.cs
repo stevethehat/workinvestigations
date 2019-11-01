@@ -27,10 +27,10 @@ namespace GoldRepl
             ReadLine.AutoCompletionHandler = new AutoCompletionHandler(_scope);
 
             _python.Execute("clr.AddReference(\"System\")", _scope);
-            _python.Execute("clr.AddReference(\"Gold\")", _scope);
+            //_python.Execute("clr.AddReference(\"Gold\")", _scope);
             _python.Execute("clr.AddReference(\"System.Core\")", _scope);
-            _python.Execute("clr.AddReference(\"GoldApiServer.DataLayer\")", _scope);
-            _python.Execute("from Net.Ibcos.GoldAPIServer.DataLayer.Models import *", _scope);
+            //_python.Execute("clr.AddReference(\"GoldApiServer.DataLayer\")", _scope);
+            //_python.Execute("from Net.Ibcos.GoldAPIServer.DataLayer.Models import *", _scope);
 
             _python.Execute("import System", _scope);
             _python.Execute("from System import Linq", _scope);

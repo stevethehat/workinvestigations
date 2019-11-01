@@ -47,15 +47,30 @@ namespace GoldRepl
             return _scope.GetVariableNames().ToList();
         }
 
-        static IEnumerable<MethodInfo> GetExtensionMethods(Assembly assembly, Type extendedType)
+        protected IEnumerable<MethodInfo> GetExtensionMethods(Assembly assembly, Type extendedType)
         {
             List<MethodInfo> extension_methods = new List<MethodInfo>();
+            if (typeof(IEnumerable<object>).IsAssignableFrom(extendedType))
+            {
+                Type t = typeof(Enumerable);
 
-            Type t = typeof(Enumerable);
+                foreach (MethodInfo mi in t.GetMethods())
+                {
+                    if (mi.IsDefined(typeof(ExtensionAttribute), false))
+                    {
+                        //if (mi.GetParameters()[0].ParameterType == extendedType)
+                        extension_methods.Add(mi);
+                    }
+                }
+
+            }
+
+
 
             //foreach (Type t in assembly.GetTypes())
             //{
-                if (t.IsDefined(typeof(ExtensionAttribute), false))
+            /*
+            if (t.IsDefined(typeof(ExtensionAttribute), false))
                 {
                     foreach (MethodInfo mi in t.GetMethods())
                     {
@@ -67,6 +82,7 @@ namespace GoldRepl
                     }
                 }
             //}
+            */
             return extension_methods;
         }
 
@@ -91,7 +107,7 @@ namespace GoldRepl
                                             .ToList();
                     result.AddRange(methods);
 
-                    var test = GetExtensionMethods(null, variableType);
+                    result.AddRange(GetExtensionMethods(null, variableType).Select(min => min.Name));
 
                     PropertyInfo[] propertyInfo = variableType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
 

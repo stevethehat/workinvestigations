@@ -23,7 +23,9 @@ namespace GoldRepl
         {
             List<T> result = new List<T>();
             result.Add(new T());
-            return result;
+            result.Add(new T());
+            result.Add(new T());
+                return result;
         }
     }
 
@@ -35,7 +37,8 @@ namespace GoldRepl
         /// <summary>
         /// Description string
         /// </summary>
-        public string Description { get; set; }
+        public string Description { get; set; } = "Description";
+        public double Value { get; set; }
         public string AMethod()
         {
             return "";
@@ -43,6 +46,12 @@ namespace GoldRepl
         public static void Info()
         {
             Console.WriteLine("Arec Info");
+        }
+
+        public Arec()
+        {
+            Random r = new Random();
+            Value = r.NextDouble() * 1000;
         }
     }
 }
