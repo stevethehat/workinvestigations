@@ -39,7 +39,7 @@ namespace Gold
                     }
                 }
             );
-
+            Console.WriteLine("Gold 5");
         }
 
         public IsamRepository<T> GetRepo<T>() where T: GoldModel, new()
@@ -52,35 +52,15 @@ namespace Gold
 
             return result;
         }
+    }
 
-        public void Output(object obj)
+    public class Extensions
+    {
+        public GoldModel GetFromDict<T>(IsamRepository<T> repo, object obj) where T : GoldModel, new()
         {
-            
-            Type variableType = (Type)obj.GetType();
-
-            if(variableType.FullName == PythonDictionary)
-            {
-                PythonDictionary dictionary = obj as PythonDictionary;
-                foreach(object key in dictionary.Keys)
-                {
-                    Console.WriteLine($"{key} = {dictionary[key]}");
-                }
-
-                return;
-            }
-
-            PropertyInfo[] propertyInfo = variableType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-
-            foreach(PropertyInfo property in propertyInfo)
-            {
-                try
-                {
-                    Console.WriteLine($"{property.Name} = {property.GetValue(obj)}");
-                } catch (Exception e)
-                {
-
-                }
-            }
+            var result = new Pdfrec();
+            result.PartNo = "PartNo";
+            return result;
         }
     }
 }

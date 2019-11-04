@@ -7,6 +7,7 @@ using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
 using Microsoft.CSharp;
 using IronPython.Runtime;
+using System.IO;
 
 namespace GoldRepl
 {
@@ -27,10 +28,10 @@ namespace GoldRepl
             ReadLine.AutoCompletionHandler = new AutoCompletionHandler(_scope);
 
             _python.Execute("clr.AddReference(\"System\")", _scope);
-            //_python.Execute("clr.AddReference(\"Gold\")", _scope);
+            _python.Execute("clr.AddReference(\"Gold\")", _scope);
             _python.Execute("clr.AddReference(\"System.Core\")", _scope);
-            //_python.Execute("clr.AddReference(\"GoldApiServer.DataLayer\")", _scope);
-            //_python.Execute("from Net.Ibcos.GoldAPIServer.DataLayer.Models import *", _scope);
+            _python.Execute("clr.AddReference(\"GoldApiServer.DataLayer\")", _scope);
+            _python.Execute("from Net.Ibcos.GoldAPIServer.DataLayer.Models import *", _scope);
 
             _python.Execute("import System", _scope);
             _python.Execute("from System import Linq", _scope);
@@ -43,10 +44,10 @@ namespace GoldRepl
             //Assembly assembly = 
             try
             {
-                //Gold.Gold gold = new Gold.Gold(dataFolder);
+                Gold.Gold gold = new Gold.Gold(dataFolder);
                 Console.WriteLine("Gold Initialized");
 
-                //_scope.SetVariable("gold", gold);
+                _scope.SetVariable("gold", gold);
             } catch(Exception e)
             {
                 Console.Write(e.Message);
@@ -66,6 +67,16 @@ namespace GoldRepl
             RunCode(@"
 def output(value):
     repl.Output(value)
+            ");
+
+            RunCode(@"
+def save(path):
+    repl.Save(path)
+            ");
+
+            RunCode(@"
+def load(path):
+    repl.Load(path)
             ");
 
             Console.WriteLine("isams initialized");
@@ -128,6 +139,35 @@ def output(value):
         protected string GetCodeLine()
         {
             return ReadLine.Read("");
+        }
+
+        public void Save(string path)
+        {
+            var history = ReadLine.GetHistory();
+                
+            var historyStr = string.Join("\n", history);
+
+            if(true == File.Exists(path))
+            {
+                File.Delete(path);
+            }
+
+            File.WriteAllText(path, historyStr);
+        }
+
+        public void Load(string path)
+        {
+            if(true == File.Exists(path))
+            {
+                string code = File.ReadAllText(path);
+                RunCode(code);
+                ReadLine.AddHistory(code.Split('\n'));
+
+            }
+            else
+            {
+                Console.WriteLine($"{path} Not found");
+            }
         }
     }
 }
