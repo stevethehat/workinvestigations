@@ -1,5 +1,6 @@
 ﻿using Microsoft.Scripting.Hosting;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -29,13 +30,23 @@ namespace GoldRepl
             _scope = scope;
             _regexes = new List<Completion>()
             {
+                new Completion(new Regex(@"""([\/\w]+)"), (m, t) => GetPathOptions(m , t)),
                 new Completion(new Regex(@"([a-zA-Z0-9_]*)\.([a-zA-Z0-9_]*)$"), (m, t) => GetPossibleOptions(GetParameters(m), m, t)),
                 new Completion(new Regex(@"([a-zA-Z0-9_]*)$"), (m, t) => GetPossibleOptions(GetVariables(), m, t)),
+                
             };
         }
 
+        private List<string> GetPathOptions(Match m, string t)
+        {
+            Directory.EnumerateDirectories("/");
+            List<string> result = new List<string>();
+            result.AddRange(Directory.EnumerateDirectories("/"));
+            return result;
+        }
+
         // characters to start completion from
-        public char[] Separators { get; set; } = new char[] { ' ', '.', '/', '(', ',', '[' };
+        public char[] Separators { get; set; } = new char[] { ' ', '.', '/', '(', ',', '[', '"' };
         public ScriptScope _scope { get; }
         private readonly List<string> _keywords = new List<string>() { "print", "dir", "len", "def" };
 

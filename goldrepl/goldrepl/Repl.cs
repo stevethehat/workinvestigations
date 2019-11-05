@@ -23,6 +23,9 @@ namespace GoldRepl
 
             _scope.ImportModule("clr");
             _python.Execute("import clr");
+            _python.Execute("import sys");
+            string setPath = $"sys.path.append(\"{ Environment.GetEnvironmentVariable("PYTHONPATH")}\")";
+            RunCode(setPath);
             _python.Execute("clr.AddReference(\"goldrepl\")", _scope);
             ReadLine.HistoryEnabled = true;
             ReadLine.AutoCompletionHandler = new AutoCompletionHandler(_scope);
