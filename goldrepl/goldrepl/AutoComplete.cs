@@ -1,5 +1,6 @@
 ﻿using Microsoft.Scripting.Hosting;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -29,13 +30,23 @@ namespace GoldRepl
             _scope = scope;
             _regexes = new List<Completion>()
             {
+                new Completion(new Regex(@"""([\/\w]+)"), (m, t) => GetPathOptions(m , t)),
                 new Completion(new Regex(@"([a-zA-Z0-9_]*)\.([a-zA-Z0-9_]*)$"), (m, t) => GetPossibleOptions(GetParameters(m), m, t)),
                 new Completion(new Regex(@"([a-zA-Z0-9_]*)$"), (m, t) => GetPossibleOptions(GetVariables(), m, t)),
+                
             };
         }
 
+        private List<string> GetPathOptions(Match m, string t)
+        {
+            Directory.EnumerateDirectories("/");
+            List<string> result = new List<string>();
+            result.AddRange(Directory.EnumerateDirectories("/"));
+            return result;
+        }
+
         // characters to start completion from
-        public char[] Separators { get; set; } = new char[] { ' ', '.', '/', '(', ',', '[' };
+        public char[] Separators { get; set; } = new char[] { ' ', '.', '/', '(', ',', '[', '"' };
         public ScriptScope _scope { get; }
         private readonly List<string> _keywords = new List<string>() { "print", "dir", "len", "def" };
 
@@ -54,35 +65,16 @@ namespace GoldRepl
             {
                 Type t = typeof(Enumerable);
 
-                foreach (MethodInfo mi in t.GetMethods())
+                foreach (MethodInfo mi in t.GetMethods().Distinct())
                 {
                     if (mi.IsDefined(typeof(ExtensionAttribute), false))
                     {
-                        //if (mi.GetParameters()[0].ParameterType == extendedType)
                         extension_methods.Add(mi);
                     }
                 }
 
             }
 
-
-
-            //foreach (Type t in assembly.GetTypes())
-            //{
-            /*
-            if (t.IsDefined(typeof(ExtensionAttribute), false))
-                {
-                    foreach (MethodInfo mi in t.GetMethods())
-                    {
-                        if (mi.IsDefined(typeof(ExtensionAttribute), false))
-                        {
-                            if (mi.GetParameters()[0].ParameterType == extendedType)
-                                extension_methods.Add(mi);
-                        }
-                    }
-                }
-            //}
-            */
             return extension_methods;
         }
 
@@ -111,7 +103,7 @@ namespace GoldRepl
 
                     PropertyInfo[] propertyInfo = variableType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
 
-                    result.AddRange(propertyInfo.Select(mi => mi.Name).ToList());
+                    result.AddRange(propertyInfo.Select(mi => mi.Name).ToList().Distinct());
                 }
             }
             catch (Exception e)
@@ -127,12 +119,10 @@ namespace GoldRepl
             List<string> result = new List<string>();
             string matchText = match.Groups[match.Groups.Count - 1].Value;
             string previousText = fullText.Substring(0, fullText.Length - matchText.Length);
-            foreach (string possibleOption in possibleOptions)
+            foreach (string possibleOption in possibleOptions.Distinct())
             {
-                //if (true == possibleOption.StartsWith(matchText, StringComparison.CurrentCultureIgnoreCase))
                 if (true == possibleOption.StartsWith(matchText))
                 {
-                    //result.Add(previousText + possibleOption);
                     result.Add(possibleOption);
                 }
             }

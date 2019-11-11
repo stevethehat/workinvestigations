@@ -21,14 +21,7 @@ namespace GoldRepl
 
                 return;
             }
-            /*
-            if (typeof(IEnumerable<GoldModel>).IsAssignableFrom(variableType))
-            {
-                OutputList(obj as IEnumerable<GoldModel>);
 
-                return;
-            }
-            */
             if (typeof(IEnumerable<object>).IsAssignableFrom(variableType))
             {
                 OutputList(obj as IEnumerable<object>);
@@ -38,15 +31,7 @@ namespace GoldRepl
 
             OutputObject(obj);
         }
-        /*
-        public void OutputList(IEnumerable<GoldModel> list)
-        {
-            foreach(GoldModel item in list)
-            {
-                Output(item);
-            }
-        }
-        */
+
         public void OutputList(IEnumerable<object> list)
         {
             foreach (object item in list)
@@ -59,9 +44,9 @@ namespace GoldRepl
         {
             foreach (object key in dictionary.Keys)
             {
-                Console.WriteLine($"{key} = {dictionary[key]}");
+                _console.Lines.Add(new OutputLine($"{key} = {dictionary[key]}"));
             }
-            Console.WriteLine("");
+            _console.Lines.Add(new OutputLine(""));
         }
 
         public void OutputObject(object obj)
@@ -70,18 +55,26 @@ namespace GoldRepl
 
             PropertyInfo[] propertyInfo = variableType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
 
-            foreach (PropertyInfo property in propertyInfo)
+            if (propertyInfo.Any())
             {
-                try
+                foreach (PropertyInfo property in propertyInfo)
                 {
-                    Console.WriteLine($"{property.Name} = {property.GetValue(obj)}");
+                    try
+                    {
+                        _console.Lines.Add(new OutputLine($"{property.Name} = {property.GetValue(obj)}"));
+                    }
+                    catch (Exception e)
+                    {
+                        _console.Lines.Add(new OutputLine(e.Message, ConsoleColor.Red));
+                    }
                 }
-                catch (Exception e)
-                {
-
-                }
+                
+                _console.Lines.Add(new OutputLine(""));
             }
-            Console.WriteLine("");
+            else
+            {
+                _console.Lines.Add(new OutputLine(obj.ToString()));
+            }
         }
     }
 }

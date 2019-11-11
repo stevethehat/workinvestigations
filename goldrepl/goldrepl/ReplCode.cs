@@ -30,18 +30,18 @@ namespace GoldRepl
 
                 if (null != result)
                 {
-                    source = _python.CreateScriptSourceFromString("print " + code);
+                    source = _python.CreateScriptSourceFromString("output(" + code + ")");
                     source.Execute(_scope);
-
+                    _console.Write(true);
                 }
             }
             catch (IronPython.Runtime.UnboundNameException e)
             {
-                Console.WriteLine(e.Message);
+                _console.Lines.Add(new OutputLine(e.Message, ConsoleColor.Red));
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                _console.Lines.Add(new OutputLine(e.Message, ConsoleColor.Red));
             }
             return result;
         }
