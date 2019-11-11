@@ -65,35 +65,16 @@ namespace GoldRepl
             {
                 Type t = typeof(Enumerable);
 
-                foreach (MethodInfo mi in t.GetMethods())
+                foreach (MethodInfo mi in t.GetMethods().Distinct())
                 {
                     if (mi.IsDefined(typeof(ExtensionAttribute), false))
                     {
-                        //if (mi.GetParameters()[0].ParameterType == extendedType)
                         extension_methods.Add(mi);
                     }
                 }
 
             }
 
-
-
-            //foreach (Type t in assembly.GetTypes())
-            //{
-            /*
-            if (t.IsDefined(typeof(ExtensionAttribute), false))
-                {
-                    foreach (MethodInfo mi in t.GetMethods())
-                    {
-                        if (mi.IsDefined(typeof(ExtensionAttribute), false))
-                        {
-                            if (mi.GetParameters()[0].ParameterType == extendedType)
-                                extension_methods.Add(mi);
-                        }
-                    }
-                }
-            //}
-            */
             return extension_methods;
         }
 
@@ -122,7 +103,7 @@ namespace GoldRepl
 
                     PropertyInfo[] propertyInfo = variableType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
 
-                    result.AddRange(propertyInfo.Select(mi => mi.Name).ToList());
+                    result.AddRange(propertyInfo.Select(mi => mi.Name).ToList().Distinct());
                 }
             }
             catch (Exception e)
@@ -138,12 +119,10 @@ namespace GoldRepl
             List<string> result = new List<string>();
             string matchText = match.Groups[match.Groups.Count - 1].Value;
             string previousText = fullText.Substring(0, fullText.Length - matchText.Length);
-            foreach (string possibleOption in possibleOptions)
+            foreach (string possibleOption in possibleOptions.Distinct())
             {
-                //if (true == possibleOption.StartsWith(matchText, StringComparison.CurrentCultureIgnoreCase))
                 if (true == possibleOption.StartsWith(matchText))
                 {
-                    //result.Add(previousText + possibleOption);
                     result.Add(possibleOption);
                 }
             }

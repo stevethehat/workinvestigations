@@ -13,11 +13,16 @@ namespace GoldRepl
 {
     public partial class Repl
     {
-        protected readonly ScriptEngine _python;
-        protected readonly ScriptScope _scope;
+        protected readonly ScriptEngine     _python;
+        protected readonly ScriptScope      _scope;
+        protected readonly ConsoleOutput    _console;
+
+        protected ConsoleOutput Console { get => _console; }
+
 
         public Repl()
         {
+            _console = new ConsoleOutput();
             _python = Python.CreateEngine();
             _scope = _python.CreateScope();
 
@@ -43,24 +48,21 @@ namespace GoldRepl
 
         public void InitData(string dataFolder = "~/gold/data")
         {
-            Console.WriteLine($"Data= {dataFolder}");
-            //Assembly assembly = 
+            _console.Lines.Add(new OutputLine($"Data= {dataFolder}"));
             try
             {
                 Gold.Gold gold = new Gold.Gold(dataFolder);
-                Console.WriteLine("Gold Initialized");
+                _console.Lines.Add(new OutputLine("Gold Initialized", ConsoleColor.Yellow));
 
                 _scope.SetVariable("gold", gold);
             } catch(Exception e)
             {
-                Console.Write(e.Message);
-                Console.Write(e.StackTrace);
-
-                //throw e;
+                _console.Lines.Add(new OutputLine(e.Message, ConsoleColor.Red, ConsoleColor.Black));
+                _console.Lines.Add(new OutputLine(e.StackTrace, ConsoleColor.Red, ConsoleColor.Black));
             }
                         
             _python.Execute("from GoldRepl import *", _scope);
-            Console.WriteLine("imported *");
+            _console.Lines.Add(new OutputLine("imported *", ConsoleColor.Yellow));
 
             Isams isams = new Isams();
             _scope.SetVariable("isams", isams);
@@ -82,7 +84,8 @@ def load(path):
     repl.Load(path)
             ");
 
-            Console.WriteLine("isams initialized");
+            _console.Lines.Add(new OutputLine("ISAMS Initialized", ConsoleColor.Yellow));
+            _console.Write(true);
         }
 
         internal void Execute(string scriptFile)
@@ -102,6 +105,7 @@ def load(path):
                     RunCode(source, code);
                 }
                 code = GetCode();
+                _console.Write(true);
             }
         }
 
@@ -113,12 +117,14 @@ def load(path):
 
             while(false == codeComplete)
             {
-                Console.Write("".PadLeft(indent, '>'));
+                //_console.Lines.Add(new OutputLine("".PadLeft(indent, '>')));
+                System.Console.Write("".PadLeft(indent, '>'));
                 if(indent > 0)
                 {
-                    Console.Write(" ");
+                    //_console.Lines.Add(new OutputLine(" "));
+                    System.Console.Write(" ");
                 }
-
+                //_console.Write();
                 string line = GetCodeLine();
                 result = $"{result}{"".PadLeft(indent * 2, ' ')}{line}{Environment.NewLine}";
 
@@ -169,7 +175,7 @@ def load(path):
             }
             else
             {
-                Console.WriteLine($"{path} Not found");
+                System.Console.WriteLine($"{path} Not found");
             }
         }
     }

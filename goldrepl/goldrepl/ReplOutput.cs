@@ -59,9 +59,9 @@ namespace GoldRepl
         {
             foreach (object key in dictionary.Keys)
             {
-                Console.WriteLine($"{key} = {dictionary[key]}");
+                System.Console.WriteLine($"{key} = {dictionary[key]}");
             }
-            Console.WriteLine("");
+            System.Console.WriteLine("");
         }
 
         public void OutputObject(object obj)
@@ -74,14 +74,14 @@ namespace GoldRepl
             {
                 try
                 {
-                    Console.WriteLine($"{property.Name} = {property.GetValue(obj)}");
+                    System.Console.WriteLine($"{property.Name} = {property.GetValue(obj)}");
                 }
                 catch (Exception e)
                 {
 
                 }
             }
-            Console.WriteLine("");
+            System.Console.WriteLine("");
         }
     }
 }

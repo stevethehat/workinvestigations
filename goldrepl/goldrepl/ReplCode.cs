@@ -37,11 +37,13 @@ namespace GoldRepl
             }
             catch (IronPython.Runtime.UnboundNameException e)
             {
-                Console.WriteLine(e.Message);
+                _console.Lines.Add(new OutputLine(e.Message, ConsoleColor.Red));
+                //Console.WriteLine(e.Message);
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                _console.Lines.Add(new OutputLine(e.Message, ConsoleColor.Red));
+                //Console.WriteLine(e.Message);
             }
             return result;
         }
