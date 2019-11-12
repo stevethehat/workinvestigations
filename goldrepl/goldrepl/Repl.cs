@@ -17,9 +17,8 @@ namespace GoldRepl
         protected readonly ScriptScope      _scope;
         protected readonly ConsoleOutput    _console;
 
-        protected ConsoleOutput Console { get => _console; }
-
-
+        public ConsoleOutput Console { get => _console; }
+        
         public Repl()
         {
             _console = new ConsoleOutput();
@@ -27,6 +26,7 @@ namespace GoldRepl
             _scope = _python.CreateScope();
 
             _scope.ImportModule("clr");
+            _scope.ImportModule("sys");
             _python.Execute("import clr");
             _python.Execute("import sys");
             string setPath = $"sys.path.append(\"{ Environment.GetEnvironmentVariable("PYTHONPATH")}\")";
@@ -72,6 +72,11 @@ namespace GoldRepl
             RunCode(@"
 def output(value):
     repl.Output(value)
+            ");
+
+            RunCode(@"
+def info(value):
+    repl.Info(value)
             ");
 
             RunCode(@"

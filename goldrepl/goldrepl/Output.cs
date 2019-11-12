@@ -8,11 +8,21 @@ namespace GoldRepl
 {
     public class ConsoleOutput
     {
+        public int MaxLines { get; set; } = 40;
         public void Write(bool clear = false)
         {
+            int count = 0;
             foreach (OutputLine line in Lines)
             {
                 line.Write();
+                count++;
+
+                if(MaxLines == count)
+                {
+                    Console.WriteLine("Press anykey to continue...");
+                    Console.ReadLine();
+                    count = 0;
+                }
             }
             if(true == clear)
             {
