@@ -42,39 +42,48 @@ namespace GoldRepl
 
         private static List<string> _operators = new List<string>()
         {
-            "=",
+            "=", ":", "\\."
             // Comparison
-            "==", "!=", "<", "<=", ">", ">=",
+            //"==", "!=", "<", "<=", ">", ">=",
             // Arithmetic
-            "\\+", "-", "\\*", "/", "//", "\\%", "\\*\\*",
+            //"\\+", "-", "\\*", "/", "//", "\\%", "\\*\\*",
             // In-place
-            "\\+=", "-=", "\\*=", "/=", "\\%=",
+            //"\\+=", "-=", "\\*=", "/=", "\\%=",
             // Bitwise
-            "\\^", "\\|", "\\&", "\\~", ">>", "<<",
+            //"\\^", "\\|", "\\&", "\\~", ">>", "<<",
         };
 
         private static List<string> _braces = new List<string>()
         {
-            "\\{", "\\}", "\\(", "\\)", "\\[", "\\]",
+            //"\\{", "\\}",
+            "\\(", "\\)",
+            "\\[", "\\]",
         };
 
         private readonly List<Rule> _rules = new List<Rule>();
 
         public SyntaxHighlight()
         {
-            //_rules.AddRange(_keywords.Select(k => new Rule(new Regex($"\b{k}\b"), _colors["keyword"])));
+            _rules.AddRange(_keywords.Select(k => new Rule(new Regex($"^(\\s*{k})"), _colors["keyword"])));
             _rules.AddRange(_operators.Select(o => new Rule(new Regex($"^(\\s?{o}\\s?)"), _colors["operator"])));
-            //_rules.AddRange(_braces.Select(b => new Rule(new Regex($"{b}"), _colors["brace"])));
+            _rules.AddRange(_braces.Select(b => new Rule(new Regex($"^{b}"), _colors["brace"])));
 
             //_rules.Add(new Rule(new Regex("^\\bself\\b"), _colors["self"]));
 
+            // Double-quoted string, possibly containing escape sequences
+            _rules.Add(new Rule(new Regex("^\\s*\"[^\"\\\\]*(\\\\.[^\"\\\\]*)*"), _colors["string"]));
+            // Single-quoted string, possibly containing escape sequences
+            //(r"'[^'\\]*(\\.[^'\\]*)*'", 0, STYLES['string']),
+
+
             // def and class
             //_rules.Add(new Rule(new Regex("^\\bdef\\b\\s*(\\w+)"), _colors["defclass"]));
+            _rules.Add(new Rule(new Regex("^\\b(def\\s+)"), _colors["defclass"]));
             //_rules.Add(new Rule(new Regex("^\\bclass\\b\\s*(\\w+)"), _colors["defclass"]));
 
             // comment
             // From '#' until a newline
-            //_rules.Add(new Rule(new Regex("^#[^\\n]*"), _colors["comment"]));
+            _rules.Add(new Rule(new Regex("^\\s*#[^\\n]*"), _colors["comment"]));
 
             // numbers
             _rules.Add(new Rule(new Regex("^\\b[+-]?[0-9]+[lL]?\\b?"), _colors["number"]));
@@ -83,7 +92,7 @@ namespace GoldRepl
             //_rules.Add(new Rule(new Regex("^\\b[+-]?0[xX][0-9A-Fa-f]+[lL]?\\b"), _colors["number"]));
             //_rules.Add(new Rule(new Regex("^\\b[+-]?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\\b"), _colors["number"]));
 
-            _rules.Add(new Rule(new Regex("^(\\w+\\s?)"), ConsoleColor.Cyan));
+            _rules.Add(new Rule(new Regex("^(\\s*\\w+\\s*)"), ConsoleColor.Cyan));
             /*
               88
               rules += [
@@ -116,6 +125,7 @@ namespace GoldRepl
             var currentCode = code.Trim();
             while (false == string.IsNullOrWhiteSpace(currentCode))
             {
+                bool ruleMatch = false;
                 foreach (Rule rule in _rules)
                 {
                     MatchCollection matchCollection = rule.Regex.Matches(currentCode);
@@ -125,8 +135,19 @@ namespace GoldRepl
                         var firstMatch = matchCollection[0];
                         Console.ForegroundColor = rule.Color;
                         Console.Write(firstMatch.Value);
-                        currentCode = currentCode.Substring(firstMatch.Value.Length).TrimStart();
+                        currentCode = currentCode.Substring(firstMatch.Value.Length);
+                        //currentCode = currentCode.Substring(firstMatch.Value.Length).TrimStart();
+
+                        ruleMatch = true;
+                        break;
                     }
+                }
+
+                if(false == ruleMatch)
+                {
+                    Console.ResetColor();
+                    Console.WriteLine($"Cant match {currentCode}");
+                    currentCode = "";
                 }
             }
             Console.ResetColor();
