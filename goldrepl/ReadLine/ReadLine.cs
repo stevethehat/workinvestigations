@@ -57,8 +57,13 @@ namespace System
                 keyInfo = Console.ReadKey(true);
             }
 
-            Console.WriteLine();
-            return keyHandler.Text;
+            //Console.BackgroundColor = ConsoleColor.Red;
+            //Console.WriteLine();
+            //Console.BackgroundColor = ConsoleColor.Black;
+            string text = keyHandler.Text;
+            keyHandler.Finish(text);
+
+            return text;
         }
     }
 }

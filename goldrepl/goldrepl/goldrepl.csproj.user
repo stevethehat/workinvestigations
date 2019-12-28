@@ -6,4 +6,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <StartArguments>../../test.py --notinit=../../init.py -d="C:\ibcos\Repositorys\golddata\gold\data"</StartArguments>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
+    <StartAction>Project</StartAction>
+    <StartArguments>--notinit=../../init.py -d="C:\ibcos\Repositorys\golddata\gold\data"</StartArguments>
+  </PropertyGroup>
 </Project>

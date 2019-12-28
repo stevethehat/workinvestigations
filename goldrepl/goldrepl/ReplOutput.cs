@@ -44,9 +44,9 @@ namespace GoldRepl
         {
             foreach (object key in dictionary.Keys)
             {
-                _console.Lines.Add(new OutputLine($"{key} = {dictionary[key]}"));
+                Console.WriteLine($"{key} = {dictionary[key]}");
             }
-            _console.Lines.Add(new OutputLine(""));
+            Console.WriteLine("");
         }
 
         public void OutputObject(object obj)
@@ -62,25 +62,25 @@ namespace GoldRepl
                 {
                     try
                     {
-                        _console.Lines.Add(new OutputLine($"{property.Name.PadRight(width, ' ')} = {property.GetValue(obj)}"));
+                        Console.WriteLine($"{property.Name.PadRight(width, ' ')} = {property.GetValue(obj)}");
                     }
                     catch (Exception e)
                     {
-                        _console.Lines.Add(new OutputLine(e.Message, ConsoleColor.Red));
+                        Console.WriteLine(e.Message);
                     }
                 }
                 
-                _console.Lines.Add(new OutputLine(""));
+                Console.WriteLine("");
             }
             else
             {
-                _console.Lines.Add(new OutputLine(obj.ToString()));
+                Console.WriteLine(obj.ToString());
             }
         }
 
         public void Info(Type type)
         {
-            Table table = new Table();
+            //Table table = new Table();
             MethodInfo[] methodInfo = type.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
 
             var methods = methodInfo.Where(m => !(m.Name.StartsWith("get_") || m.Name.StartsWith("set_")))
@@ -93,15 +93,16 @@ namespace GoldRepl
 
             foreach(PropertyInfo property in propertyInfo)
             {
-                table.Lines.Add(new TableLine(new string[] { property.Name, "col2" }));
+                //table.Lines.Add(new TableLine(new string[] { property.Name, "col2" }));
             }
 
-            table.Output(Console);
+            //table.Output(Console);
             //Console.Lines.AddRange(properties);
             Console.Write(true);
         }
     }
 
+    /*
     public class Table
     {
         public List<TableLine> Lines { get; set; } = new List<TableLine>();
@@ -127,4 +128,5 @@ namespace GoldRepl
             output.Lines.Add(new OutputLine(string.Join(" ", _columns)));
         }
     }
+    */
 }

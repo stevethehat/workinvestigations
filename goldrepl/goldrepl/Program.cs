@@ -68,12 +68,6 @@ namespace GoldRepl
                 }
                 else
                 {
-                    Console.WriteLine("Gold Interactive Repl");
-                    Console.WriteLine("=====================");
-                    Console.WriteLine(":q to quit.");
-                    Console.WriteLine("");
-
-
                     repl.RunInteractive();
                 }
                 return 0;

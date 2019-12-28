@@ -15,15 +15,18 @@ namespace GoldRepl
     {
         protected readonly ScriptEngine     _python;
         protected readonly ScriptScope      _scope;
-        protected readonly ConsoleOutput    _console;
+        //protected readonly ConsoleOutput    _console;
 
-        public ConsoleOutput Console { get => _console; }
+        //public ConsoleOutput Console { get => _console; }
+        private readonly SyntaxHighlight _syntaxHighlighter;
         
         public Repl()
         {
-            _console = new ConsoleOutput();
+            //_console = new ConsoleOutput();
             _python = Python.CreateEngine();
             _scope = _python.CreateScope();
+
+            _syntaxHighlighter = new SyntaxHighlight();
 
             _scope.ImportModule("clr");
             _scope.ImportModule("sys");
@@ -32,14 +35,12 @@ namespace GoldRepl
             string setPath = $"sys.path.append(\"{ Environment.GetEnvironmentVariable("PYTHONPATH")}\")";
             RunCode(setPath);
             _python.Execute("clr.AddReference(\"goldrepl\")", _scope);
-            ReadLine.HistoryEnabled = true;
-            ReadLine.AutoCompletionHandler = new AutoCompletionHandler(_scope);
 
             _python.Execute("clr.AddReference(\"System\")", _scope);
-            _python.Execute("clr.AddReference(\"Gold\")", _scope);
+            //_python.Execute("clr.AddReference(\"Gold\")", _scope);
             _python.Execute("clr.AddReference(\"System.Core\")", _scope);
-            _python.Execute("clr.AddReference(\"GoldApiServer.DataLayer\")", _scope);
-            _python.Execute("from Net.Ibcos.GoldAPIServer.DataLayer.Models import *", _scope);
+            //_python.Execute("clr.AddReference(\"GoldApiServer.DataLayer\")", _scope);
+            //_python.Execute("from Net.Ibcos.GoldAPIServer.DataLayer.Models import *", _scope);
 
             _python.Execute("import System", _scope);
             _python.Execute("from System import Linq", _scope);
@@ -48,21 +49,21 @@ namespace GoldRepl
 
         public void InitData(string dataFolder = "~/gold/data")
         {
-            _console.Lines.Add(new OutputLine($"Data= {dataFolder}"));
+            Console.WriteLine($"Data= {dataFolder}");
             try
             {
-                Gold.Gold gold = new Gold.Gold(dataFolder);
-                _console.Lines.Add(new OutputLine("Gold Initialized", ConsoleColor.Yellow));
+                //Gold.Gold gold = new Gold.Gold(dataFolder);
+                //_console.Lines.Add(new OutputLine("Gold Initialized", ConsoleColor.Yellow));
 
-                _scope.SetVariable("gold", gold);
+                //_scope.SetVariable("gold", gold);
             } catch(Exception e)
             {
-                _console.Lines.Add(new OutputLine(e.Message, ConsoleColor.Red, ConsoleColor.Black));
-                _console.Lines.Add(new OutputLine(e.StackTrace, ConsoleColor.Red, ConsoleColor.Black));
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
             }
                         
             _python.Execute("from GoldRepl import *", _scope);
-            _console.Lines.Add(new OutputLine("imported *", ConsoleColor.Yellow));
+            Console.WriteLine("imported *");
 
             Isams isams = new Isams();
             _scope.SetVariable("isams", isams);
@@ -89,8 +90,8 @@ def load(path):
     repl.Load(path)
             ");
 
-            _console.Lines.Add(new OutputLine("ISAMS Initialized", ConsoleColor.Yellow));
-            _console.Write(true);
+            Console.WriteLine("ISAMS Initialized");
+            //Console.Write(true);
         }
 
         internal void Execute(string scriptFile)
@@ -101,6 +102,15 @@ def load(path):
 
         public void RunInteractive()
         {
+            ReadLine.HistoryEnabled = true;
+            ReadLine.AutoCompletionHandler = new AutoCompletionHandler(_scope);
+
+            System.Console.WriteLine("Gold Interactive Repl");
+            System.Console.WriteLine("=====================");
+            System.Console.WriteLine(":q to quit.");
+            System.Console.WriteLine("");
+
+
             string code = "";
             while (false == code.StartsWith(":q\n"))
             {
@@ -110,7 +120,8 @@ def load(path):
                     RunCode(source, code);
                 }
                 code = GetCode();
-                _console.Write(true);
+                _syntaxHighlighter.WriteToConsole(code);
+                //_console.Write(true);
             }
         }
 

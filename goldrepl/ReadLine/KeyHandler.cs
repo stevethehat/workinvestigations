@@ -29,6 +29,17 @@ namespace Internal.ReadLine
         private bool IsEndOfBuffer() => Console2.CursorLeft == Console2.BufferWidth - 1;
         private bool IsInAutoCompleteMode() => _completions != null;
 
+        public void Finish(string text)
+        {
+            ClearLine();
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.WriteLine(text);
+            Console.BackgroundColor = ConsoleColor.Black;
+
+            //Console.WriteLine(text);
+            Console2.SetCursorPosition(0, Console2.CursorTop + 1);
+        }
+
         private void MoveCursorLeft()
         {
             if (IsStartOfLine())

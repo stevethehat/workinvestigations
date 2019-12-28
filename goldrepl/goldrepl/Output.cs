@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GoldRepl
 {
-    public class ConsoleOutput
+    public class _ConsoleOutput
     {
         public int MaxLines { get; set; } = 40;
         public void Write(bool clear = false)
