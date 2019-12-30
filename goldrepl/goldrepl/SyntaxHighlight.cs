@@ -11,17 +11,26 @@ namespace GoldRepl
         public Regex Regex { get; private set; }
         public ConsoleColor Color { get; private set; }
         public TokenType TokenType { get; private set; }
-        public Rule(string regex, TokenType tokenType)
+        public Func<List<Token>, bool> Test { get; private set; }
+        public Rule(string regex, TokenType tokenType, Func<List<Token>, bool> test = default(Func<List<Token>, bool>))
         {
             Regex = new Regex(regex);
             TokenType = tokenType;
             Color = TokenColors.Colors[TokenType];
+            if(default(Func<List<Token>, bool>) != test)
+            {
+                Test = test;
+            }
+            else
+            {
+                Test = l => true;
+            }
         }
     }
 
     public enum TokenType
     {
-        Keyword, Operator, Brace, DefClass, String, String2, Comment, Self, Number, Variable
+        Keyword, Operator, Brace, DefClass, String, String2, Comment, Self, Number, Variable, Method
     }
 
     public class TokenColors
@@ -38,12 +47,14 @@ namespace GoldRepl
             { TokenType.Self,       ConsoleColor.White },
             { TokenType.Number,     ConsoleColor.DarkYellow },
             { TokenType.Variable,   ConsoleColor.Cyan },
+            { TokenType.Method,     ConsoleColor.Yellow },
         };
     }
 
     public class Token
     {
         public static ScriptScope Scope { get; set; }
+        public static Token CurrentTokens { get; set; }
         public TokenType TokenType { get; private set; }
         public string Value { get; private set; }
         public Type Type { get; private set; }
@@ -138,6 +149,17 @@ namespace GoldRepl
             //_rules.Add(new Rule(new Regex("^\\b[+-]?0[xX][0-9A-Fa-f]+[lL]?\\b"), _colors["number"]));
             //_rules.Add(new Rule(new Regex("^\\b[+-]?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\\b"), _colors["number"]));
 
+            _rules.Add(new Rule("^(\\w+)", TokenType.Method, l =>
+                {
+                    bool result = false;
+                    Token token = l.LastOrDefault();
+                    if(default(Token) != token && TokenType.Operator == token.TokenType && "." == token.Value)
+                    {
+                        result = true;
+                    }
+                    return result;
+                }
+            ));
             _rules.Add(new Rule("^(\\s*\\w+\\s*)", TokenType.Variable));
             /*
               88
@@ -180,11 +202,14 @@ namespace GoldRepl
                     if (matches > 0)
                     {
                         var firstMatch = matchCollection[0];
-                        currentCode = currentCode.Substring(firstMatch.Value.Length);
+                        if(true == rule.Test(result))
+                        {
+                            currentCode = currentCode.Substring(firstMatch.Value.Length);
 
-                        ruleMatch = true;
-                        result.Add(new Token(rule.TokenType, firstMatch.Value));
-                        break;
+                            ruleMatch = true;
+                            result.Add(new Token(rule.TokenType, firstMatch.Value));
+                            break;
+                        }
                     }
                 }
 
