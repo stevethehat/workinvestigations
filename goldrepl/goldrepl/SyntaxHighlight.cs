@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Linq;
+using Microsoft.Scripting.Hosting;
 
 namespace GoldRepl
 {
@@ -38,6 +39,40 @@ namespace GoldRepl
             { TokenType.Number,     ConsoleColor.DarkYellow },
             { TokenType.Variable,   ConsoleColor.Cyan },
         };
+    }
+
+    public class Token
+    {
+        public static ScriptScope Scope { get; set; }
+        public TokenType TokenType { get; private set; }
+        public string Value { get; private set; }
+        public Type Type { get; private set; }
+        public ConsoleColor Color { get; }
+
+        public Token(TokenType tokenType, string value)
+        {
+            TokenType = tokenType;
+            Value = value;
+            Color = TokenColors.Colors[TokenType];
+
+            if(TokenType == TokenType.Variable)
+            {
+                try
+                {
+                    var test = Scope.GetVariable(value.Trim());
+                    Type = test.GetType();
+                    if(true == Type.IsGenericType)
+                    {
+                        var gType = Type.GetGenericTypeDefinition();
+                        var gArg = Type.GetGenericArguments();
+                    }
+                } catch (Exception e)
+                {
+
+                }
+                //Console.WriteLine
+            }
+        }
     }
 
     public class SyntaxHighlight
@@ -131,6 +166,46 @@ namespace GoldRepl
             */
         }
 
+        public List<Token> Tokenize(string code)
+        {
+            List<Token> result = new List<Token>();
+            var currentCode = code.Trim();
+            while (false == string.IsNullOrWhiteSpace(currentCode))
+            {
+                bool ruleMatch = false;
+                foreach (Rule rule in _rules)
+                {
+                    MatchCollection matchCollection = rule.Regex.Matches(currentCode);
+                    var matches = matchCollection.Count;
+                    if (matches > 0)
+                    {
+                        var firstMatch = matchCollection[0];
+                        currentCode = currentCode.Substring(firstMatch.Value.Length);
+
+                        ruleMatch = true;
+                        result.Add(new Token(rule.TokenType, firstMatch.Value));
+                        break;
+                    }
+                }
+
+                if (false == ruleMatch)
+                {
+                    ConsoleUtils.Write($"Cant match {currentCode}", ConsoleColor.White);
+                    currentCode = "";
+                }
+            }
+
+            return result;
+        }
+
+        public void WriteToConsole(List<Token> tokens)
+        {
+            foreach (var token in tokens)
+            {
+                ConsoleUtils.Write(token.Value, token.Color);
+            }
+        }
+
         public void WriteToConsole(string code)
         {
             var currentCode = code.Trim();
@@ -155,13 +230,14 @@ namespace GoldRepl
                     }
                 }
 
-                if(false == ruleMatch)
+                if (false == ruleMatch)
                 {
                     ConsoleUtils.Write($"Cant match {currentCode}", ConsoleColor.White);
                     //Console.ResetColor();
                     //Console.WriteLine($"Cant match {currentCode}");
                     currentCode = "";
                 }
+                
             }
             Console.ResetColor();
             //Console.WriteLine();

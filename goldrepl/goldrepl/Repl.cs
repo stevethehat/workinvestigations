@@ -27,6 +27,8 @@ namespace GoldRepl
             _python = Python.CreateEngine();
             _scope = _python.CreateScope();
 
+            Token.Scope = _scope;
+
             _syntaxHighlighter = new SyntaxHighlight();
 
             _scope.ImportModule("clr");
@@ -114,8 +116,9 @@ def load(path):
 
             ReadLine.Output = text =>
             {
-                _syntaxHighlighter.WriteToConsole(text);
-
+                //_syntaxHighlighter.WriteToConsole(text);
+                List<Token> tokens = _syntaxHighlighter.Tokenize(text);
+                _syntaxHighlighter.WriteToConsole(tokens);
             };
 
             System.Console.WriteLine("Gold Interactive Repl");
