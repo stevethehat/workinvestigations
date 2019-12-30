@@ -15,6 +15,13 @@ namespace GoldRepl
         {
             Type variableType = (Type)obj.GetType();
 
+            if(variableType.Name == "String")
+            {
+                Console.WriteLine(obj);
+                Console.WriteLine();
+                return;
+            }
+
             if (variableType.Name == "PythonDictionary")
             {
                 OutputDict(obj as PythonDictionary);
@@ -75,6 +82,7 @@ namespace GoldRepl
             else
             {
                 Console.WriteLine(obj.ToString());
+                Console.WriteLine("");
             }
         }
 

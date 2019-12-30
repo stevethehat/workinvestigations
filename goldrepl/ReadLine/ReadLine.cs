@@ -22,6 +22,8 @@ namespace System
         public static bool HistoryEnabled { get; set; }
         public static IAutoCompleteHandler AutoCompletionHandler { private get; set; }
 
+        public static Action<string> Output;
+
         public static string Read(string prompt = "", string @default = "")
         {
             Console.Write(prompt);
@@ -61,6 +63,8 @@ namespace System
             //Console.WriteLine();
             //Console.BackgroundColor = ConsoleColor.Black;
             string text = keyHandler.Text;
+            keyHandler.Output = Output;
+
             keyHandler.Finish(text);
 
             return text;

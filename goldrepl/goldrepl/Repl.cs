@@ -8,6 +8,7 @@ using Microsoft.Scripting.Hosting;
 using Microsoft.CSharp;
 using IronPython.Runtime;
 using System.IO;
+using Microsoft.Scripting.Hosting.Providers;
 
 namespace GoldRepl
 {
@@ -41,6 +42,12 @@ namespace GoldRepl
             _python.Execute("clr.AddReference(\"System.Core\")", _scope);
             //_python.Execute("clr.AddReference(\"GoldApiServer.DataLayer\")", _scope);
             //_python.Execute("from Net.Ibcos.GoldAPIServer.DataLayer.Models import *", _scope);
+
+            // suddenly started getting a really odd error on import System
+            // https://stackoverflow.com/questions/33896154/ironpython-cannot-import-os-importexception-not-a-zipfile
+            var pc = HostingHelpers.GetLanguageContext(_python) as PythonContext;
+            var hooks = pc.SystemState.Get__dict__()["path_hooks"] as List;
+            hooks.Clear();
 
             _python.Execute("import System", _scope);
             _python.Execute("from System import Linq", _scope);
@@ -105,6 +112,12 @@ def load(path):
             ReadLine.HistoryEnabled = true;
             ReadLine.AutoCompletionHandler = new AutoCompletionHandler(_scope);
 
+            ReadLine.Output = text =>
+            {
+                _syntaxHighlighter.WriteToConsole(text);
+
+            };
+
             System.Console.WriteLine("Gold Interactive Repl");
             System.Console.WriteLine("=====================");
             System.Console.WriteLine(":q to quit.");
@@ -120,7 +133,7 @@ def load(path):
                     RunCode(source, code);
                 }
                 code = GetCode();
-                _syntaxHighlighter.WriteToConsole(code);
+                //_syntaxHighlighter.WriteToConsole(code);
                 //_console.Write(true);
             }
         }

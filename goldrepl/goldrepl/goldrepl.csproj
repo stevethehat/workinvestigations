@@ -103,6 +103,7 @@
     <Compile Include="ReplOutput.cs" />
     <Compile Include="AutoComplete.cs" />
     <Compile Include="SyntaxHighlight.cs" />
+    <Compile Include="ConsoleUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

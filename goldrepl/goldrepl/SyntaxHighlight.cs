@@ -9,28 +9,39 @@ namespace GoldRepl
     {
         public Regex Regex { get; private set; }
         public ConsoleColor Color { get; private set; }
-        public Rule(Regex regex, ConsoleColor color)
+        public TokenType TokenType { get; private set; }
+        public Rule(string regex, TokenType tokenType)
         {
-            Regex = regex;
-            Color = color;
+            Regex = new Regex(regex);
+            TokenType = tokenType;
+            Color = TokenColors.Colors[TokenType];
         }
+    }
+
+    public enum TokenType
+    {
+        Keyword, Operator, Brace, DefClass, String, String2, Comment, Self, Number, Variable
+    }
+
+    public class TokenColors
+    {
+        public static Dictionary<TokenType, ConsoleColor> Colors = new Dictionary<TokenType, ConsoleColor>()
+        {
+            { TokenType.Keyword,    ConsoleColor.Blue },
+            { TokenType.Operator,   ConsoleColor.Red },
+            { TokenType.Brace,      ConsoleColor.DarkGray },
+            { TokenType.DefClass,   ConsoleColor.White },
+            { TokenType.String,     ConsoleColor.Magenta },
+            { TokenType.String2,    ConsoleColor.DarkMagenta },
+            { TokenType.Comment,    ConsoleColor.DarkGreen },
+            { TokenType.Self,       ConsoleColor.White },
+            { TokenType.Number,     ConsoleColor.DarkYellow },
+            { TokenType.Variable,   ConsoleColor.Cyan },
+        };
     }
 
     public class SyntaxHighlight
     {
-        private static Dictionary<string, ConsoleColor> _colors = new Dictionary<string, ConsoleColor>()
-        {
-            { "keyword",    ConsoleColor.Blue },
-            { "operator",   ConsoleColor.Red },
-            { "brace",      ConsoleColor.DarkGray },
-            { "defclass",   ConsoleColor.White },
-            { "string",     ConsoleColor.Magenta },
-            { "string2",    ConsoleColor.DarkMagenta },
-            { "comment",    ConsoleColor.DarkGreen },
-            { "self",       ConsoleColor.White },
-            { "number",     ConsoleColor.DarkYellow },
-        };
-
         private static List<string> _keywords = new List<string>() {
             "and", "assert", "break", "class", "continue", "def",
             "del", "elif", "else", "except", "exec", "finally",
@@ -42,15 +53,15 @@ namespace GoldRepl
 
         private static List<string> _operators = new List<string>()
         {
-            "=", ":", "\\."
+            "=", ":", "\\.",
             // Comparison
-            //"==", "!=", "<", "<=", ">", ">=",
+            "==", "!=", "<", "<=", ">", ">=",
             // Arithmetic
-            //"\\+", "-", "\\*", "/", "//", "\\%", "\\*\\*",
+            "\\+", "-", "\\*", "/", "//", "\\%", "\\*\\*",
             // In-place
-            //"\\+=", "-=", "\\*=", "/=", "\\%=",
+            "\\+=", "-=", "\\*=", "/=", "\\%=",
             // Bitwise
-            //"\\^", "\\|", "\\&", "\\~", ">>", "<<",
+            "\\^", "\\|", "\\&", "\\~", ">>", "<<",
         };
 
         private static List<string> _braces = new List<string>()
@@ -64,35 +75,35 @@ namespace GoldRepl
 
         public SyntaxHighlight()
         {
-            _rules.AddRange(_keywords.Select(k => new Rule(new Regex($"^(\\s*{k})"), _colors["keyword"])));
-            _rules.AddRange(_operators.Select(o => new Rule(new Regex($"^(\\s?{o}\\s?)"), _colors["operator"])));
-            _rules.AddRange(_braces.Select(b => new Rule(new Regex($"^{b}"), _colors["brace"])));
+            _rules.AddRange(_keywords.Select(k => new Rule($"^(\\s*{k})", TokenType.Keyword)));
+            _rules.AddRange(_operators.Select(o => new Rule($"^(\\s?{o}\\s?)", TokenType.Operator)));
+            _rules.AddRange(_braces.Select(b => new Rule($"^{b}", TokenType.Brace)));
 
             //_rules.Add(new Rule(new Regex("^\\bself\\b"), _colors["self"]));
 
             // Double-quoted string, possibly containing escape sequences
-            _rules.Add(new Rule(new Regex("^\\s*\"[^\"\\\\]*(\\\\.[^\"\\\\]*)*"), _colors["string"]));
+            _rules.Add(new Rule("^\\s*\"[^\"\\\\]*(\\\\.[^\"\\\\]*)*", TokenType.String));
             // Single-quoted string, possibly containing escape sequences
             //(r"'[^'\\]*(\\.[^'\\]*)*'", 0, STYLES['string']),
 
 
             // def and class
             //_rules.Add(new Rule(new Regex("^\\bdef\\b\\s*(\\w+)"), _colors["defclass"]));
-            _rules.Add(new Rule(new Regex("^\\b(def\\s+)"), _colors["defclass"]));
+            _rules.Add(new Rule("^\\b(def\\s+)", TokenType.DefClass));
             //_rules.Add(new Rule(new Regex("^\\bclass\\b\\s*(\\w+)"), _colors["defclass"]));
 
             // comment
             // From '#' until a newline
-            _rules.Add(new Rule(new Regex("^\\s*#[^\\n]*"), _colors["comment"]));
+            _rules.Add(new Rule("^\\s*#[^\\n]*", TokenType.Comment));
 
             // numbers
-            _rules.Add(new Rule(new Regex("^\\b[+-]?[0-9]+[lL]?\\b?"), _colors["number"]));
+            _rules.Add(new Rule("^\\b[+-]?[0-9]+[lL]?\\b?", TokenType.Number));
 
             //_rules.Add(new Rule(new Regex("^\\b[+-]?[0-9]+[lL]?\\b"), _colors["number"]));
             //_rules.Add(new Rule(new Regex("^\\b[+-]?0[xX][0-9A-Fa-f]+[lL]?\\b"), _colors["number"]));
             //_rules.Add(new Rule(new Regex("^\\b[+-]?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\\b"), _colors["number"]));
 
-            _rules.Add(new Rule(new Regex("^(\\s*\\w+\\s*)"), ConsoleColor.Cyan));
+            _rules.Add(new Rule("^(\\s*\\w+\\s*)", TokenType.Variable));
             /*
               88
               rules += [
@@ -133,8 +144,9 @@ namespace GoldRepl
                     if (matches > 0)
                     {
                         var firstMatch = matchCollection[0];
-                        Console.ForegroundColor = rule.Color;
-                        Console.Write(firstMatch.Value);
+                        ConsoleUtils.Write(firstMatch.Value, rule.Color);
+                        //Console.ForegroundColor = rule.Color;
+                        //Console.Write(firstMatch.Value);
                         currentCode = currentCode.Substring(firstMatch.Value.Length);
                         //currentCode = currentCode.Substring(firstMatch.Value.Length).TrimStart();
 
@@ -145,13 +157,14 @@ namespace GoldRepl
 
                 if(false == ruleMatch)
                 {
-                    Console.ResetColor();
-                    Console.WriteLine($"Cant match {currentCode}");
+                    ConsoleUtils.Write($"Cant match {currentCode}", ConsoleColor.White);
+                    //Console.ResetColor();
+                    //Console.WriteLine($"Cant match {currentCode}");
                     currentCode = "";
                 }
             }
             Console.ResetColor();
-            Console.WriteLine();
+            //Console.WriteLine();
         }
     }
 }
