@@ -54,7 +54,7 @@ namespace GoldRepl
     public class Token
     {
         public static ScriptScope Scope { get; set; }
-        public static Token CurrentTokens { get; set; }
+        public static List<Token> CurrentTokens { get; set; }
         public TokenType TokenType { get; private set; }
         public string Value { get; private set; }
         public Type Type { get; private set; }
@@ -83,6 +83,30 @@ namespace GoldRepl
                 }
                 //Console.WriteLine
             }
+
+            if (TokenType == TokenType.Method)
+            {
+                try
+                {
+                    var current = new List<Token>();
+                    current.AddRange(Token.CurrentTokens);
+                    current.Reverse();
+                    var test1 = current.Skip(1);
+                    var test = Scope.GetVariable(value.Trim());
+                    Type = test.GetType();
+                    if (true == Type.IsGenericType)
+                    {
+                        var gType = Type.GetGenericTypeDefinition();
+                        var gArg = Type.GetGenericArguments();
+                    }
+                }
+                catch (Exception e)
+                {
+
+                }
+                //Console.WriteLine
+            }
+
         }
     }
 
@@ -190,7 +214,8 @@ namespace GoldRepl
 
         public List<Token> Tokenize(string code)
         {
-            List<Token> result = new List<Token>();
+            //List<Token> result = new List<Token>();
+            Token.CurrentTokens = new List<Token>();
             var currentCode = code.Trim();
             while (false == string.IsNullOrWhiteSpace(currentCode))
             {
@@ -202,12 +227,12 @@ namespace GoldRepl
                     if (matches > 0)
                     {
                         var firstMatch = matchCollection[0];
-                        if(true == rule.Test(result))
+                        if(true == rule.Test(Token.CurrentTokens))
                         {
                             currentCode = currentCode.Substring(firstMatch.Value.Length);
 
                             ruleMatch = true;
-                            result.Add(new Token(rule.TokenType, firstMatch.Value));
+                            Token.CurrentTokens.Add(new Token(rule.TokenType, firstMatch.Value));
                             break;
                         }
                     }
@@ -220,7 +245,7 @@ namespace GoldRepl
                 }
             }
 
-            return result;
+            return Token.CurrentTokens;
         }
 
         public void WriteToConsole(List<Token> tokens)
